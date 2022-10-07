@@ -36,7 +36,7 @@ public class CtrlDirectori {
      * Modifica l'autor del document actiu
      * @param autor és el nou nom d'autor que es vol utilitzar pel document
      */
-    public void modificaAutor(String autor) {
+    public void modificarAutor(String autor) {
         documentActiu.setAutor(autor);
     }
 
@@ -44,7 +44,7 @@ public class CtrlDirectori {
      * Modifica el títol del document actiu
      * @param titol és el nou nom del títol que es vol utilitzar pel document
      */
-    public void modificaTitol(String titol) {
+    public void modificarTitol(String titol) {
         documentActiu.setTitol(titol);
     }
 
@@ -52,7 +52,7 @@ public class CtrlDirectori {
      * Modifica el contingut del document actiu
      * @param contingut és el nou contingut que es vol utilitzar pel document
      */
-    public void modificaContngut(String contingut) {
+    public void modificarContngut(String contingut) {
         documentActiu.setContingut(contingut);
     }
 }
