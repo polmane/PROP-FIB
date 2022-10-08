@@ -33,6 +33,20 @@ public class CtrlDirectori {
     }
 
     /**
+     * Operació per crear un directori en el nostre sistema
+     */
+    public void crearDirectori(int idDir) {
+        if (directoriObert == null) {
+            directoriObert = new Directori(idDir);
+        }
+    }
+
+    public void carregarDocument(int idDoc) {
+
+    }
+
+
+    /**
      * Modifica l'autor del document actiu
      * @param autor és el nou nom d'autor que es vol utilitzar pel document
      */
