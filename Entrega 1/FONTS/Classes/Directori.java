@@ -24,12 +24,24 @@ public class Directori {
     private int idNouDoc;
 
     /**
+     * Representa els documents que nosaltres hem creat dins el sistema
+     */
+    public HashMap<Integer,Document> docs;
+
+    /**
+     * Representa les expressions que nosaltres hem creat dins el sistema
+     */
+    public HashMap<Integer, Expressio> expressions;
+
+    /**
      *Constructora
      */
     public Directori(int idDir) {
         this.idDir = idDir;
         pesosDocs = new HashMap<>();
         deletedIds = new LinkedList<>();
+        docs = new HashMap<>();
+        expressions = new HashMap<>();
         idNouDoc = 0;
     }
 
@@ -50,6 +62,20 @@ public class Directori {
      */
     public Queue<Integer> getDeletedIds() {
         return deletedIds;
+    }
+
+    /**
+     *Getter documents que tenim dins el directori
+     */
+    public HashMap<Integer, Document> getDocs() {
+        return docs;
+    }
+
+    /**
+     *Getter expressions que tenim dins el directori
+     */
+    public HashMap<Integer, Expressio> getExpressions() {
+        return expressions;
     }
 
     /**
