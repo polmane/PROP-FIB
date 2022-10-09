@@ -3,10 +3,7 @@ package FONTS.Controladors;
 import FONTS.Classes.Directori;
 import FONTS.Classes.Document;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -134,28 +131,33 @@ public class CtrlDirectori {
      * Ara he estat buscant i nose si el Writer et crea un File tal qual, haure de buscar més quan pugui
      */
 
-    /*
+
     public void exportarDocument(String format, String path) {
-        switch (format) {
-            case "txt":
-                try {
-                    String nom = documentActiu.getAutor()+documentActiu.getTitol()+".txt";
-                    Writer docExp = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("nom"),"UTF-8"));
-                    docExp.write(documentActiu.getAutor());
-                    docExp.write("\n");
-                    docExp.write(documentActiu.getTitol());
-                    docExp.write("\n");
-                    docExp.write(documentActiu.getContingut());
-                } catch (Exception e) {
-                    System.err.println("El document no s'ha creat correctament");
-                    throw new RuntimeException(e);
-                }
-                break;
-            default:
-                break;
-        }
+         if (format == "txt") {
+             try {
+                 String nom = documentActiu.getAutor()+documentActiu.getTitol()+".txt";
+                 File dir = new File (path);
+                 File docExp = new File(dir,nom);
+                 Writer output = new BufferedWriter(new FileWriter(docExp));
+                 output.write(documentActiu.getAutor() + "\n");
+                 output.write(documentActiu.getTitol()+"\n");
+                 output.write(documentActiu.getContingut());
+             } catch (Exception e) {
+                 System.err.println("El document no s'ha creat correctament");
+                 throw new RuntimeException(e);
+             }
+         }
+         else {
+             continue;
+         }
     }
-    */
+
+    public static void main (String[] args) {
+        CtrlDirectori dir = new CtrlDirectori();
+        dir.documentActiu = new Document(0,"Pol","Prova","AIXO ÉS UNA PROVA");
+        dir.exportarDocument("txt","CUserspolcaOneDriveEscritorioPROPDocuments");
+    }
+
 
     /**
      * Elimina un document del directori
