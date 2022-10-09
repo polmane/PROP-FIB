@@ -24,16 +24,17 @@ public class TestDirectori {
     }
 
     /**
-     * Objecte de la prova: Test del mètode afegirDocument de la classe Directori
+     * Objecte de la prova: Test del mètode guardarDocument de la classe CtrlDirectori
      * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
-     * Valors estudiats: S'afegeix un document al directori
-     * Operativa: es comprova que afegir un document al directori funcioni correctament
+     * Valors estudiats: Es guarda un document al directori
+     * Operativa: es comprova que guardar un document al directori funcioni correctament
      */
     @Test
     public void TestGuardarDocument() {
         CtrlDirectori CtrlDir = new CtrlDirectori();
         CtrlDir.crearDirectori(0);
 
+        //Funcionament correcte
         int idDoc = CtrlDir.getDirectoriObert().getIdNouDoc();
         Document doc = new Document(idDoc, "juli", "prova_guardar_document");
         CtrlDir.guardarDocument(doc);
@@ -52,5 +53,29 @@ public class TestDirectori {
         Document doc4 = new Document(CtrlDir.getDirectoriObert().getIdNouDoc(), "juli", "el_mateix_titol");
         CtrlDir.guardarDocument(doc4);
         assertEquals(doc3, CtrlDir.getDirectoriObert().getDocs().get(idDoc));
+    }
+
+    /**
+     * Objecte de la prova: Test del mètode eliminarDocument de la classe CtrlDirectori
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     * Valors estudiats: S'elimina un document del directori
+     * Operativa: es comprova que eliminar un document del directori funcioni correctament
+     */
+    @Test
+    public void TestEliminarDocument() {
+        CtrlDirectori CtrlDir = new CtrlDirectori();
+        CtrlDir.crearDirectori(0);
+
+        int idDoc = CtrlDir.getDirectoriObert().getIdNouDoc();
+        Document doc = new Document(idDoc, "juli", "prova_eliminar_document");
+        CtrlDir.guardarDocument(doc);
+        assertEquals(doc, CtrlDir.getDirectoriObert().getDocs().get(idDoc));
+
+        //ERROR: No existeix el document amb identificador idDoc
+        CtrlDir.eliminarDocument(3);
+
+        //Funcionament correcte
+        CtrlDir.eliminarDocument(doc.getIdDoc());
+        assertNull(CtrlDir.getDirectoriObert().getDocs().get(idDoc));
     }
 }

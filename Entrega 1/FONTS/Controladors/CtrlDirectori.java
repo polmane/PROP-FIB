@@ -83,14 +83,14 @@ public class CtrlDirectori {
     }
 
     /**
-     * Afegeix un nou document al directori
+     * Guarda un nou document al directori
      * @param document és el document que es vol afegir al directori
      */
     public void guardarDocument(@NotNull Document document) {
         //Comprovem que no tenim cap document amb el mateix autor i titol
         String autor = document.getAutor();
         String titol = document.getTitol();
-        Set<Map.Entry<Integer, Document>> setDocuments = directoriObert.getDocs().entrySet();
+        Set<Map.Entry<Integer, Document>> setDocuments = directoriObert.docs.entrySet();
         for (Map.Entry<Integer, Document> it_doc : setDocuments) {
             Document doc = it_doc.getValue();
             if (doc.getAutor().equals(autor) && doc.getTitol().equals(titol)) {
@@ -99,7 +99,7 @@ public class CtrlDirectori {
             }
         }
 
-        //Aquesta comparació és fumada?? Com garantim que l'identificador de la
+        // FIXME: Aquesta comparació és fumada?? Com garantim que l'identificador de la
         // classe Document i l'índex que ens és útil (idNouDoc) siguin el mateix?
         // No passa res si no ho són??
         int idDoc = document.getIdDoc();
@@ -110,7 +110,9 @@ public class CtrlDirectori {
 
         directoriObert.docs.put(directoriObert.getIdNouDoc(), document);
 
-        //Calculem la seguent id per al proper document
+        //TODO: afegir pesos del nou document
+
+        //Recalculem idNouDoc
         if (!directoriObert.deletedIds.isEmpty()) {
             directoriObert.setIdNouDoc(directoriObert.deletedIds.poll());
         } else {
@@ -119,7 +121,23 @@ public class CtrlDirectori {
         }
     }
 
+    /**
+     * Elimina un document del directori
+     * @param idDoc és l'identificador del document que es vol eliminar del directori
+     */
     public void eliminarDocument(int idDoc) {
+        //Comprovem que idDoc sigui realment un identificador d'un document
+        if (!directoriObert.docs.containsKey(idDoc)) {
+            System.err.println("ERROR: No existeix el document amb identificador: " + idDoc + ".");
+            return;
+        }
 
+        directoriObert.docs.remove(idDoc);
+
+        //TODO: eliminar els pesos del document
+
+        //Reutilitzem l'identificador
+        directoriObert.deletedIds.add(idDoc);
+        directoriObert.setIdNouDoc(directoriObert.deletedIds.poll());
     }
 }
