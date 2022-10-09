@@ -106,7 +106,7 @@ public class Directori {
         for (Map.Entry<Integer, Document> it_doc : setDocuments) {
             Document doc = it_doc.getValue();
             if (doc.getAutor().equals(autor) && doc.getTitol().equals(titol)) {
-                System.err.println("ERROR: Ja existeix un document amb autor: " + autor + " i titol: " + titol + ".");
+                System.err.println("ERROR: Ja existeix un document amb autor: '" + autor + "' i titol: '" + titol + "'.");
                 return;
             }
         }
