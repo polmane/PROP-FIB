@@ -2,8 +2,11 @@ package FONTS.Controladors;
 
 import FONTS.Classes.Directori;
 import FONTS.Classes.Document;
-import org.jetbrains.annotations.NotNull;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -50,10 +53,10 @@ public class CtrlDirectori {
      * Operació per obrir un document que ja teniem precarregat dins el nostre sistema
      * @param idDoc és l'identificador del docuemnt que volem obrir
      */
-    public void carregarDocument(int idDoc) {
+    public void recuperarDocument(int idDoc) {
         //nose si fa falta aquest if pk amb una interfície ben feta podem assegurar que el document existeix
-        if (directoriObert.getDocs().containsKey(idDoc)) {
-            documentActiu = directoriObert.getDocs().get(idDoc);
+        if (directoriObert.docs.containsKey(idDoc)) {
+            documentActiu = directoriObert.docs.get(idDoc);
         }
     }
 
@@ -84,9 +87,11 @@ public class CtrlDirectori {
 
     /**
      * Guarda un nou document al directori
-     * @param document és el document que es vol afegir al directori
+     * //@param document és el document que es vol afegir al directori
+     * -----------------------------------------------------------------------------------------------------------------------------------------------------
      */
-    public void guardarDocument(@NotNull Document document) {
+    /*
+    public void guardarDocument(Document document) {
         //Comprovem que no tenim cap document amb el mateix autor i titol
         String autor = document.getAutor();
         String titol = document.getTitol();
@@ -120,6 +125,37 @@ public class CtrlDirectori {
             directoriObert.setIdNouDoc(directoriObert.getMaxIdDoc());
         }
     }
+    */
+
+    /**
+     * Exportar document falta acabar de moment tenim:
+     * Triem si volem exportar en xml o txt
+     * Creem un txt amb nom autor+titol, ara falta exportar-lo al local que nose com es fa
+     * Ara he estat buscant i nose si el Writer et crea un File tal qual, haure de buscar més quan pugui
+     */
+
+    /*
+    public void exportarDocument(String format, String path) {
+        switch (format) {
+            case "txt":
+                try {
+                    String nom = documentActiu.getAutor()+documentActiu.getTitol()+".txt";
+                    Writer docExp = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("nom"),"UTF-8"));
+                    docExp.write(documentActiu.getAutor());
+                    docExp.write("\n");
+                    docExp.write(documentActiu.getTitol());
+                    docExp.write("\n");
+                    docExp.write(documentActiu.getContingut());
+                } catch (Exception e) {
+                    System.err.println("El document no s'ha creat correctament");
+                    throw new RuntimeException(e);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    */
 
     /**
      * Elimina un document del directori
@@ -136,8 +172,7 @@ public class CtrlDirectori {
 
         //TODO: eliminar els pesos del document
 
-        //Reutilitzem l'identificador
+        //Afegim l'id a la cua per poder ser reciclada
         directoriObert.deletedIds.add(idDoc);
-        directoriObert.setIdNouDoc(directoriObert.deletedIds.poll());
     }
 }
