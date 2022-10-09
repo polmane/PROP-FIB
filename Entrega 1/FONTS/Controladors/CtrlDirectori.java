@@ -2,7 +2,14 @@ package FONTS.Controladors;
 
 import FONTS.Classes.Directori;
 import FONTS.Classes.Document;
+import org.w3c.dom.Element;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,7 +94,6 @@ public class CtrlDirectori {
      * //@param document és el document que es vol afegir al directori
      * -----------------------------------------------------------------------------------------------------------------------------------------------------
      */
-    /*
     public void guardarDocument(Document document) {
         //Comprovem que no tenim cap document amb el mateix autor i titol
         String autor = document.getAutor();
@@ -122,7 +128,7 @@ public class CtrlDirectori {
             directoriObert.setIdNouDoc(directoriObert.getMaxIdDoc());
         }
     }
-    */
+
 
     /**
      * Exportar document falta acabar de moment tenim:
@@ -133,7 +139,7 @@ public class CtrlDirectori {
 
 
     public void exportarDocument(String format, String path) {
-         if (format == "txt") {
+         if (new String("txt").equals(format)) {
              try {
                  String nom = documentActiu.getAutor()+documentActiu.getTitol()+".txt";
                  File dir = new File (path);
@@ -142,22 +148,46 @@ public class CtrlDirectori {
                  output.write(documentActiu.getAutor() + "\n");
                  output.write(documentActiu.getTitol()+"\n");
                  output.write(documentActiu.getContingut());
+                 output.flush();
              } catch (Exception e) {
-                 System.err.println("El document no s'ha creat correctament");
+                 System.err.println("El document txt no s'ha creat correctament");
                  throw new RuntimeException(e);
              }
          }
          else {
-             continue;
+             try {
+                 String nom = documentActiu.getAutor()+documentActiu.getTitol()+".xml";
+                 FileOutputStream docExp = new FileOutputStream(path+"\\"+nom);
+
+                 DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+                 DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+                 org.w3c.dom.Document doc = docBuilder.newDocument();
+                 Element docXML = doc.createElement("documentXML");
+                 docXML.setAttribute("Autor",documentActiu.getAutor());
+                 docXML.setAttribute("Titol",documentActiu.getTitol());
+                 docXML.setAttribute("Contingut",documentActiu.getContingut());
+                 doc.appendChild(docXML);
+
+                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                 Transformer transformer = transformerFactory.newTransformer();
+                 DOMSource source = new DOMSource(doc);
+                 StreamResult result = new StreamResult(docExp);
+
+                 transformer.transform(source, result);
+             }catch (Exception e) {
+                 System.err.println("El document xml no s'ha creat correctament");
+                 throw new RuntimeException(e);
+             }
          }
     }
-
+/*
     public static void main (String[] args) {
         CtrlDirectori dir = new CtrlDirectori();
         dir.documentActiu = new Document(0,"Pol","Prova","AIXO ÉS UNA PROVA");
-        dir.exportarDocument("txt","CUserspolcaOneDriveEscritorioPROPDocuments");
+        dir.exportarDocument("xml","C:\\Users\\polca\\OneDrive\\Escritorio\\PROPDocuments");
     }
-
+*/
 
     /**
      * Elimina un document del directori
