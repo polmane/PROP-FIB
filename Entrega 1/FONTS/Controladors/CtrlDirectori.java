@@ -2,6 +2,7 @@ package FONTS.Controladors;
 
 import FONTS.Classes.Directori;
 import FONTS.Classes.Document;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
@@ -45,7 +46,7 @@ public class CtrlDirectori {
 
      /**
      * Operació per obrir un document que ja teniem precarregat dins el nostre sistema
-     * @param idDoc és l'indentificador del docuemnt que volem obrir
+     * @param idDoc és l'identificador del docuemnt que volem obrir
      */
     public void carregarDocument(int idDoc) {
         //nose si fa falta aquest if pk amb una interfície ben feta podem assegurar que el document existeix
@@ -78,4 +79,13 @@ public class CtrlDirectori {
     public void modificarContngut(String contingut) {
         documentActiu.setContingut(contingut);
     }
+
+    /**
+     * Afegeix un nou document al directori
+     * @param document és el document que es vol afegir al directori
+     */
+    public void guardarDocument(@NotNull Document document) {
+        directoriObert.guardarDocument(document);
+    }
+
 }

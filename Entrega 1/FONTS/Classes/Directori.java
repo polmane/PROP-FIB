@@ -1,5 +1,7 @@
 package FONTS.Classes;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.*;
 
 public class Directori {
@@ -24,6 +26,11 @@ public class Directori {
     private int idNouDoc;
 
     /**
+     * Representa l'identificador més gran que s'ha donat mai a un document
+     */
+    private int maxIdDoc;
+
+    /**
      * Representa els documents que nosaltres hem creat dins el sistema
      */
     public HashMap<Integer,Document> docs;
@@ -43,6 +50,7 @@ public class Directori {
         docs = new HashMap<>();
         expressions = new HashMap<>();
         idNouDoc = 0;
+        maxIdDoc = 0;
     }
 
     /**
@@ -84,4 +92,43 @@ public class Directori {
     public int getIdNouDoc() {
         return idNouDoc;
     }
+
+    /**
+     * Guarda un nou document al directori
+     * @param document és el document que es vol guardar al directori
+     */
+    public void guardarDocument(@NotNull Document document) {
+
+        //Comprovem que no tenim cap document amb el mateix autor i titol
+        String autor = document.getAutor();
+        String titol = document.getTitol();
+        Set<Map.Entry<Integer, Document>> setDocuments = docs.entrySet();
+        for (Map.Entry<Integer, Document> it_doc : setDocuments) {
+            Document doc = it_doc.getValue();
+            if (doc.getAutor().equals(autor) && doc.getTitol().equals(titol)) {
+                System.err.println("ERROR: Ja existeix un document amb autor: " + autor + " i titol: " + titol + ".");
+                return;
+            }
+        }
+
+        //Aquesta comparació és fumada?? Com garantim que l'identificador de la
+        // classe Document i l'índex que ens és útil (idNouDoc) siguin el mateix?
+        // No passa res si no ho són??
+        int idDoc = document.getIdDoc();
+        if (idDoc != idNouDoc) {
+            System.err.println("ERROR: La id del document no és l'esperada pel directori");
+            return;
+        }
+
+        docs.put(idNouDoc, document);
+
+        //Calculem la seguent id per al proper document
+        if (!deletedIds.isEmpty()) {
+            idNouDoc = deletedIds.poll();
+        } else {
+            ++maxIdDoc;
+            idNouDoc = maxIdDoc;
+        }
+    }
+
 }
