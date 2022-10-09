@@ -5,6 +5,8 @@ import FONTS.Classes.Document;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class CtrlDirectori {
     /**
@@ -85,7 +87,39 @@ public class CtrlDirectori {
      * @param document és el document que es vol afegir al directori
      */
     public void guardarDocument(@NotNull Document document) {
-        directoriObert.guardarDocument(document);
+        //Comprovem que no tenim cap document amb el mateix autor i titol
+        String autor = document.getAutor();
+        String titol = document.getTitol();
+        Set<Map.Entry<Integer, Document>> setDocuments = directoriObert.getDocs().entrySet();
+        for (Map.Entry<Integer, Document> it_doc : setDocuments) {
+            Document doc = it_doc.getValue();
+            if (doc.getAutor().equals(autor) && doc.getTitol().equals(titol)) {
+                System.err.println("ERROR: Ja existeix un document amb autor: '" + autor + "' i titol: '" + titol + "'.");
+                return;
+            }
+        }
+
+        //Aquesta comparació és fumada?? Com garantim que l'identificador de la
+        // classe Document i l'índex que ens és útil (idNouDoc) siguin el mateix?
+        // No passa res si no ho són??
+        int idDoc = document.getIdDoc();
+        if (idDoc != directoriObert.getIdNouDoc()) {
+            System.err.println("ERROR: La id del document no és l'esperada pel directori");
+            return;
+        }
+
+        directoriObert.docs.put(directoriObert.getIdNouDoc(), document);
+
+        //Calculem la seguent id per al proper document
+        if (!directoriObert.deletedIds.isEmpty()) {
+            directoriObert.setIdNouDoc(directoriObert.deletedIds.poll());
+        } else {
+            directoriObert.augmentaMaxIdDoc();
+            directoriObert.setIdNouDoc(directoriObert.getMaxIdDoc());
+        }
     }
 
+    public void eliminarDocument(int idDoc) {
+
+    }
 }

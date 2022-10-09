@@ -2,6 +2,7 @@ package FONTS.Test;
 
 import FONTS.Classes.Directori;
 import FONTS.Classes.Document;
+import FONTS.Controladors.CtrlDirectori;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,22 +31,26 @@ public class TestDirectori {
      */
     @Test
     public void TestGuardarDocument() {
-        Directori dir = new Directori(0);
-        int idDoc = dir.getIdNouDoc();
+        CtrlDirectori CtrlDir = new CtrlDirectori();
+        CtrlDir.crearDirectori(0);
 
+        int idDoc = CtrlDir.getDirectoriObert().getIdNouDoc();
         Document doc = new Document(idDoc, "juli", "prova_guardar_document");
-        dir.guardarDocument(doc);
-        assertEquals(doc, dir.getDocs().get(idDoc));
+        CtrlDir.guardarDocument(doc);
+        assertEquals(doc, CtrlDir.getDirectoriObert().getDocs().get(idDoc));
 
         //ERROR: identificador document no esperat pel directori
         Document doc2 = new Document(-1, "juli", "prova_error_ids");
-        dir.guardarDocument(doc2);
+        CtrlDir.guardarDocument(doc2);
+        assertEquals(doc, CtrlDir.getDirectoriObert().getDocs().get(idDoc));
 
         //ERROR: ja existeix document amb el mateix autor i titol
-        Document doc3 = new Document(dir.getIdNouDoc(), "juli", "el_mateix_titol");
-        dir.guardarDocument(doc3);
-        Document doc4 = new Document(dir.getIdNouDoc(), "juli", "el_mateix_titol");
-        dir.guardarDocument(doc4);
-
+        idDoc = CtrlDir.getDirectoriObert().getIdNouDoc();
+        Document doc3 = new Document(idDoc, "juli", "el_mateix_titol");
+        CtrlDir.guardarDocument(doc3);
+        assertEquals(doc3, CtrlDir.getDirectoriObert().getDocs().get(idDoc));
+        Document doc4 = new Document(CtrlDir.getDirectoriObert().getIdNouDoc(), "juli", "el_mateix_titol");
+        CtrlDir.guardarDocument(doc4);
+        assertEquals(doc3, CtrlDir.getDirectoriObert().getDocs().get(idDoc));
     }
 }
