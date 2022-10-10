@@ -129,15 +129,42 @@ public class CtrlDirectori {
         }
     }
 
+    /**
+     * Afegir Document fa una alta d'un nou document dins el directori
+     * @param autor representa l'autor del document que es vol afegir
+     * @param titol representa el títol del document que es vol afegir
+     * @param contingut representa el contingut del nou document
+     */
+    //Falta fer el test d'aquesta operació
+    public void afegirDocument (String autor, String titol, String contingut) throws Exception {
+        for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
+            if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor) && directoriObert.docs.get(i).getTitol().equals(titol)) {
+                throw new Exception("El document amb autor: " + autor + " i títol: "+ titol + " ja existeix");
+            }
+        }
+        int id;
+        //Comprovem que no tenim cap id per reciclar
+        if(!directoriObert.deletedIds.isEmpty()) {
+            //En cas d'entrar aquí assignem la id que tenim a la cua
+            id = directoriObert.deletedIds.poll();
+        }
+        else {
+            //Si no hi ha ids per reciclar assignem la nova id al document
+            id = 1 + directoriObert.getIdNouDoc();
+            directoriObert.setIdNouDoc(id + 1);
+        }
+        documentActiu = new Document(id, autor, titol, contingut);
+        directoriObert.docs.put(id, documentActiu);
+
+        //TODO: afegir document a la taula de pesos
+    }
+
 
     /**
-     * Exportar document falta acabar de moment tenim:
-     * Triem si volem exportar en xml o txt
-     * Creem un txt amb nom autor+titol, ara falta exportar-lo al local que nose com es fa
-     * Ara he estat buscant i nose si el Writer et crea un File tal qual, haure de buscar més quan pugui
+     * exportarDocument exporta el document del directori a un path elegit
+     * @param format es correspon en quin format es desitja exportar el document
+     * @param path es correspon al camí desitjat per tal de guardar el document
      */
-
-
     public void exportarDocument(String format, String path) {
          if (new String("txt").equals(format)) {
              try {
@@ -165,7 +192,7 @@ public class CtrlDirectori {
                  org.w3c.dom.Document doc = docBuilder.newDocument();
                  Element docXML = doc.createElement("documentXML");
                  docXML.setAttribute("Autor",documentActiu.getAutor());
-                 docXML.setAttribute("Titol",documentActiu.getTitol());
+                 docXML.setAttribute("Títol",documentActiu.getTitol());
                  docXML.setAttribute("Contingut",documentActiu.getContingut());
                  doc.appendChild(docXML);
 
@@ -181,13 +208,13 @@ public class CtrlDirectori {
              }
          }
     }
-/*
+
     public static void main (String[] args) {
         CtrlDirectori dir = new CtrlDirectori();
-        dir.documentActiu = new Document(0,"Pol","Prova","AIXO ÉS UNA PROVA");
-        dir.exportarDocument("xml","C:\\Users\\polca\\OneDrive\\Escritorio\\PROPDocuments");
+        dir.documentActiu = new Document(0,"Pol","Prova","AIXÒ ÉS UNA PROVA");
+        dir.exportarDocument("txt","C:\\Users\\polca\\OneDrive\\Escritorio\\PROPDocuments");
     }
-*/
+
 
     /**
      * Elimina un document del directori
