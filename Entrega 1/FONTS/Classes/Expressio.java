@@ -6,7 +6,7 @@ public class Expressio {
      */
     private int idExp;
 
-    private string expressio;
+    private String expressio;
 
     /**
      *Constructores
@@ -21,7 +21,7 @@ public class Expressio {
         this.expressio = null;
     }
 
-    public Expressio(int idExp, string expressio) {
+    public Expressio(int idExp, String expressio) {
         this.idExp = idExp;
         this.expressio = expressio;
     }
@@ -36,11 +36,11 @@ public class Expressio {
     /**
      * Getter i setter de expressio
      */
-    public string getExpressio() {
+    public String getExpressio() {
         return expressio;
     }
 
-    public void setExpressio(string expressio) {
+    public void setExpressio(String expressio) {
         this.expressio = expressio;
     }
 }

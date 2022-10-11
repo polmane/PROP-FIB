@@ -28,7 +28,7 @@ public class TestExpressio {
         assertNull(exp1.getExpressio());
 
         idExp = 0;
-        string expressio = "!";
+        String expressio = "!";
         Expressio exp2 = new Expressio(idExp, expressio);
 
         assertEquals(0, exp2.getIdExp());

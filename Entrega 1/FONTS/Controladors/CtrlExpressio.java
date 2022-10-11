@@ -24,7 +24,7 @@ public class CtrlExpressio {
     /**
      * Operacio per modificar l'expressio seleccionada
      */
-    public void modificarExpressio(string exp) {
+    public void modificarExpressio(String exp) {
         expressioSeleccionada.setExpressio(exp);
     }
 
