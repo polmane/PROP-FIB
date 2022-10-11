@@ -212,7 +212,7 @@ public class CtrlDirectori {
     public static void main (String[] args) {
         CtrlDirectori dir = new CtrlDirectori();
         dir.documentActiu = new Document(0,"Pol","Prova","AIXÒ ÉS UNA PROVA");
-        dir.exportarDocument("txt","C:\\Users\\polca\\OneDrive\\Escritorio\\PROPDocuments");
+        dir.exportarDocument("xml","C:\\Users\\polca\\OneDrive\\Escritorio\\PROPDocuments");
     }
 
 
