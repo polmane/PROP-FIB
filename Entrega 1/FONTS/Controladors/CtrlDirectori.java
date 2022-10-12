@@ -2,8 +2,8 @@ package FONTS.Controladors;
 
 import FONTS.Classes.Directori;
 import FONTS.Classes.Document;
-import org.w3c.dom.Element;
 
+import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -11,9 +11,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 public class CtrlDirectori {
     /**
@@ -90,46 +87,6 @@ public class CtrlDirectori {
     }
 
     /**
-     * Guarda un nou document al directori
-     * //@param document és el document que es vol afegir al directori
-     * -----------------------------------------------------------------------------------------------------------------------------------------------------
-     */
-    public void guardarDocument(Document document) {
-        //Comprovem que no tenim cap document amb el mateix autor i titol
-        String autor = document.getAutor();
-        String titol = document.getTitol();
-        Set<Map.Entry<Integer, Document>> setDocuments = directoriObert.docs.entrySet();
-        for (Map.Entry<Integer, Document> it_doc : setDocuments) {
-            Document doc = it_doc.getValue();
-            if (doc.getAutor().equals(autor) && doc.getTitol().equals(titol)) {
-                System.err.println("ERROR: Ja existeix un document amb autor: '" + autor + "' i titol: '" + titol + "'.");
-                return;
-            }
-        }
-
-        // FIXME: Aquesta comparació és fumada?? Com garantim que l'identificador de la
-        // classe Document i l'índex que ens és útil (idNouDoc) siguin el mateix?
-        // No passa res si no ho són??
-        int idDoc = document.getIdDoc();
-        if (idDoc != directoriObert.getIdNouDoc()) {
-            System.err.println("ERROR: La id del document no és l'esperada pel directori");
-            return;
-        }
-
-        directoriObert.docs.put(directoriObert.getIdNouDoc(), document);
-
-        //TODO: afegir pesos del nou document
-
-        //Recalculem idNouDoc
-        if (!directoriObert.deletedIds.isEmpty()) {
-            directoriObert.setIdNouDoc(directoriObert.deletedIds.poll());
-        } else {
-            directoriObert.augmentaMaxIdDoc();
-            directoriObert.setIdNouDoc(directoriObert.getMaxIdDoc());
-        }
-    }
-
-    /**
      * Afegir Document fa una alta d'un nou document dins el directori
      * @param autor representa l'autor del document que es vol afegir
      * @param titol representa el títol del document que es vol afegir
@@ -189,8 +146,11 @@ public class CtrlDirectori {
                  DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
                  DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
+
+
                  org.w3c.dom.Document doc = docBuilder.newDocument();
                  Element docXML = doc.createElement("documentXML");
+
                  docXML.setAttribute("Autor",documentActiu.getAutor());
                  docXML.setAttribute("Títol",documentActiu.getTitol());
                  docXML.setAttribute("Contingut",documentActiu.getContingut());
