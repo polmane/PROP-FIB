@@ -3,7 +3,7 @@ package FONTS.Controladors;
 import FONTS.Classes.Directori;
 import FONTS.Classes.Document;
 
-import org.w3c.dom.Element;
+import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -11,6 +11,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 
 public class CtrlDirectori {
     /**
@@ -114,7 +116,41 @@ public class CtrlDirectori {
         directoriObert.docs.put(id, documentActiu);
 
         //TODO: afegir document a la taula de pesos
+        ArrayList<String> paraules = obteContingut();
     }
+
+    private ArrayList<String> obteContingut() {
+        String text = documentActiu.getContingut();
+        ArrayList<String> paraules = new ArrayList<>();
+        if (!text.isEmpty()) {
+            int i = 0;
+            while (i < text.length()) {
+                String paraula = "";
+                while (i < text.length() && esUnCharCorrecte(text.charAt(i))) {
+                    paraula += text.charAt(i);
+                    ++i;
+                }
+                ++i;
+                if (!paraula.isEmpty()) paraules.add(paraula.toString());
+            }
+        }
+        return paraules;
+    }
+
+    private boolean esUnCharCorrecte(char c) {
+        String simbols = " .,-;:_´`+¨^*{[]}!$%&/()=~|@#€¬";
+        for (int i = 0; i < simbols.length(); ++i) {
+            if (simbols.charAt(i) == c) return false;
+        }
+        return true;
+    }
+
+    public static void main (String[] args) {
+        CtrlDirectori dir = new CtrlDirectori();
+        dir.documentActiu = new Document(0,"Pol","Prova","arhu erpgq39 ´lrgha´ra ergerágiah ñr´g`ra08gear´8 gaergárga urga´r9a`r´a+ r`gpiaa.v");
+        System.out.println(dir.obteContingut());
+    }
+
 
 
     /**
@@ -149,12 +185,18 @@ public class CtrlDirectori {
 
 
                  org.w3c.dom.Document doc = docBuilder.newDocument();
-                 Element docXML = doc.createElement("documentXML");
 
-                 docXML.setAttribute("Autor",documentActiu.getAutor());
-                 docXML.setAttribute("Títol",documentActiu.getTitol());
-                 docXML.setAttribute("Contingut",documentActiu.getContingut());
-                 doc.appendChild(docXML);
+                 Element rootElement = doc.createElement(nom);
+                 doc.appendChild(rootElement);
+                 Element autor = doc.createElement("AUTOR");
+                 autor.appendChild(doc.createTextNode(documentActiu.getAutor()));
+                 rootElement.appendChild(autor);
+                 Element titol = doc.createElement("TITOL");
+                 titol.appendChild(doc.createTextNode(documentActiu.getTitol()));
+                 rootElement.appendChild(titol);
+                 Element contingut = doc.createElement("CONTINGUT");
+                 contingut.appendChild(doc.createTextNode(documentActiu.getContingut()));
+                 rootElement.appendChild(contingut);
 
                  TransformerFactory transformerFactory = TransformerFactory.newInstance();
                  Transformer transformer = transformerFactory.newTransformer();
@@ -168,12 +210,13 @@ public class CtrlDirectori {
              }
          }
     }
-
+/*
     public static void main (String[] args) {
         CtrlDirectori dir = new CtrlDirectori();
         dir.documentActiu = new Document(0,"Pol","Prova","AIXÒ ÉS UNA PROVA");
         dir.exportarDocument("xml","C:\\Users\\polca\\OneDrive\\Escritorio\\PROPDocuments");
     }
+    */
 
 
     /**
