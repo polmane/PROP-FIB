@@ -16,18 +16,7 @@ public class TestExpressio {
     @Test
     public void TestConstructores() {
 
-        Expressio exp = new Expressio();
-
-        assertNull(exp.getIdExp());
-        assertNull(exp.getExpressio());
-
-        int idExp = 0;
-        Expressio exp1 = new Expressio(idExp);
-
-        assertEquals(0, exp1.getIdExp());
-        assertNull(exp1.getExpressio());
-
-        idExp = 0;
+        Integer idExp = 0;
         String expressio = "!";
         Expressio exp2 = new Expressio(idExp, expressio);
 

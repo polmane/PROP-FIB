@@ -12,15 +12,6 @@ public class Expressio {
      *Constructores
      */
 
-    public Expressio() {
-        this.idExp = null;
-        this.expressio = null;
-    }
-    public Expressio(int idExp) {
-        this.idExp = idExp;
-        this.expressio = null;
-    }
-
     public Expressio(int idExp, String expressio) {
         this.idExp = idExp;
         this.expressio = expressio;
