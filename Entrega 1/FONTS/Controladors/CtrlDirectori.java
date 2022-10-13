@@ -3,6 +3,7 @@ package FONTS.Controladors;
 import FONTS.Classes.Directori;
 import FONTS.Classes.Document;
 
+import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -11,6 +12,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -64,7 +66,6 @@ public class CtrlDirectori {
         }
     }
 
-
     /**
      * Modifica l'autor del document actiu
      * @param autor és el nou nom d'autor que es vol utilitzar pel document
@@ -95,7 +96,7 @@ public class CtrlDirectori {
      * @param titol representa el títol del document que es vol afegir
      * @param contingut representa el contingut del nou document
      */
-    //Falta fer el test d'aquesta operació
+    //TODO: Falta fer el test d'aquesta operació
     public void afegirDocument (String autor, String titol, String contingut) throws Exception {
         for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
             if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor) && directoriObert.docs.get(i).getTitol().equals(titol)) {
@@ -234,7 +235,8 @@ public class CtrlDirectori {
      * @param format es correspon en quin format es desitja exportar el document
      * @param path es correspon al camí desitjat per tal de guardar el document
      */
-    public void exportarDocument(FILETYPE format, String path) {
+    //TODO: TEST
+    public void exportarDocument(@NotNull FILETYPE format, @NotNull String path) {
         switch (format) {
             case TXT:
                 try {
@@ -306,5 +308,27 @@ public class CtrlDirectori {
 
         //Afegim l'id a la cua per poder ser reciclada
         directoriObert.deletedIds.add(idDoc);
+    }
+
+    //TODO: TEST
+    public ArrayList<Document> cercaPerAutor(@NotNull String autor) {
+        ArrayList<Document> docs = new ArrayList<Document>();
+        for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
+            if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor)) {
+                docs.add(directoriObert.docs.get(i));
+            }
+        }
+        return docs;
+    }
+
+    //TODO: TEST
+    public ArrayList<Document> cercaPerTitol(@NotNull String titol) {
+        ArrayList<Document> docs = new ArrayList<Document>();
+        for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
+            if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getTitol().equals(titol)) {
+                docs.add(directoriObert.docs.get(i));
+            }
+        }
+        return docs;
     }
 }

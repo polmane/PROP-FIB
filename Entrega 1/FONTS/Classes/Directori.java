@@ -23,7 +23,6 @@ public class Directori {
      */
     private int idNouDoc;
 
-
     /**
      * Representa els documents que nosaltres hem creat dins el sistema
      */
@@ -70,8 +69,6 @@ public class Directori {
     public HashMap<Integer, Document> getDocs() {
         return docs;
     }
-
-
 
     /**
      * Getter identificador del seguent document
