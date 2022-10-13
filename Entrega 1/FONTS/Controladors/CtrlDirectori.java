@@ -12,10 +12,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class CtrlDirectori {
     /**
@@ -331,4 +328,31 @@ public class CtrlDirectori {
         }
         return docs;
     }
+
+    //TODO: TEST
+    public List<String> llistaAutorsPerPrefix(@NotNull String pre) {
+        List<String> autors = new ArrayList<String>();
+        for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
+            if (directoriObert.docs.containsKey(i)) {
+                String autor = directoriObert.docs.get(i).getAutor();
+                if (autor.startsWith(pre)) {
+                    autors.add(autor);
+                }
+            }
+        }
+        return autors;
+    }
+
+    //TODO: TEST
+    public List<String> llistaTitolsPerAutor(@NotNull String autor) {
+        List<String> docs = new ArrayList<String>();
+        for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
+            if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor)) {
+                docs.add(directoriObert.docs.get(i).getTitol());
+            }
+        }
+        Collections.sort(docs);
+        return docs;
+    }
+
 }
