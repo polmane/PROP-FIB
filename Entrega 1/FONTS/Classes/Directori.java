@@ -23,20 +23,13 @@ public class Directori {
      */
     private int idNouDoc;
 
-    /**
-     * Representa l'identificador més gran que s'ha donat mai a un document
-     */
-    private int maxIdDoc;
 
     /**
      * Representa els documents que nosaltres hem creat dins el sistema
      */
     public HashMap<Integer, Document> docs;
 
-    /**
-     * Representa les expressions que nosaltres hem creat dins el sistema
-     */
-    public HashMap<Integer, Expressio> expressions;
+    public HashMap<String, Integer> paraulesDirectori;
 
     /**
      * Constructora
@@ -46,9 +39,8 @@ public class Directori {
         pesosDocs = new HashMap<>();
         deletedIds = new LinkedList<>();
         docs = new HashMap<>();
-        expressions = new HashMap<>();
+        paraulesDirectori = new HashMap<>();
         idNouDoc = 0;
-        maxIdDoc = 0;
     }
 
     /**
@@ -79,12 +71,7 @@ public class Directori {
         return docs;
     }
 
-    /**
-     * Getter expressions que tenim dins el directori
-     */
-    public HashMap<Integer, Expressio> getExpressions() {
-        return expressions;
-    }
+
 
     /**
      * Getter identificador del seguent document
@@ -100,17 +87,11 @@ public class Directori {
         this.idNouDoc = idNouDoc;
     }
 
-    /**
-     * Getter identificador maxim que s'ha donat a un document
-     */
-    public int getMaxIdDoc() {
-        return maxIdDoc;
+    public HashMap<String, Integer> getParaulesDirectori() {
+        return paraulesDirectori;
     }
 
-    /**
-     * Augmenta identificador maxim que s'ha donat a un document
-     */
-    public void augmentaMaxIdDoc() {
-        this.maxIdDoc++;
+    public void setParaulesDirectori(HashMap<String, Integer> paraulesDirectori) {
+        this.paraulesDirectori = paraulesDirectori;
     }
 }

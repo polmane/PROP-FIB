@@ -11,8 +11,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class CtrlDirectori {
     /**
@@ -109,19 +110,74 @@ public class CtrlDirectori {
         }
         else {
             //Si no hi ha ids per reciclar assignem la nova id al document
-            id = 1 + directoriObert.getIdNouDoc();
-            directoriObert.setIdNouDoc(id + 1);
+            id = directoriObert.getIdNouDoc();
+            directoriObert.setIdNouDoc(id+1);
         }
         documentActiu = new Document(id, autor, titol, contingut);
         directoriObert.docs.put(id, documentActiu);
 
         //TODO: afegir document a la taula de pesos
-        ArrayList<String> paraules = obteContingut();
+        HashMap<String,Integer> paraules = obteContingut();
+        afegeixParaulesAlDir(paraules);
+        afegeixPesos();
     }
 
-    private ArrayList<String> obteContingut() {
+    private void afegeixParaulesAlDir(HashMap<String, Integer> paraules) {
+        for (String paraula : paraules.keySet()) {
+            if (directoriObert.paraulesDirectori.containsKey(paraula))
+                directoriObert.paraulesDirectori.put(paraula, directoriObert.paraulesDirectori.get(paraula) + paraules.get(paraula));
+            else directoriObert.paraulesDirectori.put(paraula, paraules.get(paraula));
+        }
+    }
+
+    private void afegeixPesos() {
+        HashMap<String,Double> idfMap = idf();
+        for (Document doc : directoriObert.docs.values()) {
+            documentActiu = doc;
+            HashMap<String,Double> tfMap = tf(obteContingut());
+            double tfIdfValue = 0.0;
+            double idfVal = 0.0;
+            Iterator itTF = tfMap.entrySet().iterator();
+            while (itTF.hasNext()) {
+                Map.Entry pair = (Map.Entry)itTF.next();
+                double tfVal  = (Double)pair.getValue() ;
+                if(idfMap.containsKey((String)pair.getKey()))
+                {
+                    idfVal = idfMap.get((String)pair.getKey());
+                }
+                tfIdfValue = tfVal *idfVal;
+                tfMap.put((pair.getKey().toString()),tfIdfValue);
+                directoriObert.pesosDocs.put(doc.getIdDoc(),tfMap);
+            }
+        }
+    }
+
+    private HashMap<String, Double> tf(HashMap<String, Integer> paraules) {
+        HashMap<String,Double> tfMap = new HashMap<>();
+        double sum = 0.0;
+        Iterator it = paraules.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            double tf = (Integer)pair.getValue()/ (double) directoriObert.paraulesDirectori.size();
+            tfMap.put((pair.getKey().toString()),tf);
+        }
+        return tfMap;
+    }
+
+    private HashMap<String, Double> idf() {
+        HashMap<String,Double> idfMap = new HashMap<>();
+        int size = directoriObert.docs.size();
+        for (String word : directoriObert.paraulesDirectori.keySet()) {
+            Double temp = size/ Double.valueOf(directoriObert.paraulesDirectori.get(word));
+            Double idf = 1 + Math.log(temp);
+            idfMap.put(word,idf);
+        }
+        return idfMap;
+    }
+
+    private HashMap<String, Integer> obteContingut() {
         String text = documentActiu.getContingut();
-        ArrayList<String> paraules = new ArrayList<>();
+        HashMap<String,Integer> paraules = new HashMap<>();
         if (!text.isEmpty()) {
             int i = 0;
             while (i < text.length()) {
@@ -131,7 +187,11 @@ public class CtrlDirectori {
                     ++i;
                 }
                 ++i;
-                if (!paraula.isEmpty()) paraules.add(paraula.toString());
+                if (!paraula.isEmpty()) {
+                    paraula = paraula.toLowerCase();
+                    if (paraules.containsKey(paraula)) paraules.put(paraula,paraules.get(paraula)+1);
+                    else paraules.put(paraula, 1);
+                }
             }
         }
         return paraules;
@@ -145,10 +205,24 @@ public class CtrlDirectori {
         return true;
     }
 
-    public static void main (String[] args) {
+    public static void main (String[] args) throws Exception {
         CtrlDirectori dir = new CtrlDirectori();
-        dir.documentActiu = new Document(0,"Pol","Prova","arhu erpgq39 ´lrgha´ra ergerágiah ñr´g`ra08gear´8 gaergárga urga´r9a`r´a+ r`gpiaa.v");
-        System.out.println(dir.obteContingut());
+        dir.directoriObert = new Directori(0);
+        dir.afegirDocument("Pol","Prova","El cotxe blau");
+        dir.afegirDocument("Manel","Prova","El cotxe negre");
+        dir.afegirDocument("Isaac","Prova","El cotxe vermell");
+        dir.afegirDocument("Juli","Prova","El cotxe lila");
+        dir.afegirDocument("Pau","Prova","La casa gran");
+        dir.afegirDocument("Joan","Prova","Avui fa fred");
+        dir.afegirDocument("Jordi","Prova","La moto maca");
+        dir.afegirDocument("Pep","Prova","Tinc molta gana");
+        dir.afegirDocument("Carles","Prova","La bici gran");
+
+        System.out.println(dir.directoriObert.paraulesDirectori);
+
+        for (Integer num : dir.directoriObert.getPesosDocs().keySet()) {
+            System.out.println(dir.directoriObert.getPesosDocs().get(num));
+        }
     }
 
 
@@ -210,14 +284,6 @@ public class CtrlDirectori {
              }
          }
     }
-/*
-    public static void main (String[] args) {
-        CtrlDirectori dir = new CtrlDirectori();
-        dir.documentActiu = new Document(0,"Pol","Prova","AIXÒ ÉS UNA PROVA");
-        dir.exportarDocument("xml","C:\\Users\\polca\\OneDrive\\Escritorio\\PROPDocuments");
-    }
-    */
-
 
     /**
      * Elimina un document del directori
