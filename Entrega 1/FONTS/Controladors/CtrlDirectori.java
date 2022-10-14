@@ -3,7 +3,6 @@ package FONTS.Controladors;
 import FONTS.Classes.Directori;
 import FONTS.Classes.Document;
 
-import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -93,7 +92,7 @@ public class CtrlDirectori {
      * @param titol representa el títol del document que es vol afegir
      * @param contingut representa el contingut del nou document
      */
-    //TODO: Falta fer el test d'aquesta operació
+    //TODO: TEST
     public void afegirDocument (String autor, String titol, String contingut) throws Exception {
         for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
             if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor) && directoriObert.docs.get(i).getTitol().equals(titol)) {
@@ -114,50 +113,50 @@ public class CtrlDirectori {
         documentActiu = new Document(id, autor, titol, contingut);
         directoriObert.docs.put(id, documentActiu);
 
-        //TODO: afegir document a la taula de pesos
-        HashMap<String,Integer> paraules = obteContingut();
-        afegeixParaulesAlDir(paraules);
+        documentActiu.setOcurrencies(obteContingut());
+        afegeixParaulesAlDir();
         afegeixPesos();
     }
 
-    private void afegeixParaulesAlDir(HashMap<String, Integer> paraules) {
-        for (String paraula : paraules.keySet()) {
+    private void afegeixParaulesAlDir() {
+        for (String paraula : documentActiu.ocurrencies.keySet()) {
             if (directoriObert.paraulesDirectori.containsKey(paraula))
-                directoriObert.paraulesDirectori.put(paraula, directoriObert.paraulesDirectori.get(paraula) + paraules.get(paraula));
-            else directoriObert.paraulesDirectori.put(paraula, paraules.get(paraula));
+                directoriObert.paraulesDirectori.put(paraula, directoriObert.paraulesDirectori.get(paraula) + documentActiu.ocurrencies.get(paraula));
+            else directoriObert.paraulesDirectori.put(paraula, documentActiu.ocurrencies.get(paraula));
         }
     }
 
     private void afegeixPesos() {
         HashMap<String,Double> idfMap = idf();
+        documentActiu.tfMap = tf(documentActiu.ocurrencies);
+        System.out.println("TF document " + documentActiu.getIdDoc() + ": " + documentActiu.tfMap);
+        System.out.println("IDF document " + documentActiu.getIdDoc() + ": " + idfMap);
         for (Document doc : directoriObert.docs.values()) {
             documentActiu = doc;
-            HashMap<String,Double> tfMap = tf(obteContingut());
             double tfIdfValue = 0.0;
             double idfVal = 0.0;
-            Iterator itTF = tfMap.entrySet().iterator();
-            while (itTF.hasNext()) {
-                Map.Entry pair = (Map.Entry)itTF.next();
-                double tfVal  = (Double)pair.getValue() ;
-                if(idfMap.containsKey((String)pair.getKey()))
-                {
-                    idfVal = idfMap.get((String)pair.getKey());
+            for (Map.Entry<String, Double> stringDoubleEntry : documentActiu.tfMap.entrySet()) {
+                Map.Entry pair = stringDoubleEntry;
+                double tfVal = (Double) pair.getValue();
+                if (idfMap.containsKey((String) pair.getKey())) {
+                    idfVal = idfMap.get((String) pair.getKey());
                 }
-                tfIdfValue = tfVal *idfVal;
-                tfMap.put((pair.getKey().toString()),tfIdfValue);
-                directoriObert.pesosDocs.put(doc.getIdDoc(),tfMap);
+                tfIdfValue = tfVal * idfVal;
+                documentActiu.tfMap.put((pair.getKey().toString()), tfIdfValue);
+                directoriObert.pesosDocs.put(doc.getIdDoc(), documentActiu.tfMap);
             }
         }
     }
 
     private HashMap<String, Double> tf(HashMap<String, Integer> paraules) {
         HashMap<String,Double> tfMap = new HashMap<>();
-        double sum = 0.0;
-        Iterator it = paraules.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            double tf = (Integer)pair.getValue()/ (double) directoriObert.paraulesDirectori.size();
-            tfMap.put((pair.getKey().toString()),tf);
+        Double sum = 0.0;
+        for (float val : paraules.values()) {
+            sum += val;
+        }
+        for (Map.Entry pair : paraules.entrySet()) {
+            double tf = (Integer) pair.getValue() / sum;
+            tfMap.put((pair.getKey().toString()), tf);
         }
         return tfMap;
     }
@@ -166,8 +165,13 @@ public class CtrlDirectori {
         HashMap<String,Double> idfMap = new HashMap<>();
         int size = directoriObert.docs.size();
         for (String word : directoriObert.paraulesDirectori.keySet()) {
-            Double temp = size/ Double.valueOf(directoriObert.paraulesDirectori.get(word));
-            Double idf = 1 + Math.log(temp);
+            double wordCount = 0;
+            for(Document docs :directoriObert.docs.values())
+            {
+                if (docs.ocurrencies.containsKey(word)) wordCount++;
+            }
+            double temp = size/ wordCount;
+            Double idf =  1 + Math.log(temp);
             idfMap.put(word,idf);
         }
         return idfMap;
@@ -206,20 +210,22 @@ public class CtrlDirectori {
     public static void main (String[] args) throws Exception {
         CtrlDirectori dir = new CtrlDirectori();
         dir.directoriObert = new Directori(0);
-        dir.afegirDocument("Pol","Prova","El cotxe blau");
-        dir.afegirDocument("Manel","Prova","El cotxe negre");
-        dir.afegirDocument("Isaac","Prova","El cotxe vermell");
-        dir.afegirDocument("Juli","Prova","El cotxe lila");
-        dir.afegirDocument("Pau","Prova","La casa gran");
-        dir.afegirDocument("Joan","Prova","Avui fa fred");
-        dir.afegirDocument("Jordi","Prova","La moto maca");
-        dir.afegirDocument("Pep","Prova","Tinc molta gana");
-        dir.afegirDocument("Carles","Prova","La bici gran");
+
+
+        dir.afegirDocument("Pol","Prova","the man went out for a walk");
+        dir.afegirDocument("Manel","Prova","the children sat around the fire");
+        /*dir.afegirDocument("Isaac","Prova","you were born with ideals and dreams");
+        dir.afegirDocument("Juli","Prova","you were born with greatness");
+        dir.afegirDocument("Pau","Prova","you were born with wings");
+        dir.afegirDocument("Joan","Prova","you are not meant for crawling, so don't");
+        dir.afegirDocument("Jordi","Prova","you have wings");
+        dir.afegirDocument("Pep","Prova",    "learn to use them and fly");*/
+        //dir.afegirDocument("Carles","Prova","La bici gran");
 
         System.out.println(dir.directoriObert.paraulesDirectori);
 
         for (Integer num : dir.directoriObert.getPesosDocs().keySet()) {
-            System.out.println(dir.directoriObert.getPesosDocs().get(num));
+            System.out.println("Document num: " + num + " " + dir.directoriObert.getPesosDocs().get(num));
         }
     }
 
@@ -233,7 +239,7 @@ public class CtrlDirectori {
      * @param path es correspon al camí desitjat per tal de guardar el document
      */
     //TODO: TEST
-    public void exportarDocument(@NotNull FILETYPE format, @NotNull String path) {
+    public void exportarDocument(FILETYPE format, String path) {
         switch (format) {
             case TXT:
                 try {
@@ -292,11 +298,10 @@ public class CtrlDirectori {
      * Elimina un document del directori
      * @param idDoc és l'identificador del document que es vol eliminar del directori
      */
-    public void eliminarDocument(int idDoc) {
+    public void eliminarDocument(int idDoc) throws Exception {
         //Comprovem que idDoc sigui realment un identificador d'un document
         if (!directoriObert.docs.containsKey(idDoc)) {
-            System.err.println("ERROR: No existeix el document amb identificador: " + idDoc + ".");
-            return;
+            throw new Exception("ERROR: No existeix el document amb identificador: " + idDoc + ".");
         }
 
         directoriObert.docs.remove(idDoc);
@@ -308,9 +313,9 @@ public class CtrlDirectori {
     }
 
     //TODO: TEST
-    public ArrayList<Document> cercaPerAutor(@NotNull String autor) {
+    public ArrayList<Document> cercaPerAutor(String autor) {
         ArrayList<Document> docs = new ArrayList<Document>();
-        for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
+        for (int i = 0; i < directoriObert.docs.size(); ++i) {
             if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor)) {
                 docs.add(directoriObert.docs.get(i));
             }
@@ -319,9 +324,9 @@ public class CtrlDirectori {
     }
 
     //TODO: TEST
-    public ArrayList<Document> cercaPerTitol(@NotNull String titol) {
+    public ArrayList<Document> cercaPerTitol(String titol) {
         ArrayList<Document> docs = new ArrayList<Document>();
-        for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
+        for (int i = 0; i < directoriObert.docs.size(); ++i) {
             if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getTitol().equals(titol)) {
                 docs.add(directoriObert.docs.get(i));
             }
@@ -330,9 +335,9 @@ public class CtrlDirectori {
     }
 
     //TODO: TEST
-    public List<String> llistaAutorsPerPrefix(@NotNull String pre) {
+    public List<String> llistaAutorsPerPrefix(String pre) {
         List<String> autors = new ArrayList<String>();
-        for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
+        for (int i = 0; i < directoriObert.docs.size(); ++i) {
             if (directoriObert.docs.containsKey(i)) {
                 String autor = directoriObert.docs.get(i).getAutor();
                 if (autor.startsWith(pre)) {
@@ -344,9 +349,9 @@ public class CtrlDirectori {
     }
 
     //TODO: TEST
-    public List<String> llistaTitolsPerAutor(@NotNull String autor) {
+    public List<String> llistaTitolsPerAutor(String autor) {
         List<String> docs = new ArrayList<String>();
-        for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
+        for (int i = 0; i < directoriObert.docs.size(); ++i) {
             if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor)) {
                 docs.add(directoriObert.docs.get(i).getTitol());
             }
