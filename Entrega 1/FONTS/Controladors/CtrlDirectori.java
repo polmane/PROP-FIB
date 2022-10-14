@@ -176,7 +176,7 @@ public class CtrlDirectori {
     private HashMap<String, Integer> obteContingut() {
         String text = documentActiu.getContingut();
         HashMap<String,Integer> paraules = new HashMap<>();
-        if (!text.isEmpty()) {
+        if (text != null && !text.isEmpty()) {
             int i = 0;
             while (i < text.length()) {
                 String paraula = "";

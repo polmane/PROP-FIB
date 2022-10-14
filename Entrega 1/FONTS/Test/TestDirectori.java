@@ -29,16 +29,16 @@ public class TestDirectori {
      * Valors estudiats: Es guarda un document al directori
      * Operativa: es comprova que guardar un document al directori funcioni correctament
      */
-    /*
+
     @Test
-    public void TestAfegirDocument() {
+    public void TestAfegirDocument() throws Exception {
         CtrlDirectori CtrlDir = new CtrlDirectori();
         CtrlDir.crearDirectori(0);
 
         //Funcionament correcte
         int idDoc = CtrlDir.getDirectoriObert().getIdNouDoc();
-        Document doc = new Document(idDoc, "juli", "prova_guardar_document");
-        CtrlDir.afegirDocument(doc.getAutor(),doc.getTitol(),doc.getContingut());
+        Document doc = new Document(idDoc, "juli", "prova_afegir_document");
+        CtrlDir.afegirDocument(doc.getAutor(), doc.getTitol(), doc.getContingut());
         assertEquals(doc, CtrlDir.getDirectoriObert().getDocs().get(idDoc));
 
         //TODO:Falta veure que crei document amb una id reciclada
@@ -54,7 +54,6 @@ public class TestDirectori {
         CtrlDir.afegirDocument(doc4.getAutor(), doc4.getTitol(), doc4.getContingut());
         assertEquals(doc3, CtrlDir.getDirectoriObert().getDocs().get(idDoc));
     }
-     */
 
     /**
      * Objecte de la prova: Test del mètode eliminarDocument de la classe CtrlDirectori
@@ -62,9 +61,9 @@ public class TestDirectori {
      * Valors estudiats: S'elimina un document del directori
      * Operativa: es comprova que eliminar un document del directori funcioni correctament
      */
-    /*
+
     @Test
-    public void TestEliminarDocument() {
+    public void TestEliminarDocument() throws Exception {
         CtrlDirectori CtrlDir = new CtrlDirectori();
         CtrlDir.crearDirectori(0);
 
@@ -80,5 +79,5 @@ public class TestDirectori {
         CtrlDir.eliminarDocument(doc.getIdDoc());
         assertNull(CtrlDir.getDirectoriObert().getDocs().get(idDoc));
     }
-    */
+
 }
