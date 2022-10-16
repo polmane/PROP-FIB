@@ -212,15 +212,15 @@ public class CtrlDirectori {
         dir.directoriObert = new Directori(0);
 
 
-        dir.afegirDocument("Pol","Prova","the man went out for a walk");
-        dir.afegirDocument("Manel","Prova","the children sat around the fire");
-        /*dir.afegirDocument("Isaac","Prova","you were born with ideals and dreams");
-        dir.afegirDocument("Juli","Prova","you were born with greatness");
-        dir.afegirDocument("Pau","Prova","you were born with wings");
-        dir.afegirDocument("Joan","Prova","you are not meant for crawling, so don't");
-        dir.afegirDocument("Jordi","Prova","you have wings");
-        dir.afegirDocument("Pep","Prova",    "learn to use them and fly");*/
-        //dir.afegirDocument("Carles","Prova","La bici gran");
+        dir.afegirDocument("Pol","Prova","el cotxe vermell");
+        dir.afegirDocument("Manel","Prova","avui fa sol");
+        dir.afegirDocument("Isaac","Prova","fem un tft");
+        dir.afegirDocument("Juli","Prova","la casa gran");
+        dir.afegirDocument("Pau","Prova","un gos negre");
+        dir.afegirDocument("Joan","Prova","una moto ràpida");
+        dir.afegirDocument("Jordi","Prova","un avió molt gran");
+        dir.afegirDocument("Pep","Prova",    "tinc molta gana");
+        dir.afegirDocument("Carles","Prova","La bici gran");
 
         System.out.println(dir.directoriObert.paraulesDirectori);
 
