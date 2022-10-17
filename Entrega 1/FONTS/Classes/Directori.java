@@ -23,10 +23,6 @@ public class Directori {
      */
     private int idNouDoc;
 
-    /**
-     * Representa les expressions que tenim al directori
-     */
-    public HashMap<Integer, String> expressions;
 
     /**
      *Constructora

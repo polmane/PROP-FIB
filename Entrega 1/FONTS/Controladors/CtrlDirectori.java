@@ -4,9 +4,6 @@ import FONTS.Classes.Directori;
 import FONTS.Classes.Document;
 import FONTS.Classes.Expressio;
 
-import java.util.Vector;
-import javax.print.Doc;
-
 public class CtrlDirectori {
     /**
      * Representa el directori que s'està utilitzant
@@ -37,6 +34,7 @@ public class CtrlDirectori {
     public Directori getDirectoriObert() {
         return directoriObert;
     }
+
     public Document getDocumentActiu() {
         return documentActiu;
     }
@@ -57,6 +55,7 @@ public class CtrlDirectori {
 
     /**
      * Modifica l'autor del document actiu
+     *
      * @param autor és el nou nom d'autor que es vol utilitzar pel document
      */
     public void modificarAutor(String autor) {
@@ -65,6 +64,7 @@ public class CtrlDirectori {
 
     /**
      * Modifica el títol del document actiu
+     *
      * @param titol és el nou nom del títol que es vol utilitzar pel document
      */
     public void modificarTitol(String titol) {
@@ -73,26 +73,12 @@ public class CtrlDirectori {
 
     /**
      * Modifica el contingut del document actiu
+     *
      * @param contingut és el nou contingut que es vol utilitzar pel document
      */
     public void modificarContngut(String contingut) {
         documentActiu.setContingut(contingut);
     }
-
-    /**
-     * Fa una cerca dels documents que contenen les paraules de la expressió
-     * que es passa com a parametre
-     * @param expressio conté les paraules que volem buscar en els documents
-     * @return Vector<Document> retorna els documents que compleixen els criteris
-     * de cerca de la expressió passada com a paràmetre
-     */
-    public Vector<Document> selectPerExpressio(Expressio expressio) {
-        Vector<Document> v = new Vector<Document>();
-        String exp = expressio.getExpressio();
-        for (int i = 0; i < exp.length(); ++i) {
-            char c = exp.charAt(i);
-            if (c == )
-        }
-        return v;
-    }
 }
+
+

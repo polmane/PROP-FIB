@@ -4,15 +4,15 @@ public class Expressio {
     /**
      * Representa el número identificador d'una expressió
      */
-    private int idEXp;
+    private Integer idExp;
 
     private String expressio;
 
     /**
      * Constructora
      */
-    public Expressio(int idEXp, String expressio) {
-        this.idEXp = idEXp;
+    public Expressio(Integer idExp, String expressio) {
+        this.idExp = idExp;
         this.expressio = expressio;
     }
 
@@ -20,7 +20,7 @@ public class Expressio {
      * Getter de idExp
      */
     public int getIdEXp() {
-        return idEXp;
+        return idExp;
     }
 
     /**

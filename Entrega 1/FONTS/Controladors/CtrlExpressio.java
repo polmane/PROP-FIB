@@ -1,8 +1,9 @@
 package FONTS.Controladors;
 
-import FONTS.Classes.Directori;
+import FONTS.Classes.Document;
 import FONTS.Classes.Expressio;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CtrlExpressio {
@@ -11,17 +12,21 @@ public class CtrlExpressio {
      */
     private Expressio expressioSeleccionada;
 
+    private Integer IdNovaExp;
+
 
     /**
      * Representa el directori on esta l'expressio seleccionada
      */
-    private Directori dir;
+    private HashMap<Integer,Expressio> expressions;
 
     /**
      * Constructora
      */
     public CtrlExpressio() {
         this.expressioSeleccionada = null;
+        IdNovaExp = 0;
+        expressions = new HashMap<>();
     }
 
     /**
@@ -32,6 +37,15 @@ public class CtrlExpressio {
     }
 
     /**
+     * AfegirExpressió permet afegir una nova expressió dins el sistema
+     * @param expressio representa l'string que l'usuari reconeix com l'expressió per fer la cerca
+     */
+    public void afegirExpressio(String expressio) {
+        expressioSeleccionada = new Expressio(IdNovaExp,expressio);
+        expressions.put(IdNovaExp,expressioSeleccionada);
+        ++IdNovaExp;
+    }
+    /**
      * Operacio per modificar l'expressio seleccionada
      */
     public void modificarExpressio(String exp) {
@@ -39,12 +53,27 @@ public class CtrlExpressio {
     }
 
     public void eliminarexpressio(int idExp) throws Exception {
-        HashMap<Integer, String> m = dir.expressions;
-        if (m.containsKey(idExp)) {
-            m.remove(idExp);
+        if (expressions.containsKey(idExp)) {
+            expressions.remove(idExp);
         } else {
             throw new Exception("La expressió no esta en el directori");
         }
     }
 
+    /**
+     * Fa una cerca dels documents que contenen les paraules de la expressió
+     * que es passa com a parametre
+     * @param expressio conté les paraules que volem buscar en els documents
+     * @return ArrayList<Document> retorna els documents que compleixen els criteris
+     * de cerca de la expressió passada com a paràmetre
+     */
+    public ArrayList<Document> selectPerExpressio(Expressio expressio) {
+        ArrayList<Document> v = new ArrayList<>();
+        String exp = expressio.getExpressio();
+        for (int i = 0; i < exp.length(); ++i) {
+            char c = exp.charAt(i);
+            //if (c == )
+        }
+        return v;
+    }
 }
