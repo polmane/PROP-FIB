@@ -4,6 +4,9 @@ import FONTS.Classes.Directori;
 import FONTS.Classes.Document;
 import FONTS.Classes.Expressio;
 
+import java.util.Vector;
+import javax.print.Doc;
+
 public class CtrlDirectori {
     /**
      * Representa el directori que s'està utilitzant
@@ -14,6 +17,11 @@ public class CtrlDirectori {
      * Representa el document carregat en el directori
      */
     private Document documentActiu;
+
+    /**
+     * Representa una Expressio
+     */
+    private Expressio expressio;
 
     /**
      * Constructora
@@ -71,7 +79,20 @@ public class CtrlDirectori {
         documentActiu.setContingut(contingut);
     }
 
-    public void eliminarExpressio(int idExp) {
-
+    /**
+     * Fa una cerca dels documents que contenen les paraules de la expressió
+     * que es passa com a parametre
+     * @param expressio conté les paraules que volem buscar en els documents
+     * @return Vector<Document> retorna els documents que compleixen els criteris
+     * de cerca de la expressió passada com a paràmetre
+     */
+    public Vector<Document> selectPerExpressio(Expressio expressio) {
+        Vector<Document> v = new Vector<Document>();
+        String exp = expressio.getExpressio();
+        for (int i = 0; i < exp.length(); ++i) {
+            char c = exp.charAt(i);
+            if (c == )
+        }
+        return v;
     }
 }
