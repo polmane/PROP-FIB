@@ -2,6 +2,7 @@ package FONTS.Controladors;
 
 import FONTS.Classes.Directori;
 import FONTS.Classes.Document;
+import FONTS.Classes.Expressio;
 
 public class CtrlDirectori {
     /**
@@ -68,5 +69,9 @@ public class CtrlDirectori {
      */
     public void modificarContngut(String contingut) {
         documentActiu.setContingut(contingut);
+    }
+
+    public void eliminarExpressio(int idExp) {
+
     }
 }
