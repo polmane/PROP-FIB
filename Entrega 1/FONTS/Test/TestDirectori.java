@@ -39,7 +39,7 @@ public class TestDirectori {
         int idDoc = CtrlDir.getDirectoriObert().getIdNouDoc();
         Document doc = new Document(idDoc, "juli", "prova_afegir_document");
         CtrlDir.afegirDocument(doc.getAutor(), doc.getTitol(), doc.getContingut());
-        assertEquals(doc, CtrlDir.getDirectoriObert().getDocs().get(idDoc));
+        assertEquals(doc, CtrlDir.getDocumentActiu());
 
         //TODO:Falta veure que crei document amb una id reciclada
 

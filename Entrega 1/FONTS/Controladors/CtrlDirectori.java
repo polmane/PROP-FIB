@@ -114,6 +114,7 @@ public class CtrlDirectori {
         directoriObert.docs.put(id, documentActiu);
 
         documentActiu.setOcurrencies(obteContingut());
+        documentActiu.setTfMap(tf(documentActiu.ocurrencies));
         afegeixParaulesAlDir();
         afegeixPesos();
     }
@@ -128,21 +129,19 @@ public class CtrlDirectori {
 
     private void afegeixPesos() {
         HashMap<String,Double> idfMap = idf();
-        documentActiu.tfMap = tf(documentActiu.ocurrencies);
-        System.out.println("TF document " + documentActiu.getIdDoc() + ": " + documentActiu.tfMap);
-        System.out.println("IDF document " + documentActiu.getIdDoc() + ": " + idfMap);
         for (Document doc : directoriObert.docs.values()) {
             documentActiu = doc;
             double tfIdfValue = 0.0;
             double idfVal = 0.0;
             for (Map.Entry<String, Double> stringDoubleEntry : documentActiu.tfMap.entrySet()) {
-                Map.Entry pair = stringDoubleEntry;
-                double tfVal = (Double) pair.getValue();
-                if (idfMap.containsKey((String) pair.getKey())) {
-                    idfVal = idfMap.get((String) pair.getKey());
+                double tfVal = (Double) stringDoubleEntry.getValue();
+                if (idfMap.containsKey((String) stringDoubleEntry.getKey())) {
+                    idfVal = idfMap.get((String) stringDoubleEntry.getKey());
                 }
+                System.out.println("TF document " + documentActiu.getIdDoc() + ": " + documentActiu.tfMap);
+                System.out.println("IDF document " + documentActiu.getIdDoc() + ": " + idfMap);
                 tfIdfValue = tfVal * idfVal;
-                documentActiu.tfMap.put((pair.getKey().toString()), tfIdfValue);
+                documentActiu.tfMap.put((stringDoubleEntry.getKey().toString()), tfIdfValue);
                 directoriObert.pesosDocs.put(doc.getIdDoc(), documentActiu.tfMap);
             }
         }
@@ -171,7 +170,7 @@ public class CtrlDirectori {
                 if (docs.ocurrencies.containsKey(word)) wordCount++;
             }
             double temp = size/ wordCount;
-            Double idf =  1 + Math.log(temp);
+            Double idf =  Math.log(1+temp);
             idfMap.put(word,idf);
         }
         return idfMap;
@@ -212,15 +211,15 @@ public class CtrlDirectori {
         dir.directoriObert = new Directori(0);
 
 
-        dir.afegirDocument("Pol","Prova","el cotxe vermell");
-        dir.afegirDocument("Manel","Prova","avui fa sol");
-        dir.afegirDocument("Isaac","Prova","fem un tft");
+        dir.afegirDocument("Pol","Prova","A A A A A");
+        dir.afegirDocument("Manel","Prova","A A A A A");
+       /* dir.afegirDocument("Isaac","Prova","fem un tft");
         dir.afegirDocument("Juli","Prova","la casa gran");
         dir.afegirDocument("Pau","Prova","un gos negre");
         dir.afegirDocument("Joan","Prova","una moto ràpida");
         dir.afegirDocument("Jordi","Prova","un avió molt gran");
         dir.afegirDocument("Pep","Prova",    "tinc molta gana");
-        dir.afegirDocument("Carles","Prova","La bici gran");
+        dir.afegirDocument("Carles","Prova","La bici gran");*/
 
         System.out.println(dir.directoriObert.paraulesDirectori);
 
