@@ -11,7 +11,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class CtrlDirectori {
@@ -97,7 +96,7 @@ public class CtrlDirectori {
     public void afegirDocument (String autor, String titol, String contingut) throws Exception {
         for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
             if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor) && directoriObert.docs.get(i).getTitol().equals(titol)) {
-                throw new Exception("El document amb autor: " + autor + " i títol: "+ titol + " ja existeix");
+                throw new Exception("El document amb autor: \"" + autor + "\" i títol: \""+ titol + "\" ja existeix");
             }
         }
         int id;
@@ -111,12 +110,10 @@ public class CtrlDirectori {
             id = directoriObert.getIdNouDoc();
             directoriObert.setIdNouDoc(id+1);
         }
-
         documentActiu = new Document(id, autor, titol, contingut);
         directoriObert.docs.put(id, documentActiu);
 
         documentActiu.setOcurrencies(obteContingut());
-        documentActiu.setTfMap(tf(documentActiu.ocurrencies));
         afegeixParaulesAlDir();
         afegeixPesos();
     }
@@ -131,19 +128,23 @@ public class CtrlDirectori {
 
     private void afegeixPesos() {
         HashMap<String,Double> idfMap = idf();
+        documentActiu.tfMap = tf(documentActiu.ocurrencies);
+        // System.out.println("TF document " + documentActiu.getIdDoc() + ": " + documentActiu.tfMap);
+        // System.out.println("IDF document " + documentActiu.getIdDoc() + ": " + idfMap);
         for (Document doc : directoriObert.docs.values()) {
+            documentActiu = doc;
             double tfIdfValue = 0.0;
             double idfVal = 0.0;
-            HashMap<String,Double> tfMapHelper = new HashMap<>();
-            for (Map.Entry<String, Double> stringDoubleEntry : doc.tfMap.entrySet()) {
-                double tfVal = (Double) stringDoubleEntry.getValue();
-                if (idfMap.containsKey((String) stringDoubleEntry.getKey())) {
-                    idfVal = idfMap.get((String) stringDoubleEntry.getKey());
+            for (Map.Entry<String, Double> stringDoubleEntry : documentActiu.tfMap.entrySet()) {
+                Map.Entry pair = stringDoubleEntry;
+                double tfVal = (Double) pair.getValue();
+                if (idfMap.containsKey((String) pair.getKey())) {
+                    idfVal = idfMap.get((String) pair.getKey());
                 }
                 tfIdfValue = tfVal * idfVal;
-                tfMapHelper.put((stringDoubleEntry.getKey().toString()), tfIdfValue);
+                documentActiu.tfMap.put((pair.getKey().toString()), tfIdfValue);
+                directoriObert.pesosDocs.put(doc.getIdDoc(), documentActiu.tfMap);
             }
-            directoriObert.pesosDocs.put(doc.idDoc, tfMapHelper);
         }
     }
 
@@ -169,8 +170,8 @@ public class CtrlDirectori {
             {
                 if (docs.ocurrencies.containsKey(word)) wordCount++;
             }
-            Double temp = size/ wordCount;
-            Double idf = Math.log(1+temp);
+            double temp = size/ wordCount;
+            Double idf =  1 + Math.log(temp);
             idfMap.put(word,idf);
         }
         return idfMap;
@@ -199,50 +200,11 @@ public class CtrlDirectori {
     }
 
     private boolean esUnCharCorrecte(char c) {
-        String simbols = " .,'-;:_´`+¨^*{[]}!$%&/()=~|@#€¬";
+        String simbols = " .,-;:_´`+¨^*{[]}!$%&/()=~|@#€¬";
         for (int i = 0; i < simbols.length(); ++i) {
             if (simbols.charAt(i) == c) return false;
         }
         return true;
-    }
-
-    private ArrayList<Document> compararDocumentsTfIdf (Integer k, Integer IdDoc) {
-        ArrayList<Document> documentsSemblants = new ArrayList<>();
-        TreeMap<Double, Document> helper = new TreeMap<>();
-        for (int i = 0; i < directoriObert.docs.size();++i) {
-            double sumAB = 0.0;
-            double A2 = 0.0;
-            double B2 = 0.0;
-            if (i == IdDoc) continue;
-            for (String word : directoriObert.pesosDocs.get(IdDoc).keySet()) {
-                double Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
-                double Bparaula = 0.0;
-                if (directoriObert.pesosDocs.get(i).containsKey(word)) {
-                    Bparaula = directoriObert.pesosDocs.get(i).get(word);
-                }
-                sumAB += Aparaula * Bparaula;
-                A2 += Math.pow(Aparaula,2);
-                B2 += Math.pow(Bparaula,2);
-            }
-            double similarity = 0.0;
-            if (A2 != 0 && B2 != 0) {
-                similarity = sumAB / (Math.sqrt(A2) * Math.sqrt(B2));
-            }
-                if (helper.size() < k) {
-                helper.put(similarity,directoriObert.docs.get(i));
-            }
-            else {
-                double comp = helper.firstKey();
-                if (similarity > comp) {
-                    helper.remove(comp);
-                    helper.put(similarity,directoriObert.docs.get(i));
-                }
-            }
-        }
-        for (Map.Entry<Double, Document> it : helper.entrySet()) {
-            documentsSemblants.add(it.getValue());
-        }
-        return documentsSemblants;
     }
 
     public static void main (String[] args) throws Exception {
@@ -250,22 +212,21 @@ public class CtrlDirectori {
         dir.directoriObert = new Directori(0);
 
 
-        dir.afegirDocument("Pol","Prova","el barri gotic de barcelona");
-        dir.afegirDocument("Manel","Prova","el barri gotic de girona");
-        dir.afegirDocument("Isaac","Prova","fem un projecte de programació");
-        dir.afegirDocument("Juli","Prova","la nit es molt llarga");
-        dir.afegirDocument("Pau","Prova","tinc una casa al barri gotic");
-        dir.afegirDocument("Joan","Prova","el programa em peta i no se per on");
-        dir.afegirDocument("Jordi","Prova","dema faig un viatge a barcelona");
-        dir.afegirDocument("Pep","Prova",    "la meva casa es d'estil gotic");
-        dir.afegirDocument("Carles","Prova","a barcelona hi ha un barri molt bonic");
+        dir.afegirDocument("Pol","Prova","el cotxe vermell");
+        dir.afegirDocument("Manel","Prova","avui fa sol");
+        dir.afegirDocument("Isaac","Prova","fem un tft");
+        dir.afegirDocument("Juli","Prova","la casa gran");
+        dir.afegirDocument("Pau","Prova","un gos negre");
+        dir.afegirDocument("Joan","Prova","una moto ràpida");
+        dir.afegirDocument("Jordi","Prova","un avió molt gran");
+        dir.afegirDocument("Pep","Prova",    "tinc molta gana");
+        dir.afegirDocument("Carles","Prova","La bici gran");
 
-        ArrayList<Document> semblants = dir.compararDocumentsTfIdf(5,0);
-        System.out.println("Els documents semblants al de " + dir.directoriObert.docs.get(0).getAutor() + " són ");
-        for (int i = 0; i < semblants.size(); ++i) {
-            System.out.println(semblants.get(i).getAutor() + ": " + semblants.get(i).getContingut());
+        System.out.println(dir.directoriObert.paraulesDirectori);
+
+        for (Integer num : dir.directoriObert.getPesosDocs().keySet()) {
+            System.out.println("Document num: " + num + " " + dir.directoriObert.getPesosDocs().get(num));
         }
-
     }
 
     public enum FILETYPE {

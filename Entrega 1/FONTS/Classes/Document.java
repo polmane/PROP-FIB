@@ -93,8 +93,4 @@ public class Document {
     public void setOcurrencies(HashMap<String, Integer> ocurrencies) {
         this.ocurrencies = ocurrencies;
     }
-
-    public void setTfMap(HashMap<String, Double> tfMap) {
-        this.tfMap = tfMap;
-    }
 }
