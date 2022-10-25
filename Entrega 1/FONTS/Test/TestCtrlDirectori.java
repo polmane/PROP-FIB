@@ -3,8 +3,7 @@ package FONTS.Test;
 import FONTS.Controladors.CtrlDirectori;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestCtrlDirectori {
     /**
@@ -31,7 +30,7 @@ public class TestCtrlDirectori {
 
         //ERROR: ja existeix document amb el mateix autor i titol
         //TODO: Això no ho podem comprovar perquè sinó els tests no passarien
-        /*idDoc = CtrlDir.getDirectoriObert().getIdNouDoc();
+        idDoc = CtrlDir.getDirectoriObert().getIdNouDoc();
         titol = "el mateix titol";
         contingut = "prova d'error a l'afegir documents amb el mateix autor i tiol";
         CtrlDir.afegirDocument(autor, titol, contingut);
@@ -44,7 +43,11 @@ public class TestCtrlDirectori {
         assertEquals(contingut, CtrlDir.getDirectoriObert().getDocs().get(idDoc).getContingut());
         //Esperem que no s'hagi afegit el document, així que el seguent document a afegir tindrà just la id
         // seguent a l'original.
-        assertEquals(idDoc+1, CtrlDir.getDirectoriObert().getIdNouDoc());*/
+        String s = "El document amb autor: " + autor + " i títol: " + titol + " ja existeix";
+        assertThrows(NullPointerException.class, () -> {
+
+        });
+        assertEquals(idDoc+1, CtrlDir.getDirectoriObert().getIdNouDoc());
     }
 
     /**

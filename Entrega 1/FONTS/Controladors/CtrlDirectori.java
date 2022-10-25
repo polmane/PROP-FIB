@@ -224,6 +224,16 @@ public class CtrlDirectori {
                 A2 += Math.pow(Aparaula,2);
                 B2 += Math.pow(Bparaula,2);
             }
+            for (String word : directoriObert.pesosDocs.get(i).keySet()) {
+                double Bparaula = directoriObert.pesosDocs.get(i).get(word);
+                double Aparaula = 0.0;
+                if (directoriObert.pesosDocs.get(IdDoc).containsKey(word)) {
+                    Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
+                }
+                sumAB += Aparaula * Bparaula;
+                A2 += Math.pow(Aparaula,2);
+                B2 += Math.pow(Bparaula,2);
+            }
             double similarity = 0.0;
             if (A2 != 0 && B2 != 0) {
                 similarity = sumAB / (Math.sqrt(A2) * Math.sqrt(B2));
@@ -261,14 +271,14 @@ public class CtrlDirectori {
         dir.afegirDocument("Pol","Prova","el barri gotic de barcelona");
         dir.afegirDocument("Manel","Prova","el barri gotic de girona");
         dir.afegirDocument("Isaac","Prova","fem un projecte de programació");
-        dir.afegirDocument("Juli","Prova","la nit es molt llarga");
-        dir.afegirDocument("Pau","Prova","A A A A A");
+        dir.afegirDocument("Juli","Prova","la nit es a molt llarga");
+        dir.afegirDocument("Pau","Prova","de de de de de de");
         dir.afegirDocument("Joan","Prova","el programa em peta i no se per on");
         dir.afegirDocument("Jordi","Prova","dema faig un viatge barcelona");
         dir.afegirDocument("Pep","Prova",    "la meva casa es d'estil gotic");
-        dir.afegirDocument("Carles","Prova","el barri gotic de barcelona");
+        dir.afegirDocument("Carles","Prova","A A A A A");
 
-        ArrayList<Document> semblants = dir.compararDocumentsTfIdf(5,0);
+        ArrayList<Document> semblants = dir.compararDocumentsTfIdf(4,0);
         System.out.println("Els documents semblants al de " + dir.directoriObert.docs.get(0).getAutor() + " són ");
         for (int i = 0; i < semblants.size(); ++i) {
             System.out.println(semblants.get(i).getAutor() + ": " + semblants.get(i).getContingut());
