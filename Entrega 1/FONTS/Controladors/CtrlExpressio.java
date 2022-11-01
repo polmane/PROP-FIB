@@ -1,10 +1,14 @@
 package FONTS.Controladors;
 
+import FONTS.Classes.BinaryTree;
 import FONTS.Classes.Document;
 import FONTS.Classes.Expressio;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static java.lang.Character.isWhitespace;
 
 public class CtrlExpressio {
     /**
@@ -67,13 +71,28 @@ public class CtrlExpressio {
      * @return ArrayList<Document> retorna els documents que compleixen els criteris
      * de cerca de la expressió passada com a paràmetre
      */
-    public ArrayList<Document> selectPerExpressio(Expressio expressio) {
-        ArrayList<Document> v = new ArrayList<>();
+    public ArrayList<Document> selectPerExpressio(Expressio expressio, HashMap<Integer, Document> docs) {
         String exp = expressio.getExpressio();
-        for (int i = 0; i < exp.length(); ++i) {
-            char c = exp.charAt(i);
-            //if (c == )
+        BinaryTree bt = new BinaryTree(exp);
+        for (Document d : docs.values()) {
+            int result = BinaryTree.evalTree(bt.root, d);
+            if (result == 0) docs.remove(d.idDoc);
         }
-        return v;
+        return (ArrayList<Document>) docs.values();
     }
+
+
+    public static void main(String[] args) {
+        Document d = new Document(0,"pol", "prova", "p1 p2 p3 hola adéu");
+        d.ocurrencies.put("p1",1);
+        d.ocurrencies.put("p2",1);
+        d.ocurrencies.put("p3",1);
+        d.ocurrencies.put("hola",1);
+        String exp = "(una | sola & paraula)";
+        BinaryTree bt = new BinaryTree(exp);
+        int result = BinaryTree.evalTree(bt.root, d);
+        System.out.println(result);
+    }
+
 }
+

@@ -1,5 +1,7 @@
 package FONTS.Classes;
 
+import java.util.HashMap;
+
 public class Document {
 
     /**
@@ -22,6 +24,8 @@ public class Document {
      */
     public String contingut;
 
+    public HashMap<String,Integer> ocurrencies;
+
     /**
      *Constructores
      */
@@ -36,6 +40,7 @@ public class Document {
         this.autor = autor;
         this.titol = titol;
         this.contingut = contingut;
+        this.ocurrencies = new HashMap<>();
     }
 
     /**
