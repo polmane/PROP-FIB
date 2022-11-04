@@ -4,28 +4,27 @@ public class Expressio {
     /**
      * Representa el número identificador d'una expressió
      */
-    private int idExp;
+    private Integer idExp;
 
     private String expressio;
 
     /**
-     *Constructores
+     * Constructora
      */
-
-    public Expressio(int idExp, String expressio) {
+    public Expressio(Integer idExp, String expressio) {
         this.idExp = idExp;
         this.expressio = expressio;
     }
 
     /**
-     *Getter de idExp
+     * Getter de idExp
      */
-    public int getIdExp() {
+    public int getIdEXp() {
         return idExp;
     }
 
     /**
-     * Getter i setter de expressio
+     * Getter i setter d'expressio
      */
     public String getExpressio() {
         return expressio;
@@ -34,4 +33,7 @@ public class Expressio {
     public void setExpressio(String expressio) {
         this.expressio = expressio;
     }
+
+
+
 }

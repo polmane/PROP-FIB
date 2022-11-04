@@ -2,6 +2,7 @@ package FONTS.Controladors;
 
 import FONTS.Classes.Directori;
 import FONTS.Classes.Document;
+import FONTS.Classes.Expressio;
 
 import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilder;
@@ -26,6 +27,11 @@ public class CtrlDirectori {
     private Document documentActiu;
 
     /**
+     * Representa una Expressio
+     */
+    private Expressio expressio;
+
+    /**
      * Constructora
      */
     public CtrlDirectori() {
@@ -39,6 +45,7 @@ public class CtrlDirectori {
     public Directori getDirectoriObert() {
         return directoriObert;
     }
+
     public Document getDocumentActiu() {
         return documentActiu;
     }
@@ -65,6 +72,7 @@ public class CtrlDirectori {
 
     /**
      * Modifica l'autor del document actiu
+     *
      * @param autor és el nou nom d'autor que es vol utilitzar pel document
      */
     public void modificarAutor(String autor) {
@@ -73,6 +81,7 @@ public class CtrlDirectori {
 
     /**
      * Modifica el títol del document actiu
+     *
      * @param titol és el nou nom del títol que es vol utilitzar pel document
      */
     public void modificarTitol(String titol) {
@@ -81,6 +90,7 @@ public class CtrlDirectori {
 
     /**
      * Modifica el contingut del document actiu
+     *
      * @param contingut és el nou contingut que es vol utilitzar pel document
      */
     public void modificarContngut(String contingut) {
@@ -428,3 +438,5 @@ public class CtrlDirectori {
     }
 
 }
+
+

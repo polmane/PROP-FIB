@@ -26,8 +26,6 @@ public class Document {
 
     public HashMap<String,Integer> ocurrencies;
 
-    public HashMap<String, Double> tfMap;
-
     /**
      *Constructores
      */
@@ -45,7 +43,6 @@ public class Document {
         this.titol = titol;
         this.contingut = contingut;
         this.ocurrencies = new HashMap<>();
-        this.tfMap = new HashMap<>();
     }
 
     /**

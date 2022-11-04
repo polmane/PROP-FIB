@@ -23,6 +23,7 @@ public class Directori {
      */
     private int idNouDoc;
 
+
     /**
      * Representa els documents que nosaltres hem creat dins el sistema
      */
