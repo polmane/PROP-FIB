@@ -122,10 +122,10 @@ public class BinaryTree {
                 ++pos;
                 return 1;
 
-            case '“':
+            case '"':
                 ++pos;
                 int start2 = pos;
-                while (root.expr.charAt(pos) != '”') ++pos;
+                while (pos < root.expr.length() && root.expr.charAt(pos) != '"') ++pos;
                 String word = root.expr.substring(start2, pos);
                 ++pos;
                 return buscaEnContingut(word, d.contingut);

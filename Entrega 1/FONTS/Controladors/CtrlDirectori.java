@@ -278,7 +278,7 @@ public class CtrlDirectori {
         dir.directoriObert = new Directori(0);
 
 
-        dir.afegirDocument("Pol","Prova","el barri gotic de barcelona");
+        dir.afegirDocument("Pol","Prova","A A A A A");
         dir.afegirDocument("Manel","Prova","el barri gotic de girona");
         dir.afegirDocument("Isaac","Prova","fem un projecte de programació");
         dir.afegirDocument("Juli","Prova","la nit es a molt llarga");

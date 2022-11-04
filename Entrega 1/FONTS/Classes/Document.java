@@ -26,6 +26,8 @@ public class Document {
 
     public HashMap<String,Integer> ocurrencies;
 
+    public HashMap<String, Double> tfMap;
+
     /**
      *Constructores
      */

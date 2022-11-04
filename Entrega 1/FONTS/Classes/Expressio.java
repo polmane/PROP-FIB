@@ -8,12 +8,15 @@ public class Expressio {
 
     private String expressio;
 
+    public BinaryTree ExpressionTree;
+
     /**
      * Constructora
      */
     public Expressio(Integer idExp, String expressio) {
         this.idExp = idExp;
         this.expressio = expressio;
+        ExpressionTree = new BinaryTree(expressio);
     }
 
     /**

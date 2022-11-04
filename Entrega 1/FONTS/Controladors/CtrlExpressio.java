@@ -73,7 +73,7 @@ public class CtrlExpressio {
      */
     public ArrayList<Document> selectPerExpressio(Expressio expressio, HashMap<Integer, Document> docs) {
         String exp = expressio.getExpressio();
-        BinaryTree bt = new BinaryTree(exp);
+        BinaryTree bt = expressio.ExpressionTree;
         for (Document d : docs.values()) {
             int result = BinaryTree.evalTree(bt.root, d);
             if (result == 0) docs.remove(d.idDoc);
@@ -88,7 +88,7 @@ public class CtrlExpressio {
         d.ocurrencies.put("p2",1);
         d.ocurrencies.put("p3",1);
         d.ocurrencies.put("hola",1);
-        String exp = "(una | sola & paraula)";
+        String exp = "\"hola adéu\"";
         BinaryTree bt = new BinaryTree(exp);
         int result = BinaryTree.evalTree(bt.root, d);
         System.out.println(result);
