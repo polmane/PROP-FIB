@@ -2,7 +2,6 @@ package FONTS.Controladors;
 
 import FONTS.Classes.Directori;
 import FONTS.Classes.Document;
-import FONTS.Classes.Expressio;
 
 import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilder;
@@ -12,7 +11,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class CtrlDirectori {
@@ -25,11 +23,6 @@ public class CtrlDirectori {
      * Representa el document carregat en el directori
      */
     private Document documentActiu;
-
-    /**
-     * Representa una Expressio
-     */
-    private Expressio expressio;
 
     /**
      * Constructora
@@ -216,7 +209,7 @@ public class CtrlDirectori {
         return true;
     }
 
-    private ArrayList<Document> compararDocumentsTfIdf (Integer k, Integer IdDoc) {
+    ArrayList<Document> compararDocuments(Integer k, Integer IdDoc) {
         ArrayList<Document> documentsSemblants = new ArrayList<>();
         TreeMap<Integer, Double> helper = new TreeMap<>();
         for (int i = 0; i < directoriObert.docs.size();++i) {
@@ -271,29 +264,6 @@ public class CtrlDirectori {
             documentsSemblants.add(directoriObert.docs.get(it.getKey()));
         }
         return documentsSemblants;
-    }
-
-    public static void main (String[] args) throws Exception {
-        CtrlDirectori dir = new CtrlDirectori();
-        dir.directoriObert = new Directori(0);
-
-
-        dir.afegirDocument("Pol","Prova","A A A A A");
-        dir.afegirDocument("Manel","Prova","el barri gotic de girona");
-        dir.afegirDocument("Isaac","Prova","fem un projecte de programació");
-        dir.afegirDocument("Juli","Prova","la nit es a molt llarga");
-        dir.afegirDocument("Pau","Prova","de de de de de de");
-        dir.afegirDocument("Joan","Prova","el programa em peta i no se per on");
-        dir.afegirDocument("Jordi","Prova","dema faig un viatge barcelona");
-        dir.afegirDocument("Pep","Prova",    "la meva casa es d'estil gotic");
-        dir.afegirDocument("Carles","Prova","A A A A A");
-
-        ArrayList<Document> semblants = dir.compararDocumentsTfIdf(4,0);
-        System.out.println("Els documents semblants al de " + dir.directoriObert.docs.get(0).getAutor() + " són ");
-        for (int i = 0; i < semblants.size(); ++i) {
-            System.out.println(semblants.get(i).getAutor() + ": " + semblants.get(i).getContingut());
-        }
-
     }
 
     public enum FILETYPE {
@@ -356,8 +326,6 @@ public class CtrlDirectori {
                     throw new RuntimeException(e);
                 }
                 break;
-            case PROP:
-                //TODO farem servir aquesta funció per a la persistència?
         }
     }
 
@@ -390,7 +358,7 @@ public class CtrlDirectori {
     }
 
     //TODO: TEST
-    public ArrayList<Document> cercaPerAutor(String autor) {
+    /*public ArrayList<Document> cercaPerAutor(String autor) {
         ArrayList<Document> docs = new ArrayList<Document>();
         for (int i = 0; i < directoriObert.docs.size(); ++i) {
             if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor)) {
@@ -409,6 +377,16 @@ public class CtrlDirectori {
             }
         }
         return docs;
+    }*/
+
+    //TODO: TEST
+    public String cercaPerAutoriTitol(String autor, String titol) {
+        for (int i = 0; i < directoriObert.docs.size(); ++i) {
+            if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getTitol().equals(titol) && directoriObert.docs.get(i).getAutor().equals(autor)) {
+                return directoriObert.docs.get(i).getContingut();
+            }
+        }
+        return null;
     }
 
     //TODO: TEST
@@ -437,6 +415,28 @@ public class CtrlDirectori {
         return docs;
     }
 
+    /*public static void main (String[] args) throws Exception {
+        CtrlDirectori dir = new CtrlDirectori();
+        dir.directoriObert = new Directori(0);
+
+
+        dir.afegirDocument("Pol","Prova","A A A A A");
+        dir.afegirDocument("Manel","Prova","el barri gotic de girona");
+        dir.afegirDocument("Isaac","Prova","fem un projecte de programació");
+        dir.afegirDocument("Juli","Prova","la nit es a molt llarga");
+        dir.afegirDocument("Pau","Prova","de de de de de de");
+        dir.afegirDocument("Joan","Prova","el programa em peta i no se per on");
+        dir.afegirDocument("Jordi","Prova","dema faig un viatge barcelona");
+        dir.afegirDocument("Pep","Prova",    "la meva casa es d'estil gotic");
+        dir.afegirDocument("Carles","Prova","A A A A A");
+
+        ArrayList<Document> semblants = dir.compararDocuments(4,0);
+        System.out.println("Els documents semblants al de " + dir.directoriObert.docs.get(0).getAutor() + " són ");
+        for (int i = 0; i < semblants.size(); ++i) {
+            System.out.println(semblants.get(i).getAutor() + ": " + semblants.get(i).getContingut());
+        }
+
+    }*/
 }
 
 

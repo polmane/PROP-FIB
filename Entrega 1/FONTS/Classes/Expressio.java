@@ -4,7 +4,7 @@ public class Expressio {
     /**
      * Representa el número identificador d'una expressió
      */
-    private Integer idExp;
+    private final Integer idExp;
 
     private String expressio;
 

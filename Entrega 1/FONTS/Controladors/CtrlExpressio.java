@@ -8,8 +8,6 @@ import FONTS.Classes.Expressio;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static java.lang.Character.isWhitespace;
-
 public class CtrlExpressio {
     /**
      * Representa l'expressio sobre la que es treballa
@@ -44,16 +42,22 @@ public class CtrlExpressio {
      * AfegirExpressió permet afegir una nova expressió dins el sistema
      * @param expressio representa l'string que l'usuari reconeix com l'expressió per fer la cerca
      */
-    public void afegirExpressio(String expressio) {
+    public void afegirExpressio(String expressio) throws Exception {
         expressioSeleccionada = new Expressio(IdNovaExp,expressio);
-        expressions.put(IdNovaExp,expressioSeleccionada);
         ++IdNovaExp;
+        for (Expressio e : expressions.values()) {
+            if (e.getExpressio().equals(expressio)) {
+                throw new Exception("Ja existeix una expresió igual en el directori");
+            }
+        }
+        expressions.put(expressioSeleccionada.getIdEXp(),expressioSeleccionada);
     }
     /**
      * Operacio per modificar l'expressio seleccionada
      */
     public void modificarExpressio(String exp) {
         expressioSeleccionada.setExpressio(exp);
+        expressioSeleccionada.ExpressionTree = new BinaryTree(exp);
     }
 
     public void eliminarexpressio(int idExp) throws Exception {
@@ -67,18 +71,18 @@ public class CtrlExpressio {
     /**
      * Fa una cerca dels documents que contenen les paraules de la expressió
      * que es passa com a parametre
-     * @param expressio conté les paraules que volem buscar en els documents
      * @return ArrayList<Document> retorna els documents que compleixen els criteris
      * de cerca de la expressió passada com a paràmetre
      */
-    public ArrayList<Document> selectPerExpressio(Expressio expressio, HashMap<Integer, Document> docs) {
-        String exp = expressio.getExpressio();
-        BinaryTree bt = expressio.ExpressionTree;
+    public ArrayList<Document> selectPerExpressio(Integer idExp, HashMap<Integer, Document> docs) {
+        String exp = expressions.get(idExp).getExpressio();
+        BinaryTree bt = expressions.get(idExp).ExpressionTree;
+        ArrayList<Document> greatDocs = new ArrayList<>();
         for (Document d : docs.values()) {
             int result = BinaryTree.evalTree(bt.root, d);
-            if (result == 0) docs.remove(d.idDoc);
+            if (result == 1) greatDocs.add(d);
         }
-        return (ArrayList<Document>) docs.values();
+        return greatDocs;
     }
 
 

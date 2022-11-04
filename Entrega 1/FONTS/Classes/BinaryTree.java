@@ -20,6 +20,7 @@ public class BinaryTree {
     public Node root;
 
     public BinaryTree(String exp) {
+        exp = exp.toLowerCase();
         Node n = new Node(exp);
         this.root = addRecursive(n,exp);
     }
