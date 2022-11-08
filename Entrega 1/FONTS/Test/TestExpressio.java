@@ -1,10 +1,10 @@
 package FONTS.Test;
 
 import FONTS.Classes.Expressio;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.Assert.assertEquals;
+
 
 public class TestExpressio {
     /**
@@ -13,7 +13,6 @@ public class TestExpressio {
      * Valors estudiats: Es cre un objecte Expressio
      * Operativa: es comprova que lesconstructores de expressio funcionen correctament
      */
-
     @Test
     public void TestConstructores() {
         int idExp = 0;

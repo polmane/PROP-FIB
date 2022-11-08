@@ -86,7 +86,7 @@ public class CtrlDirectori {
      *
      * @param contingut és el nou contingut que es vol utilitzar pel document
      */
-    public void modificarContngut(String contingut) {
+    public void modificarContingut(String contingut) {
         documentActiu.setContingut(contingut);
     }
 

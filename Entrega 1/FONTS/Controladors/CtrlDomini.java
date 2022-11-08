@@ -21,6 +21,10 @@ public class CtrlDomini {
         _ctrlDirectori.afegirDocument(autor, titol, contingut);
     }
 
+    public void modificarContingut(String contingut) {
+        _ctrlDirectori.modificarContingut(contingut);
+    }
+
     public ArrayList<Document> compararDocuments(Integer k, Integer IdDoc) {
         //Com hem de retornar aixo?
         return _ctrlDirectori.compararDocuments(k,IdDoc);

@@ -1,9 +1,10 @@
 package FONTS.Test;
 
 import FONTS.Controladors.CtrlDirectori;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class TestCtrlDirectori {
     /**
@@ -12,7 +13,6 @@ public class TestCtrlDirectori {
      * Valors estudiats: Es guarda un document al directori
      * Operativa: es comprova que guardar un document al directori funcioni correctament
      */
-
     @Test
     public void TestAfegirDocument() throws Exception {
         CtrlDirectori CtrlDir = new CtrlDirectori();
@@ -44,9 +44,9 @@ public class TestCtrlDirectori {
         //Esperem que no s'hagi afegit el document, així que el seguent document a afegir tindrà just la id
         // seguent a l'original.
         String s = "El document amb autor: " + autor + " i títol: " + titol + " ja existeix";
-        assertThrows(NullPointerException.class, () -> {
+        /*assertThrows(NullPointerException.class, () -> {
 
-        });
+        });*/
         assertEquals(idDoc+1, CtrlDir.getDirectoriObert().getIdNouDoc());
     }
 
@@ -56,7 +56,6 @@ public class TestCtrlDirectori {
      * Valors estudiats: S'elimina un document del directori
      * Operativa: es comprova que eliminar un document del directori funcioni correctament
      */
-
     @Test
     public void TestEliminarDocument() throws Exception {
         CtrlDirectori CtrlDir = new CtrlDirectori();
