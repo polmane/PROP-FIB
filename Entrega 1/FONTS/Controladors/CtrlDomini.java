@@ -2,10 +2,12 @@ package FONTS.Controladors;
 
 import FONTS.Classes.Document;
 import FONTS.Classes.Expressio;
+import FONTS.Classes.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CtrlDomini {
 
@@ -25,9 +27,11 @@ public class CtrlDomini {
         _ctrlDirectori.modificarContingut(contingut);
     }
 
-    public ArrayList<Document> compararDocuments(Integer k, Integer IdDoc) {
-        //Com hem de retornar aixo?
-        return _ctrlDirectori.compararDocuments(k,IdDoc);
+    public List<Pair<String, String>> compararDocuments(Integer k, Integer IdDoc) {
+        List<Document> resultat = _ctrlDirectori.compararDocuments(k,IdDoc);
+        return resultat.stream()
+                .map(document -> new Pair<String, String>(document.autor, document.titol))
+                .collect(Collectors.toList());
     }
 
     public void exportarDocument(CtrlDirectori.FILETYPE format, String path) {
