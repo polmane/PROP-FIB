@@ -27,8 +27,8 @@ public class CtrlDomini {
         _ctrlDirectori.modificarContingut(contingut);
     }
 
-    public List<Pair<String, String>> compararDocuments(Integer k, Integer IdDoc) {
-        List<Document> resultat = _ctrlDirectori.compararDocuments(k,IdDoc);
+    public List<Pair<String, String>> compararDocuments(CtrlDirectori.METODE_COMPARACIO m, Integer k, Integer IdDoc) {
+        List<Document> resultat = _ctrlDirectori.compararDocuments(m, k,IdDoc);
         return resultat.stream()
                 .map(document -> new Pair<String, String>(document.autor, document.titol))
                 .collect(Collectors.toList());

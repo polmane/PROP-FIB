@@ -54,7 +54,7 @@ public class CtrlDirectori {
 
     /**
      * Operació per obrir un document que ja teniem precarregat dins el nostre sistema
-     * @param idDoc és l'identificador del docuemnt que volem obrir
+     * @param idDoc és l'identificador del document que volem obrir
      */
     public void recuperarDocument(int idDoc) {
         //nose si fa falta aquest if pk amb una interfície ben feta podem assegurar que el document existeix
@@ -209,7 +209,14 @@ public class CtrlDirectori {
         return true;
     }
 
-    ArrayList<Document> compararDocuments(Integer k, Integer IdDoc) {
+
+    public enum METODE_COMPARACIO {
+        TF_IDF,
+        BOOL,
+    }
+
+    //TODO: TEST
+    public ArrayList<Document> compararDocuments(METODE_COMPARACIO m, Integer k, Integer IdDoc) {
         ArrayList<Document> documentsSemblants = new ArrayList<>();
         TreeMap<Integer, Double> helper = new TreeMap<>();
         for (int i = 0; i < directoriObert.docs.size();++i) {
@@ -221,14 +228,29 @@ public class CtrlDirectori {
                 double Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
                 double Bparaula = 0.0;
                 if (directoriObert.pesosDocs.get(i).containsKey(word)) {
-                    Bparaula = directoriObert.pesosDocs.get(i).get(word);
+                    switch (m) {
+                        case TF_IDF:
+                            Bparaula = directoriObert.pesosDocs.get(i).get(word);
+                            break;
+                        case BOOL:
+                            Bparaula = 1.0;
+                            break;
+                    }
                 }
                 sumAB += Aparaula * Bparaula;
                 A2 += Math.pow(Aparaula,2);
                 B2 += Math.pow(Bparaula,2);
             }
             for (String word : directoriObert.pesosDocs.get(i).keySet()) {
-                double Bparaula = directoriObert.pesosDocs.get(i).get(word);
+                double Bparaula = 0.0;
+                switch (m) {
+                    case TF_IDF:
+                        Bparaula = directoriObert.pesosDocs.get(i).get(word);
+                        break;
+                    case BOOL:
+                        Bparaula = 1.0;
+                        break;
+                }
                 double Aparaula = 0.0;
                 if (directoriObert.pesosDocs.get(IdDoc).containsKey(word)) {
                     Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
@@ -259,6 +281,8 @@ public class CtrlDirectori {
                 }
             }
         }
+
+        //TODO: Ordenar documentsSemblants segons similaritat dels documents
         for (Map.Entry<Integer, Double> it : helper.entrySet()) {
             System.out.println(directoriObert.docs.get(it.getKey()) + " " + it.getValue());
             documentsSemblants.add(directoriObert.docs.get(it.getKey()));
@@ -267,7 +291,7 @@ public class CtrlDirectori {
     }
 
     public enum FILETYPE {
-        TXT, XML, PROP
+        TXT, XML
     }
 
     /**
@@ -414,29 +438,6 @@ public class CtrlDirectori {
         Collections.sort(docs);
         return docs;
     }
-
-    /*public static void main (String[] args) throws Exception {
-        CtrlDirectori dir = new CtrlDirectori();
-        dir.directoriObert = new Directori(0);
-
-
-        dir.afegirDocument("Pol","Prova","A A A A A");
-        dir.afegirDocument("Manel","Prova","el barri gotic de girona");
-        dir.afegirDocument("Isaac","Prova","fem un projecte de programació");
-        dir.afegirDocument("Juli","Prova","la nit es a molt llarga");
-        dir.afegirDocument("Pau","Prova","de de de de de de");
-        dir.afegirDocument("Joan","Prova","el programa em peta i no se per on");
-        dir.afegirDocument("Jordi","Prova","dema faig un viatge barcelona");
-        dir.afegirDocument("Pep","Prova",    "la meva casa es d'estil gotic");
-        dir.afegirDocument("Carles","Prova","A A A A A");
-
-        ArrayList<Document> semblants = dir.compararDocuments(4,0);
-        System.out.println("Els documents semblants al de " + dir.directoriObert.docs.get(0).getAutor() + " són ");
-        for (int i = 0; i < semblants.size(); ++i) {
-            System.out.println(semblants.get(i).getAutor() + ": " + semblants.get(i).getContingut());
-        }
-
-    }*/
 }
 
 

@@ -1,7 +1,11 @@
 package FONTS.Test;
 
+
+import FONTS.Classes.Document;
 import FONTS.Controladors.CtrlDirectori;
 import org.junit.Test;
+
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -79,7 +83,7 @@ public class TestCtrlDirectori {
      * Operativa: Es comprova que es reciclin els identificadors dels documents eliminats i que el recorregut dels documents se salti els identificadors eliminats.
      */
     @Test
-    public  void TestAfegirIEliminarDocument() throws Exception {
+    public void TestAfegirIEliminarDocument() throws Exception {
         CtrlDirectori CtrlDir = new CtrlDirectori();
         CtrlDir.crearDirectori(0);
 
@@ -104,5 +108,28 @@ public class TestCtrlDirectori {
         CtrlDir.eliminarDocument(idDoc); //Fem el forat
         CtrlDir.eliminarDocument(idDoc+1);
         CtrlDir.afegirDocument("juli", "prova salt forat", "document per a comprovar que ens saltem el forat");
+    }
+
+    @Test
+    public void TestCompararDocuments() throws Exception { //TODO: fer ben fet
+        CtrlDirectori CtrlDir = new CtrlDirectori();
+        CtrlDir.crearDirectori(0);
+
+        CtrlDir.afegirDocument("Pol","Prova","A A A A A");
+        CtrlDir.afegirDocument("Manel","Prova","el barri gotic de girona");
+        CtrlDir.afegirDocument("Isaac","Prova","fem un projecte de programació");
+        CtrlDir.afegirDocument("Juli","Prova","la nit es a molt llarga");
+        CtrlDir.afegirDocument("Pau","Prova","de de de de de de");
+        CtrlDir.afegirDocument("Joan","Prova","el programa em peta i no se per on");
+        CtrlDir.afegirDocument("Jordi","Prova","dema faig un viatge barcelona");
+        CtrlDir.afegirDocument("Pep","Prova",    "la meva casa es d'estil gotic");
+        CtrlDir.afegirDocument("Carles","Prova","A A A A A");
+
+        ArrayList<Document> semblants = CtrlDir.compararDocuments(CtrlDirectori.METODE_COMPARACIO.TF_IDF, 2,0);
+        System.out.println("Els documents semblants al de " + CtrlDir.getDirectoriObert().docs.get(0).getAutor() + " són ");
+        for (int i = 0; i < semblants.size(); ++i) {
+            System.out.println(semblants.get(i).getAutor() + ": " + semblants.get(i).getContingut());
+        }
+
     }
 }
