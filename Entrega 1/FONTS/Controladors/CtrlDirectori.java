@@ -290,6 +290,86 @@ public class CtrlDirectori {
         return documentsSemblants;
     }
 
+
+    //TODO: TEST
+    public ArrayList<Document> compararQuery(METODE_COMPARACIO m, Integer k, HashMap<String, Double> paraules) {
+        ArrayList<Document> documentsSemblants = new ArrayList<>();
+        TreeMap<Integer, Double> helper = new TreeMap<>();
+        for (int i = 0; i < directoriObert.docs.size();++i) {
+            double sumAB = 0.0;
+            double A2 = 0.0;
+            double B2 = 0.0;
+            for (String word : paraules.keySet()) {
+                double Aparaula = paraules.get(word);
+                double Bparaula = 0.0;
+                if (directoriObert.pesosDocs.get(i).containsKey(word)) {
+                    switch (m) {
+                        case TF_IDF:
+                            Bparaula = directoriObert.pesosDocs.get(i).get(word);
+                            break;
+                        case BOOL:
+                            Bparaula = 1.0;
+                            break;
+                    }
+                }
+                sumAB += Aparaula * Bparaula;
+                A2 += Math.pow(Aparaula, 2);
+                B2 += Math.pow(Bparaula, 2);
+            }
+            //Diria que perquè funcioni l'algorisme només hem de recórrer les paraules de la query,
+            // ja que totes les altres sempre donarien 0 al multiplicar
+            /*
+            for (String word : directoriObert.pesosDocs.get(i).keySet()) {
+                double Bparaula = 0.0;
+                switch (m) {
+                    case TF_IDF:
+                        Bparaula = directoriObert.pesosDocs.get(i).get(word);
+                        break;
+                    case BOOL:
+                        Bparaula = 1.0;
+                        break;
+                }
+                double Aparaula = 0.0;
+                if () {
+                    Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
+                }
+                sumAB += Aparaula * Bparaula;
+                A2 += Math.pow(Aparaula, 2);
+                B2 += Math.pow(Bparaula, 2);
+            }
+            */
+
+            double similarity = 0.0;
+            if (A2 != 0 && B2 != 0) {
+                similarity = sumAB / (Math.sqrt(A2) * Math.sqrt(B2));
+            }
+            if (helper.size() < k) {
+                helper.put(directoriObert.docs.get(i).getIdDoc(), similarity);
+            } else {
+                double comp = 1000.0;
+                Integer idDocE = -1;
+                for (Map.Entry<Integer, Double> it1 : helper.entrySet()) {
+                    if (comp > it1.getValue()) {
+                        comp = it1.getValue();
+                        idDocE = it1.getKey();
+                    }
+                }
+                if (similarity > comp) {
+                    helper.remove(idDocE);
+                    helper.put(directoriObert.docs.get(i).getIdDoc(), similarity);
+                }
+            }
+        }
+
+
+        //TODO: Ordenar documentsSemblants segons similaritat dels documents
+        for (Map.Entry<Integer, Double> it : helper.entrySet()) {
+            System.out.println(directoriObert.docs.get(it.getKey()) + " " + it.getValue());
+            documentsSemblants.add(directoriObert.docs.get(it.getKey()));
+        }
+        return documentsSemblants;
+    }
+
     public enum FILETYPE {
         TXT, XML
     }
