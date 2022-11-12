@@ -20,7 +20,7 @@ public class CtrlExpressio {
     /**
      * Representa el directori on esta l'expressio seleccionada
      */
-    private HashMap<Integer,Expressio> expressions;
+    public HashMap<Integer,Expressio> expressions;
 
     /**
      * Constructora
@@ -47,7 +47,8 @@ public class CtrlExpressio {
         ++IdNovaExp;
         for (Expressio e : expressions.values()) {
             if (e.getExpressio().equals(expressio)) {
-                throw new Exception("Ja existeix una expresió igual en el directori");
+                //throw new Exception("Ja existeix una expresió igual en el directori");
+                return;
             }
         }
         expressions.put(expressioSeleccionada.getIdEXp(),expressioSeleccionada);
@@ -63,9 +64,10 @@ public class CtrlExpressio {
     public void eliminarexpressio(int idExp) throws Exception {
         if (expressions.containsKey(idExp)) {
             expressions.remove(idExp);
-        } else {
-            throw new Exception("La expressió no esta en el directori");
         }
+        /**} else {
+            throw new Exception("La expressió no esta en el directori");
+        }*/
     }
 
     /**
@@ -83,6 +85,7 @@ public class CtrlExpressio {
             if (result == 1) greatDocs.add(d);
         }
         return greatDocs;
+
     }
 
 

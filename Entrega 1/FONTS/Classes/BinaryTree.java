@@ -112,8 +112,9 @@ public class BinaryTree {
                 return 1;
 
             case '!':
-                ++pos;
-                int start = pos;
+                //++pos;
+                root.expr = root.expr.substring(1, root.expr.length());
+                /**int start = pos;
                 while (pos < root.expr.length() && !isWhitespace(root.expr.charAt(pos))) ++pos;
                 String word1 = root.expr.substring(start, pos);
                 if (d.ocurrencies.containsKey(word1)) {
@@ -121,6 +122,9 @@ public class BinaryTree {
                     return 0;
                 }
                 ++pos;
+                return 1;*/
+                Integer result = evalLeaf(root, d);
+                if (result == 1) return 0;
                 return 1;
 
             case '"':
