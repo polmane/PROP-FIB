@@ -87,7 +87,16 @@ public class CtrlDirectori {
      * @param contingut és el nou contingut que es vol utilitzar pel document
      */
     public void modificarContingut(String contingut) {
+
+        eliminarParaulesAlDir(documentActiu.getIdDoc());
+        directoriObert.pesosDocs.remove(documentActiu.getIdDoc());
+
         documentActiu.setContingut(contingut);
+
+        documentActiu.setOcurrencies(obteContingut());
+        documentActiu.setTfMap(tf(documentActiu.ocurrencies));
+        afegeixParaulesAlDir();
+        afegeixPesos();
     }
 
     /**
@@ -146,7 +155,7 @@ public class CtrlDirectori {
                 tfIdfValue = tfVal * idfVal;
                 tfMapHelper.put((stringDoubleEntry.getKey().toString()), tfIdfValue);
             }
-            directoriObert.pesosDocs.put(doc.idDoc, tfMapHelper);
+            directoriObert.pesosDocs.put(doc.getIdDoc(), tfMapHelper);
         }
     }
 
@@ -443,10 +452,10 @@ public class CtrlDirectori {
             throw new Exception("ERROR: No existeix el document amb identificador: " + idDoc + ".");
         }
 
-        directoriObert.docs.remove(idDoc);
-
         eliminarParaulesAlDir(idDoc);
         directoriObert.pesosDocs.remove(idDoc);
+
+        directoriObert.docs.remove(idDoc);
 
         //Afegim l'id a la cua per poder ser reciclada
         directoriObert.deletedIds.add(idDoc);
