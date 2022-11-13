@@ -1,12 +1,13 @@
 package FONTS.Test;
 
-import FONTS.Classes.Directori;
 import FONTS.Classes.Document;
-import FONTS.Controladors.CtrlDirectori;
 import FONTS.Controladors.CtrlExpressio;
 import org.junit.Test;
+
 import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TestCtrlExpressio {
 
@@ -120,15 +121,16 @@ public class TestCtrlExpressio {
     @Test
     public void TestSelectPerExpressio() throws Exception {
         CtrlExpressio CtrlExp = new CtrlExpressio();
-        CtrlDirectori CtrlDir = new CtrlDirectori();
-        CtrlDir.crearDirectori(0);
-        Directori dir = CtrlDir.getDirectoriObert();
-        CtrlDir.afegirDocument("autor1", "doc1", "hola p1 p2 p3");
+
+        Document document = new Document(0,"autor1", "doc1", "hola p1 p2 p3");
+        document.getOcurrencies().put("hola",1);
+        document.getOcurrencies().put("p1",1);
+        document.getOcurrencies().put("p2",1);
+        document.getOcurrencies().put("p3",1);
 
        //Expressio = una paraula
         CtrlExp.afegirExpressio("hola & p1");
-        ArrayList<Document> d = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdExp(), dir.getDocs());
-        assertEquals(1, d.size());
+        assertTrue(CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdExp(), document));
 
         //Expressio = negació d'una paraula
         CtrlExp.afegirExpressio("!hola & p1");

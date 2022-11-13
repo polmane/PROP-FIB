@@ -5,7 +5,6 @@ import FONTS.Classes.Document;
 import FONTS.Classes.Expressio;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CtrlExpressio {
@@ -113,20 +112,16 @@ public class CtrlExpressio {
 
     /**
      * selectPerExpressió busca, de tots els documents que nosaltres tenim en el sistema, aquells documents que compleixen l'expressió
-     * @param idExp representa la id de l'expressió que volem evaluar
-     * @param docs representa el/els document/s possibles a evaluar
+     *
+     * @param idExp    representa la id de l'expressió que volem evaluar
+     * @param document representa el document possible a evaluar
      * @return retorna els documents que compleixen l'expressió
      */
-    public ArrayList<Document> selectPerExpressio(Integer idExp, HashMap<Integer, Document> docs) {
+    public boolean selectPerExpressio(Integer idExp, Document document) {
         String exp = expressions.get(idExp).getExpressio();
         BinaryTree bt = expressions.get(idExp).getExpressionTree();
-        ArrayList<Document> greatDocs = new ArrayList<>();
-        for (Document d : docs.values()) {
-            int result = BinaryTree.evalTree(bt.root, d);
-            if (result >= 1) greatDocs.add(d);
-        }
-        return greatDocs;
-
+        int result = BinaryTree.evalTree(bt.root, document);
+        return (result != 0);
     }
 }
 

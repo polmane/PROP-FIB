@@ -72,8 +72,12 @@ public class CtrlDomini {
     }
 
     public ArrayList<Document> selectPerExpressio(Integer idExp) {
-        HashMap<Integer, Document> docs = _ctrlDirectori.getDirectoriObert().getDocs();
-        return _ctrlExpressio.selectPerExpressio(idExp, docs);
+        ArrayList<Document> resultat = new ArrayList<>();
+
+        for (Document document : _ctrlDirectori.getDirectoriObert().getDocs().values()) {
+            if(_ctrlExpressio.selectPerExpressio(idExp, document)) resultat.add(document);
+        }
+        return resultat;
     }
 
     public static void main (String[] args) throws Exception {
