@@ -159,7 +159,7 @@ public class TestCtrlDirectori {
         CtrlDir.crearDirectori(0);
 
         //Cas directori buit
-        assertNull(CtrlDir.llistaAutorsPerPrefix("Autor", CtrlDirectori.SORTING.AUT_ASC));
+        assertNull(CtrlDir.llistaAutorsPerPrefix("Autor", null));
 
         CtrlDir.afegirDocument("Juli","Titol1","Juli1");
         CtrlDir.afegirDocument("Joan","Titol2","Juli2");
@@ -169,10 +169,10 @@ public class TestCtrlDirectori {
         CtrlDir.afegirDocument("Isidre", "Titol2", "Isaac2");
 
         //Cap autor
-        assertNull(CtrlDir.llistaAutorsPerPrefix("Mar", CtrlDirectori.SORTING.AUT_ASC));
+        assertNull(CtrlDir.llistaAutorsPerPrefix("Mar", null));
 
         //Tots els autors
-        assertEquals(6, CtrlDir.llistaAutorsPerPrefix("", CtrlDirectori.SORTING.AUT_ASC).size());
+        assertEquals(6, CtrlDir.llistaAutorsPerPrefix("", null).size());
 
         //Ordre ascendent
         List<String> ret = CtrlDir.llistaAutorsPerPrefix("J", CtrlDirectori.SORTING.AUT_ASC);
@@ -183,6 +183,46 @@ public class TestCtrlDirectori {
         ret = CtrlDir.llistaAutorsPerPrefix("P", CtrlDirectori.SORTING.AUT_DESC);
         assertEquals("Pol", ret.get(0));
         assertEquals("Pau", ret.get(1));
+
+    }
+
+    /**
+     * Objecte de la prova: Test del mètode llistaTitolsPerAutor de la classe CtrlDirectori
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     * Valors estudiats: Funcionament correcte de la funció llistaTitolsPerAutor
+     * Operativa: Es comproven les diferents causes d'error de la funció i el seu funcionament correcte.
+     */
+    @Test
+    public void TestLlistaTitolsPerAutor() {
+        CtrlDirectori CtrlDir = new CtrlDirectori();
+        CtrlDir.crearDirectori(0);
+
+        //Cas directori buit
+        assertNull(CtrlDir.llistaTitolsPerAutor("Autor", CtrlDirectori.SORTING.TIT_ASC));
+
+        CtrlDir.afegirDocument("Juli","Titol1","Juli1");
+        CtrlDir.afegirDocument("Juli","Titol2","Juli2");
+        CtrlDir.afegirDocument("Juli","Titol3","Juli3");
+        CtrlDir.afegirDocument("Pol","Titol1","Pol1");
+        CtrlDir.afegirDocument("Pol", "Titol2", "Pol2");
+        CtrlDir.afegirDocument("Isaac","Titol1","Isaac1");
+        CtrlDir.afegirDocument("Isaac", "Titol2", "Isaac2");
+
+        //Cap autor i nulls
+        assertNull(CtrlDir.llistaTitolsPerAutor("Mar", null));
+        assertNull(CtrlDir.llistaTitolsPerAutor(null, null));
+        assertNull(CtrlDir.llistaTitolsPerAutor("", null));
+
+        //Ordre ascendent
+        List<String> ret = CtrlDir.llistaTitolsPerAutor("Juli", CtrlDirectori.SORTING.TIT_ASC);
+        assertEquals("Titol1", ret.get(0));
+        assertEquals("Titol2", ret.get(1));
+        assertEquals("Titol3", ret.get(2));
+
+        //Ordre descendent
+        ret = CtrlDir.llistaTitolsPerAutor("Pol", CtrlDirectori.SORTING.TIT_DESC);
+        assertEquals("Titol2", ret.get(0));
+        assertEquals("Titol1", ret.get(1));
 
     }
 }

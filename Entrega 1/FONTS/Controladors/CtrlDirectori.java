@@ -477,14 +477,19 @@ public class CtrlDirectori {
         return autors;
     }
 
-    //TODO: TEST
     public List<String> llistaTitolsPerAutor(String autor, SORTING s) {
+        if (autor == null)
+            return null;
+        if (autor.isEmpty())
+            return null;
         List<String> docs = new ArrayList<String>();
         for (int i = 0; i < directoriObert.getDocs().size(); ++i) {
             if (directoriObert.getDocs().containsKey(i) && directoriObert.getDocs().get(i).getAutor().equals(autor)) {
                 docs.add(directoriObert.getDocs().get(i).getTitol());
             }
         }
+        if (docs.isEmpty())
+            return null;
         if (s == SORTING.TIT_ASC) Collections.sort(docs);
         else if (s == SORTING.TIT_DESC) Collections.sort(docs,Collections.reverseOrder());
         return docs;
