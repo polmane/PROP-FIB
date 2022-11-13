@@ -30,7 +30,26 @@ public class BinaryTree {
         String first_part = "";
         String second_part = "";
         exp = eliminaEspais(exp);
-        if (exp.charAt(0) == '(' && exp.charAt(exp.length()-1) == ')') exp = exp.substring(1,exp.length()-1);
+        if (exp.charAt(0) == '(' && exp.charAt(exp.length()-1) == ')') {
+            int currentPar = 1;     //quantitat parentesis sense tancar
+            int help = current.pos;
+            ++help;
+            boolean correcte = true;
+            for (int i = help; i < exp.length()-1; ++i) {
+                if (exp.charAt(i) == '(') ++currentPar;
+                if (exp.charAt(i) == ')') {
+                    --currentPar;
+                    if (currentPar == 0) {  //si en algun moment tanquem el primer parentesis, break i no correcte
+                        correcte = false;
+                        break;
+                    }
+                }
+            }
+            if (correcte) {
+                exp = exp.substring(1, exp.length() - 1);
+                current.expr = exp;
+            }
+        }
         if (hiHaOr(exp, current)) {
             extracted(current, exp);
             current.expr = "+";
@@ -104,7 +123,6 @@ public class BinaryTree {
                     while (pos < root.expr.length() && !isWhitespace(root.expr.charAt(pos)) && root.expr.charAt(pos) != '}') ++pos;
                     String word = root.expr.substring(start, pos);
                     if (!d.ocurrencies.containsKey(word)) {
-                        while (root.expr.charAt(pos) != '}') ++pos;
                         return 0;
                     }
                     ++pos;
@@ -112,19 +130,11 @@ public class BinaryTree {
                 return 1;
 
             case '!':
-                //++pos;
-                root.expr = root.expr.substring(1, root.expr.length());
-                /**int start = pos;
-                while (pos < root.expr.length() && !isWhitespace(root.expr.charAt(pos))) ++pos;
-                String word1 = root.expr.substring(start, pos);
-                if (d.ocurrencies.containsKey(word1)) {
-                    ++pos;
-                    return 0;
-                }
                 ++pos;
-                return 1;*/
+                if (root.expr.charAt(pos) == '(') root.expr = root.expr.substring(2, root.expr.length()-1);
+                else root.expr = root.expr.substring(1, root.expr.length());
                 Integer result = evalLeaf(root, d);
-                if (result == 1) return 0;
+                if (result != 0) return 0;
                 return 1;
 
             case '"':

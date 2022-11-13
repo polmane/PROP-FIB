@@ -55,8 +55,7 @@ public class CtrlExpressio {
     /**
      * Operacio per modificar l'expressio seleccionada
      */
-    public void modificarExpressio(String exp) throws Exception{
-
+    public void modificarExpressio(String exp) throws Exception {
         for (Expressio e : expressions.values()) {
             if (e.getExpressio().equals(exp)) {
                 throw new Exception("Ja existeix una expresió igual en el directori");
