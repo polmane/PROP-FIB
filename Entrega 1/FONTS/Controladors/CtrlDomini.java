@@ -92,7 +92,7 @@ public class CtrlDomini {
         cdom.afegirDocument("Jordi","Prova","dema faig un viatge barcelona");
         cdom.afegirDocument("Pep","Prova",    "la meva casa es d'estil gotic");
         cdom.afegirDocument("Carles","Prova","A A A A A");
-        cdom.afegirDocument("Anna","Prova","B");
+        cdom.afegirDocument("Anna","Prova","B barri");
         cdom.afegirDocument("Marta","Prova","B el");
 
         cdom.afegirExpressio("B & (el | barri)");
