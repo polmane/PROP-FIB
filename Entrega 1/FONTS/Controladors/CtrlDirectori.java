@@ -252,10 +252,12 @@ public class CtrlDirectori {
                 B2 += Math.pow(Bparaula,2);
             }
             for (String word : directoriObert.pesosDocs.get(i).keySet()) {
-                double Bparaula = directoriObert.pesosDocs.get(i).get(word);
-                double Aparaula = 0.0;
-                if (m == METODE_COMPARACIO.BOOL) Bparaula = 1.0;
                 if (!directoriObert.getPesosDocs().get(IdDoc).containsKey(word)) {
+                    double Bparaula;
+                    if (m == METODE_COMPARACIO.BOOL) Bparaula = 1.0;
+                    else {
+                        Bparaula = directoriObert.pesosDocs.get(i).get(word);
+                    }
                     B2 += Math.pow(Bparaula,2);
                 }
             }

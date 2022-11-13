@@ -125,7 +125,7 @@ public class TestCtrlDirectori {
         CtrlDir.afegirDocument("Pep","Prova",    "la a a a meva casa es d'estil gotic");
         CtrlDir.afegirDocument("Carles","Prova","A A A A A");
 
-        ArrayList<Document> semblants = CtrlDir.compararDocuments(CtrlDirectori.METODE_COMPARACIO.BOOL, 2,0);
+        ArrayList<Document> semblants = CtrlDir.compararDocuments(CtrlDirectori.METODE_COMPARACIO.TF_IDF, 2,0);
         System.out.println("Els documents semblants al de " + CtrlDir.getDirectoriObert().docs.get(0).getAutor() + " són ");
         for (int i = 0; i < semblants.size(); ++i) {
             System.out.println(semblants.get(i).getAutor() + ": " + semblants.get(i).getContingut());
