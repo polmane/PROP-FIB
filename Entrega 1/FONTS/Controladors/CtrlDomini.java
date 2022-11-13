@@ -99,7 +99,7 @@ public class CtrlDomini {
         cdom.afegirDocument("Anna","Prova","B barri");
         cdom.afegirDocument("Marta","Prova","B el");
 
-        cdom.afegirExpressio("B & (el | barri)");
+        cdom.afegirExpressio("(hola & (\"barri gotic\"))");
 
         ArrayList<Document> docfinal = cdom.selectPerExpressio(0);
 
