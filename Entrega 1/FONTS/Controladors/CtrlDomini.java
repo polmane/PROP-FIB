@@ -1,7 +1,6 @@
 package FONTS.Controladors;
 
 import FONTS.Classes.Document;
-import FONTS.Classes.Expressio;
 import FONTS.Classes.Pair;
 
 import java.util.ArrayList;
@@ -57,15 +56,6 @@ public class CtrlDomini {
         _ctrlDirectori.eliminarDocument(idDoc);
     }
 
-    /*public ArrayList<Document> cercaPerAutor(String autor) {
-        //Com hem de retornar aixo?
-        return _ctrlDirectori.cercaPerAutor(autor);
-    }
-
-    public ArrayList<Document> cercaPerTitol(String titol) {
-        return _ctrlDirectori.cercaPerTitol(titol);
-    }*/
-
     public String cercaPerAutoriTitol(String autor, String titol) {
         return _ctrlDirectori.cercaPerAutoriTitol(autor, titol);
     }
@@ -82,7 +72,7 @@ public class CtrlDomini {
         _ctrlExpressio.afegirExpressio(expressio);
     }
 
-    public void modificarExpressio(String exp) {
+    public void modificarExpressio(String exp) throws Exception{
         _ctrlExpressio.modificarExpressio(exp);
     }
 
@@ -91,7 +81,39 @@ public class CtrlDomini {
     }
 
     public ArrayList<Document> selectPerExpressio(Integer idExp) {
-        HashMap<Integer, Document> docs = _ctrlDirectori.getDirectoriObert().getDocs();
-        return _ctrlExpressio.selectPerExpressio(idExp, docs);
+        ArrayList<Document> resultat = new ArrayList<>();
+
+        for (Document document : _ctrlDirectori.getDirectoriObert().getDocs().values()) {
+            if(_ctrlExpressio.selectPerExpressio(idExp, document)) resultat.add(document);
+        }
+        return resultat;
+    }
+
+    public static void main (String[] args) throws Exception {
+        CtrlDirectori dir = new CtrlDirectori();
+        CtrlExpressio exp = new CtrlExpressio();
+        CtrlDomini cdom = new CtrlDomini(dir, exp);
+        cdom._ctrlDirectori.crearDirectori(0);
+
+
+        cdom.afegirDocument("Pol","Prova","A A A A A");
+        cdom.afegirDocument("Manel","Prova","el barri gotic de girona");
+        cdom.afegirDocument("Isaac","Prova","fem un projecte de programació");
+        cdom.afegirDocument("Juli","Prova","la nit es a molt llarga");
+        cdom.afegirDocument("Pau","Prova","de de de de de de");
+        cdom.afegirDocument("Joan","Prova","el programa em peta i no se per on");
+        cdom.afegirDocument("Jordi","Prova","dema faig un viatge barcelona");
+        cdom.afegirDocument("Pep","Prova",    "la meva casa es d'estil gotic");
+        cdom.afegirDocument("Carles","Prova","A A A A A");
+        cdom.afegirDocument("Anna","Prova","B barri");
+        cdom.afegirDocument("Marta","Prova","B el");
+
+        cdom.afegirExpressio("(hola & (\"barri gotic\"))");
+
+        ArrayList<Document> docfinal = cdom.selectPerExpressio(0);
+
+        for(Document d : docfinal) {
+            System.out.println("El document: " + d.getAutor() + " i " + d.getTitol());
+        }
     }
 }

@@ -22,7 +22,7 @@ public class Expressio {
     /**
      * Getter de idExp
      */
-    public int getIdEXp() {
+    public int getIdExp() {
         return idExp;
     }
 
@@ -37,6 +37,11 @@ public class Expressio {
         this.expressio = expressio;
     }
 
+    public BinaryTree getExpressionTree() {
+        return ExpressionTree;
+    }
 
-
+    public void setExpressionTree(BinaryTree expressionTree) {
+        ExpressionTree = expressionTree;
+    }
 }
