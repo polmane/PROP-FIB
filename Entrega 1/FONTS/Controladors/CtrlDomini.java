@@ -63,7 +63,7 @@ public class CtrlDomini {
         _ctrlExpressio.afegirExpressio(expressio);
     }
 
-    public void modificarExpressio(String exp) {
+    public void modificarExpressio(String exp) throws Exception{
         _ctrlExpressio.modificarExpressio(exp);
     }
 

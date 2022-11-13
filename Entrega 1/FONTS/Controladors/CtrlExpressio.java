@@ -47,8 +47,7 @@ public class CtrlExpressio {
         ++IdNovaExp;
         for (Expressio e : expressions.values()) {
             if (e.getExpressio().equals(expressio)) {
-                //throw new Exception("Ja existeix una expresió igual en el directori");
-                return;
+                throw new Exception("Ja existeix una expresió igual en el directori");
             }
         }
         expressions.put(expressioSeleccionada.getIdEXp(),expressioSeleccionada);
@@ -56,7 +55,13 @@ public class CtrlExpressio {
     /**
      * Operacio per modificar l'expressio seleccionada
      */
-    public void modificarExpressio(String exp) {
+    public void modificarExpressio(String exp) throws Exception{
+
+        for (Expressio e : expressions.values()) {
+            if (e.getExpressio().equals(exp)) {
+                throw new Exception("Ja existeix una expresió igual en el directori");
+            }
+        }
         expressioSeleccionada.setExpressio(exp);
         expressioSeleccionada.ExpressionTree = new BinaryTree(exp);
     }
@@ -64,10 +69,9 @@ public class CtrlExpressio {
     public void eliminarexpressio(int idExp) throws Exception {
         if (expressions.containsKey(idExp)) {
             expressions.remove(idExp);
-        }
-        /**} else {
+        } else {
             throw new Exception("La expressió no esta en el directori");
-        }*/
+        }
     }
 
     /**
@@ -82,23 +86,10 @@ public class CtrlExpressio {
         ArrayList<Document> greatDocs = new ArrayList<>();
         for (Document d : docs.values()) {
             int result = BinaryTree.evalTree(bt.root, d);
-            if (result == 1) greatDocs.add(d);
+            if (result >= 1) greatDocs.add(d);
         }
         return greatDocs;
 
-    }
-
-
-    public static void main(String[] args) {
-        Document d = new Document(0,"pol", "prova", "p1 p2 p3 hola adéu");
-        d.ocurrencies.put("p1",1);
-        d.ocurrencies.put("p2",1);
-        d.ocurrencies.put("p3",1);
-        d.ocurrencies.put("hola",1);
-        String exp = "\"hola adéu\"";
-        BinaryTree bt = new BinaryTree(exp);
-        int result = BinaryTree.evalTree(bt.root, d);
-        System.out.println(result);
     }
 
 }
