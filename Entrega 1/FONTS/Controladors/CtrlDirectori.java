@@ -233,7 +233,9 @@ public class CtrlDirectori {
             double B2 = 0.0;
             if (i == IdDoc) continue;
             for (String word : directoriObert.pesosDocs.get(IdDoc).keySet()) {
-                double Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
+                double Aparaula;
+                if (m == METODE_COMPARACIO.BOOL) Aparaula = 1.0;
+                else Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
                 double Bparaula = 0.0;
                 if (directoriObert.pesosDocs.get(i).containsKey(word)) {
                     switch (m) {
@@ -241,7 +243,6 @@ public class CtrlDirectori {
                             Bparaula = directoriObert.pesosDocs.get(i).get(word);
                             break;
                         case BOOL:
-                            Aparaula = 1.0;
                             Bparaula = 1.0;
                             break;
                     }
@@ -253,21 +254,10 @@ public class CtrlDirectori {
             for (String word : directoriObert.pesosDocs.get(i).keySet()) {
                 double Bparaula = directoriObert.pesosDocs.get(i).get(word);
                 double Aparaula = 0.0;
-
-                if (!directoriObert.pesosDocs.get(IdDoc).containsKey(word)) {
-                    switch (m) {
-                        case TF_IDF:
-                            Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
-                            break;
-                        case BOOL:
-                            Bparaula = 1.0;
-                            Aparaula = 1.0;
-                            break;
-                    }
+                if (m == METODE_COMPARACIO.BOOL) Bparaula = 1.0;
+                if (!directoriObert.getPesosDocs().get(IdDoc).containsKey(word)) {
+                    B2 += Math.pow(Bparaula,2);
                 }
-                sumAB += Aparaula * Bparaula;
-                A2 += Math.pow(Aparaula,2);
-                B2 += Math.pow(Bparaula,2);
             }
             double similarity = 0.0;
             if (A2 != 0 && B2 != 0) {
@@ -275,7 +265,7 @@ public class CtrlDirectori {
             }
             if (helper.size() < k) {
                 helper.put(directoriObert.docs.get(i).getIdDoc(), similarity);
-            }
+            }//ferho al reves?
             else {
                 double comp = 1000.0;
                 Integer idDocE = -1;
@@ -326,28 +316,8 @@ public class CtrlDirectori {
                 A2 += Math.pow(Aparaula, 2);
                 B2 += Math.pow(Bparaula, 2);
             }
-            //Diria que perquè funcioni l'algorisme només hem de recórrer les paraules de la query,
-            // ja que totes les altres sempre donarien 0 al multiplicar
-            /*
-            for (String word : directoriObert.pesosDocs.get(i).keySet()) {
-                double Bparaula = 0.0;
-                switch (m) {
-                    case TF_IDF:
-                        Bparaula = directoriObert.pesosDocs.get(i).get(word);
-                        break;
-                    case BOOL:
-                        Bparaula = 1.0;
-                        break;
-                }
-                double Aparaula = 0.0;
-                if () {
-                    Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
-                }
-                sumAB += Aparaula * Bparaula;
-                A2 += Math.pow(Aparaula, 2);
-                B2 += Math.pow(Bparaula, 2);
-            }
-            */
+
+            //FALTA segona part
 
             double similarity = 0.0;
             if (A2 != 0 && B2 != 0) {
