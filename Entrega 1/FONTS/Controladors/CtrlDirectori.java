@@ -260,7 +260,6 @@ public class CtrlDirectori {
     public List<Pair<String, String>> compararDocuments(METODE_COMPARACIO m, SORTING s, Integer k, Integer IdDoc) {
         ArrayList<Document> documentsSemblants = new ArrayList<>();
         ArrayList<Pair<Integer,Double>> helper = new ArrayList<>();
-        //TreeMap<Integer, Double> helper = new TreeMap<>();
         for (int i = 0; i < directoriObert.getDocs().size();++i) {
             double sumAB = 0.0;
             double A2 = 0.0;
@@ -349,7 +348,7 @@ public class CtrlDirectori {
         List<Pair<String, String>> equalQuery = compararDocuments(m,s,k, documentActiu.getIdDoc());
         eliminarDocument(documentActiu.getIdDoc());
         return equalQuery;
-        }
+    }
 
     public enum FILETYPE {
         TXT, XML

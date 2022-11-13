@@ -33,8 +33,6 @@ public class TestCtrlDirectori {
         assertEquals(contingut, CtrlDir.getDirectoriObert().getDocs().get(idDoc).getContingut());
 
         //ERROR: ja existeix document amb el mateix autor i titol
-        //TODO: Això no ho podem comprovar perquè sinó els tests no passarien
-        idDoc = CtrlDir.getDirectoriObert().getIdNouDoc();
         int res = CtrlDir.afegirDocument(autor, titol, contingut);
         assertEquals(20, res);
     }
@@ -46,7 +44,7 @@ public class TestCtrlDirectori {
      * Operativa: es comprova que eliminar un document del directori funcioni correctament
      */
     @Test
-    public void TestEliminarDocument() throws Exception {
+    public void TestEliminarDocument(){
         CtrlDirectori CtrlDir = new CtrlDirectori();
         CtrlDir.crearDirectori(0);
 
@@ -68,7 +66,7 @@ public class TestCtrlDirectori {
      * Operativa: Es comprova que es reciclin els identificadors dels documents eliminats i que el recorregut dels documents se salti els identificadors eliminats.
      */
     @Test
-    public void TestAfegirIEliminarDocument() throws Exception {
+    public void TestAfegirIEliminarDocument(){
         CtrlDirectori CtrlDir = new CtrlDirectori();
         CtrlDir.crearDirectori(0);
 
