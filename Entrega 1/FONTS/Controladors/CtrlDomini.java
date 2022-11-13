@@ -70,12 +70,12 @@ public class CtrlDomini {
         return _ctrlDirectori.cercaPerAutoriTitol(autor, titol);
     }
 
-    public List<String> llistaAutorsPerPrefix(String pre) {
-        return _ctrlDirectori.llistaAutorsPerPrefix(pre);
+    public List<String> llistaAutorsPerPrefix(String pre , CtrlDirectori.SORTING s) {
+        return _ctrlDirectori.llistaAutorsPerPrefix(pre, s);
     }
 
-    public List<String> llistaTitolsPerAutor(String autor) {
-        return _ctrlDirectori.llistaTitolsPerAutor(autor);
+    public List<String> llistaTitolsPerAutor(String autor, CtrlDirectori.SORTING s) {
+        return _ctrlDirectori.llistaTitolsPerAutor(autor,s);
     }
 
     public void afegirExpressio(String expressio) throws Exception {

@@ -436,7 +436,7 @@ public class CtrlDirectori {
     }
 
     //TODO: TEST
-    public List<String> llistaAutorsPerPrefix(String pre) {
+    public List<String> llistaAutorsPerPrefix(String pre, SORTING s) {
         List<String> autors = new ArrayList<String>();
         for (int i = 0; i < directoriObert.docs.size(); ++i) {
             if (directoriObert.docs.containsKey(i)) {
@@ -446,18 +446,21 @@ public class CtrlDirectori {
                 }
             }
         }
+        if (s == SORTING.AUT_ASC) Collections.sort(autors);
+        else if (s == SORTING.AUT_DESC) Collections.sort(autors,Collections.reverseOrder());
         return autors;
     }
 
     //TODO: TEST
-    public List<String> llistaTitolsPerAutor(String autor) {
+    public List<String> llistaTitolsPerAutor(String autor, SORTING s) {
         List<String> docs = new ArrayList<String>();
         for (int i = 0; i < directoriObert.docs.size(); ++i) {
             if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor)) {
                 docs.add(directoriObert.docs.get(i).getTitol());
             }
         }
-        Collections.sort(docs);
+        if (s == SORTING.AUT_ASC) Collections.sort(docs);
+        else if (s == SORTING.AUT_DESC) Collections.sort(docs,Collections.reverseOrder());
         return docs;
     }
 }
