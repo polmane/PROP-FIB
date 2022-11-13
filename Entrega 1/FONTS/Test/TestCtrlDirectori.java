@@ -120,7 +120,7 @@ public class TestCtrlDirectori {
         CtrlDir.afegirDocument("Isaac","Prova","fem un projecte de programació");
         CtrlDir.afegirDocument("Juli","Prova","la nit es a molt llarga");
         CtrlDir.afegirDocument("Pau","Prova","de de de de de de");
-        CtrlDir.afegirDocument("Joan","Prova","el programa em peta i no se per on");
+        CtrlDir.afegirDocument("Joan","Prova","el a a programa em peta i no se per on");
         CtrlDir.afegirDocument("Jordi","Prova","dema faig un viatge barcelona");
         CtrlDir.afegirDocument("Pep","Prova",    "la meva casa es d'estil gotic");
         CtrlDir.afegirDocument("Carles","Prova","A A A A A");

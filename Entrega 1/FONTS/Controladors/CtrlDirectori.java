@@ -254,7 +254,7 @@ public class CtrlDirectori {
                 double Bparaula = directoriObert.pesosDocs.get(i).get(word);
                 double Aparaula = 0.0;
 
-                if (directoriObert.pesosDocs.get(IdDoc).containsKey(word)) {
+                if (!directoriObert.pesosDocs.get(IdDoc).containsKey(word)) {
                     switch (m) {
                         case TF_IDF:
                             Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
