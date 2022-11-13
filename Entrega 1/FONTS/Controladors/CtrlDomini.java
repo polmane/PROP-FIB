@@ -26,20 +26,27 @@ public class CtrlDomini {
         _ctrlDirectori.modificarContingut(contingut);
     }
 
-    public void modificarAutor(String autor) {
-        _ctrlDirectori.modificarContingut(autor);
+    public List<Pair<String, String>> compararDocuments(CtrlDirectori.METODE_COMPARACIO m, CtrlDirectori.SORTING s,Integer k, Integer IdDoc) {
+        return _ctrlDirectori.compararDocuments(m, s, k,IdDoc);
     }
 
-    public void modificarTitol(String titol) {
-        _ctrlDirectori.modificarContingut(titol);
-    }
+    /*public static void main(String[] args) throws Exception {
+        CtrlDirectori CtrlDir = new CtrlDirectori();
+        CtrlDomini CtrlDom = new CtrlDomini(CtrlDir,null);
+        CtrlDir.crearDirectori(0);
 
-    public List<Pair<String, String>> compararDocuments(CtrlDirectori.METODE_COMPARACIO m, Integer k, Integer IdDoc) {
-        List<Document> resultat = _ctrlDirectori.compararDocuments(m, k,IdDoc);
-        return resultat.stream()
-                .map(document -> new Pair<String, String>(document.autor, document.titol))
-                .collect(Collectors.toList());
-    }
+        CtrlDom.afegirDocument("Pol","Prova","A A A A A");
+        CtrlDom.afegirDocument("Manel","Prova","el barri gotic de girona");
+        CtrlDom.afegirDocument("Isaac","Prova","fem un projecte de programació");
+        CtrlDom.afegirDocument("Juli","Prova","A A A A A");
+        CtrlDom.afegirDocument("Pau","Prova","de de de de de de");
+        CtrlDom.afegirDocument("Joan","Prova","el a a programa em peta i no se per on");
+        CtrlDom.afegirDocument("Jordi","Prova","dema faig un viatge barcelona");
+        CtrlDom.afegirDocument("Pep","Prova",    "la a a a meva casa es d'estil gotic");
+        CtrlDom.afegirDocument("Carles","Prova","la nit es a molt llarga");
+
+        System.out.println(CtrlDom.compararDocuments(CtrlDirectori.METODE_COMPARACIO.TF_IDF, CtrlDirectori.SORTING.SIM_DESC,2,0));
+    }*/
 
     public void exportarDocument(CtrlDirectori.FILETYPE format, String path) {
         _ctrlDirectori.exportarDocument(format,path);
@@ -53,12 +60,12 @@ public class CtrlDomini {
         return _ctrlDirectori.cercaPerAutoriTitol(autor, titol);
     }
 
-    public List<String> llistaAutorsPerPrefix(String pre) {
-        return _ctrlDirectori.llistaAutorsPerPrefix(pre);
+    public List<String> llistaAutorsPerPrefix(String pre , CtrlDirectori.SORTING s) {
+        return _ctrlDirectori.llistaAutorsPerPrefix(pre, s);
     }
 
-    public List<String> llistaTitolsPerAutor(String autor) {
-        return _ctrlDirectori.llistaTitolsPerAutor(autor);
+    public List<String> llistaTitolsPerAutor(String autor, CtrlDirectori.SORTING s) {
+        return _ctrlDirectori.llistaTitolsPerAutor(autor,s);
     }
 
     public void afegirExpressio(String expressio) throws Exception {

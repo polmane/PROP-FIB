@@ -96,4 +96,8 @@ public class Document {
     public void setTfMap(HashMap<String, Double> tfMap) {
         this.tfMap = tfMap;
     }
+
+    public HashMap<String, Double> getTfMap() {
+        return tfMap;
+    }
 }

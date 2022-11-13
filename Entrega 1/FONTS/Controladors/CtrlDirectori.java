@@ -3,6 +3,7 @@ package FONTS.Controladors;
 import FONTS.Classes.Directori;
 import FONTS.Classes.Document;
 
+import FONTS.Classes.Pair;
 import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -12,6 +13,10 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.Collections.reverseOrder;
+import static java.util.Comparator.comparing;
 
 public class CtrlDirectori {
     /**
@@ -56,11 +61,13 @@ public class CtrlDirectori {
      * Operació per obrir un document que ja teniem precarregat dins el nostre sistema
      * @param idDoc és l'identificador del document que volem obrir
      */
-    public void recuperarDocument(int idDoc) {
-        //nose si fa falta aquest if pk amb una interfície ben feta podem assegurar que el document existeix
-        if (directoriObert.docs.containsKey(idDoc)) {
-            documentActiu = directoriObert.docs.get(idDoc);
+    //TODO: TEST
+    public int seleccionarDocument(int idDoc) {
+        if (directoriObert.getDocs().containsKey(idDoc)) {
+            documentActiu = directoriObert.getDocs().get(idDoc);
+            return 10;
         }
+        return 20;
     }
 
     /**
@@ -68,8 +75,15 @@ public class CtrlDirectori {
      *
      * @param autor és el nou nom d'autor que es vol utilitzar pel document
      */
-    public void modificarAutor(String autor) {
+    public int modificarAutor(String autor) {
+        for (Document document : directoriObert.getDocs().values()) {
+            if (document.getIdDoc() == documentActiu.getIdDoc()) continue;
+            if (documentActiu.getTitol().equals(document.getTitol()) && document.getAutor().equals(autor)) {
+                return 20;
+            }
+        }
         documentActiu.setAutor(autor);
+        return 10;
     }
 
     /**
@@ -77,8 +91,15 @@ public class CtrlDirectori {
      *
      * @param titol és el nou nom del títol que es vol utilitzar pel document
      */
-    public void modificarTitol(String titol) {
+    public int modificarTitol(String titol) {
+        for (Document document : directoriObert.getDocs().values()) {
+            if (document.getIdDoc() == documentActiu.getIdDoc()) continue;
+            if (documentActiu.getAutor().equals(document.getAutor()) && document.getTitol().equals(titol)) {
+                return 20;
+            }
+        }
         documentActiu.setTitol(titol);
+        return 10;
     }
 
     /**
@@ -87,7 +108,16 @@ public class CtrlDirectori {
      * @param contingut és el nou contingut que es vol utilitzar pel document
      */
     public void modificarContingut(String contingut) {
+
+        eliminarParaulesAlDir(documentActiu.getIdDoc());
+
         documentActiu.setContingut(contingut);
+
+        documentActiu.setOcurrencies(obteContingut());
+        documentActiu.setTfMap(tf(documentActiu.getOcurrencies()));
+
+        afegeixParaulesAlDir();
+        afegeixPesos();
     }
 
     /**
@@ -97,17 +127,17 @@ public class CtrlDirectori {
      * @param contingut representa el contingut del nou document
      */
     //TODO: TEST
-    public void afegirDocument (String autor, String titol, String contingut) throws Exception {
+    public int afegirDocument (String autor, String titol, String contingut) {
         for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
-            if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor) && directoriObert.docs.get(i).getTitol().equals(titol)) {
-                throw new Exception("El document amb autor: " + autor + " i títol: "+ titol + " ja existeix");
+            if (directoriObert.getDocs().containsKey(i) && directoriObert.getDocs().get(i).getAutor().equals(autor) && directoriObert.getDocs().get(i).getTitol().equals(titol)) {
+                return 20;
             }
         }
         int id;
         //Comprovem que no tenim cap id per reciclar
-        if(!directoriObert.deletedIds.isEmpty()) {
+        if(!directoriObert.getDeletedIds().isEmpty()) {
             //En cas d'entrar aquí assignem la id que tenim a la cua
-            id = directoriObert.deletedIds.poll();
+            id = directoriObert.getDeletedIds().poll();
         }
         else {
             //Si no hi ha ids per reciclar assignem la nova id al document
@@ -116,29 +146,31 @@ public class CtrlDirectori {
         }
 
         documentActiu = new Document(id, autor, titol, contingut);
-        directoriObert.docs.put(id, documentActiu);
+        directoriObert.getDocs().put(id, documentActiu);
 
         documentActiu.setOcurrencies(obteContingut());
-        documentActiu.setTfMap(tf(documentActiu.ocurrencies));
+        documentActiu.setTfMap(tf(documentActiu.getOcurrencies()));
         afegeixParaulesAlDir();
         afegeixPesos();
+
+        return 10;
     }
 
     private void afegeixParaulesAlDir() {
-        for (String paraula : documentActiu.ocurrencies.keySet()) {
-            if (directoriObert.paraulesDirectori.containsKey(paraula))
-                directoriObert.paraulesDirectori.put(paraula, directoriObert.paraulesDirectori.get(paraula) + documentActiu.ocurrencies.get(paraula));
-            else directoriObert.paraulesDirectori.put(paraula, documentActiu.ocurrencies.get(paraula));
+        for (String paraula : documentActiu.getOcurrencies().keySet()) {
+            if (directoriObert.getParaulesDirectori().containsKey(paraula))
+                directoriObert.getParaulesDirectori().put(paraula, directoriObert.getParaulesDirectori().get(paraula) + documentActiu.getOcurrencies().get(paraula));
+            else directoriObert.getParaulesDirectori().put(paraula, documentActiu.getOcurrencies().get(paraula));
         }
     }
 
     private void afegeixPesos() {
         HashMap<String,Double> idfMap = idf();
-        for (Document doc : directoriObert.docs.values()) {
+        for (Document doc : directoriObert.getDocs().values()) {
             double tfIdfValue = 0.0;
             double idfVal = 0.0;
             HashMap<String,Double> tfMapHelper = new HashMap<>();
-            for (Map.Entry<String, Double> stringDoubleEntry : doc.tfMap.entrySet()) {
+            for (Map.Entry<String, Double> stringDoubleEntry : doc.getTfMap().entrySet()) {
                 double tfVal = (Double) stringDoubleEntry.getValue();
                 if (idfMap.containsKey((String) stringDoubleEntry.getKey())) {
                     idfVal = idfMap.get((String) stringDoubleEntry.getKey());
@@ -146,7 +178,7 @@ public class CtrlDirectori {
                 tfIdfValue = tfVal * idfVal;
                 tfMapHelper.put((stringDoubleEntry.getKey().toString()), tfIdfValue);
             }
-            directoriObert.pesosDocs.put(doc.idDoc, tfMapHelper);
+            directoriObert.getPesosDocs().put(doc.getIdDoc(), tfMapHelper);
         }
     }
 
@@ -165,14 +197,14 @@ public class CtrlDirectori {
 
     private HashMap<String, Double> idf() {
         HashMap<String,Double> idfMap = new HashMap<>();
-        int size = directoriObert.docs.size();
-        for (String word : directoriObert.paraulesDirectori.keySet()) {
+        int size = directoriObert.getDocs().size();
+        for (String word : directoriObert.getParaulesDirectori().keySet()) {
             double wordCount = 0;
-            for(Document docs :directoriObert.docs.values())
+            for(Document docs :directoriObert.getDocs().values())
             {
-                if (docs.ocurrencies.containsKey(word)) wordCount++;
+                if (docs.getOcurrencies().containsKey(word)) wordCount++;
             }
-            Double temp = size/ wordCount;
+            double temp = size/ wordCount;
             Double idf = Math.log(1+temp);
             idfMap.put(word,idf);
         }
@@ -185,16 +217,16 @@ public class CtrlDirectori {
         if (text != null && !text.isEmpty()) {
             int i = 0;
             while (i < text.length()) {
-                String paraula = "";
+                StringBuilder paraula = new StringBuilder();
                 while (i < text.length() && esUnCharCorrecte(text.charAt(i))) {
-                    paraula += text.charAt(i);
+                    paraula.append(text.charAt(i));
                     ++i;
                 }
                 ++i;
-                if (!paraula.isEmpty()) {
-                    paraula = paraula.toLowerCase();
-                    if (paraules.containsKey(paraula)) paraules.put(paraula,paraules.get(paraula)+1);
-                    else paraules.put(paraula, 1);
+                if (paraula.length() > 0) {
+                    paraula = new StringBuilder(paraula.toString().toLowerCase());
+                    if (paraules.containsKey(paraula.toString())) paraules.put(paraula.toString(),paraules.get(paraula.toString())+1);
+                    else paraules.put(paraula.toString(), 1);
                 }
             }
         }
@@ -215,22 +247,34 @@ public class CtrlDirectori {
         BOOL,
     }
 
+    public enum SORTING {
+        SIM_ASC,
+        SIM_DESC,
+        AUT_ASC,
+        AUT_DESC,
+        TIT_ASC,
+        TIT_DESC,
+    }
+
     //TODO: TEST
-    public ArrayList<Document> compararDocuments(METODE_COMPARACIO m, Integer k, Integer IdDoc) {
+    public List<Pair<String, String>> compararDocuments(METODE_COMPARACIO m, SORTING s, Integer k, Integer IdDoc) {
         ArrayList<Document> documentsSemblants = new ArrayList<>();
-        TreeMap<Integer, Double> helper = new TreeMap<>();
-        for (int i = 0; i < directoriObert.docs.size();++i) {
+        ArrayList<Pair<Integer,Double>> helper = new ArrayList<>();
+        //TreeMap<Integer, Double> helper = new TreeMap<>();
+        for (int i = 0; i < directoriObert.getDocs().size();++i) {
             double sumAB = 0.0;
             double A2 = 0.0;
             double B2 = 0.0;
             if (i == IdDoc) continue;
-            for (String word : directoriObert.pesosDocs.get(IdDoc).keySet()) {
-                double Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
+            for (String word : directoriObert.getPesosDocs().get(IdDoc).keySet()) {
+                double Aparaula;
+                if (m == METODE_COMPARACIO.BOOL) Aparaula = 1.0;
+                else Aparaula = directoriObert.getPesosDocs().get(IdDoc).get(word);
                 double Bparaula = 0.0;
-                if (directoriObert.pesosDocs.get(i).containsKey(word)) {
+                if (directoriObert.getPesosDocs().get(i).containsKey(word)) {
                     switch (m) {
                         case TF_IDF:
-                            Bparaula = directoriObert.pesosDocs.get(i).get(word);
+                            Bparaula = directoriObert.getPesosDocs().get(i).get(word);
                             break;
                         case BOOL:
                             Bparaula = 1.0;
@@ -241,134 +285,71 @@ public class CtrlDirectori {
                 A2 += Math.pow(Aparaula,2);
                 B2 += Math.pow(Bparaula,2);
             }
-            for (String word : directoriObert.pesosDocs.get(i).keySet()) {
-                double Bparaula = 0.0;
-                switch (m) {
-                    case TF_IDF:
-                        Bparaula = directoriObert.pesosDocs.get(i).get(word);
-                        break;
-                    case BOOL:
-                        Bparaula = 1.0;
-                        break;
+            for (String word : directoriObert.getPesosDocs().get(i).keySet()) {
+                if (!directoriObert.getPesosDocs().get(IdDoc).containsKey(word)) {
+                    double Bparaula;
+                    if (m == METODE_COMPARACIO.BOOL) Bparaula = 1.0;
+                    else {
+                        Bparaula = directoriObert.getPesosDocs().get(i).get(word);
+                    }
+                    B2 += Math.pow(Bparaula,2);
                 }
-                double Aparaula = 0.0;
-                if (directoriObert.pesosDocs.get(IdDoc).containsKey(word)) {
-                    Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
-                }
-                sumAB += Aparaula * Bparaula;
-                A2 += Math.pow(Aparaula,2);
-                B2 += Math.pow(Bparaula,2);
             }
             double similarity = 0.0;
             if (A2 != 0 && B2 != 0) {
                 similarity = sumAB / (Math.sqrt(A2) * Math.sqrt(B2));
             }
-            if (helper.size() < k) {
-                helper.put(directoriObert.docs.get(i).getIdDoc(), similarity);
-            }
-            else {
-                double comp = 1000.0;
-                Integer idDocE = -1;
-                for (Map.Entry<Integer,Double> it1 : helper.entrySet()) {
-                    if (comp > it1.getValue()) {
-                        comp = it1.getValue();
-                        idDocE = it1.getKey();
-                    }
-                }
-                if (similarity > comp) {
-                    helper.remove(idDocE);
-                    helper.put(directoriObert.docs.get(i).getIdDoc(),similarity);
-                }
-            }
+            helper.add(new Pair<>(directoriObert.getDocs().get(i).getIdDoc(), similarity));
         }
+        helper.sort(comparing(Pair::second));
 
-        //TODO: Ordenar documentsSemblants segons similaritat dels documents
-        for (Map.Entry<Integer, Double> it : helper.entrySet()) {
-            System.out.println(directoriObert.docs.get(it.getKey()) + " " + it.getValue());
-            documentsSemblants.add(directoriObert.docs.get(it.getKey()));
+        for (Pair<Integer, Double> integerDoublePair : helper) {
+            documentsSemblants.add(directoriObert.getDocs().get(integerDoublePair.first()));
         }
-        return documentsSemblants;
+        if(k > documentsSemblants.size()) k = documentsSemblants.size();
+
+        List<Pair<String,String>> llistaSemblants= documentsSemblants.stream()
+                .map(document -> new Pair<String, String>(document.getAutor(), document.getTitol()))
+                .collect(Collectors.toList());
+        sortLlista(llistaSemblants,s);
+        return llistaSemblants.subList(0,k);
+    }
+
+    private void sortLlista(List<Pair<String, String>> llistaSemblants, SORTING s) {
+        switch(s) {
+            case SIM_DESC:
+                Collections.reverse(llistaSemblants);
+                break;
+            case SIM_ASC:
+                break;
+            case AUT_DESC:
+                Comparator<Pair<String, String>> c1 = reverseOrder(comparing(Pair::first));
+                llistaSemblants.sort(c1);
+                break;
+            case AUT_ASC:
+                llistaSemblants.sort(comparing(Pair::first));
+                break;
+            case TIT_DESC:
+                Comparator<Pair<String, String>> c2 = reverseOrder(comparing(Pair::second));
+                llistaSemblants.sort(c2);
+                break;
+            case TIT_ASC:
+                llistaSemblants.sort(comparing(Pair::second));
+        }
     }
 
 
     //TODO: TEST
-    public ArrayList<Document> compararQuery(METODE_COMPARACIO m, Integer k, HashMap<String, Double> paraules) {
-        ArrayList<Document> documentsSemblants = new ArrayList<>();
-        TreeMap<Integer, Double> helper = new TreeMap<>();
-        for (int i = 0; i < directoriObert.docs.size();++i) {
-            double sumAB = 0.0;
-            double A2 = 0.0;
-            double B2 = 0.0;
-            for (String word : paraules.keySet()) {
-                double Aparaula = paraules.get(word);
-                double Bparaula = 0.0;
-                if (directoriObert.pesosDocs.get(i).containsKey(word)) {
-                    switch (m) {
-                        case TF_IDF:
-                            Bparaula = directoriObert.pesosDocs.get(i).get(word);
-                            break;
-                        case BOOL:
-                            Bparaula = 1.0;
-                            break;
-                    }
-                }
-                sumAB += Aparaula * Bparaula;
-                A2 += Math.pow(Aparaula, 2);
-                B2 += Math.pow(Bparaula, 2);
-            }
-            //Diria que perquè funcioni l'algorisme només hem de recórrer les paraules de la query,
-            // ja que totes les altres sempre donarien 0 al multiplicar
-            /*
-            for (String word : directoriObert.pesosDocs.get(i).keySet()) {
-                double Bparaula = 0.0;
-                switch (m) {
-                    case TF_IDF:
-                        Bparaula = directoriObert.pesosDocs.get(i).get(word);
-                        break;
-                    case BOOL:
-                        Bparaula = 1.0;
-                        break;
-                }
-                double Aparaula = 0.0;
-                if () {
-                    Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
-                }
-                sumAB += Aparaula * Bparaula;
-                A2 += Math.pow(Aparaula, 2);
-                B2 += Math.pow(Bparaula, 2);
-            }
-            */
-
-            double similarity = 0.0;
-            if (A2 != 0 && B2 != 0) {
-                similarity = sumAB / (Math.sqrt(A2) * Math.sqrt(B2));
-            }
-            if (helper.size() < k) {
-                helper.put(directoriObert.docs.get(i).getIdDoc(), similarity);
-            } else {
-                double comp = 1000.0;
-                Integer idDocE = -1;
-                for (Map.Entry<Integer, Double> it1 : helper.entrySet()) {
-                    if (comp > it1.getValue()) {
-                        comp = it1.getValue();
-                        idDocE = it1.getKey();
-                    }
-                }
-                if (similarity > comp) {
-                    helper.remove(idDocE);
-                    helper.put(directoriObert.docs.get(i).getIdDoc(), similarity);
-                }
-            }
+    public List<Pair<String, String>> compararQuery(METODE_COMPARACIO m, SORTING s, Integer k, ArrayList<String> paraules) {
+        String result = "";
+        for (String paraula: paraules) {
+            result += paraula + " ";
         }
-
-
-        //TODO: Ordenar documentsSemblants segons similaritat dels documents
-        for (Map.Entry<Integer, Double> it : helper.entrySet()) {
-            System.out.println(directoriObert.docs.get(it.getKey()) + " " + it.getValue());
-            documentsSemblants.add(directoriObert.docs.get(it.getKey()));
+        afegirDocument("compararQuery","compararQuery", result);
+        List<Pair<String, String>> equalQuery = compararDocuments(m,s,k, documentActiu.getIdDoc());
+        eliminarDocument(documentActiu.getIdDoc());
+        return equalQuery;
         }
-        return documentsSemblants;
-    }
 
     public enum FILETYPE {
         TXT, XML
@@ -437,19 +418,23 @@ public class CtrlDirectori {
      * Elimina un document del directori
      * @param idDoc és l'identificador del document que es vol eliminar del directori
      */
-    public void eliminarDocument(int idDoc) throws Exception {
+    public int eliminarDocument(int idDoc) {
         //Comprovem que idDoc sigui realment un identificador d'un document
-        if (!directoriObert.docs.containsKey(idDoc)) {
-            throw new Exception("ERROR: No existeix el document amb identificador: " + idDoc + ".");
+        if (!directoriObert.getDocs().containsKey(idDoc)) {
+            return 20;
         }
 
-        directoriObert.docs.remove(idDoc);
-
         eliminarParaulesAlDir(idDoc);
-        directoriObert.pesosDocs.remove(idDoc);
+        directoriObert.getPesosDocs().remove(idDoc);
+
+        directoriObert.getDocs().remove(idDoc);
+
+        afegeixPesos();
 
         //Afegim l'id a la cua per poder ser reciclada
-        directoriObert.deletedIds.add(idDoc);
+        directoriObert.getDeletedIds().add(idDoc);
+
+        return 10;
     }
 
     private void eliminarParaulesAlDir(int idDoc) {
@@ -462,28 +447,6 @@ public class CtrlDirectori {
     }
 
     //TODO: TEST
-    /*public ArrayList<Document> cercaPerAutor(String autor) {
-        ArrayList<Document> docs = new ArrayList<Document>();
-        for (int i = 0; i < directoriObert.docs.size(); ++i) {
-            if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor)) {
-                docs.add(directoriObert.docs.get(i));
-            }
-        }
-        return docs;
-    }
-
-    //TODO: TEST
-    public ArrayList<Document> cercaPerTitol(String titol) {
-        ArrayList<Document> docs = new ArrayList<Document>();
-        for (int i = 0; i < directoriObert.docs.size(); ++i) {
-            if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getTitol().equals(titol)) {
-                docs.add(directoriObert.docs.get(i));
-            }
-        }
-        return docs;
-    }*/
-
-    //TODO: TEST
     public String cercaPerAutoriTitol(String autor, String titol) {
         for (int i = 0; i < directoriObert.docs.size(); ++i) {
             if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getTitol().equals(titol) && directoriObert.docs.get(i).getAutor().equals(autor)) {
@@ -494,28 +457,31 @@ public class CtrlDirectori {
     }
 
     //TODO: TEST
-    public List<String> llistaAutorsPerPrefix(String pre) {
+    public List<String> llistaAutorsPerPrefix(String pre, SORTING s) {
         List<String> autors = new ArrayList<String>();
-        for (int i = 0; i < directoriObert.docs.size(); ++i) {
+        for (int i = 0; i < directoriObert.getDocs().size(); ++i) {
             if (directoriObert.docs.containsKey(i)) {
-                String autor = directoriObert.docs.get(i).getAutor();
+                String autor = directoriObert.getDocs().get(i).getAutor();
                 if (autor.startsWith(pre)) {
                     autors.add(autor);
                 }
             }
         }
+        if (s == SORTING.AUT_ASC) Collections.sort(autors);
+        else if (s == SORTING.AUT_DESC) Collections.sort(autors,Collections.reverseOrder());
         return autors;
     }
 
     //TODO: TEST
-    public List<String> llistaTitolsPerAutor(String autor) {
+    public List<String> llistaTitolsPerAutor(String autor, SORTING s) {
         List<String> docs = new ArrayList<String>();
-        for (int i = 0; i < directoriObert.docs.size(); ++i) {
-            if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor)) {
-                docs.add(directoriObert.docs.get(i).getTitol());
+        for (int i = 0; i < directoriObert.getDocs().size(); ++i) {
+            if (directoriObert.getDocs().containsKey(i) && directoriObert.getDocs().get(i).getAutor().equals(autor)) {
+                docs.add(directoriObert.getDocs().get(i).getTitol());
             }
         }
-        Collections.sort(docs);
+        if (s == SORTING.AUT_ASC) Collections.sort(docs);
+        else if (s == SORTING.AUT_DESC) Collections.sort(docs,Collections.reverseOrder());
         return docs;
     }
 }
