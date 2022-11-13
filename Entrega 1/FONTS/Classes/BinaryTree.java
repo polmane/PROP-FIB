@@ -31,13 +31,18 @@ public class BinaryTree {
         String second_part = "";
         exp = eliminaEspais(exp);
         if (exp.charAt(0) == '(' && exp.charAt(exp.length()-1) == ')') {
+            int currentPar = 1;     //quantitat parentesis sense tancar
             int help = current.pos;
             ++help;
             boolean correcte = true;
-            for (int i = help; i < exp.length(); ++i) {
-                if (exp.charAt(i) == ')' && i != exp.length() - 1) {
-                    correcte = false;
-                    break;
+            for (int i = help; i < exp.length()-1; ++i) {
+                if (exp.charAt(i) == '(') ++currentPar;
+                if (exp.charAt(i) == ')') {
+                    --currentPar;
+                    if (currentPar == 0) {  //si en algun moment tanquem el primer parentesis, break i no correcte
+                        correcte = false;
+                        break;
+                    }
                 }
             }
             if (correcte) {

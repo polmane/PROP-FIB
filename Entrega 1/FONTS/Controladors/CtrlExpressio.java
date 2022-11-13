@@ -87,5 +87,17 @@ public class CtrlExpressio {
         return greatDocs;
 
     }
+    public static void main(String[] args) {
+        Document d = new Document(0,"pol", "prova", "p1 p2 p3 hola adéu");
+        d.ocurrencies.put("p1",1);
+        d.ocurrencies.put("p2",1);
+        d.ocurrencies.put("p3",1);
+        d.ocurrencies.put("hola",1);
+        d.ocurrencies.put("adéu",1);
+        String exp = "(hola & p3 p4)";
+        BinaryTree bt = new BinaryTree(exp);
+        int result = BinaryTree.evalTree(bt.root, d);
+        System.out.println(result);
+    }
 }
 
