@@ -61,7 +61,6 @@ public class CtrlDirectori {
      * Operació per obrir un document que ja teniem precarregat dins el nostre sistema
      * @param idDoc és l'identificador del document que volem obrir
      */
-    //TODO: TEST
     public int seleccionarDocument(int idDoc) {
         if (directoriObert.getDocs().containsKey(idDoc)) {
             documentActiu = directoriObert.getDocs().get(idDoc);
@@ -126,7 +125,6 @@ public class CtrlDirectori {
      * @param titol representa el títol del document que es vol afegir
      * @param contingut representa el contingut del nou document
      */
-    //TODO: TEST
     public int afegirDocument (String autor, String titol, String contingut) {
         for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
             if (directoriObert.getDocs().containsKey(i) && directoriObert.getDocs().get(i).getAutor().equals(autor) && directoriObert.getDocs().get(i).getTitol().equals(titol)) {
@@ -278,7 +276,7 @@ public class CtrlDirectori {
                         case BOOL:
                             Bparaula = 1.0;
                             break;
-                    }
+                    };
                 }
                 sumAB += Aparaula * Bparaula;
                 A2 += Math.pow(Aparaula,2);
@@ -337,7 +335,6 @@ public class CtrlDirectori {
         }
     }
 
-
     //TODO: TEST
     public List<Pair<String, String>> compararQuery(METODE_COMPARACIO m, SORTING s, Integer k, ArrayList<String> paraules) {
         String result = "";
@@ -359,7 +356,7 @@ public class CtrlDirectori {
      * @param format es correspon en quin format es desitja exportar el document
      * @param path es correspon al camí desitjat per tal de guardar el document
      */
-    //TODO: TEST
+    //TODO: TEST (NO CAL PER ENTREGA 1)
     public void exportarDocument(FILETYPE format, String path) {
         switch (format) {
             case TXT:
@@ -495,5 +492,3 @@ public class CtrlDirectori {
         return docs;
     }
 }
-
-

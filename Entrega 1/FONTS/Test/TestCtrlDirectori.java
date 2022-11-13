@@ -27,13 +27,14 @@ public class TestCtrlDirectori {
         String autor = "juli";
         String titol = "prova afegir document";
         String contingut = "document per a provar afegirDocument()";
-        CtrlDir.afegirDocument(autor, titol, contingut);
+        int res = CtrlDir.afegirDocument(autor, titol, contingut);
+        assertEquals(10, res);
         assertEquals(autor, CtrlDir.getDirectoriObert().getDocs().get(idDoc).getAutor());
         assertEquals(titol, CtrlDir.getDirectoriObert().getDocs().get(idDoc).getTitol());
         assertEquals(contingut, CtrlDir.getDirectoriObert().getDocs().get(idDoc).getContingut());
 
         //ERROR: ja existeix document amb el mateix autor i titol
-        int res = CtrlDir.afegirDocument(autor, titol, contingut);
+        res = CtrlDir.afegirDocument(autor, titol, contingut);
         assertEquals(20, res);
     }
 
@@ -92,6 +93,34 @@ public class TestCtrlDirectori {
         CtrlDir.eliminarDocument(idDoc+1);
         CtrlDir.afegirDocument("juli", "prova salt forat", "document per a comprovar que ens saltem el forat");
     }
+
+    /**
+     * Objecte de la prova: Test del mètode seleccionarDocument de la classe CtrlDirectori.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional.
+     * Valors estudiats: Funcionament correcte de la funció seleccionarDocument.
+     * Operativa: Selecciona correctament el document quan l'identificador és vàlid, altrament retorna un codi d'error.
+     */
+    @Test
+    public void seleccionarDocument() {
+        CtrlDirectori CtrlDir = new CtrlDirectori();
+        CtrlDir.crearDirectori(0);
+
+        //id fora de rang directori buit
+        assertEquals(20, CtrlDir.seleccionarDocument(3));
+
+        CtrlDir.afegirDocument("Juli","Prova","");
+        CtrlDir.afegirDocument("Juli","Prova2","");
+        CtrlDir.afegirDocument("Juli","Prova3","");
+        assertEquals(2, CtrlDir.getDocumentActiu().getIdDoc());
+
+        //Funcionament correcte
+        assertEquals(10, CtrlDir.seleccionarDocument(0));
+        assertEquals(0, CtrlDir.getDocumentActiu().getIdDoc());
+
+        //id fora de rang directori ple
+        assertEquals(20, CtrlDir.seleccionarDocument(5));
+    }
+
 
     @Test
     public void TestCompararDocuments() throws Exception { //TODO: fer ben fet
