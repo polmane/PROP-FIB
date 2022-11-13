@@ -117,7 +117,7 @@ public class TestCtrlDirectori {
      * Operativa: Selecciona correctament el document quan l'identificador és vàlid, altrament retorna un codi d'error.
      */
     @Test
-    public void seleccionarDocument() {
+    public void TestSeleccionarDocument() {
         CtrlDirectori CtrlDir = new CtrlDirectori();
         CtrlDir.crearDirectori(0);
 
@@ -137,9 +137,58 @@ public class TestCtrlDirectori {
         assertEquals(20, CtrlDir.seleccionarDocument(5));
     }
 
+    /**
+     * Objecte de la prova: Test del mètode modificarAutor de la classe CtrlDirectori
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     * Valors estudiats: Gestió correcta dels errors i funcionament correcte de modificarAutor.
+     * Operativa: Es comprova que saltin errors quan toca amb el codi corresponent i el funcionament correcte de la funció.
+     */
+    @Test
+    public void TestModificarAutor() {
+        CtrlDirectori CtrlDir = new CtrlDirectori();
+        CtrlDir.crearDirectori(0);
+
+        CtrlDir.afegirDocument("Juli","Prova","");
+        CtrlDir.afegirDocument("Pol","Prova","");
+        CtrlDir.afegirDocument("Isaac","Prova","");
+
+        assertEquals(30, CtrlDir.modificarAutor(null));
+        assertEquals(30, CtrlDir.modificarAutor(""));
+
+        //Document actiu (Isaac, Prova, ,)
+        assertEquals(20, CtrlDir.modificarAutor("Pol"));
+
+        assertEquals(10, CtrlDir.modificarAutor("Nou Autor"));
+        assertEquals("Nou Autor", CtrlDir.getDocumentActiu().getAutor());
+    }
+
+    /**
+     * Objecte de la prova: Test del mètode modificarAutor de la classe CtrlDirectori
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     * Valors estudiats: Gestió correcta dels errors i funcionament correcte de modificarAutor.
+     * Operativa: Es comprova que saltin errors quan toca amb el codi corresponent i el funcionament correcte de la funció.
+     */
+    @Test
+    public void TestModificarTitol() {
+        CtrlDirectori CtrlDir = new CtrlDirectori();
+        CtrlDir.crearDirectori(0);
+
+        CtrlDir.afegirDocument("Juli","Prova","");
+        CtrlDir.afegirDocument("Pol","Prova","");
+        CtrlDir.afegirDocument("Isaac","Prova","");
+
+        assertEquals(30, CtrlDir.modificarAutor(null));
+        assertEquals(30, CtrlDir.modificarAutor(""));
+
+        //Document actiu (Isaac, Prova, ,)
+        assertEquals(20, CtrlDir.modificarAutor("Pol"));
+
+        assertEquals(10, CtrlDir.modificarAutor("Nou Autor"));
+        assertEquals("Nou Autor", CtrlDir.getDocumentActiu().getAutor());
+    }
 
     @Test
-    public void TestCompararDocuments() throws Exception { //TODO: fer ben fet
+    public void TestCompararDocuments() { //TODO: fer ben fet
         CtrlDirectori CtrlDir = new CtrlDirectori();
         CtrlDir.crearDirectori(0);
 

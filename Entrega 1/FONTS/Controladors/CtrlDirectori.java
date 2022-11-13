@@ -74,8 +74,11 @@ public class CtrlDirectori {
      *
      * @param autor és el nou nom d'autor que es vol utilitzar pel document
      */
-    //TODO: TEST
     public int modificarAutor(String autor) {
+        if (autor == null)
+            return 30;
+        if (autor.isEmpty())
+            return 30;
         for (Document document : directoriObert.getDocs().values()) {
             if (document.getIdDoc() == documentActiu.getIdDoc()) continue;
             if (documentActiu.getTitol().equals(document.getTitol()) && document.getAutor().equals(autor)) {
