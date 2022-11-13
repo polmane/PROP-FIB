@@ -74,6 +74,7 @@ public class CtrlDirectori {
      *
      * @param autor és el nou nom d'autor que es vol utilitzar pel document
      */
+    //TODO: TEST
     public int modificarAutor(String autor) {
         for (Document document : directoriObert.getDocs().values()) {
             if (document.getIdDoc() == documentActiu.getIdDoc()) continue;
@@ -90,6 +91,7 @@ public class CtrlDirectori {
      *
      * @param titol és el nou nom del títol que es vol utilitzar pel document
      */
+    //TODO: TEST
     public int modificarTitol(String titol) {
         for (Document document : directoriObert.getDocs().values()) {
             if (document.getIdDoc() == documentActiu.getIdDoc()) continue;
@@ -106,6 +108,7 @@ public class CtrlDirectori {
      *
      * @param contingut és el nou contingut que es vol utilitzar pel document
      */
+    //TODO: TEST
     public void modificarContingut(String contingut) {
 
         eliminarParaulesAlDir(documentActiu.getIdDoc());
@@ -238,7 +241,6 @@ public class CtrlDirectori {
         }
         return true;
     }
-
 
     public enum METODE_COMPARACIO {
         TF_IDF,

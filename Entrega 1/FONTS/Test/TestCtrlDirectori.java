@@ -7,15 +7,31 @@ import org.junit.Test;
 
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class TestCtrlDirectori {
+
+    /**
+     * Objecte de la prova: Test del mètode crearDirectori de la classe CtrlDirectori
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     * Valors estudiats: Es crea un directori al controlador de directori
+     * Operativa: es comprova que crear un directori funcioni correctament
+     */
+    @Test
+    public void TestCrearDirectori() {
+        CtrlDirectori CtrlDir = new CtrlDirectori();
+        assertNull(CtrlDir.getDirectoriObert());
+
+        CtrlDir.crearDirectori(0);
+        assertNotNull(CtrlDir.getDirectoriObert());
+        assertEquals(0, CtrlDir.getDirectoriObert().getIdDir());
+    }
+
     /**
      * Objecte de la prova: Test del mètode guardarDocument de la classe CtrlDirectori
      * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
      * Valors estudiats: Es guarda un document al directori
-     * Operativa: es comprova que guardar un document al directori funcioni correctament
+     * Operativa: es comprova que afegir un document al directori funcioni correctament
      */
     @Test
     public void TestAfegirDocument() {
