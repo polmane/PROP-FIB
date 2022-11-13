@@ -447,6 +447,14 @@ public class CtrlDirectori {
 
     //TODO: TEST
     public String cercaPerAutoriTitol(String autor, String titol) {
+        if (autor == null)
+            return null;
+        if (titol == null)
+            return null;
+        if (autor.isEmpty())
+            return null;
+        if (titol.isEmpty())
+            return null;
         for (int i = 0; i < directoriObert.getDocs().size(); ++i) {
             if (directoriObert.getDocs().containsKey(i) && directoriObert.getDocs().get(i).getTitol().equals(titol) && directoriObert.getDocs().get(i).getAutor().equals(autor)) {
                 return directoriObert.getDocs().get(i).getContingut();

@@ -137,7 +137,44 @@ public class TestCtrlDirectori {
         //Autor erroni
         assertNull(CtrlDir.cercaPerAutoriTitol("AutorErroni", "Titol1"));
 
-        //FIXME: Podem passar null com a argument? Com ho controlem?
+        //Nulls o string buida
+        assertNull(CtrlDir.cercaPerAutoriTitol("Juli", null));
+        assertNull(CtrlDir.cercaPerAutoriTitol("Juli", ""));
+        assertNull(CtrlDir.cercaPerAutoriTitol(null, "Titol1"));
+        assertNull(CtrlDir.cercaPerAutoriTitol("", "Titol1"));
+
+        //Funcionament correcte
+        assertEquals("Pol2", CtrlDir.cercaPerAutoriTitol("Pol", "Titol2"));
+    }
+
+    /**
+     * Objecte de la prova: Test del mètode llistaAutorsPerPrefix de la classe CtrlDirectori
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     * Valors estudiats: Funcionament correcte de la funció llistaAutorsPerPrefix
+     * Operativa: Es comproven les diferents causes d'error de la funció i el seu funcionament correcte.
+     */
+    @Test
+    public void TestLlistaAutorsPerPrefix() {
+        CtrlDirectori CtrlDir = new CtrlDirectori();
+        CtrlDir.crearDirectori(0);
+
+        //Cas directori buit
+        assertNull(CtrlDir.llistaAutorsPerPrefix("Autor", CtrlDirectori.SORTING.AUT_ASC));
+
+        CtrlDir.afegirDocument("Juli","Titol1","Juli1");
+        CtrlDir.afegirDocument("Juli","Titol2","Juli2");
+        CtrlDir.afegirDocument("Pol","Titol1","Pol1");
+        CtrlDir.afegirDocument("Pol", "Titol2", "Pol2");
+        CtrlDir.afegirDocument("Isaac","Titol1","Isaac1");
+        CtrlDir.afegirDocument("Isaac", "Titol2", "Isaac2");
+
+        //Titol erroni
+        assertNull(CtrlDir.cercaPerAutoriTitol("Juli", "TitolErroni"));
+
+        //Autor erroni
+        assertNull(CtrlDir.cercaPerAutoriTitol("AutorErroni", "Titol1"));
+
+
 
         //Funcionament correcte
         assertEquals("Pol2", CtrlDir.cercaPerAutoriTitol("Pol", "Titol2"));
