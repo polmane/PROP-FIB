@@ -61,10 +61,12 @@ public class CtrlDirectori {
      * Operació per obrir un document que ja teniem precarregat dins el nostre sistema
      * @param idDoc és l'identificador del document que volem obrir
      */
-    public void seleccionarDocument(int idDoc) {
+    public int seleccionarDocument(int idDoc) {
         if (directoriObert.docs.containsKey(idDoc)) {
             documentActiu = directoriObert.docs.get(idDoc);
+            return 10;
         }
+        return 20;
     }
 
     /**
@@ -72,8 +74,15 @@ public class CtrlDirectori {
      *
      * @param autor és el nou nom d'autor que es vol utilitzar pel document
      */
-    public void modificarAutor(String autor) {
+    public int modificarAutor(String autor) {
+        for (Document document : directoriObert.getDocs().values()) {
+            if (document.getIdDoc() == documentActiu.getIdDoc()) continue;
+            if (documentActiu.getTitol().equals(document.getTitol()) && document.getAutor().equals(autor)) {
+                return 20;
+            }
+        }
         documentActiu.setAutor(autor);
+        return 10;
     }
 
     /**
@@ -81,8 +90,15 @@ public class CtrlDirectori {
      *
      * @param titol és el nou nom del títol que es vol utilitzar pel document
      */
-    public void modificarTitol(String titol) {
+    public int modificarTitol(String titol) {
+        for (Document document : directoriObert.getDocs().values()) {
+            if (document.getIdDoc() == documentActiu.getIdDoc()) continue;
+            if (documentActiu.getAutor().equals(document.getAutor()) && document.getTitol().equals(titol)) {
+                return 20;
+            }
+        }
         documentActiu.setTitol(titol);
+        return 10;
     }
 
     /**
@@ -110,10 +126,10 @@ public class CtrlDirectori {
      * @param contingut representa el contingut del nou document
      */
     //TODO: TEST
-    public void afegirDocument (String autor, String titol, String contingut) throws Exception {
+    public int afegirDocument (String autor, String titol, String contingut) {
         for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
             if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor) && directoriObert.docs.get(i).getTitol().equals(titol)) {
-                throw new Exception("El document amb autor: " + autor + " i títol: "+ titol + " ja existeix");
+                return 20;
             }
         }
         int id;
@@ -135,6 +151,8 @@ public class CtrlDirectori {
         documentActiu.setTfMap(tf(documentActiu.ocurrencies));
         afegeixParaulesAlDir();
         afegeixPesos();
+
+        return 10;
     }
 
     private void afegeixParaulesAlDir() {
@@ -321,7 +339,7 @@ public class CtrlDirectori {
 
 
     //TODO: TEST
-    public List<Pair<String, String>> compararQuery(METODE_COMPARACIO m, SORTING s, Integer k, ArrayList<String> paraules) throws Exception {
+    public List<Pair<String, String>> compararQuery(METODE_COMPARACIO m, SORTING s, Integer k, ArrayList<String> paraules) {
         String result = "";
         for (String paraula: paraules) {
             result += paraula + " ";
@@ -399,10 +417,10 @@ public class CtrlDirectori {
      * Elimina un document del directori
      * @param idDoc és l'identificador del document que es vol eliminar del directori
      */
-    public void eliminarDocument(int idDoc) throws Exception {
+    public int eliminarDocument(int idDoc) {
         //Comprovem que idDoc sigui realment un identificador d'un document
         if (!directoriObert.docs.containsKey(idDoc)) {
-            throw new Exception("ERROR: No existeix el document amb identificador: " + idDoc + ".");
+            return 20;
         }
 
         eliminarParaulesAlDir(idDoc);
@@ -414,6 +432,8 @@ public class CtrlDirectori {
 
         //Afegim l'id a la cua per poder ser reciclada
         directoriObert.deletedIds.add(idDoc);
+
+        return 10;
     }
 
     private void eliminarParaulesAlDir(int idDoc) {
