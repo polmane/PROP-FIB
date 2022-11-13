@@ -42,10 +42,16 @@ public class DriverCtrlDirectori {
             System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
             return;
         }
+        mostrarDocuments();
         Scanner input = new Scanner(System.in);
         int idDoc = input.nextInt();
-        _ctrlDirectori.seleccionarDocument(idDoc);
-        System.out.println("Document seleccionat correctament");
+        if (_ctrlDirectori.getDirectoriObert().getDocs().size() == 0) {
+            System.out.println("No hi ha document disponibles");
+        }
+        else {
+            _ctrlDirectori.seleccionarDocument(idDoc);
+            System.out.println("Document seleccionat correctament");
+        }
     }
 
     public void testModificarAutor() {
@@ -89,6 +95,7 @@ public class DriverCtrlDirectori {
             System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
             return;
         }
+        mostrarDocuments();
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu l'identificador del document a eliminar:");
         int id = input.nextInt();
@@ -183,7 +190,6 @@ public class DriverCtrlDirectori {
                     break;
                 case 3:
                     System.out.println("---Seleccionar document---");
-                    mostrarDocuments();
                     DDir.testSeleccionarDocument();
                     break;
                 case 4:
@@ -200,7 +206,6 @@ public class DriverCtrlDirectori {
                     break;
                 case 7:
                     System.out.println("---Eliminar document---");
-                    mostrarDocuments();
                     DDir.testEliminarDocument();
                     break;
                 case 8:
