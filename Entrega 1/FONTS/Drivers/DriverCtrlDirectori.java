@@ -5,6 +5,8 @@ import java.util.*;
 import FONTS.Classes.Document;
 import FONTS.Controladors.CtrlDirectori;
 
+import static jdk.internal.org.jline.utils.Colors.s;
+
 public class DriverCtrlDirectori {
     private static CtrlDirectori _ctrlDirectori;
 
@@ -133,7 +135,8 @@ public class DriverCtrlDirectori {
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu el prefix de nom d'autor a cercar:");
         String pre = input.nextLine();
-        List<String> res = _ctrlDirectori.llistaAutorsPerPrefix(pre);
+        System.out.println("Escriu el");
+        List<String> res = _ctrlDirectori.llistaAutorsPerPrefix(pre, s);
         System.out.println("Llista d'autors amb prefix: " + pre);
         System.out.println(res);
     }
