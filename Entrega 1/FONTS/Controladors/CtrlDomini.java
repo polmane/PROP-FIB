@@ -1,7 +1,6 @@
 package FONTS.Controladors;
 
 import FONTS.Classes.Document;
-import FONTS.Classes.Expressio;
 import FONTS.Classes.Pair;
 
 import java.util.ArrayList;
@@ -27,6 +26,14 @@ public class CtrlDomini {
         _ctrlDirectori.modificarContingut(contingut);
     }
 
+    public void modificarAutor(String autor) {
+        _ctrlDirectori.modificarContingut(autor);
+    }
+
+    public void modificarTitol(String titol) {
+        _ctrlDirectori.modificarContingut(titol);
+    }
+
     public List<Pair<String, String>> compararDocuments(CtrlDirectori.METODE_COMPARACIO m, Integer k, Integer IdDoc) {
         List<Document> resultat = _ctrlDirectori.compararDocuments(m, k,IdDoc);
         return resultat.stream()
@@ -41,15 +48,6 @@ public class CtrlDomini {
     public void eliminarDocument(int idDoc) throws Exception {
         _ctrlDirectori.eliminarDocument(idDoc);
     }
-
-    /*public ArrayList<Document> cercaPerAutor(String autor) {
-        //Com hem de retornar aixo?
-        return _ctrlDirectori.cercaPerAutor(autor);
-    }
-
-    public ArrayList<Document> cercaPerTitol(String titol) {
-        return _ctrlDirectori.cercaPerTitol(titol);
-    }*/
 
     public String cercaPerAutoriTitol(String autor, String titol) {
         return _ctrlDirectori.cercaPerAutoriTitol(autor, titol);
