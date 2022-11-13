@@ -19,7 +19,7 @@ public class TestExpressio {
         String expressio = "!";
         Expressio exp = new Expressio(idExp, expressio);
 
-        assertEquals(0, exp.getIdEXp());
+        assertEquals(0, exp.getIdExp());
         assertEquals("!", exp.getExpressio());
     }
 }

@@ -65,7 +65,7 @@ public class CtrlDomini {
         _ctrlExpressio.afegirExpressio(expressio);
     }
 
-    public void modificarExpressio(String exp) {
+    public void modificarExpressio(String exp) throws Exception{
         _ctrlExpressio.modificarExpressio(exp);
     }
 
@@ -74,8 +74,12 @@ public class CtrlDomini {
     }
 
     public ArrayList<Document> selectPerExpressio(Integer idExp) {
-        HashMap<Integer, Document> docs = _ctrlDirectori.getDirectoriObert().getDocs();
-        return _ctrlExpressio.selectPerExpressio(idExp, docs);
+        ArrayList<Document> resultat = new ArrayList<>();
+
+        for (Document document : _ctrlDirectori.getDirectoriObert().getDocs().values()) {
+            if(_ctrlExpressio.selectPerExpressio(idExp, document)) resultat.add(document);
+        }
+        return resultat;
     }
 
     public static void main (String[] args) throws Exception {
@@ -94,10 +98,10 @@ public class CtrlDomini {
         cdom.afegirDocument("Jordi","Prova","dema faig un viatge barcelona");
         cdom.afegirDocument("Pep","Prova",    "la meva casa es d'estil gotic");
         cdom.afegirDocument("Carles","Prova","A A A A A");
-        cdom.afegirDocument("Anna","Prova","B");
+        cdom.afegirDocument("Anna","Prova","B barri");
         cdom.afegirDocument("Marta","Prova","B el");
 
-        cdom.afegirExpressio("B & (el | barri)");
+        cdom.afegirExpressio("(hola & (\"barri gotic\"))");
 
         ArrayList<Document> docfinal = cdom.selectPerExpressio(0);
 
