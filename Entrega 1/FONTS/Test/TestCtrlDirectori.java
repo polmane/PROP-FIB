@@ -162,21 +162,27 @@ public class TestCtrlDirectori {
         assertNull(CtrlDir.llistaAutorsPerPrefix("Autor", CtrlDirectori.SORTING.AUT_ASC));
 
         CtrlDir.afegirDocument("Juli","Titol1","Juli1");
-        CtrlDir.afegirDocument("Juli","Titol2","Juli2");
+        CtrlDir.afegirDocument("Joan","Titol2","Juli2");
         CtrlDir.afegirDocument("Pol","Titol1","Pol1");
-        CtrlDir.afegirDocument("Pol", "Titol2", "Pol2");
+        CtrlDir.afegirDocument("Pau", "Titol2", "Pol2");
         CtrlDir.afegirDocument("Isaac","Titol1","Isaac1");
-        CtrlDir.afegirDocument("Isaac", "Titol2", "Isaac2");
+        CtrlDir.afegirDocument("Isidre", "Titol2", "Isaac2");
 
-        //Titol erroni
-        assertNull(CtrlDir.cercaPerAutoriTitol("Juli", "TitolErroni"));
+        //Cap autor
+        assertNull(CtrlDir.llistaAutorsPerPrefix("Mar", CtrlDirectori.SORTING.AUT_ASC));
 
-        //Autor erroni
-        assertNull(CtrlDir.cercaPerAutoriTitol("AutorErroni", "Titol1"));
+        //Tots els autors
+        assertEquals(6, CtrlDir.llistaAutorsPerPrefix("", CtrlDirectori.SORTING.AUT_ASC).size());
 
+        //Ordre ascendent
+        List<String> ret = CtrlDir.llistaAutorsPerPrefix("J", CtrlDirectori.SORTING.AUT_ASC);
+        assertEquals("Joan", ret.get(0));
+        assertEquals("Juli", ret.get(1));
 
+        //Ordre descendent
+        ret = CtrlDir.llistaAutorsPerPrefix("P", CtrlDirectori.SORTING.AUT_DESC);
+        assertEquals("Pol", ret.get(0));
+        assertEquals("Pau", ret.get(1));
 
-        //Funcionament correcte
-        assertEquals("Pol2", CtrlDir.cercaPerAutoriTitol("Pol", "Titol2"));
     }
 }
