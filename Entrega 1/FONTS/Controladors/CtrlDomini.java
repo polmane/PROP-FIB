@@ -18,8 +18,8 @@ public class CtrlDomini {
         this._ctrlExpressio = _ctrlExpressio;
     }
 
-    public void afegirDocument(String autor, String titol, String contingut) throws Exception {
-        _ctrlDirectori.afegirDocument(autor, titol, contingut);
+    public int afegirDocument(String autor, String titol, String contingut){
+        return _ctrlDirectori.afegirDocument(autor, titol, contingut);
     }
 
     public void modificarContingut(String contingut) {
@@ -33,7 +33,7 @@ public class CtrlDomini {
         return _ctrlDirectori.compararDocuments(m, s, k,IdDoc);
     }
 
-    /*public static void main(String[] args) throws Exception {
+    /*public static void main(String[] args){
         CtrlDirectori CtrlDir = new CtrlDirectori();
         CtrlDomini CtrlDom = new CtrlDomini(CtrlDir,null);
         CtrlDir.crearDirectori(0);
@@ -55,7 +55,7 @@ public class CtrlDomini {
         _ctrlDirectori.exportarDocument(format,path);
     }
 
-    public int eliminarDocument(int idDoc) throws Exception {
+    public int eliminarDocument(int idDoc){
         return _ctrlDirectori.eliminarDocument(idDoc);
     }
 
@@ -71,15 +71,15 @@ public class CtrlDomini {
         return _ctrlDirectori.llistaTitolsPerAutor(autor,s);
     }
 
-    public int afegirExpressio(String expressio) throws Exception {
+    public int afegirExpressio(String expressio){
         return _ctrlExpressio.afegirExpressio(expressio);
     }
 
-    public int modificarExpressio(String exp) throws Exception{
+    public int modificarExpressio(String exp){
         return _ctrlExpressio.modificarExpressio(exp);
     }
 
-    public int eliminarexpressio(int idExp) throws Exception {
+    public int eliminarexpressio(int idExp){
         return _ctrlExpressio.eliminarexpressio(idExp);
     }
 
@@ -92,7 +92,7 @@ public class CtrlDomini {
         return resultat;
     }
 
-    public static void main (String[] args) throws Exception {
+    public static void main (String[] args){
         CtrlDirectori dir = new CtrlDirectori();
         CtrlExpressio exp = new CtrlExpressio();
         CtrlDomini cdom = new CtrlDomini(dir, exp);
