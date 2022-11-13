@@ -14,6 +14,9 @@ public class CtrlExpressio {
      */
     private Expressio expressioSeleccionada;
 
+    /**
+     * Representa la Id de la nova expressió
+     */
     private Integer IdNovaExp;
 
 
@@ -32,56 +35,91 @@ public class CtrlExpressio {
     }
 
     /**
-     * Getter d'expressioSeleccionada
+     * Getter d'expressió seleccionada
+     * @return retorna l'expressió seleccionada
      */
     public Expressio getExpressioSeleccionada() {
         return expressioSeleccionada;
     }
 
+    public HashMap<Integer, Expressio> getExpressions() {
+        return expressions;
+    }
+
+    public void setExpressions(HashMap<Integer, Expressio> expressions) {
+        this.expressions = expressions;
+    }
+
+    /**
+     * seleccionarExpressió permet setejar l'expressió seleccionada dins el sistema
+     * @param idExp respresenta la id de l'expressió que volem seleccionar
+     * @return si retorna 10 vol dir que s'ha realitzat l'operació correctament, si retorna 20 significa que hi ha hagut un error
+     */
+    public int seleccionarExpressio (Integer idExp) {
+        if (expressions.containsKey(idExp)) {
+            expressioSeleccionada = expressions.get(idExp);
+            return 10;
+        }
+        return 20;
+    }
+
+
     /**
      * AfegirExpressió permet afegir una nova expressió dins el sistema
      * @param expressio representa l'string que l'usuari reconeix com l'expressió per fer la cerca
+     * @return si retorna 10 vol dir que s'ha realitzat l'operació correctament, si retorna 20 significa que hi ha hagut un error
      */
-    public void afegirExpressio(String expressio) throws Exception {
+    public int afegirExpressio(String expressio){
         expressioSeleccionada = new Expressio(IdNovaExp,expressio);
         ++IdNovaExp;
         for (Expressio e : expressions.values()) {
             if (e.getExpressio().equals(expressio)) {
-                throw new Exception("Ja existeix una expresió igual en el directori");
+                return 20;
             }
         }
-        expressions.put(expressioSeleccionada.getIdEXp(),expressioSeleccionada);
+        expressions.put(expressioSeleccionada.getIdExp(),expressioSeleccionada);
+        return 10;
     }
+
     /**
-     * Operacio per modificar l'expressio seleccionada
+     * modificarExpressió modifica l'expressió seleccionada amb un nou text corresponent
+     * @param exp representa la nova expressió
+     * @return si retorna 10 vol dir que s'ha realitzat l'operació correctament, si retorna 20 significa que hi ha hagut un error
      */
-    public void modificarExpressio(String exp) throws Exception {
+    public int modificarExpressio(String exp){
         for (Expressio e : expressions.values()) {
             if (e.getExpressio().equals(exp)) {
-                throw new Exception("Ja existeix una expresió igual en el directori");
+                return 20;
             }
         }
         expressioSeleccionada.setExpressio(exp);
-        expressioSeleccionada.ExpressionTree = new BinaryTree(exp);
+        expressioSeleccionada.setExpressionTree(new BinaryTree(exp));
+        return 10;
     }
 
-    public void eliminarexpressio(int idExp) throws Exception {
+    /**
+     * eliminarExpressió elimina l'expressió amb idExp del sistema
+     * @param idExp representa la id de l'expressió que volem eliminar
+     * @return si retorna 10 vol dir que s'ha realitzat l'operació correctament, si retorna 20 significa que hi ha hagut un error
+     */
+    public int eliminarexpressio(int idExp){
         if (expressions.containsKey(idExp)) {
             expressions.remove(idExp);
+            return 10;
         } else {
-            throw new Exception("La expressió no esta en el directori");
+            return 20;
         }
     }
 
     /**
-     * Fa una cerca dels documents que contenen les paraules de la expressió
-     * que es passa com a parametre
-     * @return ArrayList<Document> retorna els documents que compleixen els criteris
-     * de cerca de la expressió passada com a paràmetre
+     * selectPerExpressió busca, de tots els documents que nosaltres tenim en el sistema, aquells documents que compleixen l'expressió
+     * @param idExp representa la id de l'expressió que volem evaluar
+     * @param docs representa el/els document/s possibles a evaluar
+     * @return retorna els documents que compleixen l'expressió
      */
     public ArrayList<Document> selectPerExpressio(Integer idExp, HashMap<Integer, Document> docs) {
         String exp = expressions.get(idExp).getExpressio();
-        BinaryTree bt = expressions.get(idExp).ExpressionTree;
+        BinaryTree bt = expressions.get(idExp).getExpressionTree();
         ArrayList<Document> greatDocs = new ArrayList<>();
         for (Document d : docs.values()) {
             int result = BinaryTree.evalTree(bt.root, d);
@@ -90,6 +128,5 @@ public class CtrlExpressio {
         return greatDocs;
 
     }
-
 }
 

@@ -122,7 +122,7 @@ public class BinaryTree {
                     int start = pos;
                     while (pos < root.expr.length() && !isWhitespace(root.expr.charAt(pos)) && root.expr.charAt(pos) != '}') ++pos;
                     String word = root.expr.substring(start, pos);
-                    if (!d.ocurrencies.containsKey(word)) {
+                    if (!d.getOcurrencies().containsKey(word)) {
                         return 0;
                     }
                     ++pos;
@@ -143,14 +143,14 @@ public class BinaryTree {
                 while (pos < root.expr.length() && root.expr.charAt(pos) != '"') ++pos;
                 String word = root.expr.substring(start2, pos);
                 ++pos;
-                return buscaEnContingut(word, d.contingut);
+                return buscaEnContingut(word, d.getContingut());
 
             default:
                 int start3 = pos;
                 while (pos < root.expr.length() && !isWhitespace(root.expr.charAt(pos))) ++pos;
                 String word2 = root.expr.substring(start3, pos);
                 ++pos;
-                if (d.ocurrencies.containsKey(word2)) return 1;
+                if (d.getOcurrencies().containsKey(word2)) return 1;
                 return 0;
         }
     }
