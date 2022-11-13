@@ -26,6 +26,9 @@ public class CtrlDomini {
         _ctrlDirectori.modificarContingut(contingut);
     }
 
+    public int modificarAutor(String autor) {return _ctrlDirectori.modificarAutor(autor);}
+    public int modificarTitol(String titol) {return _ctrlDirectori.modificarAutor(titol);}
+
     public List<Pair<String, String>> compararDocuments(CtrlDirectori.METODE_COMPARACIO m, CtrlDirectori.SORTING s,Integer k, Integer IdDoc) {
         return _ctrlDirectori.compararDocuments(m, s, k,IdDoc);
     }
@@ -52,8 +55,8 @@ public class CtrlDomini {
         _ctrlDirectori.exportarDocument(format,path);
     }
 
-    public void eliminarDocument(int idDoc) throws Exception {
-        _ctrlDirectori.eliminarDocument(idDoc);
+    public int eliminarDocument(int idDoc) throws Exception {
+        return _ctrlDirectori.eliminarDocument(idDoc);
     }
 
     public String cercaPerAutoriTitol(String autor, String titol) {
@@ -68,16 +71,16 @@ public class CtrlDomini {
         return _ctrlDirectori.llistaTitolsPerAutor(autor,s);
     }
 
-    public void afegirExpressio(String expressio) throws Exception {
-        _ctrlExpressio.afegirExpressio(expressio);
+    public int afegirExpressio(String expressio) throws Exception {
+        return _ctrlExpressio.afegirExpressio(expressio);
     }
 
-    public void modificarExpressio(String exp) throws Exception{
-        _ctrlExpressio.modificarExpressio(exp);
+    public int modificarExpressio(String exp) throws Exception{
+        return _ctrlExpressio.modificarExpressio(exp);
     }
 
-    public void eliminarexpressio(int idExp) throws Exception {
-        _ctrlExpressio.eliminarexpressio(idExp);
+    public int eliminarexpressio(int idExp) throws Exception {
+        return _ctrlExpressio.eliminarexpressio(idExp);
     }
 
     public ArrayList<Document> selectPerExpressio(Integer idExp) {
