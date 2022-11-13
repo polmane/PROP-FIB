@@ -1,11 +1,10 @@
 package FONTS.Drivers;
 
-import java.util.*;
-
 import FONTS.Classes.Document;
 import FONTS.Controladors.CtrlDirectori;
 
-import static jdk.internal.org.jline.utils.Colors.s;
+import java.util.List;
+import java.util.Scanner;
 
 public class DriverCtrlDirectori {
     private static CtrlDirectori _ctrlDirectori;
@@ -135,7 +134,8 @@ public class DriverCtrlDirectori {
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu el prefix de nom d'autor a cercar:");
         String pre = input.nextLine();
-        System.out.println("Escriu el");
+        System.out.println("Escriu el criteri d'ordre (AUT_DESC | AUT_ASC) (ordena els noms per ordre alfabètic Descendent i Ascendent, respectivament):");
+        CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(input.nextLine());
         List<String> res = _ctrlDirectori.llistaAutorsPerPrefix(pre, s);
         System.out.println("Llista d'autors amb prefix: " + pre);
         System.out.println(res);
@@ -149,7 +149,9 @@ public class DriverCtrlDirectori {
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu el nom de l'autor:");
         String autor = input.nextLine();
-        List<String> res = _ctrlDirectori.llistaTitolsPerAutor(autor);
+        System.out.println("Escriu el criteri d'ordre (TIT_DESC | TIT_ASC) (ordena els noms per ordre alfabètic Descendent i Ascendent, respectivament):");
+        CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(input.nextLine());
+        List<String> res = _ctrlDirectori.llistaTitolsPerAutor(autor, s);
         System.out.println("Llista de titols de " + autor + ":");
         System.out.println(res);
     }
@@ -159,6 +161,7 @@ public class DriverCtrlDirectori {
             System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
             return;
         }
+        System.out.println("Comparar doc");
     }
     public static void main (String [] args) {
         System.out.println("--------------------------------------");
