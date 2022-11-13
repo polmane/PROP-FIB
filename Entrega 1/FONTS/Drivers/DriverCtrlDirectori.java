@@ -1,10 +1,12 @@
 package FONTS.Drivers;
 
 import java.util.*;
+
+import FONTS.Classes.Document;
 import FONTS.Controladors.CtrlDirectori;
 
 public class DriverCtrlDirectori {
-    private CtrlDirectori _ctrlDirectori;
+    private static CtrlDirectori _ctrlDirectori;
 
     public void testConstructora() {
         Scanner input = new Scanner(System.in);
@@ -12,12 +14,17 @@ public class DriverCtrlDirectori {
         int id = input.nextInt();
         _ctrlDirectori = new CtrlDirectori();
         _ctrlDirectori.crearDirectori(id);
+        System.out.println("Controlador de directori creat!");
     }
 
     public void testAfegirDocument() {
+        if (_ctrlDirectori == null) {
+            System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
+            return;
+        }
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu el nom de l'autor");
-        String autor = input.next();
+        String autor = input.nextLine();
         System.out.println("Escriu el titol del document");
         String titol = input.nextLine();
         System.out.println("Escriu el contingut");
@@ -26,19 +33,26 @@ public class DriverCtrlDirectori {
             _ctrlDirectori.afegirDocument(autor, titol, contingut);
             System.out.println("Document afegit correctament");
         } catch (Exception e) {
-            System.out.println("Ja existeix un document amb autor i titol donats");
-            throw new RuntimeException(e);
+            System.out.println("ERROR: Ja existeix un document amb autor i titol donats, NO s'ha afegit cap nou document");
         }
     }
 
     public void testSeleccionarDocument() {
+        if (_ctrlDirectori == null) {
+            System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
+            return;
+        }
         Scanner input = new Scanner(System.in);
         int idDoc = input.nextInt();
         _ctrlDirectori.seleccionarDocument(idDoc);
-        System.out.println("Autor modificat correctament");
+        System.out.println("Document seleccionat correctament");
     }
 
     public void testModificarAutor() {
+        if (_ctrlDirectori == null) {
+            System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
+            return;
+        }
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu el nou nom de l'autor:");
         String autor = input.nextLine();
@@ -47,6 +61,10 @@ public class DriverCtrlDirectori {
     }
 
     public void testModificarTitol() {
+        if (_ctrlDirectori == null) {
+            System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
+            return;
+        }
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu el nou titol del document:");
         String titol = input.nextLine();
@@ -55,6 +73,10 @@ public class DriverCtrlDirectori {
     }
 
     public void testModificarContingut() {
+        if (_ctrlDirectori == null) {
+            System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
+            return;
+        }
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu el nou contingut del document:");
         String contingut = input.nextLine();
@@ -63,6 +85,10 @@ public class DriverCtrlDirectori {
     }
 
     public void testEliminarDocument() {
+        if (_ctrlDirectori == null) {
+            System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
+            return;
+        }
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu l'identificador del document a eliminar:");
         int id = input.nextInt();
@@ -75,6 +101,10 @@ public class DriverCtrlDirectori {
     }
 
     public void testCercaPerAutoriTitol() {
+        if (_ctrlDirectori == null) {
+            System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
+            return;
+        }
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu el nom de l'autor:");
         String autor = input.nextLine();
@@ -89,6 +119,10 @@ public class DriverCtrlDirectori {
     }
 
     public void testLlistaAutorsPerPrefix() {
+        if (_ctrlDirectori == null) {
+            System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
+            return;
+        }
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu el prefix de nom d'autor a cercar:");
         String pre = input.nextLine();
@@ -98,6 +132,10 @@ public class DriverCtrlDirectori {
     }
 
     public void testLlistaTitolsPerAutor() {
+        if (_ctrlDirectori == null) {
+            System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
+            return;
+        }
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu el nom de l'autor:");
         String autor = input.nextLine();
@@ -107,73 +145,85 @@ public class DriverCtrlDirectori {
     }
 
     public void testCompararDocuments() {
-
+        if (_ctrlDirectori == null) {
+            System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
+            return;
+        }
     }
     public static void main (String [] args) {
         System.out.println("--------------------------------------");
         System.out.println("Driver del Controlador de Directori");
         System.out.println("--------------------------------------\n");
         DriverCtrlDirectori DDir = new DriverCtrlDirectori();
+        mostrarFuncionalitats();
+        System.out.println("Escull (un numero) d'entre les anteriors funcionalitats:");
+
         Scanner input = new Scanner(System.in);
         int option = -1;
         while (option != 0) {
-            mostrarFuncionalitats();
-            System.out.println("Escull (un numero) d'entre les anteriors funcionalitats:");
-
+            if (option != -1) System.out.println("Escull una funcionalitat: (Si vols llistar les funcionalitats escriu: h)");
+            if (!input.hasNextInt()) {
+                input.next();
+                mostrarFuncionalitats();
+                System.out.println("Escull una funcionalitat:");
+            }
             option = input.nextInt();
             System.out.println();
             switch (option) {
                 case 0:
-                    System.out.println("Tancar Driver");
+                    System.out.println("---Tancar Driver---");
                     break;
                 case 1:
-                    System.out.println("Constructora");
+                    System.out.println("---Constructora---");
                     DDir.testConstructora();
                     break;
                 case 2:
-                    System.out.println("Afegir document");
+                    System.out.println("---Afegir document---");
                     DDir.testAfegirDocument();
                     break;
                 case 3:
-                    System.out.println("Seleccionar document");
+                    System.out.println("---Seleccionar document---");
+                    mostrarDocuments();
                     DDir.testSeleccionarDocument();
                     break;
                 case 4:
-                    System.out.println("Modificar autor");
+                    System.out.println("---Modificar autor (del document seleccionat)---");
                     DDir.testModificarAutor();
                     break;
                 case 5:
-                    System.out.println("Modificar titol");
+                    System.out.println("---Modificar titol (del document seleccionat)---");
                     DDir.testModificarTitol();
                     break;
                 case 6:
-                    System.out.println("Modificar contingut");
+                    System.out.println("---Modificar contingut (del document seleccionat)---");
                     DDir.testModificarContingut();
                     break;
                 case 7:
-                    System.out.println("Eliminar document");
+                    System.out.println("---Eliminar document---");
+                    mostrarDocuments();
                     DDir.testEliminarDocument();
                     break;
                 case 8:
-                    System.out.println("Contingut de titol i autor");
+                    System.out.println("---Contingut de titol i autor---");
                     DDir.testCercaPerAutoriTitol();
                     break;
                 case 9:
-                    System.out.println("Autors per prefix");
+                    System.out.println("---Autors per prefix---");
                     DDir.testLlistaAutorsPerPrefix();
                     break;
                 case 10:
-                    System.out.println("Llista de titols de un autor");
+                    System.out.println("---Llista de titols de un autor---");
                     DDir.testLlistaTitolsPerAutor();
+                    break;
                 case 11:
-                    System.out.println("Comparar documents");
+                    System.out.println("---Comparar documents---");
                     DDir.testCompararDocuments();
                     break;
                 default:
                     System.out.println("Funcionalitat no existent");
                     break;
             }
-            System.out.println("-----------------FINISHED------------------");
+            System.out.println("-----------------FINISHED-----------------\n");
         }
     }
 
@@ -191,5 +241,13 @@ public class DriverCtrlDirectori {
         System.out.println("9: Autors per prefix");
         System.out.println("10: Llista de titols de un autor");
         System.out.println("11: Comparar documents\n");
+    }
+
+    private static void mostrarDocuments() {
+        System.out.println("Documents actuals: (  Id  |  Autor  |  Titol  )");
+        for (int i = 0; i < _ctrlDirectori.getDirectoriObert().getDocs().size(); ++i) {
+            Document doc = _ctrlDirectori.getDirectoriObert().getDocs().get(i);
+            if (doc != null) System.out.println(i + "  |  " + doc.getAutor() + "  |  " + doc.getTitol());
+        }
     }
 }
