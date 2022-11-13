@@ -241,6 +241,7 @@ public class CtrlDirectori {
                             Bparaula = directoriObert.pesosDocs.get(i).get(word);
                             break;
                         case BOOL:
+                            Aparaula = 1.0;
                             Bparaula = 1.0;
                             break;
                     }
@@ -250,18 +251,19 @@ public class CtrlDirectori {
                 B2 += Math.pow(Bparaula,2);
             }
             for (String word : directoriObert.pesosDocs.get(i).keySet()) {
-                double Bparaula = 0.0;
-                switch (m) {
-                    case TF_IDF:
-                        Bparaula = directoriObert.pesosDocs.get(i).get(word);
-                        break;
-                    case BOOL:
-                        Bparaula = 1.0;
-                        break;
-                }
+                double Bparaula = directoriObert.pesosDocs.get(i).get(word);
                 double Aparaula = 0.0;
+
                 if (directoriObert.pesosDocs.get(IdDoc).containsKey(word)) {
-                    Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
+                    switch (m) {
+                        case TF_IDF:
+                            Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
+                            break;
+                        case BOOL:
+                            Bparaula = 1.0;
+                            Aparaula = 1.0;
+                            break;
+                    }
                 }
                 sumAB += Aparaula * Bparaula;
                 A2 += Math.pow(Aparaula,2);
