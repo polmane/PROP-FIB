@@ -109,4 +109,37 @@ public class TestCtrlDirectori {
         CtrlDir.afegirDocument("Carles","Prova","A A A A A");
 
     }
+
+    /**
+     * Objecte de la prova: Test del mètode cercaPerAutoriTitol de la classe CtrlDirectori
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     * Valors estudiats: Funcionament correcte de la funció cercaPerAutoriTitol
+     * Operativa: Es comproven les diferents causes d'error de la funció i el seu funcionament correcte.
+     */
+    @Test
+    public void TestCercaPerAutoriTitol() {
+        CtrlDirectori CtrlDir = new CtrlDirectori();
+        CtrlDir.crearDirectori(0);
+
+        //Cas directori buit
+        assertNull(CtrlDir.cercaPerAutoriTitol("Autor", "Titol"));
+
+        CtrlDir.afegirDocument("Juli","Titol1","Juli1");
+        CtrlDir.afegirDocument("Juli","Titol2","Juli2");
+        CtrlDir.afegirDocument("Pol","Titol1","Pol1");
+        CtrlDir.afegirDocument("Pol", "Titol2", "Pol2");
+        CtrlDir.afegirDocument("Isaac","Titol1","Isaac1");
+        CtrlDir.afegirDocument("Isaac", "Titol2", "Isaac2");
+
+        //Titol erroni
+        assertNull(CtrlDir.cercaPerAutoriTitol("Juli", "TitolErroni"));
+
+        //Autor erroni
+        assertNull(CtrlDir.cercaPerAutoriTitol("AutorErroni", "Titol1"));
+
+        //FIXME: Podem passar null com a argument? Com ho controlem?
+
+        //Funcionament correcte
+        assertEquals("Pol2", CtrlDir.cercaPerAutoriTitol("Pol", "Titol2"));
+    }
 }
