@@ -61,9 +61,10 @@ public class CtrlDirectori {
      * Operació per obrir un document que ja teniem precarregat dins el nostre sistema
      * @param idDoc és l'identificador del document que volem obrir
      */
+    //TODO: TEST
     public int seleccionarDocument(int idDoc) {
-        if (directoriObert.docs.containsKey(idDoc)) {
-            documentActiu = directoriObert.docs.get(idDoc);
+        if (directoriObert.getDocs().containsKey(idDoc)) {
+            documentActiu = directoriObert.getDocs().get(idDoc);
             return 10;
         }
         return 20;
@@ -113,7 +114,7 @@ public class CtrlDirectori {
         documentActiu.setContingut(contingut);
 
         documentActiu.setOcurrencies(obteContingut());
-        documentActiu.setTfMap(tf(documentActiu.ocurrencies));
+        documentActiu.setTfMap(tf(documentActiu.getOcurrencies()));
 
         afegeixParaulesAlDir();
         afegeixPesos();
@@ -128,15 +129,15 @@ public class CtrlDirectori {
     //TODO: TEST
     public int afegirDocument (String autor, String titol, String contingut) {
         for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
-            if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor) && directoriObert.docs.get(i).getTitol().equals(titol)) {
+            if (directoriObert.getDocs().containsKey(i) && directoriObert.getDocs().get(i).getAutor().equals(autor) && directoriObert.getDocs().get(i).getTitol().equals(titol)) {
                 return 20;
             }
         }
         int id;
         //Comprovem que no tenim cap id per reciclar
-        if(!directoriObert.deletedIds.isEmpty()) {
+        if(!directoriObert.getDeletedIds().isEmpty()) {
             //En cas d'entrar aquí assignem la id que tenim a la cua
-            id = directoriObert.deletedIds.poll();
+            id = directoriObert.getDeletedIds().poll();
         }
         else {
             //Si no hi ha ids per reciclar assignem la nova id al document
@@ -145,10 +146,10 @@ public class CtrlDirectori {
         }
 
         documentActiu = new Document(id, autor, titol, contingut);
-        directoriObert.docs.put(id, documentActiu);
+        directoriObert.getDocs().put(id, documentActiu);
 
         documentActiu.setOcurrencies(obteContingut());
-        documentActiu.setTfMap(tf(documentActiu.ocurrencies));
+        documentActiu.setTfMap(tf(documentActiu.getOcurrencies()));
         afegeixParaulesAlDir();
         afegeixPesos();
 
@@ -156,16 +157,16 @@ public class CtrlDirectori {
     }
 
     private void afegeixParaulesAlDir() {
-        for (String paraula : documentActiu.ocurrencies.keySet()) {
-            if (directoriObert.paraulesDirectori.containsKey(paraula))
-                directoriObert.paraulesDirectori.put(paraula, directoriObert.paraulesDirectori.get(paraula) + documentActiu.ocurrencies.get(paraula));
-            else directoriObert.paraulesDirectori.put(paraula, documentActiu.ocurrencies.get(paraula));
+        for (String paraula : documentActiu.getOcurrencies().keySet()) {
+            if (directoriObert.getParaulesDirectori().containsKey(paraula))
+                directoriObert.getParaulesDirectori().put(paraula, directoriObert.getParaulesDirectori().get(paraula) + documentActiu.getOcurrencies().get(paraula));
+            else directoriObert.getParaulesDirectori().put(paraula, documentActiu.getOcurrencies().get(paraula));
         }
     }
 
     private void afegeixPesos() {
         HashMap<String,Double> idfMap = idf();
-        for (Document doc : directoriObert.docs.values()) {
+        for (Document doc : directoriObert.getDocs().values()) {
             double tfIdfValue = 0.0;
             double idfVal = 0.0;
             HashMap<String,Double> tfMapHelper = new HashMap<>();
@@ -177,7 +178,7 @@ public class CtrlDirectori {
                 tfIdfValue = tfVal * idfVal;
                 tfMapHelper.put((stringDoubleEntry.getKey().toString()), tfIdfValue);
             }
-            directoriObert.pesosDocs.put(doc.getIdDoc(), tfMapHelper);
+            directoriObert.getPesosDocs().put(doc.getIdDoc(), tfMapHelper);
         }
     }
 
@@ -196,12 +197,12 @@ public class CtrlDirectori {
 
     private HashMap<String, Double> idf() {
         HashMap<String,Double> idfMap = new HashMap<>();
-        int size = directoriObert.docs.size();
-        for (String word : directoriObert.paraulesDirectori.keySet()) {
+        int size = directoriObert.getDocs().size();
+        for (String word : directoriObert.getParaulesDirectori().keySet()) {
             double wordCount = 0;
-            for(Document docs :directoriObert.docs.values())
+            for(Document docs :directoriObert.getDocs().values())
             {
-                if (docs.ocurrencies.containsKey(word)) wordCount++;
+                if (docs.getOcurrencies().containsKey(word)) wordCount++;
             }
             double temp = size/ wordCount;
             Double idf = Math.log(1+temp);
@@ -308,7 +309,7 @@ public class CtrlDirectori {
         if(k > documentsSemblants.size()) k = documentsSemblants.size();
 
         List<Pair<String,String>> llistaSemblants= documentsSemblants.stream()
-                .map(document -> new Pair<String, String>(document.autor, document.titol))
+                .map(document -> new Pair<String, String>(document.getAutor(), document.getTitol()))
                 .collect(Collectors.toList());
         sortLlista(llistaSemblants,s);
         return llistaSemblants.subList(0,k);
@@ -419,19 +420,19 @@ public class CtrlDirectori {
      */
     public int eliminarDocument(int idDoc) {
         //Comprovem que idDoc sigui realment un identificador d'un document
-        if (!directoriObert.docs.containsKey(idDoc)) {
+        if (!directoriObert.getDocs().containsKey(idDoc)) {
             return 20;
         }
 
         eliminarParaulesAlDir(idDoc);
-        directoriObert.pesosDocs.remove(idDoc);
+        directoriObert.getPesosDocs().remove(idDoc);
 
-        directoriObert.docs.remove(idDoc);
+        directoriObert.getDocs().remove(idDoc);
 
         afegeixPesos();
 
         //Afegim l'id a la cua per poder ser reciclada
-        directoriObert.deletedIds.add(idDoc);
+        directoriObert.getDeletedIds().add(idDoc);
 
         return 10;
     }
@@ -458,9 +459,9 @@ public class CtrlDirectori {
     //TODO: TEST
     public List<String> llistaAutorsPerPrefix(String pre, SORTING s) {
         List<String> autors = new ArrayList<String>();
-        for (int i = 0; i < directoriObert.docs.size(); ++i) {
+        for (int i = 0; i < directoriObert.getDocs().size(); ++i) {
             if (directoriObert.docs.containsKey(i)) {
-                String autor = directoriObert.docs.get(i).getAutor();
+                String autor = directoriObert.getDocs().get(i).getAutor();
                 if (autor.startsWith(pre)) {
                     autors.add(autor);
                 }
@@ -474,9 +475,9 @@ public class CtrlDirectori {
     //TODO: TEST
     public List<String> llistaTitolsPerAutor(String autor, SORTING s) {
         List<String> docs = new ArrayList<String>();
-        for (int i = 0; i < directoriObert.docs.size(); ++i) {
-            if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor)) {
-                docs.add(directoriObert.docs.get(i).getTitol());
+        for (int i = 0; i < directoriObert.getDocs().size(); ++i) {
+            if (directoriObert.getDocs().containsKey(i) && directoriObert.getDocs().get(i).getAutor().equals(autor)) {
+                docs.add(directoriObert.getDocs().get(i).getTitol());
             }
         }
         if (s == SORTING.AUT_ASC) Collections.sort(docs);
