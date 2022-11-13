@@ -67,7 +67,6 @@ public class TestCtrlExpressio {
      * Valors estudiats: Es modifica una expressio del conjunt d'expressions
      * Operativa: es comprova que l'operacio modificarExpressio funciona correctament
      */
-
     @Test
     public void TestModificarExpressio() throws Exception {
         CtrlExpressio CtrlExp = new CtrlExpressio();
@@ -92,7 +91,6 @@ public class TestCtrlExpressio {
      * Valors estudiats: S'obtenen els documents que compleixen el contingut de l'expressió seleccionada
      * Operativa: es comprova que l'operacio selectPerExpressio funciona correctament
      */
-
     @Test
     public void TestSelectPerExpressio() throws Exception {
         CtrlExpressio CtrlExp = new CtrlExpressio();
@@ -143,9 +141,9 @@ public class TestCtrlExpressio {
         ArrayList<Document> d9 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
         assertEquals(0, d9.size());
 
-        /**CtrlExp.afegirExpressio("p1 | p2");
+        CtrlExp.afegirExpressio("p1 | p2");
         ArrayList<Document> d10 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
-        assertEquals(1, d10.size());*/
+        assertEquals(1, d10.size());
 
         CtrlExp.afegirExpressio("p1 | !p2");
         ArrayList<Document> d11 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
@@ -159,9 +157,9 @@ public class TestCtrlExpressio {
         ArrayList<Document> d13 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
         assertEquals(0, d13.size());
 
-        /**CtrlExp.afegirExpressio("{hola p1} | p2");
+        CtrlExp.afegirExpressio("{hola p1} | p2");
         ArrayList<Document> d14 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
-        assertEquals(1, d14.size());*/
+        assertEquals(1, d14.size());
 
         CtrlExp.afegirExpressio("{hola p1} | !p2");
         ArrayList<Document> d15 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
@@ -191,9 +189,9 @@ public class TestCtrlExpressio {
         ArrayList<Document> d21 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
         assertEquals(0, d21.size());
 
-        /**CtrlExp.afegirExpressio("{hola p1} | {p2 p3}");
+        CtrlExp.afegirExpressio("{hola p1} | {p2 p3}");
         ArrayList<Document> d22 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
-        assertEquals(1, d22.size());*/
+        assertEquals(1, d22.size());
 
         CtrlExp.afegirExpressio("{hola p1} | !{p2 p3}");
         ArrayList<Document> d23 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
@@ -223,7 +221,7 @@ public class TestCtrlExpressio {
         ArrayList<Document> d29 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
         assertEquals(0, d29.size());
 
-        /**CtrlExp.afegirExpressio("(hola)");
+        CtrlExp.afegirExpressio("(hola)");
         ArrayList<Document> d30 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
         assertEquals(1, d30.size());
 
@@ -261,33 +259,33 @@ public class TestCtrlExpressio {
 
         CtrlExp.afegirExpressio("!(p1) & !(p2)");
         ArrayList<Document> d39 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
-        assertEquals(0, d39.size());*/
+        assertEquals(0, d39.size());
 
         CtrlExp.afegirExpressio("(p1 | p3) | (p2)");
         ArrayList<Document> d40 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
         assertEquals(1, d40.size());
 
-        /**CtrlExp.afegirExpressio("(p1 | !p3) | (p2)");
+        CtrlExp.afegirExpressio("(p1 | !p3) | (p2)");
         ArrayList<Document> d41 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
         assertEquals(1, d41.size());
 
         CtrlExp.afegirExpressio("(!p1 | p3) | (p2)");
         ArrayList<Document> d42 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
-        assertEquals(1, d42.size());*/
+        assertEquals(1, d42.size());
 
         CtrlExp.afegirExpressio("(!p1 | !p3) | (p2)");
         ArrayList<Document> d43 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
         assertEquals(1, d43.size());
 
-        /**CtrlExp.afegirExpressio("(p1 & p3) | (p2)");
+        CtrlExp.afegirExpressio("(p1 & p3) | (p2)");
         ArrayList<Document> d44 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
-        assertEquals(1, d44.size());*/
+        assertEquals(1, d44.size());
 
         CtrlExp.afegirExpressio("(p1 & !p3) | (p2)");
         ArrayList<Document> d45 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
         assertEquals(1, d45.size());
 
-        /**CtrlExp.afegirExpressio("(!p1 & p3) | (p2)");
+        CtrlExp.afegirExpressio("(!p1 & p3) | (p2)");
         ArrayList<Document> d46 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
         assertEquals(1, d46.size());
 
@@ -297,7 +295,7 @@ public class TestCtrlExpressio {
 
         CtrlExp.afegirExpressio("({p1 p2} | p3)");
         ArrayList<Document> d48 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
-        assertEquals(1, d48.size());*/
+        assertEquals(1, d48.size());
 
         CtrlExp.afegirExpressio("({p1 p2} | !p3)");
         ArrayList<Document> d49 = CtrlExp.selectPerExpressio(CtrlExp.getExpressioSeleccionada().getIdEXp(), dir.getDocs());
