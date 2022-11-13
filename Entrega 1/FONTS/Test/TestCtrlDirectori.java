@@ -120,16 +120,10 @@ public class TestCtrlDirectori {
         CtrlDir.afegirDocument("Isaac","Prova","fem un projecte de programació");
         CtrlDir.afegirDocument("Juli","Prova","la nit es a molt llarga");
         CtrlDir.afegirDocument("Pau","Prova","de de de de de de");
-        CtrlDir.afegirDocument("Joan","Prova","el programa em peta i no se per on");
+        CtrlDir.afegirDocument("Joan","Prova","el a a programa em peta i no se per on");
         CtrlDir.afegirDocument("Jordi","Prova","dema faig un viatge barcelona");
-        CtrlDir.afegirDocument("Pep","Prova",    "la meva casa es d'estil gotic");
+        CtrlDir.afegirDocument("Pep","Prova",    "la a a a meva casa es d'estil gotic");
         CtrlDir.afegirDocument("Carles","Prova","A A A A A");
-
-        ArrayList<Document> semblants = CtrlDir.compararDocuments(CtrlDirectori.METODE_COMPARACIO.TF_IDF, 2,0);
-        System.out.println("Els documents semblants al de " + CtrlDir.getDirectoriObert().docs.get(0).getAutor() + " són ");
-        for (int i = 0; i < semblants.size(); ++i) {
-            System.out.println(semblants.get(i).getAutor() + ": " + semblants.get(i).getContingut());
-        }
 
     }
 }

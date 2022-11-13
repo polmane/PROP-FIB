@@ -3,6 +3,7 @@ package FONTS.Controladors;
 import FONTS.Classes.Directori;
 import FONTS.Classes.Document;
 
+import FONTS.Classes.Pair;
 import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -12,6 +13,10 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.Collections.reverseOrder;
+import static java.util.Comparator.comparing;
 
 public class CtrlDirectori {
     /**
@@ -223,25 +228,36 @@ public class CtrlDirectori {
         BOOL,
     }
 
+    public enum SORTING {
+        SIM_ASC,
+        SIM_DESC,
+        AUT_ASC,
+        AUT_DESC,
+        TIT_ASC,
+        TIT_DESC,
+    }
+
     //TODO: TEST
-    public ArrayList<Document> compararDocuments(METODE_COMPARACIO m, Integer k, Integer IdDoc) {
+    public List<Pair<String, String>> compararDocuments(METODE_COMPARACIO m, SORTING s, Integer k, Integer IdDoc) {
         ArrayList<Document> documentsSemblants = new ArrayList<>();
-        TreeMap<Integer, Double> helper = new TreeMap<>();
-        for (int i = 0; i < directoriObert.docs.size();++i) {
+        ArrayList<Pair<Integer,Double>> helper = new ArrayList<>();
+        //TreeMap<Integer, Double> helper = new TreeMap<>();
+        for (int i = 0; i < directoriObert.getDocs().size();++i) {
             double sumAB = 0.0;
             double A2 = 0.0;
             double B2 = 0.0;
             if (i == IdDoc) continue;
-            for (String word : directoriObert.pesosDocs.get(IdDoc).keySet()) {
-                double Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
+            for (String word : directoriObert.getPesosDocs().get(IdDoc).keySet()) {
+                double Aparaula;
+                if (m == METODE_COMPARACIO.BOOL) Aparaula = 1.0;
+                else Aparaula = directoriObert.getPesosDocs().get(IdDoc).get(word);
                 double Bparaula = 0.0;
-                if (directoriObert.pesosDocs.get(i).containsKey(word)) {
+                if (directoriObert.getPesosDocs().get(i).containsKey(word)) {
                     switch (m) {
                         case TF_IDF:
-                            Bparaula = directoriObert.pesosDocs.get(i).get(word);
+                            Bparaula = directoriObert.getPesosDocs().get(i).get(word);
                             break;
                         case BOOL:
-                            Aparaula = 1.0;
                             Bparaula = 1.0;
                             break;
                     }
@@ -250,135 +266,71 @@ public class CtrlDirectori {
                 A2 += Math.pow(Aparaula,2);
                 B2 += Math.pow(Bparaula,2);
             }
-            for (String word : directoriObert.pesosDocs.get(i).keySet()) {
-                double Bparaula = directoriObert.pesosDocs.get(i).get(word);
-                double Aparaula = 0.0;
-
-                if (directoriObert.pesosDocs.get(IdDoc).containsKey(word)) {
-                    switch (m) {
-                        case TF_IDF:
-                            Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
-                            break;
-                        case BOOL:
-                            Bparaula = 1.0;
-                            Aparaula = 1.0;
-                            break;
+            for (String word : directoriObert.getPesosDocs().get(i).keySet()) {
+                if (!directoriObert.getPesosDocs().get(IdDoc).containsKey(word)) {
+                    double Bparaula;
+                    if (m == METODE_COMPARACIO.BOOL) Bparaula = 1.0;
+                    else {
+                        Bparaula = directoriObert.getPesosDocs().get(i).get(word);
                     }
+                    B2 += Math.pow(Bparaula,2);
                 }
-                sumAB += Aparaula * Bparaula;
-                A2 += Math.pow(Aparaula,2);
-                B2 += Math.pow(Bparaula,2);
             }
             double similarity = 0.0;
             if (A2 != 0 && B2 != 0) {
                 similarity = sumAB / (Math.sqrt(A2) * Math.sqrt(B2));
             }
-            if (helper.size() < k) {
-                helper.put(directoriObert.docs.get(i).getIdDoc(), similarity);
-            }
-            else {
-                double comp = 1000.0;
-                Integer idDocE = -1;
-                for (Map.Entry<Integer,Double> it1 : helper.entrySet()) {
-                    if (comp > it1.getValue()) {
-                        comp = it1.getValue();
-                        idDocE = it1.getKey();
-                    }
-                }
-                if (similarity > comp) {
-                    helper.remove(idDocE);
-                    helper.put(directoriObert.docs.get(i).getIdDoc(),similarity);
-                }
-            }
+            helper.add(new Pair<>(directoriObert.getDocs().get(i).getIdDoc(), similarity));
         }
+        helper.sort(comparing(Pair::second));
 
-        //TODO: Ordenar documentsSemblants segons similaritat dels documents
-        for (Map.Entry<Integer, Double> it : helper.entrySet()) {
-            System.out.println(directoriObert.docs.get(it.getKey()) + " " + it.getValue());
-            documentsSemblants.add(directoriObert.docs.get(it.getKey()));
+        for (Pair<Integer, Double> integerDoublePair : helper) {
+            documentsSemblants.add(directoriObert.getDocs().get(integerDoublePair.first()));
         }
-        return documentsSemblants;
+        if(k > documentsSemblants.size()) k = documentsSemblants.size();
+
+        List<Pair<String,String>> llistaSemblants= documentsSemblants.stream()
+                .map(document -> new Pair<String, String>(document.autor, document.titol))
+                .collect(Collectors.toList());
+        sortLlista(llistaSemblants,s);
+        return llistaSemblants.subList(0,k);
+    }
+
+    private void sortLlista(List<Pair<String, String>> llistaSemblants, SORTING s) {
+        switch(s) {
+            case SIM_DESC:
+                Collections.reverse(llistaSemblants);
+                break;
+            case SIM_ASC:
+                break;
+            case AUT_DESC:
+                Comparator<Pair<String, String>> c1 = reverseOrder(comparing(Pair::first));
+                llistaSemblants.sort(c1);
+                break;
+            case AUT_ASC:
+                llistaSemblants.sort(comparing(Pair::first));
+                break;
+            case TIT_DESC:
+                Comparator<Pair<String, String>> c2 = reverseOrder(comparing(Pair::second));
+                llistaSemblants.sort(c2);
+                break;
+            case TIT_ASC:
+                llistaSemblants.sort(comparing(Pair::second));
+        }
     }
 
 
     //TODO: TEST
-    public ArrayList<Document> compararQuery(METODE_COMPARACIO m, Integer k, HashMap<String, Double> paraules) {
-        ArrayList<Document> documentsSemblants = new ArrayList<>();
-        TreeMap<Integer, Double> helper = new TreeMap<>();
-        for (int i = 0; i < directoriObert.docs.size();++i) {
-            double sumAB = 0.0;
-            double A2 = 0.0;
-            double B2 = 0.0;
-            for (String word : paraules.keySet()) {
-                double Aparaula = paraules.get(word);
-                double Bparaula = 0.0;
-                if (directoriObert.pesosDocs.get(i).containsKey(word)) {
-                    switch (m) {
-                        case TF_IDF:
-                            Bparaula = directoriObert.pesosDocs.get(i).get(word);
-                            break;
-                        case BOOL:
-                            Bparaula = 1.0;
-                            break;
-                    }
-                }
-                sumAB += Aparaula * Bparaula;
-                A2 += Math.pow(Aparaula, 2);
-                B2 += Math.pow(Bparaula, 2);
-            }
-            //Diria que perquè funcioni l'algorisme només hem de recórrer les paraules de la query,
-            // ja que totes les altres sempre donarien 0 al multiplicar
-            /*
-            for (String word : directoriObert.pesosDocs.get(i).keySet()) {
-                double Bparaula = 0.0;
-                switch (m) {
-                    case TF_IDF:
-                        Bparaula = directoriObert.pesosDocs.get(i).get(word);
-                        break;
-                    case BOOL:
-                        Bparaula = 1.0;
-                        break;
-                }
-                double Aparaula = 0.0;
-                if () {
-                    Aparaula = directoriObert.pesosDocs.get(IdDoc).get(word);
-                }
-                sumAB += Aparaula * Bparaula;
-                A2 += Math.pow(Aparaula, 2);
-                B2 += Math.pow(Bparaula, 2);
-            }
-            */
-
-            double similarity = 0.0;
-            if (A2 != 0 && B2 != 0) {
-                similarity = sumAB / (Math.sqrt(A2) * Math.sqrt(B2));
-            }
-            if (helper.size() < k) {
-                helper.put(directoriObert.docs.get(i).getIdDoc(), similarity);
-            } else {
-                double comp = 1000.0;
-                Integer idDocE = -1;
-                for (Map.Entry<Integer, Double> it1 : helper.entrySet()) {
-                    if (comp > it1.getValue()) {
-                        comp = it1.getValue();
-                        idDocE = it1.getKey();
-                    }
-                }
-                if (similarity > comp) {
-                    helper.remove(idDocE);
-                    helper.put(directoriObert.docs.get(i).getIdDoc(), similarity);
-                }
-            }
+    public List<Pair<String, String>> compararQuery(METODE_COMPARACIO m, SORTING s, Integer k, ArrayList<String> paraules) throws Exception {
+        String result = "";
+        for (String paraula: paraules) {
+            result += paraula + " ";
         }
-
-
-        //TODO: Ordenar documentsSemblants segons similaritat dels documents
-        for (Map.Entry<Integer, Double> it : helper.entrySet()) {
-            System.out.println(directoriObert.docs.get(it.getKey()) + " " + it.getValue());
-            documentsSemblants.add(directoriObert.docs.get(it.getKey()));
+        afegirDocument("compararQuery","compararQuery", result);
+        List<Pair<String, String>> equalQuery = compararDocuments(m,s,k, documentActiu.getIdDoc());
+        eliminarDocument(documentActiu.getIdDoc());
+        return equalQuery;
         }
-        return documentsSemblants;
-    }
 
     public enum FILETYPE {
         TXT, XML
@@ -484,7 +436,7 @@ public class CtrlDirectori {
     }
 
     //TODO: TEST
-    public List<String> llistaAutorsPerPrefix(String pre) {
+    public List<String> llistaAutorsPerPrefix(String pre, SORTING s) {
         List<String> autors = new ArrayList<String>();
         for (int i = 0; i < directoriObert.docs.size(); ++i) {
             if (directoriObert.docs.containsKey(i)) {
@@ -494,18 +446,21 @@ public class CtrlDirectori {
                 }
             }
         }
+        if (s == SORTING.AUT_ASC) Collections.sort(autors);
+        else if (s == SORTING.AUT_DESC) Collections.sort(autors,Collections.reverseOrder());
         return autors;
     }
 
     //TODO: TEST
-    public List<String> llistaTitolsPerAutor(String autor) {
+    public List<String> llistaTitolsPerAutor(String autor, SORTING s) {
         List<String> docs = new ArrayList<String>();
         for (int i = 0; i < directoriObert.docs.size(); ++i) {
             if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor)) {
                 docs.add(directoriObert.docs.get(i).getTitol());
             }
         }
-        Collections.sort(docs);
+        if (s == SORTING.AUT_ASC) Collections.sort(docs);
+        else if (s == SORTING.AUT_DESC) Collections.sort(docs,Collections.reverseOrder());
         return docs;
     }
 }
