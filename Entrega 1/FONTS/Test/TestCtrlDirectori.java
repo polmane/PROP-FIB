@@ -36,7 +36,7 @@ public class TestCtrlDirectori {
         //TODO: Això no ho podem comprovar perquè sinó els tests no passarien
         idDoc = CtrlDir.getDirectoriObert().getIdNouDoc();
         titol = "el mateix titol";
-        contingut = "prova d'error a l'afegir documents amb el mateix autor i tiol";
+        contingut = "prova d'error a l'afegir documents amb el mateix autor i titol";
         CtrlDir.afegirDocument(autor, titol, contingut);
         assertEquals(autor, CtrlDir.getDirectoriObert().getDocs().get(idDoc).getAutor());
         assertEquals(titol, CtrlDir.getDirectoriObert().getDocs().get(idDoc).getTitol());

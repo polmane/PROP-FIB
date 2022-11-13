@@ -56,8 +56,7 @@ public class CtrlDirectori {
      * Operació per obrir un document que ja teniem precarregat dins el nostre sistema
      * @param idDoc és l'identificador del document que volem obrir
      */
-    public void recuperarDocument(int idDoc) {
-        //nose si fa falta aquest if pk amb una interfície ben feta podem assegurar que el document existeix
+    public void seleccionarDocument(int idDoc) {
         if (directoriObert.docs.containsKey(idDoc)) {
             documentActiu = directoriObert.docs.get(idDoc);
         }
@@ -89,12 +88,12 @@ public class CtrlDirectori {
     public void modificarContingut(String contingut) {
 
         eliminarParaulesAlDir(documentActiu.getIdDoc());
-        directoriObert.pesosDocs.remove(documentActiu.getIdDoc());
 
         documentActiu.setContingut(contingut);
 
         documentActiu.setOcurrencies(obteContingut());
         documentActiu.setTfMap(tf(documentActiu.ocurrencies));
+
         afegeixParaulesAlDir();
         afegeixPesos();
     }
@@ -147,7 +146,7 @@ public class CtrlDirectori {
             double tfIdfValue = 0.0;
             double idfVal = 0.0;
             HashMap<String,Double> tfMapHelper = new HashMap<>();
-            for (Map.Entry<String, Double> stringDoubleEntry : doc.tfMap.entrySet()) {
+            for (Map.Entry<String, Double> stringDoubleEntry : doc.getTfMap().entrySet()) {
                 double tfVal = (Double) stringDoubleEntry.getValue();
                 if (idfMap.containsKey((String) stringDoubleEntry.getKey())) {
                     idfVal = idfMap.get((String) stringDoubleEntry.getKey());
@@ -181,7 +180,7 @@ public class CtrlDirectori {
             {
                 if (docs.ocurrencies.containsKey(word)) wordCount++;
             }
-            Double temp = size/ wordCount;
+            double temp = size/ wordCount;
             Double idf = Math.log(1+temp);
             idfMap.put(word,idf);
         }
@@ -194,16 +193,16 @@ public class CtrlDirectori {
         if (text != null && !text.isEmpty()) {
             int i = 0;
             while (i < text.length()) {
-                String paraula = "";
+                StringBuilder paraula = new StringBuilder();
                 while (i < text.length() && esUnCharCorrecte(text.charAt(i))) {
-                    paraula += text.charAt(i);
+                    paraula.append(text.charAt(i));
                     ++i;
                 }
                 ++i;
-                if (!paraula.isEmpty()) {
-                    paraula = paraula.toLowerCase();
-                    if (paraules.containsKey(paraula)) paraules.put(paraula,paraules.get(paraula)+1);
-                    else paraules.put(paraula, 1);
+                if (paraula.length() > 0) {
+                    paraula = new StringBuilder(paraula.toString().toLowerCase());
+                    if (paraules.containsKey(paraula.toString())) paraules.put(paraula.toString(),paraules.get(paraula.toString())+1);
+                    else paraules.put(paraula.toString(), 1);
                 }
             }
         }
@@ -457,6 +456,8 @@ public class CtrlDirectori {
 
         directoriObert.docs.remove(idDoc);
 
+        afegeixPesos();
+
         //Afegim l'id a la cua per poder ser reciclada
         directoriObert.deletedIds.add(idDoc);
     }
@@ -469,28 +470,6 @@ public class CtrlDirectori {
             if (directoriObert.paraulesDirectori.get(it.getKey()) == 0) directoriObert.paraulesDirectori.remove(it.getKey());
         }
     }
-
-    //TODO: TEST
-    /*public ArrayList<Document> cercaPerAutor(String autor) {
-        ArrayList<Document> docs = new ArrayList<Document>();
-        for (int i = 0; i < directoriObert.docs.size(); ++i) {
-            if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getAutor().equals(autor)) {
-                docs.add(directoriObert.docs.get(i));
-            }
-        }
-        return docs;
-    }
-
-    //TODO: TEST
-    public ArrayList<Document> cercaPerTitol(String titol) {
-        ArrayList<Document> docs = new ArrayList<Document>();
-        for (int i = 0; i < directoriObert.docs.size(); ++i) {
-            if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getTitol().equals(titol)) {
-                docs.add(directoriObert.docs.get(i));
-            }
-        }
-        return docs;
-    }*/
 
     //TODO: TEST
     public String cercaPerAutoriTitol(String autor, String titol) {
