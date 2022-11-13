@@ -437,19 +437,19 @@ public class CtrlDirectori {
     }
 
     private void eliminarParaulesAlDir(int idDoc) {
-        Document doc = directoriObert.docs.get(idDoc);
+        Document doc = directoriObert.getDocs().get(idDoc);
 
-        for (Map.Entry<String,Integer> it : doc.ocurrencies.entrySet()) {
-            directoriObert.paraulesDirectori.put(it.getKey(),directoriObert.paraulesDirectori.get(it.getKey())-it.getValue());
-            if (directoriObert.paraulesDirectori.get(it.getKey()) == 0) directoriObert.paraulesDirectori.remove(it.getKey());
+        for (Map.Entry<String,Integer> it : doc.getOcurrencies().entrySet()) {
+            directoriObert.getParaulesDirectori().put(it.getKey(),directoriObert.getParaulesDirectori().get(it.getKey())-it.getValue());
+            if (directoriObert.getParaulesDirectori().get(it.getKey()) == 0) directoriObert.getParaulesDirectori().remove(it.getKey());
         }
     }
 
     //TODO: TEST
     public String cercaPerAutoriTitol(String autor, String titol) {
-        for (int i = 0; i < directoriObert.docs.size(); ++i) {
-            if (directoriObert.docs.containsKey(i) && directoriObert.docs.get(i).getTitol().equals(titol) && directoriObert.docs.get(i).getAutor().equals(autor)) {
-                return directoriObert.docs.get(i).getContingut();
+        for (int i = 0; i < directoriObert.getDocs().size(); ++i) {
+            if (directoriObert.getDocs().containsKey(i) && directoriObert.getDocs().get(i).getTitol().equals(titol) && directoriObert.getDocs().get(i).getAutor().equals(autor)) {
+                return directoriObert.getDocs().get(i).getContingut();
             }
         }
         return null;
@@ -459,7 +459,7 @@ public class CtrlDirectori {
     public List<String> llistaAutorsPerPrefix(String pre, SORTING s) {
         List<String> autors = new ArrayList<String>();
         for (int i = 0; i < directoriObert.getDocs().size(); ++i) {
-            if (directoriObert.docs.containsKey(i)) {
+            if (directoriObert.getDocs().containsKey(i)) {
                 String autor = directoriObert.getDocs().get(i).getAutor();
                 if (autor.startsWith(pre)) {
                     autors.add(autor);
@@ -479,8 +479,8 @@ public class CtrlDirectori {
                 docs.add(directoriObert.getDocs().get(i).getTitol());
             }
         }
-        if (s == SORTING.AUT_ASC) Collections.sort(docs);
-        else if (s == SORTING.AUT_DESC) Collections.sort(docs,Collections.reverseOrder());
+        if (s == SORTING.TIT_ASC) Collections.sort(docs);
+        else if (s == SORTING.TIT_DESC) Collections.sort(docs,Collections.reverseOrder());
         return docs;
     }
 }

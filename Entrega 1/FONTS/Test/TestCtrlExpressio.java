@@ -50,11 +50,11 @@ public class TestCtrlExpressio {
         CtrlExp.afegirExpressio("pol & pau");
 
         //Funcionament correcte
-        CtrlExp.eliminarexpressio(CtrlExp.getExpressioSeleccionada().getIdExp());
+        CtrlExp.eliminarExpressio(CtrlExp.getExpressioSeleccionada().getIdExp());
         assertEquals(0, CtrlExp.getExpressions().size());
 
         //ERROR: No existeix l'expressio amb el identificador idExp
-        int resultat = CtrlExp.eliminarexpressio(1);
+        int resultat = CtrlExp.eliminarExpressio(1);
         assertEquals(20, resultat);
 
     }

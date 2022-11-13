@@ -101,7 +101,7 @@ public class CtrlExpressio {
      * @param idExp representa la id de l'expressió que volem eliminar
      * @return si retorna 10 vol dir que s'ha realitzat l'operació correctament, si retorna 20 significa que hi ha hagut un error
      */
-    public int eliminarexpressio(int idExp){
+    public int eliminarExpressio(int idExp){
         if (expressions.containsKey(idExp)) {
             expressions.remove(idExp);
             return 10;
