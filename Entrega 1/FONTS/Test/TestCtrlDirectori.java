@@ -18,7 +18,7 @@ public class TestCtrlDirectori {
      * Operativa: es comprova que guardar un document al directori funcioni correctament
      */
     @Test
-    public void TestAfegirDocument() throws Exception {
+    public void TestAfegirDocument() {
         CtrlDirectori CtrlDir = new CtrlDirectori();
         CtrlDir.crearDirectori(0);
 
@@ -35,23 +35,8 @@ public class TestCtrlDirectori {
         //ERROR: ja existeix document amb el mateix autor i titol
         //TODO: Això no ho podem comprovar perquè sinó els tests no passarien
         idDoc = CtrlDir.getDirectoriObert().getIdNouDoc();
-        titol = "el mateix titol";
-        contingut = "prova d'error a l'afegir documents amb el mateix autor i titol";
-        CtrlDir.afegirDocument(autor, titol, contingut);
-        assertEquals(autor, CtrlDir.getDirectoriObert().getDocs().get(idDoc).getAutor());
-        assertEquals(titol, CtrlDir.getDirectoriObert().getDocs().get(idDoc).getTitol());
-        assertEquals(contingut, CtrlDir.getDirectoriObert().getDocs().get(idDoc).getContingut());
-        CtrlDir.afegirDocument(autor, titol, contingut);
-        assertEquals(autor, CtrlDir.getDirectoriObert().getDocs().get(idDoc).getAutor());
-        assertEquals(titol, CtrlDir.getDirectoriObert().getDocs().get(idDoc).getTitol());
-        assertEquals(contingut, CtrlDir.getDirectoriObert().getDocs().get(idDoc).getContingut());
-        //Esperem que no s'hagi afegit el document, així que el seguent document a afegir tindrà just la id
-        // seguent a l'original.
-        String s = "El document amb autor: " + autor + " i títol: " + titol + " ja existeix";
-        /*assertThrows(NullPointerException.class, () -> {
-
-        });*/
-        assertEquals(idDoc+1, CtrlDir.getDirectoriObert().getIdNouDoc());
+        int res = CtrlDir.afegirDocument(autor, titol, contingut);
+        assertEquals(20, res);
     }
 
     /**
