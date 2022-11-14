@@ -1,12 +1,12 @@
 package FONTS.Test;
 
 
-import FONTS.Classes.Document;
 import FONTS.Classes.Pair;
 import FONTS.Controladors.CtrlDirectori;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -314,7 +314,7 @@ public class TestCtrlDirectori {
 
         int idDoc1, idDoc2, idDoc3, idDoc4;
         List<Pair<String, String>> ret;
-        ArrayList<String> query = new ArrayList<String>();
+        ArrayList<String> query = new ArrayList<>();
         query.add("hola");
         query.add("bon");
         query.add("dia");

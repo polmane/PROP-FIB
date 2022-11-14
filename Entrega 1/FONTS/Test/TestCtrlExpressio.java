@@ -4,8 +4,6 @@ import FONTS.Classes.Document;
 import FONTS.Controladors.CtrlExpressio;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 public class TestCtrlExpressio {
@@ -118,7 +116,7 @@ public class TestCtrlExpressio {
      */
 
     @Test
-    public void TestSelectPerExpressio() throws Exception {
+    public void TestSelectPerExpressio() {
         CtrlExpressio CtrlExp = new CtrlExpressio();
 
         Document document = new Document(0,"autor1", "doc1", "hola p1 p2 p3");
