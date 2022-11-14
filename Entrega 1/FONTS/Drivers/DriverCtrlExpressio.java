@@ -1,8 +1,10 @@
 package FONTS.Drivers;
 
+import FONTS.Classes.Document;
 import FONTS.Classes.Expressio;
 import FONTS.Controladors.CtrlExpressio;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class DriverCtrlExpressio {
@@ -46,6 +48,7 @@ public class DriverCtrlExpressio {
             if (_ctrlExpressio.getExpressioSeleccionada() == null) System.out.println("Expressió seleccionada actual: null");
             else System.out.println("(Expressió seleccionada:" + _ctrlExpressio.getExpressioSeleccionada().getIdExp() +")");
             mostrarExpressions();
+            System.out.println("Escriu l'identificador de l'expressio a seleccionar:");
             Scanner input = new Scanner(System.in);
             while (!input.hasNextInt()) {
                 input.next();
@@ -122,7 +125,21 @@ public class DriverCtrlExpressio {
             System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
             return;
         }
-        System.out.println("Comparar doc");
+        Scanner input = new Scanner(System.in);
+        if (_ctrlExpressio.getExpressioSeleccionada() == null) System.out.println("No tens cap expressio seleccionada. Selecciona-la i torna-ho a intentar (funcionalitat 3)");
+        else {
+            System.out.println("Simulem un document per veure si compleix l'expressió booleana seleccionada, insereix el contingut d'aquest:");
+            String contingut = input.nextLine();
+            Document doc = new Document(0,"","", contingut);
+            doc.setOcurrencies(obteContingut(contingut));
+
+            if (_ctrlExpressio.selectPerExpressio(_ctrlExpressio.getExpressioSeleccionada().getIdExp(), doc)) {
+                System.out.println("El document compleix l'expressió");
+            }
+            else {
+                System.out.println("EL document no compleix l'expressió");
+            }
+        }
     }
     public static void main (String [] args) {
         System.out.println("--------------------------------------");
@@ -196,5 +213,34 @@ public class DriverCtrlExpressio {
         for (Expressio exp : _ctrlExpressio.getExpressions().values()) {
             System.out.println(exp.getIdExp() + "  |  " + exp.getExpressio());
         }
+    }
+    private HashMap<String, Integer> obteContingut(String contingut) {
+        String text = contingut;
+        HashMap<String,Integer> paraules = new HashMap<>();
+        if (text != null && !text.isEmpty()) {
+            int i = 0;
+            while (i < text.length()) {
+                StringBuilder paraula = new StringBuilder();
+                while (i < text.length() && esUnCharCorrecte(text.charAt(i))) {
+                    paraula.append(text.charAt(i));
+                    ++i;
+                }
+                ++i;
+                if (paraula.length() > 0) {
+                    paraula = new StringBuilder(paraula.toString().toLowerCase());
+                    if (paraules.containsKey(paraula.toString())) paraules.put(paraula.toString(),paraules.get(paraula.toString())+1);
+                    else paraules.put(paraula.toString(), 1);
+                }
+            }
+        }
+        return paraules;
+    }
+
+    private boolean esUnCharCorrecte(char c) {
+        String simbols = " .,'-;:_´`+¨^*{[]}!$%&/()=~|@#€¬";
+        for (int i = 0; i < simbols.length(); ++i) {
+            if (simbols.charAt(i) == c) return false;
+        }
+        return true;
     }
 }

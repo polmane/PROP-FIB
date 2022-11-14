@@ -116,8 +116,7 @@ public class TestCtrlDirectori {
      * Objecte de la prova: Test del mètode seleccionarDocument de la classe CtrlDirectori.
      * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional.
      * Valors estudiats: Funcionament correcte de la funció seleccionarDocument.
-     * Operativa: Primer comprovem que retorna el codi d'error 31 quan intentem seleccionar qualsevol document d'un directori buit.
-     *            Després creem un nou document amb el mètode afegirDocument.
+     * Operativa: Primer creem un nou document amb el mètode afegirDocument.
      *            A continuació, cridem l'operació seleccionarDocument passant com a paràmetre la id de l'expressió desitjada,
      *            el primer cas és una id correcte (//Funcionament correcte) i retorna el codi 10
      *            Finalment, intentem fer la crida amb una id incorrecte per assegurar-nos que retorna el codi d'error 20 (ERROR:...)
@@ -126,9 +125,6 @@ public class TestCtrlDirectori {
     public void TestSeleccionarDocument() {
         CtrlDirectori CtrlDir = new CtrlDirectori();
         CtrlDir.crearDirectori(0);
-
-        //Directori buit
-        assertEquals(31, CtrlDir.seleccionarDocument(3));
 
         CtrlDir.afegirDocument("Juli","Prova","");
         CtrlDir.afegirDocument("Juli","Prova2","");
