@@ -1,12 +1,11 @@
 package FONTS.Drivers;
 
-import FONTS.Classes.Document;
 import FONTS.Classes.Expressio;
 import FONTS.Controladors.CtrlExpressio;
 
 import java.util.Scanner;
 
-public class DriverCtlExpressio {
+public class DriverCtrlExpressio {
     private static CtrlExpressio _ctrlExpressio;
 
     public void testConstructora() {
@@ -23,9 +22,15 @@ public class DriverCtlExpressio {
         System.out.println("Escriu l'expressió booleana:");
         String exp = input.nextLine();
         int codi = _ctrlExpressio.afegirExpressio(exp);
-        if (codi == 10) {System.out.println("Expressio afegida correctament");}
-        else {
+        if (codi == 10)
+        {
+            System.out.println("Expressio: ' " + exp + " ' afegida correctament");
+        }
+        else if (codi == 20){
             System.out.println("ERROR: Ja existeix un expressió idèntica, NO s'ha afegit cap nova expressió");
+        }
+        else if (codi == 30) {
+            System.out.println("ERROR: Expressió no vàlida, escriu un string!");
         }
     }
 
@@ -38,12 +43,19 @@ public class DriverCtlExpressio {
             System.out.println("No hi ha expressions disponibles");
         }
         else {
+            if (_ctrlExpressio.getExpressioSeleccionada() == null) System.out.println("Expressió seleccionada actual: null");
+            else System.out.println("(Expressió seleccionada:" + _ctrlExpressio.getExpressioSeleccionada().getIdExp() +")");
             mostrarExpressions();
-            System.out.println("(Expressió seleccionada:" + _ctrlExpressio.getExpressioSeleccionada().getIdExp() +")");
             Scanner input = new Scanner(System.in);
+            while (!input.hasNextInt()) {
+                input.next();
+                System.out.println("Identificador no vàlid. Intenta-ho de nou");
+            }
             int idExp = input.nextInt();
+            input.nextLine();
+
             int codi = _ctrlExpressio.seleccionarExpressio(idExp);
-            if (codi == 10) System.out.println("Expressió seleccionada correctament");
+            if (codi == 10) System.out.println("Expressió "+idExp+" seleccionada correctament");
             else {
                 System.out.println("ERROR: No existeix cap expressió amb aquest identificador");
             }
@@ -59,7 +71,16 @@ public class DriverCtlExpressio {
         System.out.println("Escriu la nova expressió:");
         String exp = input.nextLine();
         int codi = _ctrlExpressio.modificarExpressio(exp);
-        System.out.println("ERROR: Ja existeix un expressió idèntica, NO s'ha modificat l'expressió");
+        if (codi == 10) {System.out.println("Expressio modificada correctament");}
+        else if (codi == 20){
+            System.out.println("ERROR: Ja existeix un expressió idèntica, NO s'ha modificat l'expressió");
+        }
+        else if (codi == 30){
+            System.out.println("ERROR: Expressio no vàlida, escrigui un string significatiu!");
+        }
+        else if (codi == 31) {
+            System.out.println("ERROR: No tens cap expressio seleccionada. Selecciona-la i torna-ho a intentar (funcinalitat (3))");
+        }
     }
 
     public void testEliminarExpressio() {
@@ -67,16 +88,32 @@ public class DriverCtlExpressio {
             System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
             return;
         }
-        mostrarExpressions();
-        System.out.println("(Expressió seleccionada:" + _ctrlExpressio.getExpressioSeleccionada().getIdExp() +")");
-        Scanner input = new Scanner(System.in);
-        System.out.println("Escriu l'identificador de l'expressió a eliminar:");
-        int id = input.nextInt();
-        int codi = _ctrlExpressio.eliminarExpressio(id);
-        if (codi == 11)System.out.println("L'expressió eliminada corresponia amb l'expressió seleccionada. Recorda seleccionar-ne un altra!");
-        else if (codi == 10) System.out.println("Expressió eliminada correctament");
+        if (_ctrlExpressio.getExpressions().size() == 0) {
+            System.out.println("No hi ha expressions disponibles");
+        }
         else {
-            System.out.println("No existeix l'expressió amb aquest identificador");
+            if (_ctrlExpressio.getExpressioSeleccionada() == null)
+                System.out.println("Expressió seleccionada actual: null");
+            else
+                System.out.println("(Expressió seleccionada:" + _ctrlExpressio.getExpressioSeleccionada().getIdExp() + ")");
+            mostrarExpressions();
+            System.out.println("(Expressió seleccionada:" + _ctrlExpressio.getExpressioSeleccionada().getIdExp() + ")");
+            Scanner input = new Scanner(System.in);
+            System.out.println("Escriu l'identificador de l'expressió a eliminar (prem 'a' per abortar):");
+            if (!input.hasNextInt()) {
+                input.next();
+                System.out.println("Abortant eliminar exxpressio");
+                return;
+            }
+            int id = input.nextInt();
+            input.nextLine();
+            int codi = _ctrlExpressio.eliminarExpressio(id);
+            if (codi == 11)
+                System.out.println("L'expressió eliminada corresponia amb l'expressió seleccionada. Recorda seleccionar-ne un altra (funcionalitat 3)!");
+            else if (codi == 10) System.out.println("Expressió eliminada correctament");
+            else if (codi == 20){
+                System.out.println("No existeix l'expressió amb aquest identificador");
+            }
         }
     }
 
@@ -91,7 +128,7 @@ public class DriverCtlExpressio {
         System.out.println("--------------------------------------");
         System.out.println("Driver del Controlador d'Expressió");
         System.out.println("--------------------------------------\n");
-        DriverCtlExpressio DExp = new DriverCtlExpressio();
+        DriverCtrlExpressio DExp = new DriverCtrlExpressio();
         mostrarFuncionalitats();
         System.out.println("Escull (un numero) d'entre les anteriors funcionalitats:");
 
@@ -105,6 +142,7 @@ public class DriverCtlExpressio {
                 System.out.println("Escull una funcionalitat:");
             }
             option = input.nextInt();
+            input.nextLine();
             System.out.println();
             switch (option) {
                 case 0:
