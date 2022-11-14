@@ -1,0 +1,13 @@
+Instruccions per compilar:
+- make: compila tots els drivers, controladors i classes i crea
+els .jar a la carpeta EXE i EXE/Test.
+- make all: compila tots els drivers, controladors i classes i
+crea els .jar a la carpeta EXE.
+- make DriverCtrlDomini: compila i executa el DriverCtrlDomini.
+- make DriverCtrlDirectori: compila i executa el DriverCtrlDirectori.
+- make DriverExpressio: compila i executa el DriverCtrlExpressio
+- make TestCtrlDirectori: compila i executa TestCtrlDirectori.
+- make TestCtrlExpressio: compila i executa TestCtrlExpressio.
+- make TestDirectori: compila i executa TestDirectori.
+- make TestDocument: compila i executa TestDocument.
+- make TestExpressio: compila i executa TestExpressio.
