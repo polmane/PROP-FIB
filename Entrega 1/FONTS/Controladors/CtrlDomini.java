@@ -32,8 +32,8 @@ public class CtrlDomini {
         return _ctrlDirectori.modificarAutor(titol);
     }
 
-    public void modificarContingut(String contingut) {
-        _ctrlDirectori.modificarContingut(contingut);
+    public int modificarContingut(String contingut) {
+        return _ctrlDirectori.modificarContingut(contingut);
     }
 
     public List<Pair<String, String>> compararDocuments(CtrlDirectori.METODE_COMPARACIO m, CtrlDirectori.SORTING s,Integer k, Integer IdDoc) {

@@ -149,6 +149,7 @@ public class TestCtrlDirectori {
         CtrlDirectori CtrlDir = new CtrlDirectori();
         CtrlDir.crearDirectori(0);
 
+        assertEquals(31, CtrlDir.modificarAutor("o"));
         CtrlDir.afegirDocument("Juli","Prova","");
         CtrlDir.afegirDocument("Pol","Prova","");
         CtrlDir.afegirDocument("Isaac","Prova","");
@@ -175,6 +176,7 @@ public class TestCtrlDirectori {
         CtrlDirectori CtrlDir = new CtrlDirectori();
         CtrlDir.crearDirectori(0);
 
+        assertEquals(31, CtrlDir.modificarTitol("o"));
         CtrlDir.afegirDocument("Juli","Prova1","");
         CtrlDir.afegirDocument("Juli","Prova2","");
         CtrlDir.afegirDocument("Juli","Prova3","");
@@ -201,6 +203,7 @@ public class TestCtrlDirectori {
         CtrlDirectori CtrlDir = new CtrlDirectori();
         CtrlDir.crearDirectori(0);
 
+        assertEquals(31, CtrlDir.modificarContingut("o"));
         CtrlDir.afegirDocument("Juli","Prova","contingut inicial");
 
         CtrlDir.modificarContingut("contingut final");

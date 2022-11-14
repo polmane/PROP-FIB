@@ -17,7 +17,7 @@ public class DriverCtrlDirectori {
             System.out.println("Identificador no vàlid. Intenta-ho de nou:");
         }
         int id = input.nextInt();
-        System.out.println("(Si més endavant crida la funció constructora es perdrà tot el que hi havia en el directori.\n També, és la manera de reiniciar el directori)");
+        System.out.println("(Si més endavant torna a executar la funció constructora es perdrà tot el que hi havia en el directori.\n També, és la manera de reiniciar el directori)");
         _ctrlDirectori = new CtrlDirectori();
         _ctrlDirectori.crearDirectori(id);
         System.out.println("Controlador de directori creat!");
@@ -36,7 +36,7 @@ public class DriverCtrlDirectori {
         System.out.println("Escriu el contingut");
         String contingut = input.nextLine();
         int codi = _ctrlDirectori.afegirDocument(autor, titol, contingut);
-        if (codi == 10) {System.out.println("Document afegit correctament");}
+        if (codi == 10) {System.out.println("Document afegit i seleccionat correctament. ");}
         else if (codi == 20){
             System.out.println("ERROR: Ja existeix un document amb autor i titol donats, NO s'ha afegit cap nou document");
         }
@@ -54,8 +54,14 @@ public class DriverCtrlDirectori {
             System.out.println("No hi ha documents disponibles");
         }
         else {
+            System.out.println("(Document seleccionat actual:" + _ctrlDirectori.getDocumentActiu().getIdDoc() +")");
             mostrarDocuments();
+            System.out.println("Escriu l'identificador del document a seleccionar:");
             Scanner input = new Scanner(System.in);
+            while (!input.hasNextInt()) {
+                input.nextLine();
+                System.out.println("Identificador no vàlid. Intenta-ho de nou");
+            }
             int idDoc = input.nextInt();
             int codi = _ctrlDirectori.seleccionarDocument(idDoc);
             if (codi == 10) System.out.println("Document seleccionat correctament");
@@ -74,7 +80,16 @@ public class DriverCtrlDirectori {
         System.out.println("Escriu el nou nom de l'autor:");
         String autor = input.nextLine();
         int codi = _ctrlDirectori.modificarAutor(autor);
-        System.out.println("Autor modificat correctament");
+        if (codi == 10) {System.out.println("Autor modificat correctament");}
+        else if (codi == 20){
+            System.out.println("ERROR: Ja existeix un document amb el titol i el nou nom d'autor");
+        }
+        else if (codi == 30){
+            System.out.println("ERROR: Autor no vàlid, escrigui un string significatiu!");
+        }
+        else if (codi == 31) {
+            System.out.println("ERROR: No tens cap document seleccionat. Selecciona'l i torna-ho a intentar (funcinalitat (2))");
+        }
     }
 
     public void testModificarTitol() {
@@ -82,11 +97,21 @@ public class DriverCtrlDirectori {
             System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
             return;
         }
+
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu el nou titol del document:");
         String titol = input.nextLine();
-        _ctrlDirectori.modificarTitol(titol);
-        System.out.println("Titol modificat correctament");
+        int codi = _ctrlDirectori.modificarTitol(titol);
+        if (codi == 10) {System.out.println("Titol modificat correctament");}
+        else if (codi == 20){
+            System.out.println("ERROR: Ja existeix un document amb l'autor i el nou titol");
+        }
+        else if (codi == 30){
+            System.out.println("ERROR: Titol no vàlid, escrigui un string significatiu!");
+        }
+        else if (codi == 31) {
+            System.out.println("ERROR: No tens cap document seleccionat. Selecciona'l i torna-ho a intentar (funcinalitat (2))");
+        }
     }
 
     public void testModificarContingut() {
@@ -94,11 +119,15 @@ public class DriverCtrlDirectori {
             System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
             return;
         }
+
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu el nou contingut del document:");
         String contingut = input.nextLine();
-        _ctrlDirectori.modificarContingut(contingut);
-        System.out.println("Contingut modificat correctament");
+        int codi = _ctrlDirectori.modificarContingut(contingut);
+        if (codi == 10) {System.out.println("Contingut modificat correctament");}
+        else if (codi == 31) {
+            System.out.println("ERROR: No tens cap document seleccionat. Selecciona'l i torna-ho a intentar (funcinalitat (2))");
+        }
     }
 
     public void testEliminarDocument() {
@@ -106,16 +135,22 @@ public class DriverCtrlDirectori {
             System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
             return;
         }
-        System.out.println("(Document seleccionat actual:" + -_ctrlDirectori.getDocumentActiu().getIdDoc() +")");
-        mostrarDocuments();
-        Scanner input = new Scanner(System.in);
-        System.out.println("Escriu l'identificador del document a eliminar:");
-        int id = input.nextInt();
-        int codi = _ctrlDirectori.eliminarDocument(id);
-        if (codi == 11) System.out.println("El document eliminat corresponia al document actiu. Recorda seleccionar-ne una altra (funcionalitat 3");
-        else if (codi == 10) System.out.println("Document eliminat correctament");
+        if (_ctrlDirectori.getDirectoriObert().getDocs().size() == 0) {
+            System.out.println("No hi ha documents disponibles");
+        }
         else {
-            System.out.println("No existeix el document amb aquest identificador");
+            System.out.println("(Document seleccionat actual:" + _ctrlDirectori.getDocumentActiu().getIdDoc() + ")");
+            mostrarDocuments();
+            System.out.println("Escriu l'identificador del document a eliminar:");
+            Scanner input = new Scanner(System.in);
+            int id = input.nextInt();
+            int codi = _ctrlDirectori.eliminarDocument(id);
+            if (codi == 11)
+                System.out.println("El document eliminat corresponia al document actiu. Recorda seleccionar-ne una altra (funcionalitat 3");
+            else if (codi == 10) System.out.println("Document eliminat correctament");
+            else {
+                System.out.println("No existeix el document amb aquest identificador");
+            }
         }
     }
 

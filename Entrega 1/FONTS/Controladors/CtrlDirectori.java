@@ -76,6 +76,7 @@ public class CtrlDirectori {
      * @param autor és el nou nom d'autor que es vol utilitzar pel document
      */
     public int modificarAutor(String autor) {
+        if (documentActiu == null) return 31;
         if (autor == null || autor.isBlank()) {
             return 30;
         }
@@ -95,6 +96,7 @@ public class CtrlDirectori {
      * @param titol és el nou nom del títol que es vol utilitzar pel document
      */
     public int modificarTitol(String titol) {
+        if (documentActiu == null) return 31;
         if (titol == null || titol.isBlank()) {
             return 30;
         }
@@ -113,7 +115,9 @@ public class CtrlDirectori {
      *
      * @param contingut és el nou contingut que es vol utilitzar pel document
      */
-    public void modificarContingut(String contingut) {
+    public int modificarContingut(String contingut) {
+        if (documentActiu == null) return 31;
+
         eliminarParaulesAlDir(documentActiu.getIdDoc());
 
         documentActiu.setContingut(contingut);
@@ -123,6 +127,7 @@ public class CtrlDirectori {
 
         afegeixParaulesAlDir();
         afegeixPesos();
+        return 10;
     }
 
     /**
@@ -438,6 +443,7 @@ public class CtrlDirectori {
 
         //Afegim l'id a la cua per poder ser reciclada
         directoriObert.getDeletedIds().add(idDoc);
+
         if (documentActiu != null && idDoc == documentActiu.getIdDoc()){
             documentActiu = null;
             return 11;
