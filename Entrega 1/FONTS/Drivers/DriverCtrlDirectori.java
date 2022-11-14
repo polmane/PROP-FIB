@@ -30,10 +30,9 @@ public class DriverCtrlDirectori {
         String titol = input.nextLine();
         System.out.println("Escriu el contingut");
         String contingut = input.nextLine();
-        try {
-            _ctrlDirectori.afegirDocument(autor, titol, contingut);
-            System.out.println("Document afegit correctament");
-        } catch (Exception e) {
+        int codi = _ctrlDirectori.afegirDocument(autor, titol, contingut);
+        if (codi == 10) {System.out.println("Document afegit correctament");}
+        else {
             System.out.println("ERROR: Ja existeix un document amb autor i titol donats, NO s'ha afegit cap nou document");
         }
     }
@@ -45,13 +44,16 @@ public class DriverCtrlDirectori {
         }
         mostrarDocuments();
         Scanner input = new Scanner(System.in);
-        int idDoc = input.nextInt();
         if (_ctrlDirectori.getDirectoriObert().getDocs().size() == 0) {
-            System.out.println("No hi ha document disponibles");
+            System.out.println("No hi ha documents disponibles");
         }
         else {
-            _ctrlDirectori.seleccionarDocument(idDoc);
-            System.out.println("Document seleccionat correctament");
+            int idDoc = input.nextInt();
+            int codi = _ctrlDirectori.seleccionarDocument(idDoc);
+            if (codi == 10) System.out.println("Document seleccionat correctament");
+            else {
+                System.out.println("ERROR: No existeix cap document amb aquest identificador");
+            }
         }
     }
 
@@ -63,7 +65,7 @@ public class DriverCtrlDirectori {
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu el nou nom de l'autor:");
         String autor = input.nextLine();
-        _ctrlDirectori.modificarAutor(autor);
+        int codi = _ctrlDirectori.modificarAutor(autor);
         System.out.println("Autor modificat correctament");
     }
 
@@ -100,11 +102,10 @@ public class DriverCtrlDirectori {
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu l'identificador del document a eliminar:");
         int id = input.nextInt();
-        try {
-            _ctrlDirectori.eliminarDocument(id);
-            System.out.println("Document eliminat correctament");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        int codi = _ctrlDirectori.eliminarDocument(id);
+        if (codi == 10) System.out.println("Document eliminat correctament");
+        else {
+            System.out.println("No existeix el document amb aquest identificador");
         }
     }
 
@@ -119,6 +120,7 @@ public class DriverCtrlDirectori {
         System.out.println("Escriu el titol del document :");
         String titol = input.nextLine();
         String contingut = _ctrlDirectori.cercaPerAutoriTitol(autor, titol);
+
         if (contingut == null) System.out.println("No s'ha trobat cap document amb aquest autor i titol");
         else {
             System.out.println("Contingut del document de " + autor + " amb el titol: " + titol + ":");
@@ -149,7 +151,7 @@ public class DriverCtrlDirectori {
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu el nom de l'autor:");
         String autor = input.nextLine();
-        System.out.println("Escriu el criteri d'ordre (TIT_DESC | TIT_ASC) (ordena els noms per ordre alfabètic Descendent i Ascendent, respectivament):");
+        System.out.println("Escriu el criteri d'ordre (TIT_DESC | TIT_ASC) (ordena els titols per ordre alfabètic Descendent i Ascendent, respectivament):");
         CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(input.nextLine());
         List<String> res = _ctrlDirectori.llistaTitolsPerAutor(autor, s);
         System.out.println("Llista de titols de " + autor + ":");
@@ -256,9 +258,8 @@ public class DriverCtrlDirectori {
 
     private static void mostrarDocuments() {
         System.out.println("Documents actuals: (  Id  |  Autor  |  Titol  )");
-        for (int i = 0; i < _ctrlDirectori.getDirectoriObert().getDocs().size(); ++i) {
-            Document doc = _ctrlDirectori.getDirectoriObert().getDocs().get(i);
-            if (doc != null) System.out.println(i + "  |  " + doc.getAutor() + "  |  " + doc.getTitol());
+        for (Document doc : _ctrlDirectori.getDirectoriObert().getDocs().values()) {
+            System.out.println(doc.getIdDoc() + "  |  " + doc.getAutor() + "  |  " + doc.getTitol());
         }
     }
 }
