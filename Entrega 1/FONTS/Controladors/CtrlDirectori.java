@@ -82,7 +82,7 @@ public class CtrlDirectori {
         }
         for (Document document : directoriObert.getDocs().values()) {
             if (document.getIdDoc() == documentActiu.getIdDoc()) continue;
-            if (documentActiu.getTitol().equals(document.getTitol()) && document.getAutor().equals(autor)) {
+            if (documentActiu.getTitol().equalsIgnoreCase(document.getTitol()) && document.getAutor().equalsIgnoreCase(autor)) {
                 return 20;
             }
         }
@@ -102,7 +102,7 @@ public class CtrlDirectori {
         }
         for (Document document : directoriObert.getDocs().values()) {
             if (document.getIdDoc() == documentActiu.getIdDoc()) continue;
-            if (documentActiu.getAutor().equals(document.getAutor()) && document.getTitol().equals(titol)) {
+            if (documentActiu.getAutor().equalsIgnoreCase(document.getAutor()) && document.getTitol().equalsIgnoreCase(titol)) {
                 return 20;
             }
         }
@@ -139,7 +139,7 @@ public class CtrlDirectori {
     public int afegirDocument (String autor, String titol, String contingut) {
         if (autor == null || autor.isBlank() || titol == null || titol.isBlank()) return 30;
         for (Document doc : directoriObert.getDocs().values()) {
-            if (doc.getAutor().equals(autor) && doc.getTitol().equals(titol)) {
+            if (doc.getAutor().equalsIgnoreCase(autor) && doc.getTitol().equalsIgnoreCase(titol)) {
                 return 20;
             }
         }
@@ -266,7 +266,7 @@ public class CtrlDirectori {
     }
 
     public List<Pair<String, String>> compararDocuments(METODE_COMPARACIO m, SORTING s, Integer k, Integer IdDoc) {
-        if (m == null | s == null | k <= 0 | !directoriObert.getDocs().containsKey(IdDoc) | directoriObert.getDocs().size() == 1)
+        if (m == null || s == null || k <= 0 || !directoriObert.getDocs().containsKey(IdDoc) || directoriObert.getDocs().size() == 1)
             return null;
         ArrayList<Document> documentsSemblants = new ArrayList<>();
         ArrayList<Pair<Integer,Double>> helper = new ArrayList<>();
@@ -347,7 +347,7 @@ public class CtrlDirectori {
     }
 
     public List<Pair<String, String>> compararQuery(METODE_COMPARACIO m, SORTING s, Integer k, ArrayList<String> paraules) {
-        if (m == null | s == null | k <= 0 | paraules == null | directoriObert.getDocs().size() == 0)
+        if (m == null || s == null || k <= 0 || paraules == null || directoriObert.getDocs().size() == 0)
             return null;
         if (paraules.isEmpty())
             return null;
@@ -465,7 +465,7 @@ public class CtrlDirectori {
             return null;
         }
         for (Document doc : directoriObert.getDocs().values()) {
-            if (doc.getTitol().equals(titol) && doc.getAutor().equals(autor)) {
+            if (doc.getTitol().equalsIgnoreCase(titol) && doc.getAutor().equalsIgnoreCase(autor)) {
                 return doc.getContingut();
             }
         }
@@ -477,7 +477,7 @@ public class CtrlDirectori {
         List<String> autors = new ArrayList<String>();
         for (Document doc : directoriObert.getDocs().values()) {
             String autor = doc.getAutor();
-            if (autor.startsWith(pre)) {
+            if (autor.toLowerCase().startsWith(pre.toLowerCase())) {
                 autors.add(autor);
             }
         }
@@ -492,7 +492,7 @@ public class CtrlDirectori {
         if (autor == null || autor.isBlank()) return null;
         List<String> docs = new ArrayList<>();
         for (Document doc : directoriObert.getDocs().values()) {
-            if (doc.getAutor().equals(autor)) {
+            if (doc.getAutor().equalsIgnoreCase(autor)) {
                 docs.add(doc.getTitol());
             }
         }

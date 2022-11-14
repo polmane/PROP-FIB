@@ -88,7 +88,7 @@ public class DriverCtrlDirectori {
             System.out.println("ERROR: Autor no vàlid, escrigui un string significatiu!");
         }
         else if (codi == 31) {
-            System.out.println("ERROR: No tens cap document seleccionat. Selecciona'l i torna-ho a intentar (funcinalitat (2))");
+            System.out.println("ERROR: No tens cap document seleccionat. Selecciona'l i torna-ho a intentar (funcinalitat (3))");
         }
     }
 
@@ -110,7 +110,7 @@ public class DriverCtrlDirectori {
             System.out.println("ERROR: Titol no vàlid, escrigui un string significatiu!");
         }
         else if (codi == 31) {
-            System.out.println("ERROR: No tens cap document seleccionat. Selecciona'l i torna-ho a intentar (funcinalitat (2))");
+            System.out.println("ERROR: No tens cap document seleccionat. Selecciona'l i torna-ho a intentar (funcinalitat (3))");
         }
     }
 
@@ -126,7 +126,7 @@ public class DriverCtrlDirectori {
         int codi = _ctrlDirectori.modificarContingut(contingut);
         if (codi == 10) {System.out.println("Contingut modificat correctament");}
         else if (codi == 31) {
-            System.out.println("ERROR: No tens cap document seleccionat. Selecciona'l i torna-ho a intentar (funcinalitat (2))");
+            System.out.println("ERROR: No tens cap document seleccionat. Selecciona'l i torna-ho a intentar (funcinalitat (3))");
         }
     }
 
@@ -141,15 +141,20 @@ public class DriverCtrlDirectori {
         else {
             System.out.println("(Document seleccionat actual:" + _ctrlDirectori.getDocumentActiu().getIdDoc() + ")");
             mostrarDocuments();
-            System.out.println("Escriu l'identificador del document a eliminar:");
+            System.out.println("Escriu l'identificador del document a eliminar (prem 'a' per abortar:");
             Scanner input = new Scanner(System.in);
+            if (!input.hasNextInt()) {
+                input.nextLine();
+                System.out.println("Abortant eliminar document");
+                return;
+            }
             int id = input.nextInt();
             int codi = _ctrlDirectori.eliminarDocument(id);
             if (codi == 11)
-                System.out.println("El document eliminat corresponia al document actiu. Recorda seleccionar-ne una altra (funcionalitat 3");
+                System.out.println("El document eliminat corresponia al document actiu. RECORDA seleccionar-ne una altra (funcionalitat (3)");
             else if (codi == 10) System.out.println("Document eliminat correctament");
-            else {
-                System.out.println("No existeix el document amb aquest identificador");
+            else if  (codi == 20) {
+                System.out.println("ERROR: No existeix cap document amb aquest identificador");
             }
         }
     }
