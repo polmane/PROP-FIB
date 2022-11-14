@@ -56,7 +56,8 @@ public class DriverCtrlDirectori {
             System.out.println("No hi ha documents disponibles");
         }
         else {
-            System.out.println("(Document seleccionat actual:" + _ctrlDirectori.getDocumentActiu().getIdDoc() +")");
+            if (_ctrlDirectori.getDocumentActiu() == null) System.out.println("Document seleccionat actual: null");
+            else System.out.println("(Document seleccionat actual:" + _ctrlDirectori.getDocumentActiu().getIdDoc() +")");
             mostrarDocuments();
             System.out.println("Escriu l'identificador del document a seleccionar:");
             Scanner input = new Scanner(System.in);
@@ -142,7 +143,8 @@ public class DriverCtrlDirectori {
             System.out.println("No hi ha documents disponibles");
         }
         else {
-            System.out.println("(Document seleccionat actual:" + _ctrlDirectori.getDocumentActiu().getIdDoc() + ")");
+            if (_ctrlDirectori.getDocumentActiu() == null) System.out.println("Document seleccionat actual: null, selecciona el document desitjat amb la opció 3");
+            else {System.out.println("(Document seleccionat actual:" + _ctrlDirectori.getDocumentActiu().getIdDoc() + ")");}
             mostrarDocuments();
             System.out.println("Escriu l'identificador del document a eliminar (prem 'a' per abortar):");
             Scanner input = new Scanner(System.in);
