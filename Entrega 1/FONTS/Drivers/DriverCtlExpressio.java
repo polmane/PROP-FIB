@@ -99,7 +99,7 @@ public class DriverCtlExpressio {
         int option = -1;
         while (option != 0) {
             if (option != -1) System.out.println("Escull una funcionalitat: (Si vols llistar les funcionalitats escriu: h)");
-            if (!input.hasNextInt()) {
+            while (!input.hasNextInt()) {
                 input.next();
                 mostrarFuncionalitats();
                 System.out.println("Escull una funcionalitat:");

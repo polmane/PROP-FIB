@@ -14,10 +14,11 @@ public class DriverCtrlDirectori {
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu l'identificador (id, tipus enter) del teu directori:");
         while (!input.hasNextInt()) {
-            input.nextLine();
+            input.next();
             System.out.println("Identificador no vàlid. Intenta-ho de nou:");
         }
         int id = input.nextInt();
+        input.nextLine();
         System.out.println("(Si més endavant torna a executar la funció constructora es perdrà tot el que hi havia en el directori.\n També, és la manera de reiniciar el directori)\n");
         _ctrlDirectori = new CtrlDirectori();
         _ctrlDirectori.crearDirectori(id);
@@ -60,10 +61,11 @@ public class DriverCtrlDirectori {
             System.out.println("Escriu l'identificador del document a seleccionar:");
             Scanner input = new Scanner(System.in);
             while (!input.hasNextInt()) {
-                input.nextLine();
+                input.next();
                 System.out.println("Identificador no vàlid. Intenta-ho de nou");
             }
             int idDoc = input.nextInt();
+            input.nextLine();
             int codi = _ctrlDirectori.seleccionarDocument(idDoc);
             if (codi == 10) System.out.println("Document seleccionat correctament");
             else {
@@ -142,14 +144,15 @@ public class DriverCtrlDirectori {
         else {
             System.out.println("(Document seleccionat actual:" + _ctrlDirectori.getDocumentActiu().getIdDoc() + ")");
             mostrarDocuments();
-            System.out.println("Escriu l'identificador del document a eliminar (prem 'a' per abortar:");
+            System.out.println("Escriu l'identificador del document a eliminar (prem 'a' per abortar):");
             Scanner input = new Scanner(System.in);
             if (!input.hasNextInt()) {
-                input.nextLine();
+                input.next();
                 System.out.println("Abortant eliminar document");
                 return;
             }
             int id = input.nextInt();
+            input.nextLine();
             int codi = _ctrlDirectori.eliminarDocument(id);
             if (codi == 11)
                 System.out.println("El document eliminat corresponia al document actiu. RECORDA seleccionar-ne una altra (funcionalitat (3)");
@@ -265,19 +268,21 @@ public class DriverCtrlDirectori {
         System.out.println();
         System.out.println("Indica la quantitat (enter major que 0) màxima de documents més semblants que vols llistar (si n'hi ha suficients):");
         while (!input.hasNextInt()) {
-            input.nextLine();
+            input.next();
             System.out.println("Quantitat no vàlida. Intenta-ho de nou:");
         }
         int k = input.nextInt();
+        input.nextLine();
 
         System.out.println();
         System.out.println("Escull l'identificador del document el qual compararem amb la resta:");
         mostrarDocuments();
         while (!input.hasNextInt()) {
-            input.nextLine();
+            input.next();
             System.out.println("Identificador no vàlid. Intenta-ho de nou:");
         }
         int id = input.nextInt();
+        input.nextLine();
 
         List<Pair<String, String>> res = _ctrlDirectori.compararDocuments(m, s, k, id);
         if (res == null) {
@@ -321,10 +326,11 @@ public class DriverCtrlDirectori {
         System.out.println();
         System.out.println("Indica la quantitat (enter major que 0) màxima de documents més semblants que vols llistar (si n'hi ha suficients):");
         while (!input.hasNextInt()) {
-            input.nextLine();
+            input.next();
             System.out.println("Quantitat no vàlida. Intenta-ho de nou:");
         }
         int k = input.nextInt();
+        input.nextLine();
 
         System.out.println();
         System.out.println("Escriu les paraules de la query separades per un espai. (El simbols s'eliminaran)");
@@ -352,11 +358,12 @@ public class DriverCtrlDirectori {
         while (option != 0) {
             if (option != -1) System.out.println("Escull una funcionalitat: (Si vols llistar les funcionalitats escriu: h)");
             while (!input.hasNextInt()) {
-                input.nextLine();
+                input.next();
                 mostrarFuncionalitats();
                 System.out.println("Escull una funcionalitat:");
             }
             option = input.nextInt();
+            input.nextLine();
             System.out.println();
             switch (option) {
                 case 0:
