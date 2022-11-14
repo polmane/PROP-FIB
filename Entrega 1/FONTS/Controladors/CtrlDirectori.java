@@ -342,7 +342,6 @@ public class CtrlDirectori {
         }
     }
 
-    //TODO: TEST
     public List<Pair<String, String>> compararQuery(METODE_COMPARACIO m, SORTING s, Integer k, ArrayList<String> paraules) {
         if (m == null | s == null | k <= 0 | paraules == null | directoriObert.getDocs().size() == 0)
             return null;
