@@ -180,11 +180,28 @@ public class TestCtrlDirectori {
         assertEquals(30, CtrlDir.modificarTitol(null));
         assertEquals(30, CtrlDir.modificarTitol(""));
 
-        //Document actiu (Isaac, Prova, ,)
+        //Document actiu (Juli, Prova3, ,)
         assertEquals(20, CtrlDir.modificarTitol("Prova1"));
 
         assertEquals(10, CtrlDir.modificarTitol("Nou Titol"));
         assertEquals("Nou Titol", CtrlDir.getDocumentActiu().getTitol());
+    }
+
+    /**
+     * Objecte de la prova: Test del mètode modificarContingut de la classe CtrlDirectori
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     * Valors estudiats: Gestió correcta dels errors i funcionament correcte de modificarContingut.
+     * Operativa: Es comprova que saltin errors quan toca amb el codi corresponent i el funcionament correcte de la funció.
+     */
+    @Test
+    public void TestModificarContingut() {
+        CtrlDirectori CtrlDir = new CtrlDirectori();
+        CtrlDir.crearDirectori(0);
+
+        CtrlDir.afegirDocument("Juli","Prova","contingut inicial");
+
+        CtrlDir.modificarContingut("contingut final");
+        assertEquals("contingut final", CtrlDir.getDocumentActiu().getContingut());
     }
 
     @Test
