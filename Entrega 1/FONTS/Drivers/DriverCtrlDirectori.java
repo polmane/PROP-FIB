@@ -99,11 +99,13 @@ public class DriverCtrlDirectori {
             return;
         }
         mostrarDocuments();
+        System.out.println("(Document seleccionat:" + -_ctrlDirectori.getDocumentActiu().getIdDoc() +")");
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu l'identificador del document a eliminar:");
         int id = input.nextInt();
         int codi = _ctrlDirectori.eliminarDocument(id);
-        if (codi == 10) System.out.println("Document eliminat correctament");
+        if (codi == 11) System.out.println("El document eliminat corresponia al document actiu. Recorda seleccionar-ne una altra");
+        else if (codi == 10) System.out.println("Document eliminat correctament");
         else {
             System.out.println("No existeix el document amb aquest identificador");
         }

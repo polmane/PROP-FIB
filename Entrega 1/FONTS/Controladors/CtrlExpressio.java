@@ -86,6 +86,9 @@ public class CtrlExpressio {
      * @return si retorna 10 vol dir que s'ha realitzat l'operació correctament, si retorna 20 significa que hi ha hagut un error
      */
     public int modificarExpressio(String exp){
+        if (exp == null || exp.isEmpty()) {
+            return 30;
+        }
         for (Expressio e : expressions.values()) {
             if (e.getExpressio().equals(exp)) {
                 return 20;
@@ -104,6 +107,10 @@ public class CtrlExpressio {
     public int eliminarExpressio(int idExp){
         if (expressions.containsKey(idExp)) {
             expressions.remove(idExp);
+            if (idExp == expressioSeleccionada.getIdExp()) {
+                expressioSeleccionada = null;
+                return 11;
+            }
             return 10;
         } else {
             return 20;

@@ -76,10 +76,9 @@ public class CtrlDirectori {
      * @param autor és el nou nom d'autor que es vol utilitzar pel document
      */
     public int modificarAutor(String autor) {
-        if (autor == null)
+        if (autor == null || autor.isEmpty()) {
             return 30;
-        if (autor.isEmpty())
-            return 30;
+        }
         for (Document document : directoriObert.getDocs().values()) {
             if (document.getIdDoc() == documentActiu.getIdDoc()) continue;
             if (documentActiu.getTitol().equals(document.getTitol()) && document.getAutor().equals(autor)) {
@@ -96,10 +95,9 @@ public class CtrlDirectori {
      * @param titol és el nou nom del títol que es vol utilitzar pel document
      */
     public int modificarTitol(String titol) {
-        if (titol == null)
+        if (titol == null || titol.isEmpty()) {
             return 30;
-        if (titol.isEmpty())
-            return 30;
+        }
         for (Document document : directoriObert.getDocs().values()) {
             if (document.getIdDoc() == documentActiu.getIdDoc()) continue;
             if (documentActiu.getAutor().equals(document.getAutor()) && document.getTitol().equals(titol)) {
@@ -439,7 +437,10 @@ public class CtrlDirectori {
 
         //Afegim l'id a la cua per poder ser reciclada
         directoriObert.getDeletedIds().add(idDoc);
-
+        if (idDoc == documentActiu.getIdDoc()){
+            documentActiu = null;
+            return 11;
+        }
         return 10;
     }
 
