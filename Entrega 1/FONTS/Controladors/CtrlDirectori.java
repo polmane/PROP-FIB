@@ -284,7 +284,7 @@ public class CtrlDirectori {
                         case BOOL:
                             Bparaula = 1.0;
                             break;
-                    };
+                    }
                 }
                 sumAB += Aparaula * Bparaula;
                 A2 += Math.pow(Aparaula,2);
@@ -480,7 +480,7 @@ public class CtrlDirectori {
         if (autors.isEmpty())
             return null;
         if (s == SORTING.AUT_ASC) Collections.sort(autors);
-        else if (s == SORTING.AUT_DESC) Collections.sort(autors,Collections.reverseOrder());
+        else if (s == SORTING.AUT_DESC) autors.sort(Collections.reverseOrder());
         return autors;
     }
 
@@ -489,7 +489,7 @@ public class CtrlDirectori {
             return null;
         if (autor.isEmpty())
             return null;
-        List<String> docs = new ArrayList<String>();
+        List<String> docs = new ArrayList<>();
         for (int i = 0; i < directoriObert.getDocs().size(); ++i) {
             if (directoriObert.getDocs().containsKey(i) && directoriObert.getDocs().get(i).getAutor().equals(autor)) {
                 docs.add(directoriObert.getDocs().get(i).getTitol());
@@ -498,7 +498,7 @@ public class CtrlDirectori {
         if (docs.isEmpty())
             return null;
         if (s == SORTING.TIT_ASC) Collections.sort(docs);
-        else if (s == SORTING.TIT_DESC) Collections.sort(docs,Collections.reverseOrder());
+        else if (s == SORTING.TIT_DESC) docs.sort(Collections.reverseOrder());
         return docs;
     }
 }
