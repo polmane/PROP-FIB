@@ -29,7 +29,7 @@ public class TestCtrlDirectori {
     }
 
     /**
-     * Objecte de la prova: Test del mètode guardarDocument de la classe CtrlDirectori
+     * Objecte de la prova: Test del mètode afegirDocument de la classe CtrlDirectori
      * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
      * Valors estudiats: Es guarda un document al directori
      * Operativa: es comprova que afegir un document al directori funcioni correctament
@@ -155,6 +155,7 @@ public class TestCtrlDirectori {
 
         assertEquals(30, CtrlDir.modificarAutor(null));
         assertEquals(30, CtrlDir.modificarAutor(""));
+        assertEquals(30, CtrlDir.modificarAutor(" "));
 
         //Document actiu (Isaac, Prova, ,)
         assertEquals(20, CtrlDir.modificarAutor("Pol"));
@@ -180,6 +181,7 @@ public class TestCtrlDirectori {
 
         assertEquals(30, CtrlDir.modificarTitol(null));
         assertEquals(30, CtrlDir.modificarTitol(""));
+        assertEquals(30, CtrlDir.modificarTitol(" "));
 
         //Document actiu (Juli, Prova3, ,)
         assertEquals(20, CtrlDir.modificarTitol("Prova1"));

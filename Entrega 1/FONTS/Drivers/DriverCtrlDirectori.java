@@ -12,7 +12,12 @@ public class DriverCtrlDirectori {
     public void testConstructora() {
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu l'identificador (id, tipus enter) del teu directori:");
+        while (!input.hasNextInt()) {
+            input.nextLine();
+            System.out.println("Identificador no vàlid. Intenta-ho de nou:");
+        }
         int id = input.nextInt();
+        System.out.println("(Si més endavant crida la funció constructora es perdrà tot el que hi havia en el directori.\n També, és la manera de reiniciar el directori)");
         _ctrlDirectori = new CtrlDirectori();
         _ctrlDirectori.crearDirectori(id);
         System.out.println("Controlador de directori creat!");
@@ -32,8 +37,11 @@ public class DriverCtrlDirectori {
         String contingut = input.nextLine();
         int codi = _ctrlDirectori.afegirDocument(autor, titol, contingut);
         if (codi == 10) {System.out.println("Document afegit correctament");}
-        else {
+        else if (codi == 20){
             System.out.println("ERROR: Ja existeix un document amb autor i titol donats, NO s'ha afegit cap nou document");
+        }
+        else {
+            System.out.println("ERROR: Autor i/o titol no vàlids, escrigui un string!");
         }
     }
 
@@ -42,12 +50,12 @@ public class DriverCtrlDirectori {
             System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
             return;
         }
-        mostrarDocuments();
-        Scanner input = new Scanner(System.in);
         if (_ctrlDirectori.getDirectoriObert().getDocs().size() == 0) {
             System.out.println("No hi ha documents disponibles");
         }
         else {
+            mostrarDocuments();
+            Scanner input = new Scanner(System.in);
             int idDoc = input.nextInt();
             int codi = _ctrlDirectori.seleccionarDocument(idDoc);
             if (codi == 10) System.out.println("Document seleccionat correctament");
@@ -98,13 +106,13 @@ public class DriverCtrlDirectori {
             System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
             return;
         }
+        System.out.println("(Document seleccionat actual:" + -_ctrlDirectori.getDocumentActiu().getIdDoc() +")");
         mostrarDocuments();
-        System.out.println("(Document seleccionat:" + -_ctrlDirectori.getDocumentActiu().getIdDoc() +")");
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu l'identificador del document a eliminar:");
         int id = input.nextInt();
         int codi = _ctrlDirectori.eliminarDocument(id);
-        if (codi == 11) System.out.println("El document eliminat corresponia al document actiu. Recorda seleccionar-ne una altra");
+        if (codi == 11) System.out.println("El document eliminat corresponia al document actiu. Recorda seleccionar-ne una altra (funcionalitat 3");
         else if (codi == 10) System.out.println("Document eliminat correctament");
         else {
             System.out.println("No existeix el document amb aquest identificador");
@@ -179,8 +187,8 @@ public class DriverCtrlDirectori {
         int option = -1;
         while (option != 0) {
             if (option != -1) System.out.println("Escull una funcionalitat: (Si vols llistar les funcionalitats escriu: h)");
-            if (!input.hasNextInt()) {
-                input.next();
+            while (!input.hasNextInt()) {
+                input.nextLine();
                 mostrarFuncionalitats();
                 System.out.println("Escull una funcionalitat:");
             }
@@ -227,7 +235,7 @@ public class DriverCtrlDirectori {
                     DDir.testLlistaAutorsPerPrefix();
                     break;
                 case 10:
-                    System.out.println("---Llista de titols de un autor---");
+                    System.out.println("---Llista de titols d'un autor---");
                     DDir.testLlistaTitolsPerAutor();
                     break;
                 case 11:

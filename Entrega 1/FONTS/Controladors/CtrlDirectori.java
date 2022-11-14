@@ -76,7 +76,7 @@ public class CtrlDirectori {
      * @param autor és el nou nom d'autor que es vol utilitzar pel document
      */
     public int modificarAutor(String autor) {
-        if (autor == null || autor.isEmpty()) {
+        if (autor == null || autor.isBlank()) {
             return 30;
         }
         for (Document document : directoriObert.getDocs().values()) {
@@ -95,7 +95,7 @@ public class CtrlDirectori {
      * @param titol és el nou nom del títol que es vol utilitzar pel document
      */
     public int modificarTitol(String titol) {
-        if (titol == null || titol.isEmpty()) {
+        if (titol == null || titol.isBlank()) {
             return 30;
         }
         for (Document document : directoriObert.getDocs().values()) {
@@ -132,8 +132,9 @@ public class CtrlDirectori {
      * @param contingut representa el contingut del nou document
      */
     public int afegirDocument (String autor, String titol, String contingut) {
-        for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
-            if (directoriObert.getDocs().containsKey(i) && directoriObert.getDocs().get(i).getAutor().equals(autor) && directoriObert.getDocs().get(i).getTitol().equals(titol)) {
+        if (autor == null || autor.isBlank() || titol == null || titol.isBlank()) return 30;
+        for (Document doc : directoriObert.getDocs().values()) {
+            if (doc.getAutor().equals(autor) && doc.getTitol().equals(titol)) {
                 return 20;
             }
         }
@@ -204,7 +205,7 @@ public class CtrlDirectori {
         int size = directoriObert.getDocs().size();
         for (String word : directoriObert.getParaulesDirectori().keySet()) {
             double wordCount = 0;
-            for(Document docs :directoriObert.getDocs().values())
+            for (Document docs :directoriObert.getDocs().values())
             {
                 if (docs.getOcurrencies().containsKey(word)) wordCount++;
             }
@@ -264,20 +265,20 @@ public class CtrlDirectori {
             return null;
         ArrayList<Document> documentsSemblants = new ArrayList<>();
         ArrayList<Pair<Integer,Double>> helper = new ArrayList<>();
-        for (int i = 0; i < directoriObert.getDocs().size();++i) {
+        for (Document doc : directoriObert.getDocs().values()) {
             double sumAB = 0.0;
             double A2 = 0.0;
             double B2 = 0.0;
-            if (i == IdDoc) continue;
+            if (doc.getIdDoc() == IdDoc) continue;
             for (String word : directoriObert.getPesosDocs().get(IdDoc).keySet()) {
                 double Aparaula;
                 if (m == METODE_COMPARACIO.BOOL) Aparaula = 1.0;
                 else Aparaula = directoriObert.getPesosDocs().get(IdDoc).get(word);
                 double Bparaula = 0.0;
-                if (directoriObert.getPesosDocs().get(i).containsKey(word)) {
+                if (directoriObert.getPesosDocs().get(doc.getIdDoc()).containsKey(word)) {
                     switch (m) {
                         case TF_IDF:
-                            Bparaula = directoriObert.getPesosDocs().get(i).get(word);
+                            Bparaula = directoriObert.getPesosDocs().get(doc.getIdDoc()).get(word);
                             break;
                         case BOOL:
                             Bparaula = 1.0;
@@ -288,12 +289,12 @@ public class CtrlDirectori {
                 A2 += Math.pow(Aparaula,2);
                 B2 += Math.pow(Bparaula,2);
             }
-            for (String word : directoriObert.getPesosDocs().get(i).keySet()) {
+            for (String word : directoriObert.getPesosDocs().get(doc.getIdDoc()).keySet()) {
                 if (!directoriObert.getPesosDocs().get(IdDoc).containsKey(word)) {
                     double Bparaula;
                     if (m == METODE_COMPARACIO.BOOL) Bparaula = 1.0;
                     else {
-                        Bparaula = directoriObert.getPesosDocs().get(i).get(word);
+                        Bparaula = directoriObert.getPesosDocs().get(doc.getIdDoc()).get(word);
                     }
                     B2 += Math.pow(Bparaula,2);
                 }
@@ -302,7 +303,7 @@ public class CtrlDirectori {
             if (A2 != 0 && B2 != 0) {
                 similarity = sumAB / (Math.sqrt(A2) * Math.sqrt(B2));
             }
-            helper.add(new Pair<>(directoriObert.getDocs().get(i).getIdDoc(), similarity));
+            helper.add(new Pair<>(doc.getIdDoc(), similarity));
         }
         helper.sort(comparing(Pair::second));
 
@@ -437,7 +438,7 @@ public class CtrlDirectori {
 
         //Afegim l'id a la cua per poder ser reciclada
         directoriObert.getDeletedIds().add(idDoc);
-        if (idDoc == documentActiu.getIdDoc()){
+        if (documentActiu != null && idDoc == documentActiu.getIdDoc()){
             documentActiu = null;
             return 11;
         }
@@ -454,28 +455,24 @@ public class CtrlDirectori {
     }
 
     public String cercaPerAutoriTitol(String autor, String titol) {
-        if (autor == null | titol == null)
+        if (autor == null || titol == null || autor.isBlank() || titol.isBlank()) {
             return null;
-        if (autor.isEmpty() | titol.isEmpty())
-            return null;
-        for (int i = 0; i < directoriObert.getDocs().size(); ++i) {
-            if (directoriObert.getDocs().containsKey(i) && directoriObert.getDocs().get(i).getTitol().equals(titol) && directoriObert.getDocs().get(i).getAutor().equals(autor)) {
-                return directoriObert.getDocs().get(i).getContingut();
+        }
+        for (Document doc : directoriObert.getDocs().values()) {
+            if (doc.getTitol().equals(titol) && doc.getAutor().equals(autor)) {
+                return doc.getContingut();
             }
         }
         return null;
     }
 
     public List<String> llistaAutorsPerPrefix(String pre, SORTING s) {
-        if (pre == null)
-            return null;
+        if (pre == null) return null;
         List<String> autors = new ArrayList<String>();
-        for (int i = 0; i < directoriObert.getDocs().size(); ++i) {
-            if (directoriObert.getDocs().containsKey(i)) {
-                String autor = directoriObert.getDocs().get(i).getAutor();
-                if (autor.startsWith(pre)) {
-                    autors.add(autor);
-                }
+        for (Document doc : directoriObert.getDocs().values()) {
+            String autor = doc.getAutor();
+            if (autor.startsWith(pre)) {
+                autors.add(autor);
             }
         }
         if (autors.isEmpty())
@@ -486,14 +483,11 @@ public class CtrlDirectori {
     }
 
     public List<String> llistaTitolsPerAutor(String autor, SORTING s) {
-        if (autor == null)
-            return null;
-        if (autor.isEmpty())
-            return null;
+        if (autor == null || autor.isBlank()) return null;
         List<String> docs = new ArrayList<>();
-        for (int i = 0; i < directoriObert.getDocs().size(); ++i) {
-            if (directoriObert.getDocs().containsKey(i) && directoriObert.getDocs().get(i).getAutor().equals(autor)) {
-                docs.add(directoriObert.getDocs().get(i).getTitol());
+        for (Document doc : directoriObert.getDocs().values()) {
+            if (doc.getAutor().equals(autor)) {
+                docs.add(doc.getTitol());
             }
         }
         if (docs.isEmpty())
