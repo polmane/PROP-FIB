@@ -94,8 +94,11 @@ public class CtrlDirectori {
      *
      * @param titol és el nou nom del títol que es vol utilitzar pel document
      */
-    //TODO: TEST
     public int modificarTitol(String titol) {
+        if (titol == null)
+            return 30;
+        if (titol.isEmpty())
+            return 30;
         for (Document document : directoriObert.getDocs().values()) {
             if (document.getIdDoc() == documentActiu.getIdDoc()) continue;
             if (documentActiu.getAutor().equals(document.getAutor()) && document.getTitol().equals(titol)) {

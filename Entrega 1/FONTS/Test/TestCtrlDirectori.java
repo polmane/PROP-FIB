@@ -163,9 +163,9 @@ public class TestCtrlDirectori {
     }
 
     /**
-     * Objecte de la prova: Test del mètode modificarAutor de la classe CtrlDirectori
+     * Objecte de la prova: Test del mètode modificarTitol de la classe CtrlDirectori
      * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
-     * Valors estudiats: Gestió correcta dels errors i funcionament correcte de modificarAutor.
+     * Valors estudiats: Gestió correcta dels errors i funcionament correcte de modificarTitol.
      * Operativa: Es comprova que saltin errors quan toca amb el codi corresponent i el funcionament correcte de la funció.
      */
     @Test
@@ -173,18 +173,18 @@ public class TestCtrlDirectori {
         CtrlDirectori CtrlDir = new CtrlDirectori();
         CtrlDir.crearDirectori(0);
 
-        CtrlDir.afegirDocument("Juli","Prova","");
-        CtrlDir.afegirDocument("Pol","Prova","");
-        CtrlDir.afegirDocument("Isaac","Prova","");
+        CtrlDir.afegirDocument("Juli","Prova1","");
+        CtrlDir.afegirDocument("Juli","Prova2","");
+        CtrlDir.afegirDocument("Juli","Prova3","");
 
-        assertEquals(30, CtrlDir.modificarAutor(null));
-        assertEquals(30, CtrlDir.modificarAutor(""));
+        assertEquals(30, CtrlDir.modificarTitol(null));
+        assertEquals(30, CtrlDir.modificarTitol(""));
 
         //Document actiu (Isaac, Prova, ,)
-        assertEquals(20, CtrlDir.modificarAutor("Pol"));
+        assertEquals(20, CtrlDir.modificarTitol("Prova1"));
 
-        assertEquals(10, CtrlDir.modificarAutor("Nou Autor"));
-        assertEquals("Nou Autor", CtrlDir.getDocumentActiu().getAutor());
+        assertEquals(10, CtrlDir.modificarTitol("Nou Titol"));
+        assertEquals("Nou Titol", CtrlDir.getDocumentActiu().getTitol());
     }
 
     @Test
