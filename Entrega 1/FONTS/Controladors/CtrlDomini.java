@@ -40,7 +40,7 @@ public class CtrlDomini {
         return _ctrlDirectori.compararDocuments(m, s, k, IdDoc);
     }
 
-    public List<Pair<String, String>> compararQuery(CtrlDirectori.METODE_COMPARACIO m, CtrlDirectori.SORTING s, Integer k, ArrayList<String> paraules) {
+    public List<Pair<String, String>> compararQuery(CtrlDirectori.METODE_COMPARACIO m, CtrlDirectori.SORTING s, Integer k, String paraules) {
         return _ctrlDirectori.compararQuery(m, s, k, paraules);
     }
 

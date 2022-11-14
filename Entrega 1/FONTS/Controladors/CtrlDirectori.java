@@ -346,16 +346,13 @@ public class CtrlDirectori {
         }
     }
 
-    public List<Pair<String, String>> compararQuery(METODE_COMPARACIO m, SORTING s, Integer k, ArrayList<String> paraules) {
+    public List<Pair<String, String>> compararQuery(METODE_COMPARACIO m, SORTING s, Integer k, String paraules) {
         if (m == null || s == null || k <= 0 || paraules == null || directoriObert.getDocs().size() == 0)
             return null;
         if (paraules.isEmpty())
             return null;
-        String result = "";
-        for (String paraula: paraules) {
-            result += paraula + " ";
-        }
-        afegirDocument("compararQuery","compararQuery", result);
+
+        afegirDocument("compararQuery","compararQuery", paraules);
         List<Pair<String, String>> equalQuery = compararDocuments(m,s,k, documentActiu.getIdDoc());
         eliminarDocument(documentActiu.getIdDoc());
         return equalQuery;

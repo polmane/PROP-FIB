@@ -1,6 +1,7 @@
 package FONTS.Drivers;
 
 import FONTS.Classes.Document;
+import FONTS.Classes.Pair;
 import FONTS.Controladors.CtrlDirectori;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class DriverCtrlDirectori {
             System.out.println("Identificador no vàlid. Intenta-ho de nou:");
         }
         int id = input.nextInt();
-        System.out.println("(Si més endavant torna a executar la funció constructora es perdrà tot el que hi havia en el directori.\n També, és la manera de reiniciar el directori)");
+        System.out.println("(Si més endavant torna a executar la funció constructora es perdrà tot el que hi havia en el directori.\n També, és la manera de reiniciar el directori)\n");
         _ctrlDirectori = new CtrlDirectori();
         _ctrlDirectori.crearDirectori(id);
         System.out.println("Controlador de directori creat!");
@@ -186,11 +187,23 @@ public class DriverCtrlDirectori {
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu el prefix de nom d'autor a cercar:");
         String pre = input.nextLine();
-        System.out.println("Escriu el criteri d'ordre (AUT_DESC | AUT_ASC) (ordena els noms per ordre alfabètic Descendent i Ascendent, respectivament):");
-        CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(input.nextLine());
+        System.out.println("Escriu el criteri d'ordre del resultat (AUT_ASC | AUT_DESC) (ordena els noms per ordre alfabètic Ascendent i Descendent, respectivament):");
+        String criteri = input.nextLine();
+        if (!criteri.equals("AUT_ASC") && !criteri.equals("AUT_DESC")) {
+            criteri = "AUT_ASC";
+            System.out.println("Criteri mal escrit, usem el criteri per defecte AUT_ASC");
+        }
+        CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(criteri);
         List<String> res = _ctrlDirectori.llistaAutorsPerPrefix(pre, s);
-        System.out.println("Llista d'autors amb prefix: " + pre);
-        System.out.println(res);
+
+        System.out.println();
+        if (res == null) {
+            System.out.println("No s'han trobat autors amb aquest prefix");
+        }
+        else {
+            System.out.println("Llista d'autors amb prefix '" + pre + "' i criteri " + s);
+            System.out.println(res);
+        }
     }
 
     public void testLlistaTitolsPerAutor() {
@@ -201,11 +214,23 @@ public class DriverCtrlDirectori {
         Scanner input = new Scanner(System.in);
         System.out.println("Escriu el nom de l'autor:");
         String autor = input.nextLine();
-        System.out.println("Escriu el criteri d'ordre (TIT_DESC | TIT_ASC) (ordena els titols per ordre alfabètic Descendent i Ascendent, respectivament):");
-        CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(input.nextLine());
+        System.out.println("Escriu el criteri d'ordre del resultat (TIT_ASC | TIT_DESC) (ordena els titols per ordre alfabètic Ascendent i Descendent, respectivament):");
+        String criteri = input.nextLine();
+        if (!criteri.equals("TIT_ASC") && !criteri.equals("TIT_DESC")) {
+            criteri = "TIT_ASC";
+            System.out.println("Criteri mal escrit, usem el criteri per defecte TIT_ASC");
+
+        }
+        System.out.println();
+        CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(criteri);
         List<String> res = _ctrlDirectori.llistaTitolsPerAutor(autor, s);
-        System.out.println("Llista de titols de " + autor + ":");
-        System.out.println(res);
+        if (res == null) {
+            System.out.println("No s'han trobat titols d'aquest autor");
+        }
+        else {
+            System.out.println("Llista de titols de " + autor + " amb criteri " + s + ":");
+            System.out.println(res);
+        }
     }
 
     public void testCompararDocuments() {
@@ -213,7 +238,106 @@ public class DriverCtrlDirectori {
             System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
             return;
         }
-        System.out.println("Comparar doc");
+        Scanner input = new Scanner(System.in);
+        System.out.println("Escriu el metode de comparació de documents (TF_IDF | BOOL):");
+        String metode = input.nextLine();
+        if (!metode.equals("TF_IDF") && !metode.equals("BOOL")) {
+            metode = "TF_IDF";
+            System.out.println("Metode mal escrit, usem el metode per defecte TF_IDF");
+        }
+        CtrlDirectori.METODE_COMPARACIO m = CtrlDirectori.METODE_COMPARACIO.valueOf(metode);
+
+        System.out.println();
+        System.out.println("Escriu el criteri d'ordre del resultat (SIM_ASC | SIM_DESC | AUT_ASC | AUT_DESC | TIT_ASC | TIT_DESC)");
+        System.out.println("(SIM ordena els resultats per ordre de similaritat ASCendent o DESCdendent, respectivament,");
+        System.out.println("AUT ordena els resultats per autor en ordre alfabètic ASCendent o DESCdendent, respectivament,");
+        System.out.println("TIT ordena els resultats per titol en ordre alfabètic ASCendent o DESCdendent, respectivament,");
+
+        String criteri = input.nextLine();
+        if (!criteri.equals("SIM_ASC") && !criteri.equals("SIM_DESC") &&
+            !criteri.equals("AUT_ASC") && !criteri.equals("AUT_DESC") &&
+            !criteri.equals("TIT_ASC") && !criteri.equals("TIT_DESC")) {
+            criteri = "SIM_DESC";
+            System.out.println("Criteri mal escrit, usem el criteri per defecte SIM_DESC");
+        }
+        CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(criteri);
+
+        System.out.println();
+        System.out.println("Indica la quantitat (enter major que 0) màxima de documents més semblants que vols llistar (si n'hi ha suficients):");
+        while (!input.hasNextInt()) {
+            input.nextLine();
+            System.out.println("Quantitat no vàlida. Intenta-ho de nou:");
+        }
+        int k = input.nextInt();
+
+        System.out.println();
+        System.out.println("Escull l'identificador del document el qual compararem amb la resta:");
+        mostrarDocuments();
+        while (!input.hasNextInt()) {
+            input.nextLine();
+            System.out.println("Identificador no vàlid. Intenta-ho de nou:");
+        }
+        int id = input.nextInt();
+
+        List<Pair<String, String>> res = _ctrlDirectori.compararDocuments(m, s, k, id);
+        if (res == null) {
+            System.out.println("No existeix document amb aquest identificador. Alternativament, pot ser que no hi hagi suficients documents per comparar (¡recorda que NO es compara amb si mateix!)");
+        }
+        else {
+            System.out.println("LLista de documents (Autor i titol) més semblants al document amb identificador " + id + " segons el metode "+m+ " i criteri "+s);
+            System.out.println(res);
+        }
+    }
+
+    public void testCompararQuery() {
+        if (_ctrlDirectori == null) {
+            System.out.println("Primer has de crear el controlador! Fes-ho amb la funcionalitat Constructora (1)");
+            return;
+        }
+        Scanner input = new Scanner(System.in);
+        System.out.println("Escriu el metode de comparació de documents amb la query (TF_IDF | BOOL):");
+        String metode = input.nextLine();
+        if (!metode.equals("TF_IDF") && !metode.equals("BOOL")) {
+            metode = "TF_IDF";
+            System.out.println("Metode mal escrit, usem el metode per defecte TF_IDF");
+        }
+        CtrlDirectori.METODE_COMPARACIO m = CtrlDirectori.METODE_COMPARACIO.valueOf(metode);
+
+        System.out.println();
+        System.out.println("Escriu el criteri d'ordre del resultat (SIM_ASC | SIM_DESC | AUT_ASC | AUT_DESC | TIT_ASC | TIT_DESC)");
+        System.out.println("(SIM ordena els resultats per ordre de similaritat ASCendent o DESCdendent, respectivament,");
+        System.out.println("AUT ordena els resultats per autor en ordre alfabètic ASCendent o DESCdendent, respectivament,");
+        System.out.println("TIT ordena els resultats per titol en ordre alfabètic ASCendent o DESCdendent, respectivament,");
+
+        String criteri = input.nextLine();
+        if (!criteri.equals("SIM_ASC") && !criteri.equals("SIM_DESC") &&
+                !criteri.equals("AUT_ASC") && !criteri.equals("AUT_DESC") &&
+                !criteri.equals("TIT_ASC") && !criteri.equals("TIT_DESC")) {
+            criteri = "SIM_DESC";
+            System.out.println("Criteri mal escrit, usem el criteri per defecte SIM_DESC");
+        }
+        CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(criteri);
+
+        System.out.println();
+        System.out.println("Indica la quantitat (enter major que 0) màxima de documents més semblants que vols llistar (si n'hi ha suficients):");
+        while (!input.hasNextInt()) {
+            input.nextLine();
+            System.out.println("Quantitat no vàlida. Intenta-ho de nou:");
+        }
+        int k = input.nextInt();
+
+        System.out.println();
+        System.out.println("Escriu les paraules de la query separades per un espai. (El simbols s'eliminaran)");
+        String query = input.nextLine();
+
+        List<Pair<String, String>> res = _ctrlDirectori.compararQuery(m, s, k, query);
+        if (res == null) {
+            System.out.println("No hi ha suficients documents per comparar (mínim 1) o, alternativament, la query és buida");
+        }
+        else {
+            System.out.println("LLista de documents (Autor i titol) més semblants a la query segons el metode "+m+ " i criteri "+s);
+            System.out.println(res);
+        }
     }
     public static void main (String [] args) {
         System.out.println("--------------------------------------");
@@ -279,8 +403,12 @@ public class DriverCtrlDirectori {
                     DDir.testLlistaTitolsPerAutor();
                     break;
                 case 11:
-                    System.out.println("---Comparar documents---");
+                    System.out.println("---Documents semblants---");
                     DDir.testCompararDocuments();
+                    break;
+                case 12:
+                    System.out.println("---Documents semblants a una query---");
+                    DDir.testCompararQuery();
                     break;
                 default:
                     System.out.println("Funcionalitat no existent");
@@ -302,8 +430,9 @@ public class DriverCtrlDirectori {
         System.out.println("7: Eliminar document");
         System.out.println("8: Contingut de titol i autor");
         System.out.println("9: Autors per prefix");
-        System.out.println("10: Llista de titols de un autor");
-        System.out.println("11: Comparar documents\n");
+        System.out.println("10: Llista de titols d'un autor");
+        System.out.println("11: Documents semblants");
+        System.out.println("12: Documents semblants a una query\n");
     }
 
     private static void mostrarDocuments() {

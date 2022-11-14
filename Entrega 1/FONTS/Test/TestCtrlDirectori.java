@@ -319,10 +319,7 @@ public class TestCtrlDirectori {
 
         int idDoc1, idDoc2, idDoc3, idDoc4;
         List<Pair<String, String>> ret;
-        ArrayList<String> query = new ArrayList<>();
-        query.add("hola");
-        query.add("bon");
-        query.add("dia");
+        String query = new String("hola bon dia");
 
         //Errors de null i d'arguments
         CtrlDir.afegirDocument("Pol","Prova","A A A A A");
