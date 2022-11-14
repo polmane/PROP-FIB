@@ -2,6 +2,7 @@ package FONTS.Test;
 
 
 import FONTS.Classes.Document;
+import FONTS.Classes.Pair;
 import FONTS.Controladors.CtrlDirectori;
 import org.junit.Test;
 
@@ -191,7 +192,7 @@ public class TestCtrlDirectori {
      * Objecte de la prova: Test del mètode modificarContingut de la classe CtrlDirectori
      * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
      * Valors estudiats: Gestió correcta dels errors i funcionament correcte de modificarContingut.
-     * Operativa: Es comprova que saltin errors quan toca amb el codi corresponent i el funcionament correcte de la funció.
+     * Operativa: Es comprova el funcionament correcte de la funció.
      */
     @Test
     public void TestModificarContingut() {
@@ -204,21 +205,100 @@ public class TestCtrlDirectori {
         assertEquals("contingut final", CtrlDir.getDocumentActiu().getContingut());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode compararDocuments de la classe CtrlDirectori
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     * Valors estudiats: Gestió correcta dels errors i funcionament correcte de compararDocuments.
+     * Operativa: Es comprova el funcionament correcte de la funció.
+     */
     @Test
-    public void TestCompararDocuments() { //TODO: fer ben fet
+    public void TestCompararDocuments() {
         CtrlDirectori CtrlDir = new CtrlDirectori();
         CtrlDir.crearDirectori(0);
 
-        CtrlDir.afegirDocument("Pol","Prova","A A A A A");
-        CtrlDir.afegirDocument("Manel","Prova","el barri gotic de girona");
-        CtrlDir.afegirDocument("Isaac","Prova","fem un projecte de programació");
-        CtrlDir.afegirDocument("Juli","Prova","la nit es a molt llarga");
-        CtrlDir.afegirDocument("Pau","Prova","de de de de de de");
-        CtrlDir.afegirDocument("Joan","Prova","el a a programa em peta i no se per on");
-        CtrlDir.afegirDocument("Jordi","Prova","dema faig un viatge barcelona");
-        CtrlDir.afegirDocument("Pep","Prova",    "la a a a meva casa es d'estil gotic");
-        CtrlDir.afegirDocument("Carles","Prova","A A A A A");
+        int idDoc1, idDoc2, idDoc3, idDoc4, idDoc5;
+        List<Pair<String, String>> ret;
 
+
+        //Errors de null i d'arguments
+        CtrlDir.afegirDocument("Pol","Prova","A A A A A");
+        idDoc1 = CtrlDir.getDocumentActiu().getIdDoc();
+        CtrlDir.afegirDocument("Juli","Prova","A A A A A");
+        idDoc2 = CtrlDir.getDocumentActiu().getIdDoc();
+        CtrlDir.afegirDocument("Isaac","Prova","A A A A A");
+        idDoc3 = CtrlDir.getDocumentActiu().getIdDoc();
+        assertNull(CtrlDir.compararDocuments(null, CtrlDirectori.SORTING.AUT_ASC, 1, idDoc1));
+        assertNull(CtrlDir.compararDocuments(CtrlDirectori.METODE_COMPARACIO.TF_IDF, null, 1, idDoc1));
+        assertNull(CtrlDir.compararDocuments(CtrlDirectori.METODE_COMPARACIO.TF_IDF, CtrlDirectori.SORTING.AUT_ASC, 0, idDoc1));
+        assertNull(CtrlDir.compararDocuments(CtrlDirectori.METODE_COMPARACIO.TF_IDF, CtrlDirectori.SORTING.AUT_ASC, 1, 4));
+        CtrlDir.eliminarDocument(idDoc1);
+        CtrlDir.eliminarDocument(idDoc2);
+        CtrlDir.eliminarDocument(idDoc3);
+
+
+        //k > nombre documents
+        CtrlDir.afegirDocument("Manel","Prova","el barri gotic de girona");
+        idDoc1 = CtrlDir.getDocumentActiu().getIdDoc();
+        CtrlDir.afegirDocument("Isaac","Prova","fem un projecte de programació");
+        idDoc2 = CtrlDir.getDocumentActiu().getIdDoc();
+        ret = CtrlDir.compararDocuments(CtrlDirectori.METODE_COMPARACIO.TF_IDF, CtrlDirectori.SORTING.AUT_ASC, 4, idDoc1);
+        assertEquals(1, ret.size());
+        CtrlDir.eliminarDocument(idDoc1);
+        CtrlDir.eliminarDocument(idDoc2);
+
+
+        //Un unic document
+        CtrlDir.afegirDocument("Juli","Prova","A A A A A");
+        idDoc1 = CtrlDir.getDocumentActiu().getIdDoc();
+        ret = CtrlDir.compararDocuments(CtrlDirectori.METODE_COMPARACIO.TF_IDF, CtrlDirectori.SORTING.AUT_ASC, 1, idDoc1);
+        assertNull(ret);
+        CtrlDir.eliminarDocument(idDoc1);
+
+
+        //METODE_COMPARACIO I SORTING
+        CtrlDir.afegirDocument("Juli","Titol1","hola bon dia");
+        idDoc1 = CtrlDir.getDocumentActiu().getIdDoc();
+        CtrlDir.afegirDocument("Pau","Titol2","dia i dia");
+        idDoc2 = CtrlDir.getDocumentActiu().getIdDoc();
+        CtrlDir.afegirDocument("Joan","Titol3","hola bon mati");
+        idDoc3 = CtrlDir.getDocumentActiu().getIdDoc();
+        CtrlDir.afegirDocument("Jordi","Titol4","hola hola hola");
+        idDoc4 = CtrlDir.getDocumentActiu().getIdDoc();
+        CtrlDir.afegirDocument("Pep","Titol5",    "hola hola hola hola");
+        idDoc5 = CtrlDir.getDocumentActiu().getIdDoc();
+        ret = CtrlDir.compararDocuments(CtrlDirectori.METODE_COMPARACIO.TF_IDF, CtrlDirectori.SORTING.SIM_DESC, 3, idDoc1);
+        assertEquals("Joan", ret.get(0).first());
+        assertEquals("Pep", ret.get(1).first());
+        assertEquals("Jordi", ret.get(2).first());
+        ret = CtrlDir.compararDocuments(CtrlDirectori.METODE_COMPARACIO.BOOL, CtrlDirectori.SORTING.SIM_DESC, 3, idDoc1);
+        assertEquals("Pep", ret.get(0).first());
+        assertEquals("Jordi", ret.get(1).first());
+        assertEquals("Pau", ret.get(2).first());
+        ret = CtrlDir.compararDocuments(CtrlDirectori.METODE_COMPARACIO.TF_IDF, CtrlDirectori.SORTING.SIM_ASC, 3, idDoc1);
+        assertEquals("Jordi", ret.get(0).first());
+        assertEquals("Pep", ret.get(1).first());
+        assertEquals("Joan", ret.get(2).first());
+        ret = CtrlDir.compararDocuments(CtrlDirectori.METODE_COMPARACIO.TF_IDF, CtrlDirectori.SORTING.AUT_ASC, 3, idDoc1);
+        assertEquals("Joan", ret.get(0).first());
+        assertEquals("Jordi", ret.get(1).first());
+        assertEquals("Pep", ret.get(2).first());
+        ret = CtrlDir.compararDocuments(CtrlDirectori.METODE_COMPARACIO.TF_IDF, CtrlDirectori.SORTING.AUT_DESC, 3, idDoc1);
+        assertEquals("Pep", ret.get(0).first());
+        assertEquals("Jordi", ret.get(1).first());
+        assertEquals("Joan", ret.get(2).first());
+        ret = CtrlDir.compararDocuments(CtrlDirectori.METODE_COMPARACIO.TF_IDF, CtrlDirectori.SORTING.TIT_ASC, 3, idDoc1);
+        assertEquals("Titol3", ret.get(0).second());
+        assertEquals("Titol4", ret.get(1).second());
+        assertEquals("Titol5", ret.get(2).second());
+        ret = CtrlDir.compararDocuments(CtrlDirectori.METODE_COMPARACIO.TF_IDF, CtrlDirectori.SORTING.TIT_DESC, 3, idDoc1);
+        assertEquals("Titol5", ret.get(0).second());
+        assertEquals("Titol4", ret.get(1).second());
+        assertEquals("Titol3", ret.get(2).second());
+        CtrlDir.eliminarDocument(idDoc1);
+        CtrlDir.eliminarDocument(idDoc2);
+        CtrlDir.eliminarDocument(idDoc3);
+        CtrlDir.eliminarDocument(idDoc4);
+        CtrlDir.eliminarDocument(idDoc5);
     }
 
     /**

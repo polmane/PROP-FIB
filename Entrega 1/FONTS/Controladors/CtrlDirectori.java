@@ -15,6 +15,7 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.lang.Math.min;
 import static java.util.Collections.reverseOrder;
 import static java.util.Comparator.comparing;
 
@@ -114,9 +115,7 @@ public class CtrlDirectori {
      *
      * @param contingut és el nou contingut que es vol utilitzar pel document
      */
-    //TODO: TEST
     public void modificarContingut(String contingut) {
-
         eliminarParaulesAlDir(documentActiu.getIdDoc());
 
         documentActiu.setContingut(contingut);
@@ -262,8 +261,9 @@ public class CtrlDirectori {
         TIT_DESC,
     }
 
-    //TODO: TEST
     public List<Pair<String, String>> compararDocuments(METODE_COMPARACIO m, SORTING s, Integer k, Integer IdDoc) {
+        if (m == null | s == null | k <= 0 | !directoriObert.getDocs().containsKey(IdDoc) | directoriObert.getDocs().size() == 1)
+            return null;
         ArrayList<Document> documentsSemblants = new ArrayList<>();
         ArrayList<Pair<Integer,Double>> helper = new ArrayList<>();
         for (int i = 0; i < directoriObert.getDocs().size();++i) {
@@ -308,16 +308,15 @@ public class CtrlDirectori {
         }
         helper.sort(comparing(Pair::second));
 
-        for (Pair<Integer, Double> integerDoublePair : helper) {
-            documentsSemblants.add(directoriObert.getDocs().get(integerDoublePair.first()));
+        for (int i = 0; i < min(k, helper.size()); ++i) {
+            documentsSemblants.add(directoriObert.getDocs().get(helper.get(i).first()));
         }
-        if(k > documentsSemblants.size()) k = documentsSemblants.size();
 
         List<Pair<String,String>> llistaSemblants= documentsSemblants.stream()
                 .map(document -> new Pair<String, String>(document.getAutor(), document.getTitol()))
                 .collect(Collectors.toList());
         sortLlista(llistaSemblants,s);
-        return llistaSemblants.subList(0,k);
+        return llistaSemblants;
     }
 
     private void sortLlista(List<Pair<String, String>> llistaSemblants, SORTING s) {
@@ -345,6 +344,10 @@ public class CtrlDirectori {
 
     //TODO: TEST
     public List<Pair<String, String>> compararQuery(METODE_COMPARACIO m, SORTING s, Integer k, ArrayList<String> paraules) {
+        if (m == null | s == null | k <= 0 | paraules == null | directoriObert.getDocs().size() == 0)
+            return null;
+        if (paraules.isEmpty())
+            return null;
         String result = "";
         for (String paraula: paraules) {
             result += paraula + " ";
