@@ -1,6 +1,5 @@
 package Entrega2.Persistencia.FONTS.Classes;
-
-import Entrega1.FONTS.Classes.Document;
+import Entrega1.FONTS.Classes.Expressio;
 import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -10,8 +9,11 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 
-public class GestorDocument {
+public class GestorExpressio {
 
+    public enum FILETYPE {
+        TXT, XML, PROP
+    }
 
     /**
      * exportarDocument exporta el document del directori a un path elegit
@@ -20,8 +22,8 @@ public class GestorDocument {
      * @param path   es correspon al camí desitjat per tal de guardar el document
      */
     //TODO: TEST
-    public void exportarDocument(GestorDirectori.FILETYPE format, Document doc, String path) {
-        String nom = doc.getAutor() + '_' + doc.getTitol();
+    public void exportarExpressio(GestorDirectori.FILETYPE format, Expressio expressio, String path) {
+        String nom = "Expressio" + expressio.getIdExp();
         switch (format) {
             case TXT:
                 try {
@@ -29,9 +31,7 @@ public class GestorDocument {
                     File dir = new File(path);
                     File docExp = new File(dir, nom);
                     Writer output = new BufferedWriter(new FileWriter(docExp));
-                    output.write(doc.getAutor() + "\n");
-                    output.write(doc.getTitol() + "\n");
-                    output.write(doc.getContingut());
+                    output.write(expressio.getExpressio() + "\n");
                     output.flush();
                 } catch (Exception e) {
                     System.err.println("El document txt no s'ha creat correctament");
@@ -46,19 +46,9 @@ public class GestorDocument {
                     DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
                     org.w3c.dom.Document document = docBuilder.newDocument();
-                    Element rootElement = document.createElement("DOCUMENT"); //FIXME:
-                    // Aqui petava per caracter ilegal a on ara posa FILE, abans hi havia la variable 'nom' (entenc q el "." la liava)
-                    // Serveix aixi amb aquesta etiqueta?? cal que sigui el nom del fitxer?? Ara mateix es crea el document correctament ;-)
+                    Element rootElement = document.createElement("EXPRESSIO");
+                    rootElement.appendChild(document.createTextNode(expressio.getExpressio()));
                     document.appendChild(rootElement);
-                    Element autor = document.createElement("AUTOR");
-                    autor.appendChild(document.createTextNode(doc.getAutor()));
-                    rootElement.appendChild(autor);
-                    Element titol = document.createElement("TITOL");
-                    titol.appendChild(document.createTextNode(doc.getTitol()));
-                    rootElement.appendChild(titol);
-                    Element contingut = document.createElement("CONTINGUT");
-                    contingut.appendChild(document.createTextNode(doc.getContingut()));
-                    rootElement.appendChild(contingut);
 
                     TransformerFactory transformerFactory = TransformerFactory.newInstance();
                     Transformer transformer = transformerFactory.newTransformer();
