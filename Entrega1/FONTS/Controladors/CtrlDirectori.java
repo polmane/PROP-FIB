@@ -1,17 +1,9 @@
-package FONTS.Controladors;
+package Entrega1.FONTS.Controladors;
 
-import FONTS.Classes.Directori;
-import FONTS.Classes.Document;
+import Entrega1.FONTS.Classes.Directori;
+import Entrega1.FONTS.Classes.Document;
 
-import FONTS.Classes.Pair;
-import org.w3c.dom.*;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.*;
+import Entrega1.FONTS.Classes.Pair;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -357,12 +349,6 @@ public class CtrlDirectori {
         eliminarDocument(documentActiu.getIdDoc());
         return equalQuery;
     }
-
-    public enum FILETYPE {
-        TXT, XML
-    }
-
-
 
     /**
      * Elimina un document del directori

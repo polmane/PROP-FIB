@@ -1,8 +1,8 @@
-package FONTS.Test;
+package Entrega1.FONTS.Test;
 
 
-import FONTS.Classes.Pair;
-import FONTS.Controladors.CtrlDirectori;
+import Entrega1.FONTS.Classes.Pair;
+import Entrega1.FONTS.Controladors.CtrlDirectori;
 import org.junit.Test;
 import java.util.List;
 

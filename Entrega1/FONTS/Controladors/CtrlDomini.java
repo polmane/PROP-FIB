@@ -1,7 +1,7 @@
-package FONTS.Controladors;
+package Entrega1.FONTS.Controladors;
 
-import FONTS.Classes.Document;
-import FONTS.Classes.Pair;
+import Entrega1.FONTS.Classes.Document;
+import Entrega1.FONTS.Classes.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +44,10 @@ public class CtrlDomini {
         return _ctrlDirectori.compararQuery(m, s, k, paraules);
     }
 
+    /*
     public void exportarDocument(CtrlDirectori.FILETYPE format, String path) {
         _ctrlDirectori.exportarDocument(format,path);
-    }
+    } */
 
     public int eliminarDocument(int idDoc){
         return _ctrlDirectori.eliminarDocument(idDoc);

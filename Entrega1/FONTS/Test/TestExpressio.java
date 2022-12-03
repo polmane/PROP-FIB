@@ -1,6 +1,6 @@
-package FONTS.Test;
+package Entrega1.FONTS.Test;
 
-import FONTS.Classes.Expressio;
+import Entrega1.FONTS.Classes.Expressio;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

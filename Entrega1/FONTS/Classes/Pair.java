@@ -1,4 +1,4 @@
-package FONTS.Classes;
+package Entrega1.FONTS.Classes;
 
 /**
  * Classe generica per crear tuples

@@ -1,8 +1,8 @@
-package FONTS.Controladors;
+package Entrega1.FONTS.Controladors;
 
-import FONTS.Classes.BinaryTree;
-import FONTS.Classes.Document;
-import FONTS.Classes.Expressio;
+import Entrega1.FONTS.Classes.BinaryTree;
+import Entrega1.FONTS.Classes.Document;
+import Entrega1.FONTS.Classes.Expressio;
 
 
 import java.util.HashMap;
