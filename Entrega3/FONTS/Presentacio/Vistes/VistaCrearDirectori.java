@@ -58,7 +58,6 @@ public class VistaCrearDirectori extends JFrame {
                 }
             }
         }
-
         BnouDirectori.addActionListener(crearDirectori);
 
     }
