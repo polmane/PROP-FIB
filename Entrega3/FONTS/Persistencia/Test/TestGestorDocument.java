@@ -1,4 +1,6 @@
-import Classes.Document;
+package Persistencia.Test;
+
+import Domini.Classes.Document;
 import Persistencia.Classes.GestorDirectori;
 import Persistencia.Classes.GestorDocument;
 import org.junit.Test;

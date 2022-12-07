@@ -1,7 +1,7 @@
+package Domini.Test;
 
-
-import Classes.Document;
-import Controladors.CtrlExpressio;
+import Domini.Classes.Document;
+import Domini.Controladors.CtrlExpressio;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

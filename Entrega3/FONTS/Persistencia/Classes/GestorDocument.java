@@ -9,12 +9,13 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import Domini.Classes.Document;
 
 public class GestorDocument {
 
 
     //TODO: TEST
-    public void exportarDocument(GestorDirectori.FILETYPE format, Classes.Document doc, String path) {
+    public void exportarDocument(GestorDirectori.FILETYPE format, Document doc, String path) {
         String nom = doc.getAutor() + '_' + doc.getTitol();
         switch (format) {
             case TXT:

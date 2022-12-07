@@ -1,4 +1,6 @@
-import Classes.Expressio;
+package Persistencia.Test;
+
+import Domini.Classes.Expressio;
 import Persistencia.Classes.GestorDirectori;
 import Persistencia.Classes.GestorExpressio;
 import org.junit.Test;

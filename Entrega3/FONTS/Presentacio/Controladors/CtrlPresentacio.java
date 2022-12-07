@@ -1,6 +1,6 @@
-package FONTS.Controladors;
+package Presentacio.Controladors;
 
-import FONTS.Domini.CtrlDomini;
+import Domini.Controladors.CtrlDomini;
 
 public class CtrlPresentacio {
 

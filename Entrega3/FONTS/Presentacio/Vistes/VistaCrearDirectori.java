@@ -1,14 +1,9 @@
-package FONTS.Presentacio.vistes;
+package Presentacio.Vistes;
 
-import FONTS.Presentacio.Controladors.CtrlPresentacio;
-
+import Presentacio.Controladors.CtrlPresentacio;
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.file;
 
 public class VistaCrearDirectori extends JFrame {
 
@@ -42,7 +37,7 @@ public class VistaCrearDirectori extends JFrame {
         ActionListener crearDirectori = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(idDir.getText().lenght() == 0) {
+                if(idDir.getText().length() == 0) {
                     JDialog error = new JDialog(frame, "Error: no s'ha introduït un identificador per el directori");
                     error.setBounds(800, 300, 400, 200);
                     error.setLayout(null);

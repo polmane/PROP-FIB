@@ -1,6 +1,6 @@
+package Domini.Test;
 
-
-import Classes.Directori;
+import Domini.Classes.Directori;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

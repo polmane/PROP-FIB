@@ -1,5 +1,6 @@
+package Domini.Test;
 
-import Classes.Expressio;
+import Domini.Classes.Expressio;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

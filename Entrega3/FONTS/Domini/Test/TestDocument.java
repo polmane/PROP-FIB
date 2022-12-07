@@ -1,6 +1,6 @@
+package Domini.Test;
 
-
-import Classes.Document;
+import Domini.Classes.Document;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

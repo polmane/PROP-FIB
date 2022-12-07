@@ -1,5 +1,7 @@
-import Classes.Pair;
-import Controladors.CtrlDirectori;
+package Domini.Test;
+;
+import Domini.Classes.Pair;
+import Domini.Controladors.CtrlDirectori;
 import org.junit.Test;
 import java.util.List;
 
