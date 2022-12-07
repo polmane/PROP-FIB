@@ -1,8 +1,8 @@
-package Controladors;
+package FONTS.Controladors;
 
 
-import Classes.Document;
-import Classes.Pair;
+import FONTS.Classes.Document;
+import FONTS.Classes.Pair;
 
 import java.util.ArrayList;
 import java.util.List;

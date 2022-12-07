@@ -1,8 +1,8 @@
-package Drivers;
+package FONTS.Drivers;
 
-import Classes.Document;
-import Classes.Expressio;
-import Controladors.CtrlExpressio;
+import FONTS.Classes.Document;
+import FONTS.Classes.Expressio;
+import FONTS.Controladors.CtrlExpressio;
 
 import java.util.HashMap;
 import java.util.Scanner;

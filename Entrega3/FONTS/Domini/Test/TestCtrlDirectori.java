@@ -1,5 +1,5 @@
 package Domini.Test;
-;
+
 import Domini.Classes.Pair;
 import Domini.Controladors.CtrlDirectori;
 import org.junit.Test;

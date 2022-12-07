@@ -1,4 +1,4 @@
-package Classes;
+package FONTS.Classes;
 
 import static java.lang.Character.isWhitespace;
 

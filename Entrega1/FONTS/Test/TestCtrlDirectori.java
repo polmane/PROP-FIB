@@ -1,5 +1,7 @@
-import Classes.Pair;
-import Controladors.CtrlDirectori;
+package FONTS.Test;
+
+import FONTS.Classes.Pair;
+import FONTS.Controladors.CtrlDirectori;
 import org.junit.Test;
 import java.util.List;
 

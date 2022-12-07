@@ -1,9 +1,9 @@
-package Drivers;
+package FONTS.Drivers;
 
 
-import Classes.Document;
-import Classes.Pair;
-import Controladors.CtrlDirectori;
+import FONTS.Classes.Document;
+import FONTS.Classes.Pair;
+import FONTS.Controladors.CtrlDirectori;
 
 import java.util.List;
 import java.util.Scanner;

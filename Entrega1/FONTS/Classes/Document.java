@@ -1,4 +1,4 @@
-package Classes;
+package FONTS.Classes;
 
 import java.util.HashMap;
 

@@ -1,10 +1,8 @@
-package Controladors;
+package FONTS.Controladors;
 
-
-
-import Classes.Directori;
-import Classes.Document;
-import Classes.Pair;
+import FONTS.Classes.Document;
+import FONTS.Classes.Pair;
+import FONTS.Classes.Directori;
 
 import java.util.*;
 import java.util.stream.Collectors;

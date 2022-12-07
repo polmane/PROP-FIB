@@ -1,7 +1,7 @@
+package FONTS.Test;
 
-
-import Classes.Document;
-import Controladors.CtrlExpressio;
+import FONTS.Classes.Document;
+import FONTS.Controladors.CtrlExpressio;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

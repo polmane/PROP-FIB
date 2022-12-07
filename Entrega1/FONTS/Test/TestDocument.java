@@ -1,6 +1,6 @@
+package FONTS.Test;
 
-
-import Classes.Document;
+import FONTS.Classes.Document;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
