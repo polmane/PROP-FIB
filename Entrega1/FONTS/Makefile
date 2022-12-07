@@ -1,55 +1,45 @@
 JC =javac --release 11
 .SUFFIXES:.java .class
 .java.class:
-	$(JC) $./*.java
+	$(JC) $*.java
 
 
 default:
-	@javac -d . Classes/*.java
-	@javac -d . Controladors/*.java
-	@javac -d . Drivers/*.java
+	$(JC) -d ../EXE -cp ../ Controladors/*.java
+	$(JC) -d ../EXE -cp ../ Drivers/*.java
 
-	@jar cfe ../EXE/DriverCtrlDomini.jar Drivers.DriverCtrlDomini Drivers/DriverCtrlDomini.class Controladors/*.class Classes/*.class
-	@jar cfe ../EXE/DriverCtrlDirectori.jar Drivers.DriverCtrlDirectori Drivers/DriverCtrlDirectori.class Controladors/*.class Classes/*.class
-	@jar cfe ../EXE/DriverCtrlExpressio.jar Drivers.DriverCtrlExpressio Drivers/DriverCtrlExpressio.class Controladors/*.class Classes/*.class
+	jar cfe ../EXE/DriverCtrlDirectori.jar Drivers.DriverCtrlDirectori ../EXE/FONTS/Drivers/DriverCtrlDirectori.class ../EXE/FONTS/Controladors/*.class ../EXE/FONTS/Classes/*.class
+	jar cfe ../EXE/DriverCtrlExpressio.jar Drivers.DriverCtrlExpressio ../EXE/FONTS/Drivers/DriverCtrlExpressio.class ../EXE/FONTS/Controladors/*.class ../EXE/FONTS/Classes/*.class
 
-	@javac -sourcepath . -classpath "lib/*" Test/*.java -d .
-	@jar cfe ../EXE/Tests/TestCtrlDirectori.jar Test.TestCtrlDirectori Classes/*.class
-	@jar cfe ../EXE/Tests/TestCtrlExpressio.jar Test.TestCtrlExpressio Classes/*.class
-	@jar cfe ../EXE/Tests/TestDirectori.jar Test.TestDirectori Classes/*.class
-	@jar cfe ../EXE/Tests/TestDocument.jar Test.TestDocument Classes/*.class
-	@jar cfe ../EXE/Tests/TestExpressio.jar Test.TestExpressio Classes/*.class
+	$(JC) -cp ../:lib/* Test/*.java -d ../EXE
 
 all: default
 
 clean:
-	rm Classes/*.class
-	rm Controladors/*.class
-	rm Drivers/*.class
-	rm Test/*.class
+	rm ../EXE/FONTS/Classes/*.class
+	rm ../EXE/FONTS/Controladors/*.class
+	rm ../EXE/FONTS/Drivers/*.class
+	rm ../EXE/FONTS/Test/*.class
 	rm ../EXE/*.jar
-	rm ../EXE/Test*.jar
-
-DriverCtrlDomini: default
-	@java Drivers.DriverCtrlDomini
+	rm ../EXE/FONTS/Test/*.jar
 
 DriverCtrlExpressio: default
-	@java Drivers.DriverCtrlExpressio
+	java -cp ../EXE FONTS/Drivers/DriverCtrlExpressio
 
 DriverCtrlDirectori: default
-	@java Drivers.DriverCtrlDirectori
+	java -cp ../EXE FONTS/Drivers/DriverCtrlDirectori
 
 TestCtrlDirectori: default
-	@java -jar lib/junit-4.12.jar -cp . --select-class Test.TestCtrlDirectori
+	java -cp ../EXE:lib/* org.junit.runner.JUnitCore FONTS.Test.TestCtrlDirectori
 
 TestCtrlExpressio: default
-	@java -jar lib/junit-4.12.jar -cp . --select-class Test.TestCtrlExpressio
+	java -cp ../EXE:lib/* org.junit.runner.JUnitCore FONTS.Test.TestCtrlExpressio
 
 TestDirectori: default
-	@java -jar lib/junit-4.12.jar -cp . --select-class Test.TestDirectori
+	java -cp ../EXE:lib/* org.junit.runner.JUnitCore FONTS.Test.TestDirectori
 
 TestDocument: default
-	@java -jar lib/junit-4.12.jar -cp . --select-class Test.TestDocument
+	java -cp ../EXE:lib/* org.junit.runner.JUnitCore FONTS.Test.TestDocument
 
 TestExpressio: default
-	@java -jar lib/junit-4.12.jar -cp . --select-class Test.TestExpressio
+	java -cp ../EXE:lib/* org.junit.runner.JUnitCore FONTS.Test.TestExpressio
