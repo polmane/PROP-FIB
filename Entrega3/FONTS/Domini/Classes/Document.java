@@ -1,4 +1,4 @@
-package Classes;
+package Domini.Classes;
 
 import java.util.HashMap;
 

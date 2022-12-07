@@ -1,10 +1,9 @@
-package Controladors;
+package Domini.Controladors;
 
 
-
-import Classes.Directori;
-import Classes.Document;
-import Classes.Pair;
+import Domini.Classes.Directori;
+import Domini.Classes.Document;
+import Domini.Classes.Pair;
 
 import java.util.*;
 import java.util.stream.Collectors;

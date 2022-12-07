@@ -1,8 +1,9 @@
-package Controladors;
+package Domini.Controladors;
 
 
-import Classes.Document;
-import Classes.Pair;
+
+import Domini.Classes.Document;
+import Domini.Classes.Pair;
 
 import java.util.ArrayList;
 import java.util.List;

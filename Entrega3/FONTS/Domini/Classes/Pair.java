@@ -1,4 +1,4 @@
-package Classes;
+package Domini.Classes;
 
 /**
  * Classe generica per crear tuples

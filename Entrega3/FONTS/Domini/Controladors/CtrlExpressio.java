@@ -1,8 +1,8 @@
-package Controladors;
+package Domini.Controladors;
 
-import Classes.BinaryTree;
-import Classes.Document;
-import Classes.Expressio;
+import Domini.Classes.BinaryTree;
+import Domini.Classes.Document;
+import Domini.Classes.Expressio;
 
 import java.util.HashMap;
 

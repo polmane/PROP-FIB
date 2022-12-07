@@ -1,5 +1,6 @@
-package Entrega2.Persistencia.FONTS.Classes;
-import Entrega1.FONTS.Classes.Expressio;
+package Persistencia.Classes;
+
+import Classes.Expressio;
 import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

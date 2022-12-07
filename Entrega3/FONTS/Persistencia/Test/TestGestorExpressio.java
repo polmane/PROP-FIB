@@ -1,8 +1,6 @@
-package Entrega2.Persistencia.FONTS.Test;
-
-import Entrega1.FONTS.Classes.Expressio;
-import Entrega2.Persistencia.FONTS.Classes.GestorDirectori;
-import Entrega2.Persistencia.FONTS.Classes.GestorExpressio;
+import Classes.Expressio;
+import Persistencia.Classes.GestorDirectori;
+import Persistencia.Classes.GestorExpressio;
 import org.junit.Test;
 
 public class TestGestorExpressio {

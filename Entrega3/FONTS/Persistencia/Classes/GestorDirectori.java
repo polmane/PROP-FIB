@@ -1,8 +1,9 @@
-package Entrega2.Persistencia.FONTS.Classes;
+package Persistencia.Classes;
 
-import Entrega1.FONTS.Classes.Directori;
-import Entrega1.FONTS.Classes.Document;
-import Entrega1.FONTS.Classes.Expressio;
+import Classes.Directori;
+import Classes.Document;
+import Classes.Expressio;
+
 import java.util.Collection;
 
 public class GestorDirectori {

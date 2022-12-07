@@ -1,8 +1,6 @@
-package Entrega2.Persistencia.FONTS.Test;
-
-import Entrega2.Persistencia.FONTS.Classes.GestorDirectori;
-import Entrega2.Persistencia.FONTS.Classes.GestorDocument;
-import Entrega1.FONTS.Classes.Document;
+import Classes.Document;
+import Persistencia.Classes.GestorDirectori;
+import Persistencia.Classes.GestorDocument;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

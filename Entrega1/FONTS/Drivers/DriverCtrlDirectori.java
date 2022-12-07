@@ -1,8 +1,9 @@
-package Entrega1.FONTS.Drivers;
+package Drivers;
 
-import Entrega1.FONTS.Classes.Document;
-import Entrega1.FONTS.Classes.Pair;
-import Entrega1.FONTS.Controladors.CtrlDirectori;
+
+import Classes.Document;
+import Classes.Pair;
+import Controladors.CtrlDirectori;
 
 import java.util.List;
 import java.util.Scanner;
