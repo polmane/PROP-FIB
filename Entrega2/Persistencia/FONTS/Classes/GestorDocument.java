@@ -13,12 +13,6 @@ import java.io.*;
 public class GestorDocument {
 
 
-    /**
-     * exportarDocument exporta el document del directori a un path elegit
-     *
-     * @param format es correspon en quin format es desitja exportar el document
-     * @param path   es correspon al camí desitjat per tal de guardar el document
-     */
     //TODO: TEST
     public void exportarDocument(GestorDirectori.FILETYPE format, Document doc, String path) {
         String nom = doc.getAutor() + '_' + doc.getTitol();
