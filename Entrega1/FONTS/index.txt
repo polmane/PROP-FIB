@@ -3,7 +3,7 @@ El directori esta dividit en packages i conte tantes carpetes com packages te el
 
 -- Classes: aquest directori conte el .java de totes les classes del sistema.
 
--- Controladors: aquest directori conte el .java de tots els controladors del sistema.
+-- Persistencia.Controladors: aquest directori conte el .java de tots els controladors del sistema.
 
 -- Drivers: aquest directori conte el .java dels diferents drivers del sistema.
 
