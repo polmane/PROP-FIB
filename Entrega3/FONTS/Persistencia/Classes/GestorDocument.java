@@ -1,6 +1,8 @@
 package Persistencia.Classes;
 
 
+import Domini.Classes.Pair;
+import org.junit.Assert;
 import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -9,12 +11,16 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.util.Scanner;
+
 import Domini.Classes.Document;
 
 public class GestorDocument {
 
+    public enum FILETYPE {
+        TXT, XML, PROP
+    }
 
-    //TODO: TEST
     public void exportarDocument(GestorDirectori.FILETYPE format, Document doc, String path) {
         String nom = doc.getAutor() + '_' + doc.getTitol();
         switch (format) {
@@ -67,5 +73,58 @@ public class GestorDocument {
                 }
                 break;
         }
+    }
+
+    public Pair<Document, Boolean> importarDocument(int idDoc, String path){
+        if (path.endsWith(".txt")) {
+            return tryParse(idDoc, path, FILETYPE.TXT);
+        }
+        else if (path.endsWith(".xml")) {
+            return tryParse(idDoc, path, FILETYPE.XML);
+        }
+        else if (path.endsWith(".prop")) {
+            return tryParse(idDoc, path, FILETYPE.PROP);
+        }
+        System.err.println("ERROR: Format del document situat a " + path + " no suportat");
+        return new Pair<Document, Boolean>(null, false);
+    }
+
+    private Pair<Document, Boolean> tryParse(int idDoc, String path, FILETYPE format) {
+        String autor = "", titol = "", contingut = "";
+        switch (format) {
+            case TXT:
+                try {
+                    File f = new File(path);
+                    Scanner scanner = new Scanner(f);
+                    autor = scanner.nextLine();
+                    titol = scanner.nextLine();
+                    while (scanner.hasNextLine()) {
+                        contingut += scanner.nextLine() + "\n";
+                    }
+                } catch (Exception e) {
+                    System.err.println("No s'ha pogut importar el document " + path + " en format TXT");
+                    throw new RuntimeException(e);
+                }
+                break;
+            case XML:
+                Assert.fail("IMPORTAR XML NO IMPLEMENTAT");
+                break;
+            case PROP:
+                Assert.fail("IMPORTAR PROP NO IMPLEMENTAT");
+                break;
+            default:
+                Assert.fail("ASSERT NOT REACHED");
+        }
+
+        return new Pair<Document, Boolean>(new Document(idDoc, autor, titol, contingut), false);
+    }
+
+    public static void main(String args[]) {
+        GestorDocument gestor = new GestorDocument();
+        Document d = gestor.importarDocument(0, "D:/Juli/01_Uni/Q5/PROP/subgrup-prop11.1/Entrega3/FONTS/Persistencia/Exported/Document1.txt").first();
+        System.out.println("Document 1");
+        System.out.println(d.getAutor());
+        System.out.println(d.getTitol());
+        System.out.println(d.getContingut());
     }
 }
