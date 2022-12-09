@@ -23,7 +23,7 @@ public class GestorExpressio {
      * @param path   es correspon al camí desitjat per tal de guardar el document
      */
     //TODO: TEST
-    public void exportarExpressio(GestorDirectori.FILETYPE format, Expressio expressio, String path) {
+    public void exportarExpressio(FILETYPE format, Expressio expressio, String path) {
         String nom = "Expressio" + expressio.getIdExp();
         switch (format) {
             case TXT:
