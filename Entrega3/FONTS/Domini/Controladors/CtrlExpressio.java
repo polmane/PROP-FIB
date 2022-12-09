@@ -126,7 +126,6 @@ public class CtrlExpressio {
      * @return retorna els documents que compleixen l'expressió
      */
     public boolean selectPerExpressio(Integer idExp, Document document) {
-        String exp = expressions.get(idExp).getExpressio();
         BinaryTree bt = expressions.get(idExp).getExpressionTree();
         int result = BinaryTree.evalTree(bt.root, document);
         return (result != 0);
