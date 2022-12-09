@@ -1,48 +1,45 @@
 package Presentacio.Vistes;
 
 import Presentacio.Controladors.CtrlPresentacio;
-import java.awt.*;
+
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
-public class VistaCrearDirectori extends JFrame {
+public class VistaAfegirExpressio extends JFrame {
+    private JButton afegirExpressió;
     private JPanel panel;
-    private JButton NouDirectori;
-    private JTextField idDir;
+    private JTextField introduirExpressió;
 
     private JFrame frame = new JFrame("JFrame");
 
-    public VistaCrearDirectori() {
+    public VistaAfegirExpressio() {
         setContentPane(panel);
         setBounds(500, 300, 500, 300);
         setResizable(true);
-        setTitle("Gestor de documents de PROP");
+        setTitle("Pàgina per afegir una expressió");
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-        NouDirectori.addActionListener(new ActionListener() {
+        afegirExpressió.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(idDir.getText().length() == 0) {
-                    JDialog error = new JDialog(frame, "Error: no s'ha introduït un identificador per el directori");
+                if(introduirExpressió.getText().length() == 0) {
+                    JDialog error = new JDialog(frame, "Error: no s'ha introduït cap expressió");
                     error.setBounds(800, 300, 400, 200);
                     error.setLayout(null);
 
-                    JLabel txtError = new JLabel("S'ha de introduir un valor valid com a identificador");
+                    JLabel txtError = new JLabel("S'ha de introduir un valor valid com a expressió");
                     txtError.setBounds(80, 20, 400, 40);
                     error.add(txtError);
                     error.setVisible(true);
                 } else {
-                    CtrlPresentacio.crearDirectori(Integer.parseInt(idDir.getText()));
+                    CtrlPresentacio.afegirExp(introduirExpressió.getText());
                     CtrlPresentacio.PagPrincipal();
                     setVisible(false);
                 }
-
             }
         });
     }
-
 }

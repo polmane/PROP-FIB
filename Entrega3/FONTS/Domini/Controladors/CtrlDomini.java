@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CtrlDomini {
 
-    private final CtrlDirectori _ctrlDirectori;
+    public CtrlDirectori _ctrlDirectori;
     private final CtrlExpressio _ctrlExpressio;
 
     public CtrlDomini(CtrlDirectori _ctrlDirectori, CtrlExpressio _ctrlExpressio) {
