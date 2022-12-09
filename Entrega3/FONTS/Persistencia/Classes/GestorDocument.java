@@ -40,7 +40,7 @@ public class GestorDocument {
                     output.write(doc.getContingut());
                     output.flush();
                 } catch (Exception e) {
-                    System.err.println("El document txt no s'ha creat correctament");
+                    System.err.println("El document en format .txt no s'ha creat correctament");
                     throw new RuntimeException(e);
                 }
                 break;
@@ -75,7 +75,22 @@ public class GestorDocument {
 
                     transformer.transform(source, result);
                 } catch (Exception e) {
-                    System.err.println("El document xml no s'ha creat correctament");
+                    System.err.println("El document en format .xml no s'ha creat correctament");
+                    throw new RuntimeException(e);
+                }
+                break;
+            default:
+                try {
+                    nom += ".prop";
+                    File dir = new File(path);
+                    File docExp = new File(dir, nom);
+                    Writer output = new BufferedWriter(new FileWriter(docExp));
+                    output.write("(autor)->" + doc.getAutor() + "<-");
+                    output.write("(titol)->" + doc.getTitol() + "<-");
+                    output.write("(contingut)->" + doc.getContingut() + "<-");
+                    output.flush();
+                } catch (Exception e) {
+                    System.err.println("El document en format .prop no s'ha creat correctament");
                     throw new RuntimeException(e);
                 }
                 break;
