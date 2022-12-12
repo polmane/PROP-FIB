@@ -65,7 +65,7 @@ public class VistaCrearDocument extends JFrame{
                     error.setVisible(true);*/
                 else {
                     int idDoc = CtrlPresentacio.crearDocument(Autor.getText(), Titol.getText(), Contingut.getText());
-                    CtrlPresentacio.vistaPaginaOpcions(idDoc);
+                    CtrlPresentacio.vistaPaginaOpcions(idDoc, Autor.getText(), Titol.getText(), Contingut.getText());
                     setVisible(false);
                 }
             }

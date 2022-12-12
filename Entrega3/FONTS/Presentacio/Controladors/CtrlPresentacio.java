@@ -34,20 +34,20 @@ public class CtrlPresentacio {
 
     public static void vistaCarregarDocument() { VistaCarregarDocument vCDoc = new VistaCarregarDocument(); }
 
-    public static void vistaPaginaOpcions(int id) {
-        VistaPaginaOpcions vPop = new VistaPaginaOpcions(id);
+    public static void vistaPaginaOpcions(int id, String autor, String titol, String contingut) {
+        VistaPaginaOpcions vPop = new VistaPaginaOpcions(id, autor, titol, contingut);
     }
 
-    public static void vistaModificarDocument(int id) {
-        VistaModificarDocument vMdoc = new VistaModificarDocument();
+    public static void vistaModificarDocument(int id, String autor, String titol, String contingut) {
+        VistaModificarDocument vMdoc = new VistaModificarDocument(id, autor, titol, contingut);
     }
 
     public static void vistaInfoDocument(int id) {
         VistaInfoDocument vIdoc = new VistaInfoDocument();
     }
 
-    public static void vistaContingutDocument() {
-        VistaContingutDocument vCdoc = new VistaContingutDocument();
+    public static void vistaContingutDocument(int id, String autor, String titol, String contingut) {
+        VistaContingutDocument vCdoc = new VistaContingutDocument(id, autor, titol, contingut);
     }
 
     public static void vistaDocsSemblants() {

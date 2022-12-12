@@ -1,10 +1,9 @@
 package Presentacio.Vistes;
 
 import Presentacio.Controladors.CtrlPresentacio;
-import java.awt.*;
+
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
 public class VistaPaginaOpcions extends JFrame {
 
@@ -18,16 +17,19 @@ public class VistaPaginaOpcions extends JFrame {
     private JLabel TitolCerques;
     private JPanel panel;
 
-    public VistaPaginaOpcions(int id) {
+    public VistaPaginaOpcions(int id, String autor, String titol, String contingut) {
         setContentPane(panel);
         setBounds(500, 300, 500, 300);
         setResizable(true);
-        setTitle("Pàgina per afegir una expressió");
+        setTitle("Pàgina d'opcions per a un document");
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Autor.setText("pol");
+        CtrlPresentacio.seleccionarDocument(id);
+        Autor.setText(autor);
+        Titol.setText(titol);
+        Contingut.setText(contingut);
 
         Enrere.addActionListener(new ActionListener() {
             @Override
@@ -50,7 +52,7 @@ public class VistaPaginaOpcions extends JFrame {
         Modificar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CtrlPresentacio.vistaModificarDocument(id);
+                CtrlPresentacio.vistaModificarDocument(id, autor, titol, contingut);
                 setVisible(false);
             }
         });
