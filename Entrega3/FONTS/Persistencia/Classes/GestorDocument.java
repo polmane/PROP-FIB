@@ -105,16 +105,18 @@ public class GestorDocument {
     }
 
     public Document importarDocument(int idDoc, String path){
+        //NOTE: El path pot ser absolut o relatiu a la base del projecte (subgrup-prop11.1)
+        //      P.E. per accedir a la carpeta exported el path haura de ser:
+        //           "./Entrega3/FONTS/Persistencia/Exported"
         try {
-            URL url = getClass().getResource(path);
             if (path.endsWith(".txt")) {
-                return ParseTXT(idDoc, url);
+                return ParseTXT(idDoc, path);
             }
             else if (path.endsWith(".xml")) {
-                return ParseXML(idDoc, url);
+                return ParseXML(idDoc, path);
             }
             else if (path.endsWith(".prop")) {
-                return ParsePROP(idDoc, url);
+                return ParsePROP(idDoc, path);
             }
         }
         catch (Exception e) {
@@ -125,60 +127,60 @@ public class GestorDocument {
         return null;
     }
 
-    private Document ParseTXT(int idDoc, URL url) {
+    private Document ParseTXT(int idDoc, String path) {
         String autor = "";
         String titol = "";
         StringBuilder contingut = new StringBuilder();
         try {
-            Scanner scanner = new Scanner(new File(url.getPath()));
+            Scanner scanner = new Scanner(new File(path));
             autor = scanner.nextLine();
             titol = scanner.nextLine();
             while (scanner.hasNextLine()) {
                 contingut.append(scanner.nextLine()).append("\n");
             }
         } catch (Exception e) {
-            System.err.println("No s'ha pogut importar el document " + url.getPath() + " en format TXT");
+            System.err.println("No s'ha pogut importar el document " + path + " en format TXT");
             throw new RuntimeException(e);
         }
         return new Document(idDoc, autor, titol, contingut.toString());
     }
 
-    private Document ParseXML(int idDoc, URL url) {
+    private Document ParseXML(int idDoc, String path) {
         String autor = "", titol = "", contingut = "";
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 
             DocumentBuilder db = dbf.newDocumentBuilder();
-            org.w3c.dom.Document doc = db.parse(new File(url.getPath()));
+            org.w3c.dom.Document doc = db.parse(new File(path));
             Element document = (Element) doc.getElementsByTagName(XML_TAG_DOCUMENT).item(0);
 
             autor = document.getElementsByTagName(XML_TAG_AUTOR).item(0).getTextContent();
             titol = document.getElementsByTagName(XML_TAG_TITOL).item(0).getTextContent();
             contingut = document.getElementsByTagName(XML_TAG_CONTINGUT).item(0).getTextContent();
         } catch (Exception e) {
-            System.err.println("No s'ha pogut importar el document " + url.getPath() + " en format XML");
+            System.err.println("No s'ha pogut importar el document " + path + " en format XML");
             throw new RuntimeException(e);
         }
         return new Document(idDoc, autor, titol, contingut);
     }
 
-    private Document ParsePROP(int idDoc, URL url) {
+    private Document ParsePROP(int idDoc, String path) {
         String autor = "", titol = "", contingut = "";
         try {
-            Scanner scanner = new Scanner(new File(url.getPath()));
+            Scanner scanner = new Scanner(new File(path));
 
             scanner.useDelimiter("->|<-");
             List<String> tokens = scanner.tokens().collect(Collectors.toList());
 
             int index = tokens.indexOf(PROP_TAG_AUTOR);
             if (index < 0)
-                throw new RuntimeException("El document " + url.getPath() + " no conte l'etiqueta " + PROP_TAG_AUTOR);
+                throw new RuntimeException("El document " + path + " no conte l'etiqueta " + PROP_TAG_AUTOR);
             autor = tokens.get(index + 1);
 
             index = tokens.indexOf(PROP_TAG_TITOL);
             if (index < 0)
-                throw new RuntimeException("El document " + url.getPath() + " no conte l'etiqueta " + PROP_TAG_TITOL);
+                throw new RuntimeException("El document " + path + " no conte l'etiqueta " + PROP_TAG_TITOL);
             titol = tokens.get(index + 1);
 
             index = tokens.indexOf(PROP_TAG_CONTINGUT);
@@ -186,7 +188,7 @@ public class GestorDocument {
                 contingut = tokens.get(tokens.indexOf(PROP_TAG_CONTINGUT) + 1);
 
         } catch (Exception e) {
-            System.err.println("No s'ha pogut importar el document " + url.getPath() + " en format PROP");
+            System.err.println("No s'ha pogut importar el document " + path + " en format PROP");
             throw new RuntimeException(e);
         }
         return new Document(idDoc, autor, titol, contingut);
@@ -196,7 +198,7 @@ public class GestorDocument {
     public static void main(String[] args) {
         Document doc = new Document(0, "autor_document", "titol_document", "");
         GestorDocument gestor = new GestorDocument();
-        gestor.exportarDocument(FILETYPE.XML, doc, "../Exported/");
+        gestor.exportarDocument(FILETYPE.XML, doc, "./Entrega3/FONTS/Persistencia/Exported/");
         Document d = gestor.importarDocument(0, "D:/Juli/01_Uni/Q5/PROP/subgrup-prop11.1/Entrega3/FONTS/Persistencia/Exported/autor_document_titol_document.xml");
         System.out.println("Document 1");
         System.out.println(d.getAutor());
