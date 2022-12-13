@@ -10,6 +10,7 @@ public class VistaCrearDirectori extends JFrame {
     private JPanel panel;
     private JButton NouDirectori;
     private JTextField idDir;
+    private JLabel Titol;
 
     private JFrame frame = new JFrame("JFrame");
 

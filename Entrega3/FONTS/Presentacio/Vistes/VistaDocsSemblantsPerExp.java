@@ -1,7 +1,5 @@
 package Presentacio.Vistes;
 
-import Presentacio.Controladors.CtrlPresentacio;
-
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -10,7 +8,7 @@ public class VistaDocsSemblantsPerExp extends JFrame{
     private JComboBox Expresio;
     private JButton Busar;
     private JButton Enrere;
-    private JLabel Docs;
+    private JTextPane Docs;
 
     private JFrame frame = new JFrame("JFrame");
 
@@ -18,7 +16,7 @@ public class VistaDocsSemblantsPerExp extends JFrame{
         setContentPane(panel);
         setBounds(500, 300, 500, 300);
         setResizable(true);
-        setTitle("Gestor de documents de PROP");
+        setTitle("Comparació de documents");
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
