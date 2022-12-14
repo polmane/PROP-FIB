@@ -9,11 +9,14 @@ import javax.swing.event.*;
 public class Main {
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JFrame frame = new VistaCrearDirectori();
-            }
+        SwingUtilities.invokeLater(
+            new Runnable() {
+                @Override
+                public void run() {
+                    CtrlPresentacio _ctrlPresentacio = new CtrlPresentacio();
+                    _ctrlPresentacio.iniPresentacio();
+                    //JFrame frame = new VistaCrearDirectori();
+                }
         });
     }
 }

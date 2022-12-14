@@ -12,11 +12,17 @@ import java.util.List;
 
 public class CtrlPresentacio {
 
-    private static CtrlDomini cd = new CtrlDomini(new CtrlDirectori(), new CtrlExpressio());
+    private static CtrlDomini _ctrlDomini;
+    private VistaPagPrincipal vPrincipal;
 
     //VISTES
+    public CtrlPresentacio() {
+         _ctrlDomini = new CtrlDomini(new CtrlDirectori(), new CtrlExpressio());
+         vPrincipal = new VistaPagPrincipal();
+    }
 
     public static void iniPresentacio() {
+
         VistaCrearDirectori vCd = new VistaCrearDirectori();
     }
 
@@ -61,57 +67,57 @@ public class CtrlPresentacio {
     //FUNCIONS DE DOMINI
 
     public static void crearDirectori(int id) {
-        cd._ctrlDirectori.crearDirectori(id);
+        _ctrlDomini._ctrlDirectori.crearDirectori(id);
     }
 
-    public static int crearDocument(String autor, String titol, String contingut) { return cd.afegirDocument(titol, autor, contingut); }
+    public static int crearDocument(String autor, String titol, String contingut) { return _ctrlDomini.afegirDocument(titol, autor, contingut); }
 
-    public static int seleccionarDocument(int id) { return cd.seleccionarDocument(id); }
+    public static int seleccionarDocument(int id) { return _ctrlDomini.seleccionarDocument(id); }
 
-    public static int afegirExp(String expressio)  { return cd.afegirExpressio(expressio); }
+    public static int afegirExp(String expressio)  { return _ctrlDomini.afegirExpressio(expressio); }
 
     public static int modificarAutor(String autor) {
-        return cd.modificarAutor(autor);
+        return _ctrlDomini.modificarAutor(autor);
     }
 
     public static int modificarTitol(String titol) {
-        return cd.modificarAutor(titol);
+        return _ctrlDomini.modificarAutor(titol);
     }
 
     public static int modificarContingut(String contingut) {
-        return cd.modificarContingut(contingut);
+        return _ctrlDomini.modificarContingut(contingut);
     }
 
     public static List<Pair<String, String>> compararDocuments(CtrlDirectori.METODE_COMPARACIO m, CtrlDirectori.SORTING s, int k, int id) {
-        return cd.compararDocuments(m, s, k, id);
+        return _ctrlDomini.compararDocuments(m, s, k, id);
     }
 
     public static List<Pair<String, String>> compararQuery(CtrlDirectori.METODE_COMPARACIO m, CtrlDirectori.SORTING s, int k, String paraules) {
-        return cd.compararQuery(m, s, k, paraules);
+        return _ctrlDomini.compararQuery(m, s, k, paraules);
     }
 
     //public static void exportarDocument(CtrlDirectori.FILETYPE format, String path) { cd.exportarDocument(format,path); }
 
     public static int eliminarDocument(int id){
-        return cd.eliminarDocument(id);
+        return _ctrlDomini.eliminarDocument(id);
     }
 
-    public static String cercaPerAutoriTitol(String autor, String titol) { return cd.cercaPerAutoriTitol(autor, titol); }
+    public static String cercaPerAutoriTitol(String autor, String titol) { return _ctrlDomini.cercaPerAutoriTitol(autor, titol); }
 
-    public static List<String> llistaAutorsPerPrefix(String pre , CtrlDirectori.SORTING s) { return cd.llistaAutorsPerPrefix(pre, s); }
+    public static List<String> llistaAutorsPerPrefix(String pre , CtrlDirectori.SORTING s) { return _ctrlDomini.llistaAutorsPerPrefix(pre, s); }
 
-    public static List<String> llistaTitolsPerAutor(String autor, CtrlDirectori.SORTING s) { return cd.llistaTitolsPerAutor(autor,s); }
+    public static List<String> llistaTitolsPerAutor(String autor, CtrlDirectori.SORTING s) { return _ctrlDomini.llistaTitolsPerAutor(autor,s); }
 
     public static int seleccionarExpressio (int id) {
-        return cd.seleccionarExpressio(id);
+        return _ctrlDomini.seleccionarExpressio(id);
     }
 
-    public static int modificarExpressio(String exp){ return cd.modificarExpressio(exp); }
+    public static int modificarExpressio(String exp){ return _ctrlDomini.modificarExpressio(exp); }
 
     public static int eliminarExpressio(int id){
-        return cd.eliminarExpressio(id);
+        return _ctrlDomini.eliminarExpressio(id);
     }
 
-    public static ArrayList<Document> selectPerExpressio(int id) { return cd.selectPerExpressio(id); }
+    public static ArrayList<Document> selectPerExpressio(int id) { return _ctrlDomini.selectPerExpressio(id); }
 
 }
