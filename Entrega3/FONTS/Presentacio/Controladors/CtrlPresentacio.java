@@ -35,10 +35,10 @@ public class CtrlPresentacio {
     public void iniPresentacio() {
         VistaCrearDirectori vCd = new VistaCrearDirectori(this);
         vPrincipal.hacerVisible();
-
+        vPrincipal.desactivar();
     }
 
-    public void PagPrincipal() {
+    public void activarPagPrincipal() {
         vPrincipal.activar();
         //VistaPagPrincipal vPp = new VistaPagPrincipal();
     }

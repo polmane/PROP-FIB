@@ -48,8 +48,6 @@ public class VistaPagPrincipal extends JFrame{
         });
     }
     public void hacerVisible() {
-        System.out.println
-                ("isEventDispatchThread: " + SwingUtilities.isEventDispatchThread());
         this.pack();
         this.setVisible(true);
     }

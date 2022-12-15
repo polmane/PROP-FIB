@@ -39,7 +39,7 @@ public class VistaAfegirExpressio extends JFrame {
                 } else {
                     _ctrlPresentacio.afegirExp(introduirExpressió.getText());
                     setVisible(false);
-                    _ctrlPresentacio.PagPrincipal();
+                    _ctrlPresentacio.activarPagPrincipal();
                 }
             }
         });

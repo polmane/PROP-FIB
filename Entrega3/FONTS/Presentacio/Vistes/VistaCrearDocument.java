@@ -34,7 +34,7 @@ public class VistaCrearDocument extends JFrame{
                     error.setBounds(800, 300, 400, 200);
                     error.setLayout(null);
 
-                    JLabel txtError = new JLabel("S'ha de introduir un valor valid com a autor");
+                    JLabel txtError = new JLabel("S'ha d'introduir un valor valid com a autor");
                     txtError.setBounds(80, 20, 400, 40);
                     error.add(txtError);
                     error.setVisible(true);
@@ -43,7 +43,7 @@ public class VistaCrearDocument extends JFrame{
                     error.setBounds(800, 300, 400, 200);
                     error.setLayout(null);
 
-                    JLabel txtError = new JLabel("S'ha de introduir un valor valid com a titol");
+                    JLabel txtError = new JLabel("S'ha d'introduir un valor valid com a titol");
                     txtError.setBounds(80, 20, 400, 40);
                     error.add(txtError);
                     error.setVisible(true);
@@ -66,8 +66,15 @@ public class VistaCrearDocument extends JFrame{
                     error.add(txtError);
                     error.setVisible(true);*/
                 else {
-                    int idDoc = _ctrlPresentacio.crearDocument(Autor.getText(), Titol.getText(), Contingut.getText());
-                    _ctrlPresentacio.vistaPaginaOpcions(idDoc, Autor.getText(), Titol.getText(), Contingut.getText());
+                    int codi = _ctrlPresentacio.crearDocument(Autor.getText(), Titol.getText(), Contingut.getText());
+                    if (codi == 10) {System.out.println("Document afegit i seleccionat correctament. ");}
+                    else if (codi == 20){
+                        System.out.println("ERROR: Ja existeix un document amb autor i titol donats, NO s'ha afegit cap nou document");
+                    }
+                    else {
+                        System.out.println("ERROR: Autor i/o titol no vàlids, escrigui un string!");
+                    }
+                    _ctrlPresentacio.vistaPaginaOpcions(codi, Autor.getText(), Titol.getText(), Contingut.getText());
                     setVisible(false);
                 }
             }

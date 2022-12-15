@@ -39,7 +39,7 @@ public class VistaPaginaOpcions extends JFrame {
         Enrere.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                _ctrlPresentacio.PagPrincipal();
+                _ctrlPresentacio.activarPagPrincipal();
                 setVisible(false);
             }
         });
@@ -50,7 +50,7 @@ public class VistaPaginaOpcions extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int id=0;
                 _ctrlPresentacio.eliminarDocument(id);
-                _ctrlPresentacio.PagPrincipal();
+                _ctrlPresentacio.activarPagPrincipal();
                 setVisible(false);
             }
         });
