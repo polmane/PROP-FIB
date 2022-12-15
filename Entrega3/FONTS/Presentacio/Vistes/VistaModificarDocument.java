@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class VistaModificarDocument extends JFrame{
+    private CtrlPresentacio _ctrlPresentacio;
     private JPanel panel;
     private JTextField Autor;
     private JTextField Titol;
@@ -13,7 +14,8 @@ public class VistaModificarDocument extends JFrame{
 
     private JFrame frame = new JFrame("JFrame");
 
-    public VistaModificarDocument(int id, String autor, String titol, String contingut) {
+    public VistaModificarDocument(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(500, 300, 500, 300);
         setResizable(true);
@@ -22,8 +24,11 @@ public class VistaModificarDocument extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        String autor="Pol1";
         Autor.setText(autor);
+        String titol="Mañé1";
         Titol.setText(titol);
+        String contingut="Roiger1";
         Contingut.setText(contingut);
         Guardar.addActionListener(new ActionListener() {
             @Override
@@ -65,10 +70,11 @@ public class VistaModificarDocument extends JFrame{
                  error.add(txtError);
                  error.setVisible(true);*/
                 else {
-                    CtrlPresentacio.modificarAutor(Autor.getText());
-                    CtrlPresentacio.modificarTitol(Titol.getText());
-                    CtrlPresentacio.modificarContingut(Contingut.getText());
-                    CtrlPresentacio.vistaPaginaOpcions(id, Autor.getText(), Titol.getText(), Contingut.getText());
+                    _ctrlPresentacio.modificarAutor(Autor.getText());
+                    _ctrlPresentacio.modificarTitol(Titol.getText());
+                    _ctrlPresentacio.modificarContingut(Contingut.getText());
+                    int id = 0;
+                    _ctrlPresentacio.vistaPaginaOpcions( id, Autor.getText(), Titol.getText(), Contingut.getText());
                     setVisible(false);
                 }
             }

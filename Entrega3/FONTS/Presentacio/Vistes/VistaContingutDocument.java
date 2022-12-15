@@ -4,6 +4,7 @@ import Presentacio.Controladors.CtrlPresentacio;
 import java.awt.event.*;
 import javax.swing.*;
 public class VistaContingutDocument extends JFrame{
+    CtrlPresentacio _ctrlPresentacio;
     private JTextField Autor;
     private JTextField Titol;
     private JTextPane Contingut;
@@ -13,7 +14,8 @@ public class VistaContingutDocument extends JFrame{
 
     private JFrame frame = new JFrame("JFrame");
 
-    public VistaContingutDocument(int id, String autor, String titol, String contingut) {
+    public VistaContingutDocument(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(500, 300, 500, 300);
         setResizable(true);
@@ -43,7 +45,7 @@ public class VistaContingutDocument extends JFrame{
                     error.add(txtError);
                     error.setVisible(true);
                 } else {
-                    String contingut = CtrlPresentacio.cercaPerAutoriTitol(Autor.getText(), Titol.getText());
+                    String contingut = _ctrlPresentacio.cercaPerAutoriTitol(Autor.getText(), Titol.getText());
                     Contingut.setText(contingut);
                 }
             }
@@ -51,7 +53,11 @@ public class VistaContingutDocument extends JFrame{
         Enrere.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CtrlPresentacio.vistaPaginaOpcions(id, autor, titol, contingut);
+                int id = 0;
+                String autor="pol";
+                String titol = "mañe";
+                String contingut="roiger";
+                _ctrlPresentacio.vistaPaginaOpcions(id, autor, titol, contingut);
             }
         });
     }

@@ -6,7 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class VistaPaginaOpcions extends JFrame {
-
+    private CtrlPresentacio _ctrlPresentacio;
     private JTextField Autor;
     private JTextField Titol;
     private JTextField Contingut;
@@ -17,7 +17,8 @@ public class VistaPaginaOpcions extends JFrame {
     private JLabel TitolCerques;
     private JPanel panel;
 
-    public VistaPaginaOpcions(int id, String autor, String titol, String contingut) {
+    public VistaPaginaOpcions(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(500, 300, 500, 300);
         setResizable(true);
@@ -26,15 +27,19 @@ public class VistaPaginaOpcions extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        CtrlPresentacio.seleccionarDocument(id);
+        int id = 0;
+        _ctrlPresentacio.seleccionarDocument(id);
+        String autor = "pol";
         Autor.setText(autor);
+        String titol = "mañe";
         Titol.setText(titol);
+        String contingut = "roiger";
         Contingut.setText(contingut);
 
         Enrere.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CtrlPresentacio.PagPrincipal();
+                _ctrlPresentacio.PagPrincipal();
                 setVisible(false);
             }
         });
@@ -43,8 +48,9 @@ public class VistaPaginaOpcions extends JFrame {
         Eliminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CtrlPresentacio.eliminarDocument(id);
-                CtrlPresentacio.PagPrincipal();
+                int id=0;
+                _ctrlPresentacio.eliminarDocument(id);
+                _ctrlPresentacio.PagPrincipal();
                 setVisible(false);
             }
         });
@@ -52,7 +58,7 @@ public class VistaPaginaOpcions extends JFrame {
         Modificar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CtrlPresentacio.vistaModificarDocument(id, autor, titol, contingut);
+                _ctrlPresentacio.vistaModificarDocument(id, autor, titol, contingut);
                 setVisible(false);
             }
         });

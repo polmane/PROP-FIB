@@ -430,5 +430,14 @@ public class CtrlDirectori {
         return docs;
     }
 
+    public ArrayList<String> llistarDocuments() {
+        ArrayList<String> resultat = new ArrayList<>();
+        for (Document doc : directoriObert.getDocs().values()) {
+            resultat.add(String.valueOf(doc.getIdDoc()));
+            resultat.add(String.valueOf(doc.getAutor()));
+            resultat.add(String.valueOf(doc.getTitol()));
+        }
+        return resultat;
+    }
 
 }

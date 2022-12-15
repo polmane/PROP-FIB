@@ -6,6 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class VistaDocsSemblants extends JFrame{
+    private CtrlPresentacio _ctrlPresentacio;
     private JPanel panel;
     private JTextField idDoc;
     private JTextField K;
@@ -17,7 +18,8 @@ public class VistaDocsSemblants extends JFrame{
 
     private JFrame frame = new JFrame("JFrame");
 
-    public VistaDocsSemblants() {
+    public VistaDocsSemblants(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(500, 300, 500, 300);
         setResizable(true);

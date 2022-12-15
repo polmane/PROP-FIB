@@ -5,6 +5,7 @@ package Domini.Controladors;
 import Domini.Classes.Document;
 import Domini.Classes.Pair;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,10 @@ public class CtrlDomini {
     public CtrlDirectori _ctrlDirectori;
     private final CtrlExpressio _ctrlExpressio;
 
+    public CtrlDomini() {
+        _ctrlExpressio = new CtrlExpressio();
+        _ctrlDirectori = new CtrlDirectori();
+    }
     public CtrlDomini(CtrlDirectori _ctrlDirectori, CtrlExpressio _ctrlExpressio) {
         this._ctrlDirectori = _ctrlDirectori;
         this._ctrlExpressio = _ctrlExpressio;
@@ -45,11 +50,6 @@ public class CtrlDomini {
     public List<Pair<String, String>> compararQuery(CtrlDirectori.METODE_COMPARACIO m, CtrlDirectori.SORTING s, Integer k, String paraules) {
         return _ctrlDirectori.compararQuery(m, s, k, paraules);
     }
-
-    /*
-    public void exportarDocument(CtrlDirectori.FILETYPE format, String path) {
-        _ctrlDirectori.exportarDocument(format,path);
-    } */
 
     public int eliminarDocument(int idDoc){
         return _ctrlDirectori.eliminarDocument(idDoc);
@@ -92,7 +92,14 @@ public class CtrlDomini {
         return resultat;
     }
 
-    public static void main (String[] args){
+    public ArrayList<String> llistarDocuments() {
+        return _ctrlDirectori.llistarDocuments();
+    }
+    public ArrayList<String> llistarExpressions() {
+        return _ctrlExpressio.llistarExpressions();
+    }
+
+    /*public static void main (String[] args){
         CtrlDirectori dir = new CtrlDirectori();
         CtrlExpressio exp = new CtrlExpressio();
         CtrlDomini cdom = new CtrlDomini(dir, exp);
@@ -100,7 +107,7 @@ public class CtrlDomini {
 
 
         cdom.afegirDocument("Pol","Prova","A A A A A");
-        cdom.afegirDocument("Manel","Prova","el barri gotic de girona");
+        cdom.afegirDocument("Manel","Prova","hola, el barri gotic de girona");
         cdom.afegirDocument("Isaac","Prova","fem un projecte de programació");
         cdom.afegirDocument("Juli","Prova","la nit es a molt llarga");
         cdom.afegirDocument("Pau","Prova","de de de de de de");
@@ -111,6 +118,8 @@ public class CtrlDomini {
         cdom.afegirDocument("Anna","Prova","B barri");
         cdom.afegirDocument("Marta","Prova","B el");
 
+        System.out.println(cdom.llistarDocuments());
+
         cdom.afegirExpressio("(hola & (\"barri gotic\"))");
 
         ArrayList<Document> docfinal = cdom.selectPerExpressio(0);
@@ -118,7 +127,8 @@ public class CtrlDomini {
         for(Document d : docfinal) {
             System.out.println("El document: " + d.getAutor() + " i " + d.getTitol());
         }
-    }
+        System.out.println(cdom.llistarExpressions());
+    }*/
         /*public static void main(String[] args){
         CtrlDirectori CtrlDir = new CtrlDirectori();
         CtrlDomini CtrlDom = new CtrlDomini(CtrlDir,null);

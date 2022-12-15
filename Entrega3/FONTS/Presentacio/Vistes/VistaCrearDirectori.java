@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 public class VistaCrearDirectori extends JFrame {
+    private CtrlPresentacio _ctrlPresentacio;
     private JPanel panel;
     private JButton NouDirectori;
     private JTextField idDir;
@@ -14,7 +15,8 @@ public class VistaCrearDirectori extends JFrame {
 
     private JFrame frame = new JFrame("JFrame");
 
-    public VistaCrearDirectori() {
+    public VistaCrearDirectori(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(500, 300, 500, 300);
         setResizable(true);
@@ -37,8 +39,7 @@ public class VistaCrearDirectori extends JFrame {
                     error.add(txtError);
                     error.setVisible(true);
                 } else {
-                    CtrlPresentacio.crearDirectori(Integer.parseInt(idDir.getText()));
-                    CtrlPresentacio.PagPrincipal();
+                    _ctrlPresentacio.crearDirectori(Integer.parseInt(idDir.getText()));
                     setVisible(false);
                 }
 

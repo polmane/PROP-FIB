@@ -6,20 +6,22 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class VistaAfegirExpressio extends JFrame {
+    private CtrlPresentacio _ctrlPresentacio;
     private JButton afegirExpressió;
     private JPanel panel;
     private JTextField introduirExpressió;
 
     private JFrame frame = new JFrame("JFrame");
 
-    public VistaAfegirExpressio() {
+    public VistaAfegirExpressio(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(500, 300, 500, 300);
         setResizable(true);
         setTitle("Pàgina per afegir una expressió");
 
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 
         afegirExpressió.addActionListener(new ActionListener() {
@@ -35,9 +37,9 @@ public class VistaAfegirExpressio extends JFrame {
                     error.add(txtError);
                     error.setVisible(true);
                 } else {
-                    CtrlPresentacio.afegirExp(introduirExpressió.getText());
-                    CtrlPresentacio.PagPrincipal();
+                    _ctrlPresentacio.afegirExp(introduirExpressió.getText());
                     setVisible(false);
+                    _ctrlPresentacio.PagPrincipal();
                 }
             }
         });

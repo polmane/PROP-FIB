@@ -6,6 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class VistaCrearDocument extends JFrame{
+    private CtrlPresentacio _ctrlPresentacio;
     private JTextField Autor;
     private JTextField Titol;
     private JTextField Contingut;
@@ -15,7 +16,8 @@ public class VistaCrearDocument extends JFrame{
 
     private JFrame frame = new JFrame("JFrame");
 
-    public VistaCrearDocument() {
+    public VistaCrearDocument(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(500, 300, 500, 300);
         setResizable(true);
@@ -64,8 +66,8 @@ public class VistaCrearDocument extends JFrame{
                     error.add(txtError);
                     error.setVisible(true);*/
                 else {
-                    int idDoc = CtrlPresentacio.crearDocument(Autor.getText(), Titol.getText(), Contingut.getText());
-                    CtrlPresentacio.vistaPaginaOpcions(idDoc, Autor.getText(), Titol.getText(), Contingut.getText());
+                    int idDoc = _ctrlPresentacio.crearDocument(Autor.getText(), Titol.getText(), Contingut.getText());
+                    _ctrlPresentacio.vistaPaginaOpcions(idDoc, Autor.getText(), Titol.getText(), Contingut.getText());
                     setVisible(false);
                 }
             }
