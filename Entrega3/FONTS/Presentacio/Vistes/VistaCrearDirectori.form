@@ -15,7 +15,16 @@
           <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <borderPainted value="false"/>
+          <focusCycleRoot value="false"/>
+          <focusPainted value="true"/>
+          <focusable value="true"/>
+          <hideActionText value="false"/>
+          <opaque value="false"/>
+          <rolloverEnabled value="true"/>
+          <selected value="false"/>
           <text value="Crear Directori"/>
+          <visible value="true"/>
         </properties>
       </component>
       <hspacer id="fa672">
