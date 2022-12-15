@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 public class VistaInfoDocument extends JFrame{
 
-    private CtrlPresentacio pcrpe;
+    private CtrlPresentacio _ctrlPresentacio;
     private JPanel panel;
     private JTextField Info;
     private JButton Buscar;
@@ -18,7 +18,8 @@ public class VistaInfoDocument extends JFrame{
 
     private JFrame frame = new JFrame("JFrame");
 
-    public VistaInfoDocument(int id, String autor, String titol, String contingut, CtrlPresentacio cpre) {
+    public VistaInfoDocument(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(500, 300, 500, 300);
         setResizable(true);
@@ -27,13 +28,15 @@ public class VistaInfoDocument extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        pcrpe = cpre;
-
 
         Enrere.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pcrpe.vistaPaginaOpcions(id, autor, titol, contingut);
+                int id= 0;
+                String autor = "Pol";
+                String titol = "mañe";
+                String contingut = "Roiger";
+                _ctrlPresentacio.vistaPaginaOpcions(id, autor, titol, contingut);
                 setVisible(false);
             }
         });

@@ -15,7 +15,6 @@ public class Main {
                 public void run() {
                     CtrlPresentacio _ctrlPresentacio = new CtrlPresentacio();
                     _ctrlPresentacio.iniPresentacio();
-                    //JFrame frame = new VistaCrearDirectori();
                 }
         });
     }

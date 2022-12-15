@@ -66,7 +66,7 @@ public class CtrlPresentacio {
     }
 
     public void vistaInfoDocument(int id) {
-        vIdoc = new VistaInfoDocument();
+        vIdoc = new VistaInfoDocument(this);
     }
 
     public void vistaContingutDocument(int id, String autor, String titol, String contingut) {
@@ -78,7 +78,7 @@ public class CtrlPresentacio {
     }
 
     public void vistaDocsSemblantsPerExp() {
-        vSPexp = new VistaDocsSemblantsPerExp();
+        vSPexp = new VistaDocsSemblantsPerExp(this);
     }
 
     //FUNCIONS DE DOMINI
