@@ -1,5 +1,7 @@
 package Presentacio.Vistes;
 
+import Presentacio.Controladors.CtrlPresentacio;
+
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -12,7 +14,7 @@ public class VistaDocsSemblantsPerExp extends JFrame{
 
     private JFrame frame = new JFrame("JFrame");
 
-    public VistaDocsSemblantsPerExp() {
+    public VistaDocsSemblantsPerExp(int id, String autor, String titol, String contingut) {
         setContentPane(panel);
         setBounds(500, 300, 500, 300);
         setResizable(true);
@@ -31,7 +33,8 @@ public class VistaDocsSemblantsPerExp extends JFrame{
         Enrere.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                CtrlPresentacio.vistaPaginaOpcions(id, autor, titol, contingut);
+                setVisible(false);
             }
         });
     }

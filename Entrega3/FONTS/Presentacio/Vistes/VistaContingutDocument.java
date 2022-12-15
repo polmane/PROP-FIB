@@ -52,6 +52,7 @@ public class VistaContingutDocument extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 CtrlPresentacio.vistaPaginaOpcions(id, autor, titol, contingut);
+                setVisible(false);
             }
         });
     }

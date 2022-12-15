@@ -6,6 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class VistaCrearDocument extends JFrame{
+
     private JTextField Autor;
     private JTextField Titol;
     private JTextField Contingut;

@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 public class VistaCrearDirectori extends JFrame {
+
     private JPanel panel;
     private JButton NouDirectori;
     private JTextField idDir;
@@ -38,7 +39,7 @@ public class VistaCrearDirectori extends JFrame {
                     error.setVisible(true);
                 } else {
                     CtrlPresentacio.crearDirectori(Integer.parseInt(idDir.getText()));
-                    CtrlPresentacio.PagPrincipal();
+                    CtrlPresentacio.vistaPagPrincipal();
                     setVisible(false);
                 }
 

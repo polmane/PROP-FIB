@@ -19,7 +19,7 @@ public class VistaPaginaOpcions extends JFrame {
 
     public VistaPaginaOpcions(int id, String autor, String titol, String contingut) {
         setContentPane(panel);
-        setBounds(500, 300, 500, 300);
+        setBounds(500, 300, 700, 500);
         setResizable(true);
         setTitle("Pàgina d'opcions per a un document");
 
@@ -34,7 +34,7 @@ public class VistaPaginaOpcions extends JFrame {
         Enrere.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CtrlPresentacio.PagPrincipal();
+                CtrlPresentacio.vistaPagPrincipal();
                 setVisible(false);
             }
         });
@@ -44,7 +44,7 @@ public class VistaPaginaOpcions extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CtrlPresentacio.eliminarDocument(id);
-                CtrlPresentacio.PagPrincipal();
+                CtrlPresentacio.vistaPagPrincipal();
                 setVisible(false);
             }
         });
@@ -54,6 +54,25 @@ public class VistaPaginaOpcions extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 CtrlPresentacio.vistaModificarDocument(id, autor, titol, contingut);
                 setVisible(false);
+            }
+        });
+        Cerques.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Cerques.getSelectedItem().toString() == "Contingut d'un document") {
+                    CtrlPresentacio.vistaContingutDocument(id, autor, titol, contingut);
+                    setVisible(false);
+                } else if (Cerques.getSelectedItem().toString() == "Informació d'un document") {
+                    //CtrlPresentacio.vistaInfoDocument(id);
+                    setVisible(false);
+                } else if (Cerques.getSelectedItem().toString() == "Documents semblants") {
+                    CtrlPresentacio.vistaDocsSemblants(id, autor, titol, contingut);
+                    setVisible(false);
+                } else {
+                    CtrlPresentacio.vistaDocsSemblantsPerExp(id, autor, titol, contingut);
+                    setVisible(false);
+                }
+
             }
         });
     }

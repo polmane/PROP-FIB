@@ -16,11 +16,11 @@ public class CtrlPresentacio {
 
     //VISTES
 
-    public static void iniPresentacio() {
+    public static void vistaCrearDirectori() {
         VistaCrearDirectori vCd = new VistaCrearDirectori();
     }
 
-    public static void PagPrincipal() {
+    public static void vistaPagPrincipal() {
         VistaPagPrincipal vPp = new VistaPagPrincipal();
     }
 
@@ -42,20 +42,20 @@ public class CtrlPresentacio {
         VistaModificarDocument vMdoc = new VistaModificarDocument(id, autor, titol, contingut);
     }
 
-    public static void vistaInfoDocument(int id) {
-        VistaInfoDocument vIdoc = new VistaInfoDocument();
-    }
+    /**public static void vistaInfoDocument(int id, String autor, String titol, String contingut) {
+        VistaInfoDocument vIdoc = new VistaInfoDocument(id, autor, titol, contingut);
+    }*/
 
     public static void vistaContingutDocument(int id, String autor, String titol, String contingut) {
         VistaContingutDocument vCdoc = new VistaContingutDocument(id, autor, titol, contingut);
     }
 
-    public static void vistaDocsSemblants() {
-        VistaDocsSemblants vDocsS = new VistaDocsSemblants();
+    public static void vistaDocsSemblants(int id, String autor, String titol, String contingut) {
+        VistaDocsSemblants vDocsS = new VistaDocsSemblants(id, autor, titol, contingut);
     }
 
-    public static void vistaDocsSemblantsPerExp() {
-        VistaDocsSemblantsPerExp vSPexp = new VistaDocsSemblantsPerExp();
+    public static void vistaDocsSemblantsPerExp(int id, String autor, String titol, String contingut) {
+        VistaDocsSemblantsPerExp vSPexp = new VistaDocsSemblantsPerExp(id, autor, titol, contingut);
     }
 
     //FUNCIONS DE DOMINI

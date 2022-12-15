@@ -17,7 +17,7 @@ public class VistaDocsSemblants extends JFrame{
 
     private JFrame frame = new JFrame("JFrame");
 
-    public VistaDocsSemblants() {
+    public VistaDocsSemblants(int id, String autor, String titol, String contingut) {
         setContentPane(panel);
         setBounds(500, 300, 500, 300);
         setResizable(true);
@@ -36,7 +36,8 @@ public class VistaDocsSemblants extends JFrame{
         Enrere.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                CtrlPresentacio.vistaPaginaOpcions(id, autor, titol, contingut);
+                setVisible(false);
             }
         });
     }
