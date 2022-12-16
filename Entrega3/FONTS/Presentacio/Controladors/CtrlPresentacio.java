@@ -2,8 +2,7 @@ package Presentacio.Controladors;
 
 import java.util.*;
 import Domini.Classes.Pair;
-import Domini.Classes.Document;
-import Domini.Controladors.CtrlDirectori;
+import Domini.Classes.Document;;
 import Domini.Controladors.CtrlDomini;
 import Presentacio.Vistes.*;
 
