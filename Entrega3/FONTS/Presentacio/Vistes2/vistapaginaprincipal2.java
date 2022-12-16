@@ -26,7 +26,8 @@ public class vistapaginaprincipal2 extends JFrame{
     private JButton importar;
     private JFileChooser file_chooser;
 
-    public vistapaginaprincipal2() {
+    public vistapaginaprincipal2(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
@@ -49,7 +50,7 @@ public class vistapaginaprincipal2 extends JFrame{
             public void run() {
                 //Turn off metal's use of bold fonts
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistapaginaprincipal2();
+                //new vistapaginaprincipal2();
             }
         });
     }

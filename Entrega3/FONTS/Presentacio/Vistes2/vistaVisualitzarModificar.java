@@ -2,25 +2,28 @@ package Presentacio.Vistes2;
 
 import Presentacio.Controladors.CtrlPresentacio;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
-public class vistaRecuperarSessio extends JFrame{
+public class vistaVisualitzarModificar extends JFrame{
 
     private CtrlPresentacio _ctrlPresentacio;
-    private JButton Recuperar;
-    private JButton Crear;
-    private JLabel text;
-    private JPanel panel;
 
-    public vistaRecuperarSessio(CtrlPresentacio pCtrlPresentacio) {
+    private JPanel panel;
+    private JTextField Autor;
+    private JTextField Titol;
+    private JTextField Contingut;
+    private JPanel panelDocument;
+    private JPanel panelOpcions;
+    private JButton Modificar;
+    private JButton Enrere;
+    private JButton Guardar;
+
+    public vistaVisualitzarModificar(CtrlPresentacio pCtrlPresentacio) {
         _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
-        setTitle("Gestor de documents de PROP");
+        setTitle("Gestió d'un document");
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,7 +36,7 @@ public class vistaRecuperarSessio extends JFrame{
             public void run() {
                 //Turn off metal's use of bold fonts
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
-                //new vistaRecuperarSessio();
+                //new vistaVisualitzarModificar();
             }
         });
     }
