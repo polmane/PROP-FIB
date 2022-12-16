@@ -2,32 +2,29 @@ package Presentacio.Vistes2;
 
 import Presentacio.Controladors.CtrlPresentacio;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
-public class vistaVisualitzarModificar extends JFrame{
+
+public class vistaCrearDocument extends JFrame{
 
     private CtrlPresentacio _ctrlPresentacio;
+
 
     private JPanel panel;
     private JTextField Autor;
     private JTextField Titol;
-    private JPanel panelOpcions;
-    private JButton Modificar;
-    private JButton Enrere;
-    private JButton Guardar;
     private JTextArea Contingut;
-    private JLabel labelAutor;
-    private JLabel labelTitol;
+    private JButton Crear;
+    private JButton Enrere;
     private JLabel labelContingut;
+    private JLabel labelTitol;
+    private JLabel labelAutor;
 
-    public vistaVisualitzarModificar() {
+    public vistaCrearDocument() {
         //_ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
-        setTitle("Gestió d'un document");
+        setTitle("Crear un document");
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,7 +37,7 @@ public class vistaVisualitzarModificar extends JFrame{
             public void run() {
                 //Turn off metal's use of bold fonts
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaVisualitzarModificar();
+                new vistaCrearDocument();
             }
         });
     }
