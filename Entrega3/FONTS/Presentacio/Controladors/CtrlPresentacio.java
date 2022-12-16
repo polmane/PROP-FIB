@@ -5,7 +5,6 @@ import Domini.Classes.Pair;
 import Domini.Classes.Document;
 import Domini.Controladors.CtrlDirectori;
 import Domini.Controladors.CtrlDomini;
-import Domini.Controladors.CtrlExpressio;
 import Presentacio.Vistes.*;
 
 import java.util.List;
