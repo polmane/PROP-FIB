@@ -25,7 +25,7 @@ public class vistaDocumentsRellevants extends JFrame {
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
-        setTitle("Buscar els documents semblants");
+        setTitle("Buscar els documents més rellevants segons una sèrie de paraules");
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
