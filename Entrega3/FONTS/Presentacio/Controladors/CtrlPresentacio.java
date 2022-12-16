@@ -33,9 +33,10 @@ public class CtrlPresentacio {
     }
 
     public void iniPresentacio() {
-        VistaCrearDirectori vCd = new VistaCrearDirectori(this);
+
         vPrincipal.hacerVisible();
         vPrincipal.desactivar();
+        VistaCrearDirectori vCd = new VistaCrearDirectori(this);
     }
 
     public void activarPagPrincipal() {
@@ -105,12 +106,12 @@ public class CtrlPresentacio {
         return _ctrlDomini.modificarContingut(contingut);
     }
 
-    public List<Pair<String, String>> compararDocuments(CtrlDirectori.METODE_COMPARACIO m, CtrlDirectori.SORTING s, int k, int id) {
-        return _ctrlDomini.compararDocuments(m, s, k, id);
+    public List<Pair<String, String>> compararDocuments(String metodeComp, String sorting, int k, int id) {
+        return _ctrlDomini.compararDocuments(metodeComp, sorting, k, id);
     }
 
-    public List<Pair<String, String>> compararQuery(CtrlDirectori.METODE_COMPARACIO m, CtrlDirectori.SORTING s, int k, String paraules) {
-        return _ctrlDomini.compararQuery(m, s, k, paraules);
+    public List<Pair<String, String>> compararQuery(String metodeComp, String sorting, int k, String paraules) {
+        return _ctrlDomini.compararQuery(metodeComp, sorting, k, paraules);
     }
 
     //public static void exportarDocument(CtrlDirectori.FILETYPE format, String path) { cd.exportarDocument(format,path); }
@@ -121,9 +122,13 @@ public class CtrlPresentacio {
 
     public String cercaPerAutoriTitol(String autor, String titol) { return _ctrlDomini.cercaPerAutoriTitol(autor, titol); }
 
-    public List<String> llistaAutorsPerPrefix(String pre , CtrlDirectori.SORTING s) { return _ctrlDomini.llistaAutorsPerPrefix(pre, s); }
+    public List<String> llistaAutorsPerPrefix(String pre , String sorting) {
+        return _ctrlDomini.llistaAutorsPerPrefix(pre, sorting);
+    }
 
-    public List<String> llistaTitolsPerAutor(String autor, CtrlDirectori.SORTING s) { return _ctrlDomini.llistaTitolsPerAutor(autor,s); }
+    public List<String> llistaTitolsPerAutor(String autor, String sorting) {
+        return _ctrlDomini.llistaTitolsPerAutor(autor,sorting);
+    }
 
     public int seleccionarExpressio (int id) {
         return _ctrlDomini.seleccionarExpressio(id);

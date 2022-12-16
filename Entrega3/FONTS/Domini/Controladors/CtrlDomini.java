@@ -43,11 +43,15 @@ public class CtrlDomini {
         return _ctrlDirectori.modificarContingut(contingut);
     }
 
-    public List<Pair<String, String>> compararDocuments(CtrlDirectori.METODE_COMPARACIO m, CtrlDirectori.SORTING s, Integer k, Integer IdDoc) {
+    public List<Pair<String, String>> compararDocuments(String metodeComp, String sorting, Integer k, Integer IdDoc) {
+        CtrlDirectori.METODE_COMPARACIO m = CtrlDirectori.METODE_COMPARACIO.valueOf(metodeComp);
+        CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(sorting);
         return _ctrlDirectori.compararDocuments(m, s, k, IdDoc);
     }
 
-    public List<Pair<String, String>> compararQuery(CtrlDirectori.METODE_COMPARACIO m, CtrlDirectori.SORTING s, Integer k, String paraules) {
+    public List<Pair<String, String>> compararQuery(String metodeComp, String sorting, Integer k, String paraules) {
+        CtrlDirectori.METODE_COMPARACIO m = CtrlDirectori.METODE_COMPARACIO.valueOf(metodeComp);
+        CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(sorting);
         return _ctrlDirectori.compararQuery(m, s, k, paraules);
     }
 
@@ -59,11 +63,13 @@ public class CtrlDomini {
         return _ctrlDirectori.cercaPerAutoriTitol(autor, titol);
     }
 
-    public List<String> llistaAutorsPerPrefix(String pre , CtrlDirectori.SORTING s) {
+    public List<String> llistaAutorsPerPrefix(String pre , String sorting) {
+        CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(sorting);
         return _ctrlDirectori.llistaAutorsPerPrefix(pre, s);
     }
 
-    public List<String> llistaTitolsPerAutor(String autor, CtrlDirectori.SORTING s) {
+    public List<String> llistaTitolsPerAutor(String autor, String sorting) {
+        CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(sorting);
         return _ctrlDirectori.llistaTitolsPerAutor(autor,s);
     }
 

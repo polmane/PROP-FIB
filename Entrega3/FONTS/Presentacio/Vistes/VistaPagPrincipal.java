@@ -48,7 +48,7 @@ public class VistaPagPrincipal extends JFrame{
         });
     }
     public void hacerVisible() {
-        this.pack();
+        //this.pack();
         this.setVisible(true);
     }
 
