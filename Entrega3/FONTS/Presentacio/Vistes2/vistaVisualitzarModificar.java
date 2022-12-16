@@ -11,15 +11,17 @@ public class vistaVisualitzarModificar extends JFrame{
     private JPanel panel;
     private JTextField Autor;
     private JTextField Titol;
-    private JTextField Contingut;
-    private JPanel panelDocument;
     private JPanel panelOpcions;
     private JButton Modificar;
     private JButton Enrere;
     private JButton Guardar;
+    private JTextArea Contingut;
+    private JLabel labelAutor;
+    private JLabel labelTitol;
+    private JLabel labelContingut;
 
-    public vistaVisualitzarModificar(CtrlPresentacio pCtrlPresentacio) {
-        _ctrlPresentacio = pCtrlPresentacio;
+    public vistaVisualitzarModificar() {
+        //_ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
@@ -36,7 +38,7 @@ public class vistaVisualitzarModificar extends JFrame{
             public void run() {
                 //Turn off metal's use of bold fonts
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
-                //new vistaVisualitzarModificar();
+                new vistaVisualitzarModificar();
             }
         });
     }
