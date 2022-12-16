@@ -13,7 +13,6 @@ public class vistaDocumentsSemblants extends JFrame {
     private JRadioButton BOOLRadioButton;
     private JRadioButton TFIDFRadioButton;
     private JComboBox comboBox1;
-    private JTextArea Resultat;
     private JButton Buscar;
     private JButton Enrere;
     private JLabel labelMetode;
@@ -22,6 +21,7 @@ public class vistaDocumentsSemblants extends JFrame {
     private JLabel labelResultat;
     private JPanel panelOpcions;
     private JComboBox Documents;
+    private JList Resultat;
 
     public vistaDocumentsSemblants() {
         //_ctrlPresentacio = pCtrlPresentacio;

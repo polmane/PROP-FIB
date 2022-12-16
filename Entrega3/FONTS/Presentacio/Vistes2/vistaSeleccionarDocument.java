@@ -4,27 +4,21 @@ import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
 
-public class vistaDocumentsRellevants extends JFrame {
+public class vistaSeleccionarDocument extends JFrame {
     private CtrlPresentacio _ctrlPresentacio;
     private JPanel panel;
-    private JTextField textField2;
-    private JRadioButton BOOLRadioButton;
-    private JRadioButton TFIDFRadioButton;
-    private JComboBox comboBox2;
-    private JButton Buscar;
-    private JButton Enrere;
+    private JComboBox Documents;
+    private JButton Seleccionar;
+    private JButton Cancellar;
     private JPanel panelOpcions;
-    private JLabel labelResultat;
-    private JLabel labelMetode;
-    private JTextField Paraules;
-    private JList Resultat;
+    private JLabel labelDocuments;
 
-    public vistaDocumentsRellevants() {
+    public vistaSeleccionarDocument() {
         //_ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
-        setTitle("Buscar els documents més rellevants segons una sèrie de paraules");
+        setTitle("Selecció d'un document");
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,7 +31,7 @@ public class vistaDocumentsRellevants extends JFrame {
             public void run() {
                 //Turn off metal's use of bold fonts
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaDocumentsRellevants();
+                new vistaSeleccionarDocument();
             }
         });
     }

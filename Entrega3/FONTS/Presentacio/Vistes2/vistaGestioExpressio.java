@@ -19,6 +19,8 @@ public class vistaGestioExpressio extends JFrame{
     private JPanel panelSelect;
     private JPanel panelBuscar;
     private JPanel panelOpcions;
+    private JList Resultat;
+    private JLabel labelResultat;
 
     public vistaGestioExpressio() {
         //_ctrlPresentacio = pCtrlPresentacio;

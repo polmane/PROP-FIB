@@ -9,13 +9,13 @@ public class vistaCerques extends JFrame {
 
     private JPanel panel;
     private JTextField Info;
-    private JTextArea Resultat;
     private JComboBox Cerques;
     private JButton Buscar;
     private JButton Enrere;
     private JLabel labelInfo;
     private JLabel labelResultat;
     private JPanel panelOpcions;
+    private JList Resultat;
 
     public vistaCerques() {
         //_ctrlPresentacio = pCtrlPresentacio;
