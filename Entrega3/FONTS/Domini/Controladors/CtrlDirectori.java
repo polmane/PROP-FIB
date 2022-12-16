@@ -434,8 +434,8 @@ public class CtrlDirectori {
         ArrayList<String> resultat = new ArrayList<>();
         for (Document doc : directoriObert.getDocs().values()) {
             resultat.add(String.valueOf(doc.getIdDoc()));
-            resultat.add(String.valueOf(doc.getAutor()));
-            resultat.add(String.valueOf(doc.getTitol()));
+            resultat.add(doc.getAutor());
+            resultat.add(doc.getTitol());
         }
         return resultat;
     }
