@@ -23,7 +23,7 @@ public class vistapaginaprincipal2 extends JFrame{
     private JPanel panelDocument;
     private JPanel panelGestio;
     private JPanel panelOpcions;
-    private JButton importar;
+
     private JFileChooser file_chooser;
 
     public vistapaginaprincipal2(CtrlPresentacio pCtrlPresentacio) {
@@ -36,12 +36,7 @@ public class vistapaginaprincipal2 extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        importar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-            }
-        });
     }
     public static void main(String[] args) {
         //Schedule a job for the event dispatch thread:
