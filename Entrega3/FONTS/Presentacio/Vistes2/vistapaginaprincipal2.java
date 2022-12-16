@@ -1,10 +1,10 @@
 package Presentacio.Vistes2;
 
 import Presentacio.Controladors.CtrlPresentacio;
-
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.event.*;
 
 public class vistapaginaprincipal2 extends JFrame{
     private CtrlPresentacio _ctrlPresentacio;
