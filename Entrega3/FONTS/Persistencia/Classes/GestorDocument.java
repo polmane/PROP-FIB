@@ -107,13 +107,13 @@ public class GestorDocument {
         //           "./Entrega3/FONTS/Persistencia/Exported"
         try {
             if (path.endsWith(".txt")) {
-                return ParseTXT(path);
+                return parseTXT(path);
             }
             else if (path.endsWith(".xml")) {
-                return ParseXML(path);
+                return parseXML(path);
             }
             else if (path.endsWith(".prop")) {
-                return ParsePROP(path);
+                return parsePROP(path);
             }
         }
         catch (Exception e) {
@@ -124,7 +124,7 @@ public class GestorDocument {
         return null;
     }
 
-    private ArrayList<String> ParseTXT(String path) {
+    private ArrayList<String> parseTXT(String path) {
         ArrayList<String> values = new ArrayList<String>(3);
         try {
             Scanner scanner = new Scanner(new File(path));
@@ -142,7 +142,7 @@ public class GestorDocument {
         return values;
     }
 
-    private ArrayList<String> ParseXML(String path) {
+    private ArrayList<String> parseXML(String path) {
         ArrayList<String> values = new ArrayList<String>(3);
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -161,7 +161,7 @@ public class GestorDocument {
         return values;
     }
 
-    private ArrayList<String> ParsePROP(String path) {
+    private ArrayList<String> parsePROP(String path) {
         ArrayList<String> values = new ArrayList<String>(3);
         try {
             Scanner scanner = new Scanner(new File(path));
