@@ -13,7 +13,7 @@ import Domini.Classes.Document;
 
 public class GestorDocument {
 
-    public void exportarDocument(GestorDirectori.FILETYPE format, Document doc, String path) {
+    public void exportarDocument(GestorBD.FILETYPE format, Document doc, String path) {
         String nom = doc.getAutor() + '_' + doc.getTitol();
         switch (format) {
             case TXT:
@@ -84,6 +84,6 @@ public class GestorDocument {
         GestorDocument gestorDocument = new GestorDocument();
         Document doc = new Document(0,"prova","txt","avui fa bon dia");
         String path = "C:/Users/polca/OneDrive/Escritorio/PROPDocuments";
-        gestorDocument.exportarDocument(GestorDirectori.FILETYPE.valueOf("PROP"),doc,path);
+        gestorDocument.exportarDocument(GestorBD.FILETYPE.valueOf("PROP"),doc,path);
     }
 }

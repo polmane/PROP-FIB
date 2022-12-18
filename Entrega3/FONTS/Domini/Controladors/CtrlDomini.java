@@ -4,6 +4,7 @@ package Domini.Controladors;
 
 import Domini.Classes.Document;
 import Domini.Classes.Pair;
+import Persistencia.Controladors.CtrlPersistencia;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +13,12 @@ public class CtrlDomini {
 
     private final CtrlDirectori _ctrlDirectori;
     private final CtrlExpressio _ctrlExpressio;
+    private final CtrlPersistencia _ctrlPersistencia;
 
-    public CtrlDomini(CtrlDirectori _ctrlDirectori, CtrlExpressio _ctrlExpressio) {
+    public CtrlDomini(CtrlDirectori _ctrlDirectori, CtrlExpressio _ctrlExpressio, CtrlPersistencia ctrlPersistencia) {
         this._ctrlDirectori = _ctrlDirectori;
         this._ctrlExpressio = _ctrlExpressio;
+        this._ctrlPersistencia = ctrlPersistencia;
     }
 
     public int afegirDocument(String autor, String titol, String contingut){
@@ -95,7 +98,8 @@ public class CtrlDomini {
     public static void main (String[] args){
         CtrlDirectori dir = new CtrlDirectori();
         CtrlExpressio exp = new CtrlExpressio();
-        CtrlDomini cdom = new CtrlDomini(dir, exp);
+        CtrlPersistencia per = new CtrlPersistencia();
+        CtrlDomini cdom = new CtrlDomini(dir, exp, per);
         cdom._ctrlDirectori.crearDirectori(0);
 
 
