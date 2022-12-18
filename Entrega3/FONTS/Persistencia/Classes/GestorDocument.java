@@ -21,16 +21,16 @@ public class GestorDocument {
         TXT, XML, PROP
     }
 
-    private static final String XML_TAG_AUTOR = "autor";
-    private static final String XML_TAG_TITOL = "titol";
-    private static final String XML_TAG_CONTINGUT = "contingut";
-    private static final String PROP_TAG_AUTOR = "(autor)";
-    private static final String PROP_TAG_TITOL = "(titol)";
-    private static final String PROP_TAG_CONTINGUT = "(contingut)";
+    public static final String XML_TAG_AUTOR = "autor";
+    public static final String XML_TAG_TITOL = "titol";
+    public static final String XML_TAG_CONTINGUT = "contingut";
+    public static final String PROP_TAG_AUTOR = "(autor)";
+    public static final String PROP_TAG_TITOL = "(titol)";
+    public static final String PROP_TAG_CONTINGUT = "(contingut)";
 
 
 
-    public void exportarDocument(String autor, String titol, String contingut, FILETYPE format, String path) {
+    public boolean exportarDocument(String autor, String titol, String contingut, FILETYPE format, String path) {
         String nom = autor + '_' + titol;
         switch (format) {
             case TXT:
@@ -45,7 +45,8 @@ public class GestorDocument {
                     output.flush();
                 } catch (Exception e) {
                     System.err.println("El document en format .txt no s'ha creat correctament");
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
+                    return false;
                 }
                 break;
             case XML:
@@ -77,7 +78,8 @@ public class GestorDocument {
                     transformer.transform(source, result);
                 } catch (Exception e) {
                     System.err.println("El document en format .xml no s'ha creat correctament");
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
+                    return false;
                 }
                 break;
             case PROP:
@@ -92,12 +94,14 @@ public class GestorDocument {
                     output.flush();
                 } catch (Exception e) {
                     System.err.println("El document en format .prop no s'ha creat correctament");
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
+                    return false;
                 }
                 break;
             default:
                 Assert.fail("NOT REACHED");
         }
+        return true;
     }
 
     public ArrayList<String> importarDocument(String path){
