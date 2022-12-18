@@ -24,6 +24,20 @@ public class vistaRecuperarSessio extends JFrame{
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Recuperar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //_ctrlPresentacio.carregar
+                dispose();
+            }
+        });
+        Crear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _ctrlPresentacio.crearDirectori(0);
+                dispose();
+            }
+        });
     }
 
     public static void main(String[] args) {

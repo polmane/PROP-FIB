@@ -440,4 +440,12 @@ public class CtrlDirectori {
         return resultat;
     }
 
+    public int getIdDocSeleccionat() {
+        if (documentActiu != null) {
+            return documentActiu.getIdDoc();
+        }
+        else {
+            return 31;
+        }
+    }
 }

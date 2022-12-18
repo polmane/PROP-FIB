@@ -3,6 +3,8 @@ package Presentacio.Vistes2;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class vistaPaginaPrincipal extends JFrame{
     private CtrlPresentacio _ctrlPresentacio;
@@ -34,7 +36,38 @@ public class vistaPaginaPrincipal extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        crearDocumentButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _ctrlPresentacio.ObrirVistaCrearDocument();
+            }
+        });
+        seleccionarDocumentButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _ctrlPresentacio.ObrirVistaSeleccionarDocument();
+            }
+        });
+        gestionarExpressionsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _ctrlPresentacio.ObrirVistaGestioExpressio();
+            }
+        });
+        visualitzarModificarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _ctrlPresentacio.ObrirVistaVisualitzarModificarDocument();
+            }
+        });
 
+        eliminarDocumentSeleccionatButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    //TODO comprovar que hi hagi algun seleccionat: _ctrlDomin.getIdDocSeleccionat?
+                _ctrlPresentacio.eliminarDocument();
+            }
+        });
     }
 
     public void hacerVisible() {
