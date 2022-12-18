@@ -11,15 +11,15 @@ public class vistaCrearModificarExpressio extends JFrame {
     private JButton Crear;
     private JButton Modificar;
 
-    public vistaCrearModificarExpressio() {
-        //_ctrlPresentacio = pCtrlPresentacio;
+    public vistaCrearModificarExpressio(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
         setTitle("Crear un document");
 
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     public static void main(String[] args) {
@@ -29,7 +29,7 @@ public class vistaCrearModificarExpressio extends JFrame {
             public void run() {
                 //Turn off metal's use of bold fonts
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaCrearModificarExpressio();
+                new vistaCrearModificarExpressio(new CtrlPresentacio());
             }
         });
     }

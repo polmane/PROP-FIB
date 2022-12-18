@@ -19,15 +19,15 @@ public class vistaDocumentsRellevants extends JFrame {
     private JTextField Paraules;
     private JList Resultat;
 
-    public vistaDocumentsRellevants() {
-        //_ctrlPresentacio = pCtrlPresentacio;
+    public vistaDocumentsRellevants(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
         setTitle("Buscar els documents més rellevants segons una sèrie de paraules");
 
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     public static void main(String[] args) {
@@ -37,7 +37,7 @@ public class vistaDocumentsRellevants extends JFrame {
             public void run() {
                 //Turn off metal's use of bold fonts
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaDocumentsRellevants();
+                new vistaDocumentsRellevants(new CtrlPresentacio());
             }
         });
     }

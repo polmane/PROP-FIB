@@ -18,15 +18,15 @@ public class vistaContingutDocument extends JFrame {
     private JButton Enrere;
     private JPanel panelOpcions;
 
-    public vistaContingutDocument() {
-        //_ctrlPresentacio = pCtrlPresentacio;
+    public vistaContingutDocument(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
         setTitle("Buscar el contingut d'un document");
 
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     public static void main(String[] args) {
@@ -36,7 +36,7 @@ public class vistaContingutDocument extends JFrame {
             public void run() {
                 //Turn off metal's use of bold fonts
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaContingutDocument();
+                new vistaContingutDocument(new CtrlPresentacio());
             }
         });
     }

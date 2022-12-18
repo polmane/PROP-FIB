@@ -17,15 +17,15 @@ public class vistaCerques extends JFrame {
     private JPanel panelOpcions;
     private JList Resultat;
 
-    public vistaCerques() {
-        //_ctrlPresentacio = pCtrlPresentacio;
+    public vistaCerques(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
         setTitle("Cerca d'els titols d'un autor o dels autos que comencen per un prefix");
 
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     public static void main(String[] args) {
@@ -35,7 +35,7 @@ public class vistaCerques extends JFrame {
             public void run() {
                 //Turn off metal's use of bold fonts
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaCerques();
+                new vistaCerques(new CtrlPresentacio());
             }
         });
     }

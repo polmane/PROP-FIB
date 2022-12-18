@@ -1,12 +1,10 @@
 package Presentacio.Vistes2;
 
 import Presentacio.Controladors.CtrlPresentacio;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.event.*;
 
-public class vistapaginaprincipal2 extends JFrame{
+import javax.swing.*;
+
+public class vistaPaginaPrincipal extends JFrame{
     private CtrlPresentacio _ctrlPresentacio;
     private JPanel panel;
     private JButton crearDocumentButton;
@@ -26,8 +24,8 @@ public class vistapaginaprincipal2 extends JFrame{
 
     private JFileChooser file_chooser;
 
-    public vistapaginaprincipal2() {
-        //_ctrlPresentacio = pCtrlPresentacio;
+    public vistaPaginaPrincipal(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
@@ -38,6 +36,20 @@ public class vistapaginaprincipal2 extends JFrame{
 
 
     }
+
+    public void hacerVisible() {
+        //this.pack();
+        this.setVisible(true);
+    }
+
+    public void activar() {
+        this.setEnabled(true);
+    }
+
+    public void desactivar() {
+        this.setEnabled(false);
+    }
+
     public static void main(String[] args) {
         //Schedule a job for the event dispatch thread:
         //creating and showing this application's GUI.
@@ -45,7 +57,7 @@ public class vistapaginaprincipal2 extends JFrame{
             public void run() {
                 //Turn off metal's use of bold fonts
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistapaginaprincipal2();
+                new vistaPaginaPrincipal(new CtrlPresentacio());
             }
         });
     }

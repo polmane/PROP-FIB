@@ -17,15 +17,15 @@ public class vistaCrearDocument extends JFrame{
     private JLabel labelTitol;
     private JLabel labelAutor;
 
-    public vistaCrearDocument() {
-        //_ctrlPresentacio = pCtrlPresentacio;
+    public vistaCrearDocument(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
         setTitle("Crear un document");
 
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     public static void main(String[] args) {
@@ -35,7 +35,7 @@ public class vistaCrearDocument extends JFrame{
             public void run() {
                 //Turn off metal's use of bold fonts
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaCrearDocument();
+                new vistaCrearDocument(new CtrlPresentacio());
             }
         });
     }

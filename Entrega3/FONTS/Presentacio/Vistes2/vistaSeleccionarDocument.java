@@ -13,15 +13,15 @@ public class vistaSeleccionarDocument extends JFrame {
     private JPanel panelOpcions;
     private JLabel labelDocuments;
 
-    public vistaSeleccionarDocument() {
-        //_ctrlPresentacio = pCtrlPresentacio;
+    public vistaSeleccionarDocument(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
         setTitle("Selecció d'un document");
 
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     public static void main(String[] args) {
@@ -31,7 +31,7 @@ public class vistaSeleccionarDocument extends JFrame {
             public void run() {
                 //Turn off metal's use of bold fonts
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaSeleccionarDocument();
+                new vistaSeleccionarDocument(new CtrlPresentacio());
             }
         });
     }

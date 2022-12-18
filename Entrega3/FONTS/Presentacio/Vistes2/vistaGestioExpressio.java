@@ -22,15 +22,15 @@ public class vistaGestioExpressio extends JFrame{
     private JList Resultat;
     private JLabel labelResultat;
 
-    public vistaGestioExpressio() {
-        //_ctrlPresentacio = pCtrlPresentacio;
+    public vistaGestioExpressio(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
         setTitle("Gestió d'una expressió");
 
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     public static void main(String[] args) {
@@ -40,7 +40,7 @@ public class vistaGestioExpressio extends JFrame{
             public void run() {
                 //Turn off metal's use of bold fonts
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaGestioExpressio();
+                new vistaGestioExpressio(new CtrlPresentacio());
             }
         });
     }

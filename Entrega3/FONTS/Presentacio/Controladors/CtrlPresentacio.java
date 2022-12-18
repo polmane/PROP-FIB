@@ -4,37 +4,37 @@ import java.util.*;
 import Domini.Classes.Pair;
 import Domini.Classes.Document;;
 import Domini.Controladors.CtrlDomini;
-import Presentacio.Vistes.*;
+import Presentacio.Vistes2.*;
 
 import java.util.List;
 
 public class CtrlPresentacio {
 
     private CtrlDomini _ctrlDomini;
-    private VistaPagPrincipal vPrincipal = null;
-    private VistaCrearDirectori vCd;
-    private VistaAfegirExpressio vAexp;
-    private VistaCrearDocument vCrearDoc;
-    private VistaCarregarDocument vCarregarDoc;
-    private VistaPaginaOpcions vPop;
-    private VistaModificarDocument vMdoc;
-    private VistaInfoDocument vIdoc;
-    private VistaContingutDocument vCdoc;
-    private VistaDocsSemblants vDocsS;
-    private VistaDocsSemblantsPerExp vSPexp;
+    private vistaPaginaPrincipal vPrincipal = null;
+    private vistaRecuperarSessio vRecuperarSessio;
+    private vistaGestioExpressio vGestioExpressio;
+    private vistaCrearDocument vCrearDoc;
+    private vistaSeleccionarDocument vSelecDoc;
 
+    private vistaVisualitzarModificarDocument vVisualModiDoc;
+    private vistaContingutDocument vContingutDoc;
+    private vistaDocumentsSemblants vDocsSemblants;
+    private vistaDocumentsRellevants vDocsRellevants;
+    private vistaCrearModificarExpressio vCrearModiExp;
+    private vistaCerques vCerques;
 
     //VISTES
     public CtrlPresentacio() {
          _ctrlDomini = new CtrlDomini();
-         vPrincipal = new VistaPagPrincipal(this);
+         vPrincipal = new vistaPaginaPrincipal(this);
     }
 
     public void iniPresentacio() {
 
         vPrincipal.hacerVisible();
         vPrincipal.desactivar();
-        VistaCrearDirectori vCd = new VistaCrearDirectori(this);
+        vRecuperarSessio = new vistaRecuperarSessio(this);
     }
 
     public void activarPagPrincipal() {
@@ -42,42 +42,49 @@ public class CtrlPresentacio {
         //VistaPagPrincipal vPp = new VistaPagPrincipal();
     }
 
-    public void vistaAfegirExpressio() {
+    public void ObrirVistaGestioExpressio() {
         vPrincipal.desactivar();
-        vAexp = new VistaAfegirExpressio(this);
+        vGestioExpressio = new vistaGestioExpressio(this);
     }
 
-    public void vistaCrearDocument() {
+    public void ObrirVistaCrearDocument() {
         vPrincipal.desactivar();
-        vCrearDoc = new VistaCrearDocument(this);
+        vCrearDoc = new vistaCrearDocument(this);
     }
 
-    public void vistaCarregarDocument() {
-        vCarregarDoc = new VistaCarregarDocument();
+    public void ObrirVistaSeleccionarDocument() {
+        vPrincipal.desactivar();
+        vSelecDoc = new vistaSeleccionarDocument(this);
     }
 
-    public void vistaPaginaOpcions(int id, String autor, String titol, String contingut) {
-        vPop = new VistaPaginaOpcions(this);
+    public void ObrirVistaVisualitzarModificarDocument() {
+        vPrincipal.desactivar();
+        vVisualModiDoc = new vistaVisualitzarModificarDocument(this);
     }
 
-    public void vistaModificarDocument(int id, String autor, String titol, String contingut) {
-        vMdoc = new VistaModificarDocument(this);
+    public void ObrirVistaContingutDocument() {
+        vPrincipal.desactivar();
+        vContingutDoc = new vistaContingutDocument(this);
     }
 
-    public void vistaInfoDocument(int id) {
-        vIdoc = new VistaInfoDocument(this);
+    public void ObrirVistaDocumentsSemblants() {
+        vPrincipal.desactivar();
+        vDocsSemblants = new vistaDocumentsSemblants(this);
     }
 
-    public void vistaContingutDocument(int id, String autor, String titol, String contingut) {
-        vCdoc = new VistaContingutDocument(this);
+    public void ObrirVistaDocumentsRellevants() {
+        vPrincipal.desactivar();
+        vDocsRellevants = new vistaDocumentsRellevants(this);
     }
 
-    public void vistaDocsSemblants() {
-        vDocsS = new VistaDocsSemblants(this);
+    public void ObrirVistaCrearModificarExpressio() {
+        vPrincipal.desactivar();
+        vCrearModiExp = new vistaCrearModificarExpressio(this);
     }
 
-    public void vistaDocsSemblantsPerExp() {
-        vSPexp = new VistaDocsSemblantsPerExp(this);
+    public void ObrirVistaCerques() {
+        vPrincipal.desactivar();
+        vCerques = new vistaCerques(this);
     }
 
     //FUNCIONS DE DOMINI
@@ -90,14 +97,12 @@ public class CtrlPresentacio {
 
     public int seleccionarDocument(int id) { return _ctrlDomini.seleccionarDocument(id); }
 
-    public int afegirExp(String expressio)  { return _ctrlDomini.afegirExpressio(expressio); }
-
     public int modificarAutor(String autor) {
         return _ctrlDomini.modificarAutor(autor);
     }
 
     public int modificarTitol(String titol) {
-        return _ctrlDomini.modificarAutor(titol);
+        return _ctrlDomini.modificarTitol(titol);
     }
 
     public int modificarContingut(String contingut) {
@@ -112,7 +117,7 @@ public class CtrlPresentacio {
         return _ctrlDomini.compararQuery(metodeComp, sorting, k, paraules);
     }
 
-    //public static void exportarDocument(CtrlDirectori.FILETYPE format, String path) { cd.exportarDocument(format,path); }
+    //public static void exportarDocument(CtrlDirectori.FILETYPE format, String path) { _ctrlDomini.exportarDocument(format,path); }
 
     public int eliminarDocument(int id){
         return _ctrlDomini.eliminarDocument(id);
@@ -128,6 +133,8 @@ public class CtrlPresentacio {
         return _ctrlDomini.llistaTitolsPerAutor(autor,sorting);
     }
 
+    public int afegirExp(String expressio)  { return _ctrlDomini.afegirExpressio(expressio); }
+
     public int seleccionarExpressio (int id) {
         return _ctrlDomini.seleccionarExpressio(id);
     }
@@ -139,5 +146,12 @@ public class CtrlPresentacio {
     }
 
     public ArrayList<Document> selectPerExpressio(int id) { return _ctrlDomini.selectPerExpressio(id); }
+
+    public ArrayList<String> llistarDocuments() {
+        return _ctrlDomini.llistarDocuments();
+    }
+    public ArrayList<String> llistarExpressions() {
+        return _ctrlDomini.llistarExpressions();
+    }
 
 }

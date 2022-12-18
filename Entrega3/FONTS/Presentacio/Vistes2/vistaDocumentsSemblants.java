@@ -23,15 +23,15 @@ public class vistaDocumentsSemblants extends JFrame {
     private JComboBox Documents;
     private JList Resultat;
 
-    public vistaDocumentsSemblants() {
-        //_ctrlPresentacio = pCtrlPresentacio;
+    public vistaDocumentsSemblants(CtrlPresentacio pCtrlPresentacio) {
+        _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
         setTitle("Buscar els documents semblants");
 
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     public static void main(String[] args) {
@@ -41,7 +41,7 @@ public class vistaDocumentsSemblants extends JFrame {
             public void run() {
                 //Turn off metal's use of bold fonts
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaDocumentsSemblants();
+                new vistaDocumentsSemblants(new CtrlPresentacio());
             }
         });
     }
