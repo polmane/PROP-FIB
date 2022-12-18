@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TestGestorDocument {
@@ -91,7 +91,7 @@ public class TestGestorDocument {
         f.delete();
     }
 
-    //TODO: FIX XML EXPORT I DESPRES FER BE EL TEST
+    //TODO: FIX XML EXPORT I DESPRES FER BE EL TEST D'EXPORT
     /*
     @Test
     public void testExportarDocumentXMLSimple() {
@@ -191,7 +191,7 @@ public class TestGestorDocument {
         String cmp = GestorDocument.PROP_TAG_AUTOR + "->" + autor + "<-" +
                      GestorDocument.PROP_TAG_TITOL + "->" + titol + "<-" +
                      GestorDocument.PROP_TAG_CONTINGUT + "->" + contingut + "<-";
-        Assert.assertEquals(cmp, result.toString());
+        Assert.assertEquals(cmp, result.nextLine());
         result.close();
         f.delete();
     }
@@ -215,7 +215,7 @@ public class TestGestorDocument {
         String cmp = GestorDocument.PROP_TAG_AUTOR + "->" + autor + "<-" +
                 GestorDocument.PROP_TAG_TITOL + "->" + titol + "<-" +
                 GestorDocument.PROP_TAG_CONTINGUT + "->" + "<-";
-        Assert.assertEquals(cmp, result.toString());
+        Assert.assertEquals(cmp, result.nextLine());
         result.close();
         f.delete();
     }
@@ -253,6 +253,91 @@ public class TestGestorDocument {
         f.delete();
     }
 
+    @Test
+    public void testImportarDocumentFormatNoSuportat() {
+        GestorDocument gDoc = new GestorDocument();
+        ArrayList<String> result = gDoc.importarDocument(PATH_IN + "/format_no_suportat.wtf");
+        Assert.assertNull(result);
+    }
+
+    @Test
+    public void testImportarDocumentTXTSimple() {
+        GestorDocument gDoc = new GestorDocument();
+        String autor = "Juli";
+        String titol = "prova1";
+        String contingut = "contingut de prova";
+        ArrayList<String> result = gDoc.importarDocument(PATH_IN + "/" + autor + "_" + titol + ".txt");
+        Assert.assertEquals(autor, result.get(0));
+        Assert.assertEquals(titol, result.get(1));
+        Assert.assertEquals(contingut, result.get(2));
+    }
+
+    @Test
+    public void testImportarDocumentTXTSenseContingut() {
+        GestorDocument gDoc = new GestorDocument();
+        String autor = "Juli";
+        String titol = "prova2";
+        String contingut = "";
+        ArrayList<String> result = gDoc.importarDocument(PATH_IN + "/" + autor + "_" + titol + ".txt");
+        Assert.assertEquals(autor, result.get(0));
+        Assert.assertEquals(titol, result.get(1));
+        Assert.assertEquals(contingut, result.get(2));
+    }
+
+    @Test
+    public void testImportarDocumentTXTContingutLlarg() {
+        GestorDocument gDoc = new GestorDocument();
+        String autor = "Juli";
+        String titol = "prova3";
+        String c1 = "contingut de prova\n";
+        String c2 = "que conte salts de pagina\n";
+        String c3 = "hem de veure\n";
+        String c4 = "que els exporti be\n";
+        ArrayList<String> result = gDoc.importarDocument(PATH_IN + "/" + autor + "_" + titol + ".txt");
+        Assert.assertEquals(autor, result.get(0));
+        Assert.assertEquals(titol, result.get(1));
+        Assert.assertEquals(c1 + c2 + c3 + c4, result.get(2));
+    }
+
+    //TODO: FIX XML EXPORT I DESPRES FER BE EL TEST D'IMPORT
 
 
+    @Test
+    public void testImportarDocumentPROPSimple() {
+        GestorDocument gDoc = new GestorDocument();
+        String autor = "Juli";
+        String titol = "prova1";
+        String contingut = "contingut de prova";
+        ArrayList<String> result = gDoc.importarDocument(PATH_IN + "/" + autor + "_" + titol + ".prop");
+        Assert.assertEquals(autor, result.get(0));
+        Assert.assertEquals(titol, result.get(1));
+        Assert.assertEquals(contingut, result.get(2));
+    }
+
+    @Test
+    public void testImportarDocumentPROPSenseContingut() {
+        GestorDocument gDoc = new GestorDocument();
+        String autor = "Juli";
+        String titol = "prova2";
+        String contingut = "";
+        ArrayList<String> result = gDoc.importarDocument(PATH_IN + "/" + autor + "_" + titol + ".prop");
+        Assert.assertEquals(autor, result.get(0));
+        Assert.assertEquals(titol, result.get(1));
+        Assert.assertEquals(contingut, result.get(2));
+    }
+
+    @Test
+    public void testImportarDocumentPROPContingutLlarg() {
+        GestorDocument gDoc = new GestorDocument();
+        String autor = "Juli";
+        String titol = "prova3";
+        String c1 = "contingut de prova\n";
+        String c2 = "que conte salts de pagina\n";
+        String c3 = "hem de veure\n";
+        String c4 = "que els exporti be\n";
+        ArrayList<String> result = gDoc.importarDocument(PATH_IN + "/" + autor + "_" + titol + ".prop");
+        Assert.assertEquals(autor, result.get(0));
+        Assert.assertEquals(titol, result.get(1));
+        Assert.assertEquals(c1 + c2 + c3 + c4, result.get(2));
+    }
 }
