@@ -10,7 +10,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 
-public class GestorExpressio {
+public class GestorExpressions {
 
     public enum FILETYPE {
         TXT, XML, PROP
