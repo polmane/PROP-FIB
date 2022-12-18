@@ -1,9 +1,11 @@
 package Domini.Classes;
 
+import java.io.Serializable;
+
 /**
  * Classe generica per crear tuples
  */
-public class Pair<F extends Object,S extends Object>
+public class Pair<F extends Object,S extends Object> implements Serializable
 {
     private F _first;
     private S _second;
