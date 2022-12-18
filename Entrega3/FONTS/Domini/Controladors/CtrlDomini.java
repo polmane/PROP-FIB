@@ -4,6 +4,7 @@ package Domini.Controladors;
 
 import Domini.Classes.Document;
 import Domini.Classes.Pair;
+import Persistencia.Controladors.CtrlPersistencia;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +13,12 @@ public class CtrlDomini {
 
     private final CtrlDirectori _ctrlDirectori;
     private final CtrlExpressio _ctrlExpressio;
+    private final CtrlPersistencia _ctrlPersistencia;
 
-    public CtrlDomini(CtrlDirectori _ctrlDirectori, CtrlExpressio _ctrlExpressio) {
+    public CtrlDomini(CtrlDirectori _ctrlDirectori, CtrlExpressio _ctrlExpressio, CtrlPersistencia ctrlPersistencia) {
         this._ctrlDirectori = _ctrlDirectori;
         this._ctrlExpressio = _ctrlExpressio;
+        this._ctrlPersistencia = ctrlPersistencia;
     }
 
     public int afegirDocument(String autor, String titol, String contingut){
@@ -91,50 +94,4 @@ public class CtrlDomini {
         }
         return resultat;
     }
-
-    public static void main (String[] args){
-        CtrlDirectori dir = new CtrlDirectori();
-        CtrlExpressio exp = new CtrlExpressio();
-        CtrlDomini cdom = new CtrlDomini(dir, exp);
-        cdom._ctrlDirectori.crearDirectori(0);
-
-
-        cdom.afegirDocument("Pol","Prova","A A A A A");
-        cdom.afegirDocument("Manel","Prova","el barri gotic de girona");
-        cdom.afegirDocument("Isaac","Prova","fem un projecte de programació");
-        cdom.afegirDocument("Juli","Prova","la nit es a molt llarga");
-        cdom.afegirDocument("Pau","Prova","de de de de de de");
-        cdom.afegirDocument("Joan","Prova","el programa em peta i no se per on");
-        cdom.afegirDocument("Jordi","Prova","dema faig un viatge barcelona");
-        cdom.afegirDocument("Pep","Prova",    "la meva casa es d'estil gotic");
-        cdom.afegirDocument("Carles","Prova","A A A A A");
-        cdom.afegirDocument("Anna","Prova","B barri");
-        cdom.afegirDocument("Marta","Prova","B el");
-
-        cdom.afegirExpressio("(hola & (\"barri gotic\"))");
-
-        ArrayList<Document> docfinal = cdom.selectPerExpressio(0);
-
-        for(Document d : docfinal) {
-            System.out.println("El document: " + d.getAutor() + " i " + d.getTitol());
-        }
-    }
-        /*public static void main(String[] args){
-        CtrlDirectori CtrlDir = new CtrlDirectori();
-        CtrlDomini CtrlDom = new CtrlDomini(CtrlDir,null);
-        CtrlDir.crearDirectori(0);
-
-        CtrlDom.afegirDocument("Pol","Prova","A A A A A");
-        CtrlDom.afegirDocument("Manel","Prova","el barri gotic de girona");
-        CtrlDom.afegirDocument("Isaac","Prova","fem un projecte de programació");
-        CtrlDom.afegirDocument("Juli","Prova","A A A A A");
-        CtrlDom.afegirDocument("Pau","Prova","de de de de de de");
-        CtrlDom.afegirDocument("Joan","Prova","el a a programa em peta i no se per on");
-        CtrlDom.afegirDocument("Jordi","Prova","dema faig un viatge barcelona");
-        CtrlDom.afegirDocument("Pep","Prova",    "la a a a meva casa es d'estil gotic");
-        CtrlDom.afegirDocument("Carles","Prova","la nit es a molt llarga");
-
-        System.out.println(CtrlDom.compararDocuments(CtrlDirectori.METODE_COMPARACIO.TF_IDF, CtrlDirectori.SORTING.SIM_DESC,2,0));
-    }*/
-
 }

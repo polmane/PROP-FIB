@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 public class GestorDocument {
 
+<<<<<<< HEAD
     public enum FILETYPE {
         TXT, XML, PROP
     }
@@ -33,6 +34,10 @@ public class GestorDocument {
 
     public void exportarDocument(String autor, String titol, String contingut, FILETYPE format, String path) {
         String nom = autor + '_' + titol;
+=======
+    public void exportarDocument(GestorBD.FILETYPE format, Document doc, String path) {
+        String nom = doc.getAutor() + '_' + doc.getTitol();
+>>>>>>> exportacions
         switch (format) {
             case TXT:
                 try {
@@ -196,6 +201,7 @@ public class GestorDocument {
 
 
     public static void main(String[] args) {
+<<<<<<< HEAD
         GestorDocument gestor = new GestorDocument();
         gestor.exportarDocument("autor_document", "titol_document", "", FILETYPE.XML, "./Entrega3/FONTS/Persistencia/Exported/");
         ArrayList<String> ret = gestor.importarDocument("D:/Juli/01_Uni/Q5/PROP/subgrup-prop11.1/Entrega3/FONTS/Persistencia/Exported/autor_document_titol_document.xml");
@@ -203,5 +209,11 @@ public class GestorDocument {
         System.out.println(ret.get(0));
         System.out.println(ret.get(1));
         System.out.println(ret.get(2));
+=======
+        GestorDocument gestorDocument = new GestorDocument();
+        Document doc = new Document(0,"prova","txt","avui fa bon dia");
+        String path = "C:/Users/polca/OneDrive/Escritorio/PROPDocuments";
+        gestorDocument.exportarDocument(GestorBD.FILETYPE.valueOf("PROP"),doc,path);
+>>>>>>> exportacions
     }
 }
