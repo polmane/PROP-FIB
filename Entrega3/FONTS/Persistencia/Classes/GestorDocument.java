@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class GestorDocument {
+
     public enum FILETYPE {
         TXT, XML, PROP
     }
@@ -120,33 +121,34 @@ public class GestorDocument {
             }
         }
         catch (Exception e) {
-            System.err.println("No s'ha pogut importar el document " + path);
-            throw new RuntimeException(e);
+            System.err.println("El document " + path + " en format no s'ha importat correctament");
+            return null;
         }
-        Assert.fail("ERROR: Format del document situat a " + path + " no suportat");
+        System.err.println("ERROR: Format del document situat a " + path + " no suportat");
         return null;
     }
 
     private ArrayList<String> parseTXT(String path) {
-        ArrayList<String> values = new ArrayList<String>(3);
+        ArrayList<String> values = new ArrayList<>(3);
         try {
             Scanner scanner = new Scanner(new File(path));
-            values.set(0,scanner.nextLine());
-            values.set(1,scanner.nextLine());
+            values.add(scanner.nextLine());
+            values.add(scanner.nextLine());
             StringBuilder contingut = new StringBuilder();
             while (scanner.hasNextLine()) {
                 contingut.append(scanner.nextLine()).append("\n");
             }
-            values.set(2, contingut.toString());
+            values.add(contingut.toString());
         } catch (Exception e) {
-            System.err.println("No s'ha pogut importar el document " + path + " en format TXT");
-            throw new RuntimeException(e);
+            System.err.println("El document " + path + " en format .txt no s'ha importat correctament");
+            e.printStackTrace();
+            return null;
         }
         return values;
     }
 
     private ArrayList<String> parseXML(String path) {
-        ArrayList<String> values = new ArrayList<String>(3);
+        ArrayList<String> values = new ArrayList<>(3);
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
@@ -154,18 +156,19 @@ public class GestorDocument {
             DocumentBuilder db = dbf.newDocumentBuilder();
             org.w3c.dom.Document doc = db.parse(new File(path));
 
-            values.set(0, doc.getElementsByTagName(XML_TAG_AUTOR).item(0).getTextContent());
-            values.set(1, doc.getElementsByTagName(XML_TAG_TITOL).item(0).getTextContent());
-            values.set(2, doc.getElementsByTagName(XML_TAG_CONTINGUT).item(0).getTextContent());
+            values.add(doc.getElementsByTagName(XML_TAG_AUTOR).item(0).getTextContent());
+            values.add(doc.getElementsByTagName(XML_TAG_TITOL).item(0).getTextContent());
+            values.add(doc.getElementsByTagName(XML_TAG_CONTINGUT).item(0).getTextContent());
         } catch (Exception e) {
-            System.err.println("No s'ha pogut importar el document " + path + " en format XML");
-            throw new RuntimeException(e);
+            System.err.println("El document " + path + " en format .xml no s'ha importat correctament");
+            e.printStackTrace();
+            return null;
         }
         return values;
     }
 
     private ArrayList<String> parsePROP(String path) {
-        ArrayList<String> values = new ArrayList<String>(3);
+        ArrayList<String> values = new ArrayList<>(3);
         try {
             Scanner scanner = new Scanner(new File(path));
 
@@ -175,24 +178,25 @@ public class GestorDocument {
             int index = tokens.indexOf(PROP_TAG_AUTOR);
             if (index < 0)
                 throw new RuntimeException("El document " + path + " no conte l'etiqueta " + PROP_TAG_AUTOR);
-            values.set(0, tokens.get(index + 1));
+            values.add(tokens.get(index + 1));
 
             index = tokens.indexOf(PROP_TAG_TITOL);
             if (index < 0)
                 throw new RuntimeException("El document " + path + " no conte l'etiqueta " + PROP_TAG_TITOL);
-            values.set(1, tokens.get(index + 1));
+            values.add(tokens.get(index + 1));
 
             index = tokens.indexOf(PROP_TAG_CONTINGUT);
             if (index >= 0) {
-                values.set(2, tokens.get(tokens.indexOf(PROP_TAG_CONTINGUT) + 1));
+                values.add(tokens.get(tokens.indexOf(PROP_TAG_CONTINGUT) + 1));
             }
             else {
-                values.set(2, "");
+                values.add("");
             }
 
         } catch (Exception e) {
-            System.err.println("No s'ha pogut importar el document " + path + " en format PROP");
-            throw new RuntimeException(e);
+            System.err.println("El document " + path + " en format .prop no s'ha importat correctament");
+            e.printStackTrace();
+            return null;
         }
         return values;
     }
