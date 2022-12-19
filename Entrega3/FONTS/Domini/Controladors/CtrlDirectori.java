@@ -109,7 +109,7 @@ public class CtrlDirectori {
      * @param contingut és el nou contingut que es vol utilitzar pel document
      */
     public int modificarContingut(String contingut) {
-        if (documentActiu == null) return 31;
+        if (documentActiu == null) return -31;
 
         eliminarParaulesAlDir(documentActiu.getIdDoc());
 
@@ -120,7 +120,10 @@ public class CtrlDirectori {
 
         afegeixParaulesAlDir();
         afegeixPesos();
-        return 10;
+
+        documentActiu.setContingut(null);
+
+        return documentActiu.getIdDoc();
     }
 
     /**
@@ -130,10 +133,10 @@ public class CtrlDirectori {
      * @param contingut representa el contingut del nou document
      */
     public int afegirDocument (String autor, String titol, String contingut) {
-        if (autor == null || autor.isBlank() || titol == null || titol.isBlank()) return 30;
+        if (autor == null || autor.isBlank() || titol == null || titol.isBlank()) return -30;
         for (Document doc : directoriObert.getDocs().values()) {
             if (doc.getAutor().equalsIgnoreCase(autor) && doc.getTitol().equalsIgnoreCase(titol)) {
-                return 20;
+                return -20;
             }
         }
         int id;
@@ -155,6 +158,8 @@ public class CtrlDirectori {
         documentActiu.setTfMap(tf(documentActiu.getOcurrencies()));
         afegeixParaulesAlDir();
         afegeixPesos();
+
+        documentActiu.setContingut(null);
 
         return 10;
     }
@@ -358,7 +363,7 @@ public class CtrlDirectori {
     public int eliminarDocument(int idDoc) {
         //Comprovem que idDoc sigui realment un identificador d'un document
         if (!directoriObert.getDocs().containsKey(idDoc)) {
-            return 20;
+            return -20;
         }
 
         eliminarParaulesAlDir(idDoc);
@@ -373,9 +378,9 @@ public class CtrlDirectori {
 
         if (documentActiu != null && idDoc == documentActiu.getIdDoc()){
             documentActiu = null;
-            return 11;
+            return -11;
         }
-        return 10;
+        return -10;
     }
 
     private void eliminarParaulesAlDir(int idDoc) {

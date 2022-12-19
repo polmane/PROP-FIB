@@ -68,16 +68,16 @@ public class CtrlExpressio {
      * @return si retorna 10 vol dir que s'ha realitzat l'operació correctament, si retorna 20 significa que hi ha hagut un error
      */
     public int afegirExpressio(String expressio){
-        if (expressio == null || expressio.isBlank()) return 30;
+        if (expressio == null || expressio.isBlank()) return -30;
         expressioSeleccionada = new Expressio(IdNovaExp,expressio);
         ++IdNovaExp;
         for (Expressio e : expressions.values()) {
             if (e.getExpressio().equals(expressio)) {
-                return 20;
+                return -20;
             }
         }
         expressions.put(expressioSeleccionada.getIdExp(),expressioSeleccionada);
-        return 10;
+        return expressioSeleccionada.getIdExp();
     }
 
     /**
@@ -86,18 +86,18 @@ public class CtrlExpressio {
      * @return si retorna 10 vol dir que s'ha realitzat l'operació correctament, si retorna 20 significa que hi ha hagut un error
      */
     public int modificarExpressio(String exp){
-        if (expressioSeleccionada == null) return 31;
+        if (expressioSeleccionada == null) return -31;
         if (exp == null || exp.isEmpty()) {
-            return 30;
+            return -30;
         }
         for (Expressio e : expressions.values()) {
             if (e.getExpressio().equals(exp)) {
-                return 20;
+                return -20;
             }
         }
         expressioSeleccionada.setExpressio(exp);
         expressioSeleccionada.setExpressionTree(new BinaryTree(exp));
-        return 10;
+        return expressioSeleccionada.getIdExp();
     }
 
     /**
@@ -110,11 +110,11 @@ public class CtrlExpressio {
             expressions.remove(idExp);
             if (expressioSeleccionada != null && idExp == expressioSeleccionada.getIdExp()) {
                 expressioSeleccionada = null;
-                return 11;
+                return -11;
             }
-            return 10;
+            return -10;
         } else {
-            return 20;
+            return -20;
         }
     }
 

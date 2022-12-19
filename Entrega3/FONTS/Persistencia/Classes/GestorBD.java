@@ -69,7 +69,7 @@ public class GestorBD {
         return true;
     }
 
-    public boolean eliminarDocument (int idDoc) {
+    public Boolean eliminarDocument (int idDoc) {
         File document = new File (path + "/" + String.valueOf(idDoc) + ".txt");
         if (document.delete()) {
             return true;
