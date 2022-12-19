@@ -44,7 +44,7 @@ public class GestorDocument {
                     output.write(autor + "\n");
                     output.write(titol + "\n");
                     output.write(contingut);
-                    output.flush();
+                    output.close();
                     return true;
                 } catch (Exception e) {
                     return false;
@@ -76,6 +76,7 @@ public class GestorDocument {
                     StreamResult result = new StreamResult(docExp);
                     Transformer transformer = TransformerFactory.newInstance().newTransformer();
                     transformer.transform(source, result);
+
                     return true;
                 } catch (Exception e) {
                     return false;
@@ -89,7 +90,7 @@ public class GestorDocument {
                     output.write(PROP_TAG_AUTOR + "->" + autor + "<-");
                     output.write(PROP_TAG_TITOL + "->" + titol + "<-");
                     output.write(PROP_TAG_CONTINGUT + "->" + contingut + "<-");
-                    output.flush();
+                    output.close();
                     return true;
                 } catch (Exception e) {
                     return false;
