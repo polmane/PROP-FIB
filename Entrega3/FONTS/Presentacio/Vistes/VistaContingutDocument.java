@@ -57,7 +57,7 @@ public class VistaContingutDocument extends JFrame{
                 String autor="pol";
                 String titol = "mañe";
                 String contingut="roiger";
-                _ctrlPresentacio.vistaPaginaOpcions(id, autor, titol, contingut);
+                //_ctrlPresentacio.vistaPaginaOpcions(id, autor, titol, contingut);
             }
         });
     }

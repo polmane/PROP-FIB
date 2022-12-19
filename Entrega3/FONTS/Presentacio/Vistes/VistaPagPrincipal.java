@@ -26,23 +26,17 @@ public class VistaPagPrincipal extends JFrame{
         crearDocument.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                _ctrlPresentacio.vistaCrearDocument();
+                //_ctrlPresentacio.vistaCrearDocument();
             }
         });
 
-        afegirExpressio.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                _ctrlPresentacio.vistaAfegirExpressio();
-            }
-        });
 
         obrirDocument.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 UIManager.put("FileChooser.openButtonText", "Obrir");
                 UIManager.put("FileChooser.cancelButtonText", "Cancel·lar");
-                _ctrlPresentacio.vistaCarregarDocument();
+               // _ctrlPresentacio.vistaCarregarDocument();
                 setVisible(false);
             }
         });

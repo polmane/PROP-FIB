@@ -58,7 +58,7 @@ public class VistaPaginaOpcions extends JFrame {
         Modificar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                _ctrlPresentacio.vistaModificarDocument(id, autor, titol, contingut);
+                //_ctrlPresentacio.vistaModificarDocument(id, autor, titol, contingut);
                 setVisible(false);
             }
         });

@@ -3,6 +3,8 @@ package Presentacio.Vistes2;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -36,6 +38,21 @@ public class vistaCrearDocument extends JFrame{
                 _ctrlPresentacio.activarPagPrincipal();
                 System.out.println("Tancant vistaCrearDocument");
                 dispose();
+            }
+        });
+        Crear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int id = _ctrlPresentacio.crearDocument(Autor.getText(), Titol.getText(), Contingut.getText());
+                _ctrlPresentacio.ObrirVistaVisualitzarModificarDocument();
+                setVisible(false);
+            }
+        });
+        Enrere.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _ctrlPresentacio.activarPagPrincipal();
+                setVisible(false);
             }
         });
     }

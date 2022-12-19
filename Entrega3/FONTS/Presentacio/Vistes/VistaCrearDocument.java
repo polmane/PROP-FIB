@@ -74,7 +74,7 @@ public class VistaCrearDocument extends JFrame{
                     else {
                         System.out.println("ERROR: Autor i/o titol no vàlids, escrigui un string!");
                     }
-                    _ctrlPresentacio.vistaPaginaOpcions(codi, Autor.getText(), Titol.getText(), Contingut.getText());
+                    //_ctrlPresentacio.vistaPaginaOpcions(codi, Autor.getText(), Titol.getText(), Contingut.getText());
                     setVisible(false);
                 }
             }

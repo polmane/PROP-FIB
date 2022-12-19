@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CtrlPresentacio {
 
-    private CtrlDomini _ctrlDomini;
+    public CtrlDomini _ctrlDomini;
     private vistaPaginaPrincipal vPrincipal = null;
     private vistaRecuperarSessio vRecuperarSessio;
     private vistaGestioExpressio vGestioExpressio;

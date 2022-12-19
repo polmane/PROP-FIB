@@ -39,7 +39,7 @@ public class VistaDocsSemblantsPerExp extends JFrame{
                 String autor = "Pol";
                 String titol = "mañe";
                 String contingut = "Roiger";
-                _ctrlPresentacio.vistaPaginaOpcions(id, autor, titol, contingut);
+                //_ctrlPresentacio.vistaPaginaOpcions(id, autor, titol, contingut);
                 setVisible(false);
             }
         });

@@ -74,7 +74,7 @@ public class VistaModificarDocument extends JFrame{
                     _ctrlPresentacio.modificarTitol(Titol.getText());
                     _ctrlPresentacio.modificarContingut(Contingut.getText());
                     int id = 0;
-                    _ctrlPresentacio.vistaPaginaOpcions( id, Autor.getText(), Titol.getText(), Contingut.getText());
+                    //_ctrlPresentacio.vistaPaginaOpcions( id, Autor.getText(), Titol.getText(), Contingut.getText());
                     setVisible(false);
                 }
             }
