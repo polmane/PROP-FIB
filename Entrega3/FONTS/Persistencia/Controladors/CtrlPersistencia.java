@@ -46,6 +46,10 @@ public class CtrlPersistencia {
         return _gDoc.exportarDocument(autor, titol, contingut, format, path);
     }
 
+    public ArrayList<String> importarDocument(String path) {
+        return _gDoc.importarDocument(path);
+    }
+
     public Boolean guardarExpressio(int idExp, String expressio) {
         return _gExp.guardarExpressio(idExp, expressio);
     }

@@ -10,6 +10,7 @@ import Persistencia.Classes.GestorBD;
 import Persistencia.Classes.GestorDocument;
 import Persistencia.Controladors.CtrlPersistencia;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class CtrlDomini {
@@ -168,6 +169,14 @@ public class CtrlDomini {
         Boolean b = _ctrlPersistencia.exportarDocument(d.getAutor(),d.getTitol(),d.getContingut(),format,path);
         if (!b) return -50;
         return d.getIdDoc();
+    }
+
+    public int importarDocument(String path) {
+        ArrayList<String> values = _ctrlPersistencia.importarDocument(path);
+        if (values == null)
+            return -50;
+
+        return _ctrlDirectori.afegirDocument(values.get(0), values.get(1), values.get(2));
     }
 
     public int guardarExpressio (String expressio) {
