@@ -158,4 +158,8 @@ public class CtrlPresentacio {
         return _ctrlDomini.getIdDocSeleccionat();
     }
 
+    public int getIdExp() {
+        return _ctrlDomini.getIdExp();
+    }
+
 }

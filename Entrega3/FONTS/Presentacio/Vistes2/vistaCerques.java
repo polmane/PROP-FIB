@@ -3,8 +3,9 @@ package Presentacio.Vistes2;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class vistaCerques extends JFrame {
     private CtrlPresentacio _ctrlPresentacio;
@@ -18,6 +19,8 @@ public class vistaCerques extends JFrame {
     private JLabel labelResultat;
     private JPanel panelOpcions;
     private JList Resultat;
+    private JComboBox Sorting;
+    private JLabel labelSorting;
 
     public vistaCerques(CtrlPresentacio pCtrlPresentacio) {
         _ctrlPresentacio = pCtrlPresentacio;
@@ -36,6 +39,30 @@ public class vistaCerques extends JFrame {
                 _ctrlPresentacio.activarPagPrincipal();
                 System.out.println("Tancant vistaCrearDocument");
                 dispose();
+            }
+        });
+        Buscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<String> res = new ArrayList<String>();
+                if (Cerques.getSelectedItem() == "Llista de titols d'un autor") {
+                    res = _ctrlPresentacio.llistaTitolsPerAutor(Info.getText(), String.valueOf(Sorting.getSelectedItem()));
+                    String noms[] = {"Isaac", "Pol"};
+                    for(int i = 0; i < res.size(); ++i) {
+                        Resultat = new JList(noms);
+                    }
+                } else if (Cerques.getSelectedItem() == "Llista d'autors que comencen per un prefix") {
+                    res = _ctrlPresentacio.llistaAutorsPerPrefix(Info.getText(), String.valueOf(Sorting.getSelectedItem()));
+                }
+            }
+        });
+        Enrere.addComponentListener(new ComponentAdapter() {
+        });
+        Enrere.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _ctrlPresentacio.activarPagPrincipal();
+                setVisible(false);
             }
         });
     }

@@ -141,5 +141,9 @@ public class CtrlExpressio {
         }
         return resultat;
     }
+
+    public int  getIdExp() {
+        return expressioSeleccionada.getIdExp();
+    }
 }
 

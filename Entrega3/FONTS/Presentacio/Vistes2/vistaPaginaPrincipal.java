@@ -38,6 +38,11 @@ public class vistaPaginaPrincipal extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
+        if(autor.getText() == null || titol.getText() == null) {
+            visualitzarModificarButton.setEnabled(false);
+        } else visualitzarModificarButton.setEnabled(true);
+
+
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -55,9 +60,6 @@ public class vistaPaginaPrincipal extends JFrame{
             }
         });
 
-        if(autor.getText() == null || titol.getText() == null) {
-            visualitzarModificarButton.setEnabled(false);
-        } else visualitzarModificarButton.setEnabled(true);
         crearDocumentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -108,12 +110,16 @@ public class vistaPaginaPrincipal extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 if (cerquesBox.getSelectedItem() == "Contingut d'un document") {
                     _ctrlPresentacio.ObrirVistaContingutDocument();
+                    desactivar();
                 } else if (cerquesBox.getSelectedItem() == "Llista de títols d'un autor" || cerquesBox.getSelectedItem() == "Llista d'autors que comencen per un prefix") {
                     _ctrlPresentacio.ObrirVistaCerques();
+                    desactivar();
                 } else if (cerquesBox.getSelectedItem() == "Documents semblants") {
                     _ctrlPresentacio.ObrirVistaDocumentsSemblants();
+                    desactivar();
                 } else if (cerquesBox.getSelectedItem() == "Documents rellevants") {
                     _ctrlPresentacio.ObrirVistaDocumentsRellevants();
+                    desactivar();
                 }
             }
         });

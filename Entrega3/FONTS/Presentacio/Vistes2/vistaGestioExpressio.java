@@ -3,6 +3,8 @@ package Presentacio.Vistes2;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -43,7 +45,36 @@ public class vistaGestioExpressio extends JFrame{
                 dispose();
             }
         });
+
+        Crear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _ctrlPresentacio.ObrirVistaCrearModificarExpressio();
+                setVisible(false);
+            }
+        });
+        Enrere.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _ctrlPresentacio.activarPagPrincipal();
+                setVisible(false);
+            }
+        });
+        Eliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _ctrlPresentacio.eliminarExpressio(_ctrlPresentacio.getIdExp());
+            }
+        });
+        Modificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _ctrlPresentacio.ObrirVistaCrearModificarExpressio();
+                setVisible(false);
+            }
+        });
     }
+
 
     public static void main(String[] args) {
         //Schedule a job for the event dispatch thread:
