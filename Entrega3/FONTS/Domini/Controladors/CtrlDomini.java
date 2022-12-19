@@ -105,7 +105,7 @@ public class CtrlDomini {
         return _ctrlExpressio.llistarExpressions();
     }
 
-    public int getIdDocSeleccionat() {
+    public ArrayList<String> getIdDocSeleccionat() {
         return _ctrlDirectori.getIdDocSeleccionat();
     }
 

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 public class vistaVisualitzarModificarDocument extends JFrame{
 
@@ -45,10 +46,19 @@ public class vistaVisualitzarModificarDocument extends JFrame{
             }
         });
 
-        Document d = _ctrlPresentacio._ctrlDomini._ctrlDirectori.getDocumentActiu();
-        Autor.setText(d.autor);
-        Titol.setText(d.titol);
-        Contingut.setText(d.contingut);
+        ArrayList<String> document = _ctrlPresentacio.getIdDocSeleccionat();
+        String s = document.get(0);
+        if (s == "-31") {
+            Autor.setText("");
+            Titol.setText("");
+            Contingut.setText("");
+        } else {
+            for (int i = 0; i < document.size(); ++i) {
+                Autor.setText(document.get(1));
+                Titol.setText(document.get(2));
+                Contingut.setText(document.get(3));
+            }
+        }
         Enrere.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

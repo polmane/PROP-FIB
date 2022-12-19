@@ -44,7 +44,7 @@ public class vistaCrearDocument extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 int id = _ctrlPresentacio.crearDocument(Autor.getText(), Titol.getText(), Contingut.getText());
-                _ctrlPresentacio.ObrirVistaVisualitzarModificarDocument();
+                _ctrlPresentacio.activarPagPrincipal();
                 setVisible(false);
             }
         });

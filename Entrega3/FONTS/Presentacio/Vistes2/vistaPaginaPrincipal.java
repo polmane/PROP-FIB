@@ -55,6 +55,9 @@ public class vistaPaginaPrincipal extends JFrame{
             }
         });
 
+        if(autor.getText() == null || titol.getText() == null) {
+            visualitzarModificarButton.setEnabled(false);
+        } else visualitzarModificarButton.setEnabled(true);
         crearDocumentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -98,6 +101,20 @@ public class vistaPaginaPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Exportar FileChooser");
+            }
+        });
+        cerquesBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (cerquesBox.getSelectedItem() == "Contingut d'un document") {
+                    _ctrlPresentacio.ObrirVistaContingutDocument();
+                } else if (cerquesBox.getSelectedItem() == "Llista de títols d'un autor" || cerquesBox.getSelectedItem() == "Llista d'autors que comencen per un prefix") {
+                    _ctrlPresentacio.ObrirVistaCerques();
+                } else if (cerquesBox.getSelectedItem() == "Documents semblants") {
+                    _ctrlPresentacio.ObrirVistaDocumentsSemblants();
+                } else if (cerquesBox.getSelectedItem() == "Documents rellevants") {
+                    _ctrlPresentacio.ObrirVistaDocumentsRellevants();
+                }
             }
         });
     }

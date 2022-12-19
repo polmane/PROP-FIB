@@ -443,12 +443,17 @@ public class CtrlDirectori {
         return resultat;
     }
 
-    public int getIdDocSeleccionat() {
+    public ArrayList<String>  getIdDocSeleccionat() {
+        ArrayList<String> resultat = new ArrayList<>();
         if (documentActiu != null) {
-            return documentActiu.getIdDoc();
+            resultat.add(String.valueOf(documentActiu.getIdDoc()));
+            resultat.add(documentActiu.getAutor());
+            resultat.add(documentActiu.getTitol());
+            resultat.add(documentActiu.getContingut());
         }
         else {
-            return -31;
+            resultat.add("-31");
         }
+        return resultat;
     }
 }
