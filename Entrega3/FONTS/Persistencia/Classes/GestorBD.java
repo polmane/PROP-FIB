@@ -82,6 +82,19 @@ public class GestorBD {
         return estatObject;
     }
 
+    public String carregarContingutDocument (int idDoc){
+        File file = new File(BD_PATH + "/" + String.valueOf(idDoc) + ".txt");
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            StringBuilder result = new StringBuilder();
+            String helper;
+            while ((helper = br.readLine()) != null) result.append(helper);
+            return result.toString();
+        } catch (IOException e) {
+            return "$ERROR: no s'ha pogut llegir el contingut del document correctament";
+        }
+    }
+
     public boolean eliminarDocument (int idDoc) {
         File document = new File (BD_PATH + "/" + String.valueOf(idDoc) + ".txt");
         return document.delete();

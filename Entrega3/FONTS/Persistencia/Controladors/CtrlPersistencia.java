@@ -41,8 +41,11 @@ public class CtrlPersistencia {
         return _gExp.guardarExpressio(idExp, expressio);
     }
 
-    public Boolean eliminarExpressio (int idExp) {
+    public Boolean eliminarExpressio(int idExp) {
         return _gExp.eliminarExpressio(idExp);
     }
 
+    public String carregarContingutDocument(int idDoc) {
+        return _gBD.carregarContingutDocument(idDoc);
     }
+}

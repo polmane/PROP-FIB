@@ -56,9 +56,9 @@ public class CtrlExpressio {
     public int seleccionarExpressio (Integer idExp) {
         if (expressions.containsKey(idExp)) {
             expressioSeleccionada = expressions.get(idExp);
-            return 10;
+            return -10;
         }
-        return 20;
+        return -20;
     }
 
 

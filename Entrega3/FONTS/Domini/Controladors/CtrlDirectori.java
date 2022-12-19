@@ -58,9 +58,9 @@ public class CtrlDirectori {
     public int seleccionarDocument(int idDoc) {
         if (directoriObert.getDocs().containsKey(idDoc)) {
             documentActiu = directoriObert.getDocs().get(idDoc);
-            return 10;
+            return -10;
         }
-        return 20;
+        return -20;
     }
 
     /**
@@ -121,8 +121,6 @@ public class CtrlDirectori {
         afegeixParaulesAlDir();
         afegeixPesos();
 
-        documentActiu.setContingut(null);
-
         return documentActiu.getIdDoc();
     }
 
@@ -161,7 +159,7 @@ public class CtrlDirectori {
 
         documentActiu.setContingut(null);
 
-        return 10;
+        return id;
     }
 
     private void afegeixParaulesAlDir() {
@@ -377,6 +375,7 @@ public class CtrlDirectori {
         directoriObert.getDeletedIds().add(idDoc);
 
         if (documentActiu != null && idDoc == documentActiu.getIdDoc()){
+            documentActiu.setContingut(null);
             documentActiu = null;
             return -11;
         }

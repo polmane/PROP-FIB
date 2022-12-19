@@ -1,6 +1,6 @@
 package Persistencia.Classes;
 
-import org.junit.Assert;
+
 import org.w3c.dom.*;
 
 import javax.xml.XMLConstants;
@@ -97,7 +97,6 @@ public class GestorDocument {
             default:
                 return false;
         }
-        return true;
     }
 
     public ArrayList<String> importarDocument(String path){

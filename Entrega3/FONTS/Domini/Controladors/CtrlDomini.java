@@ -32,7 +32,14 @@ public class CtrlDomini {
     }
 
     public int seleccionarDocument(int idDoc) {
-        return _ctrlDirectori.seleccionarDocument(idDoc);
+        _ctrlDirectori.getDocumentActiu().setContingut(null);
+        int i = _ctrlDirectori.seleccionarDocument(idDoc);
+        if (i > -1) {
+            String contingut = _ctrlPersistencia.carregarContingutDocument(idDoc);
+            if (contingut.equals("$ERROR: no s'ha pogut llegir el contingut del document correctament")) return -50;
+            _ctrlDirectori.getDocumentActiu().setContingut(contingut);
+        }
+        return i;
     }
 
     public int modificarAutor(String autor) {
@@ -85,21 +92,22 @@ public class CtrlDomini {
         return _ctrlExpressio.seleccionarExpressio(idExp);
     }
 
-    public int afegirExpressio(String expressio) {
-        return _ctrlExpressio.afegirExpressio(expressio);
-    }
-
     public int modificarExpressio(String exp) {
-        return _ctrlExpressio.modificarExpressio(exp);
+        int i = _ctrlExpressio.modificarExpressio(exp);
+        if (i > -1) {
+            Boolean b = _ctrlPersistencia.guardarExpressio(i,exp);
+            if (!b) return -50;
+        }
+        return i;
     }
 
     public ArrayList<Document> selectPerExpressio(Integer idExp) {
         ArrayList<Document> resultat = new ArrayList<>();
 
         for (Document document : _ctrlDirectori.getDirectoriObert().getDocs().values()) {
-            //TODO: carregar el contingut del document
+            document.setContingut(_ctrlPersistencia.carregarContingutDocument(document.getIdDoc()));
             if (_ctrlExpressio.selectPerExpressio(idExp, document)) resultat.add(document);
-            //TODO: eliminar el contingut del document
+            document.setContingut(null);
         }
         return resultat;
     }
@@ -116,7 +124,7 @@ public class CtrlDomini {
         if (!i) {
             return -50;
         }
-        return 10;
+        return -10;
     }
     public int exportarDocument(GestorDocument.FILETYPE format, String path) {
         Document d = _ctrlDirectori.getDocumentActiu();
