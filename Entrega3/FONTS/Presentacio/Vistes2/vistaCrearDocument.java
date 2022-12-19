@@ -20,6 +20,8 @@ public class vistaCrearDocument extends JFrame{
     private JLabel labelContingut;
     private JLabel labelTitol;
     private JLabel labelAutor;
+    private JFrame frame = new JFrame("JFrame");
+
 
     public vistaCrearDocument(CtrlPresentacio pCtrlPresentacio) {
         _ctrlPresentacio = pCtrlPresentacio;
@@ -43,7 +45,26 @@ public class vistaCrearDocument extends JFrame{
         Crear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int id = _ctrlPresentacio.crearDocument(Autor.getText(), Titol.getText(), Contingut.getText());
+                int codi = _ctrlPresentacio.crearDocument(Autor.getText(), Titol.getText(), Contingut.getText());
+                if (codi == 30) {
+                    JDialog error = new JDialog(frame, "Error");
+                    error.setBounds(800, 300, 400, 200);
+                    error.setLayout(null);
+
+                    JLabel txtError = new JLabel("Títol o autor nuls");
+                    txtError.setBounds(150, 30, 400, 40);
+                    error.add(txtError);
+                    error.setVisible(true);
+                } else if (codi == 20) {
+                    JDialog error = new JDialog(frame, "Error");
+                    error.setBounds(800, 300, 700, 200);
+                    error.setLayout(null);
+
+                    JLabel txtError = new JLabel("Ja existeix un document en el directori amb aquest títol i autor");
+                    txtError.setBounds(150, 30, 400, 40);
+                    error.add(txtError);
+                    error.setVisible(true);
+                }
                 _ctrlPresentacio.activarPagPrincipal();
                 setVisible(false);
             }
