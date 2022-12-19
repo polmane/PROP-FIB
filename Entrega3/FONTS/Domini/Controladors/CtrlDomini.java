@@ -146,7 +146,6 @@ public class CtrlDomini {
         _ctrlExpressio.setExpressions(expressionsHashMap);
 
         _ctrlDirectori.crearDirectori(estat.idDir);
-        _ctrlDirectori.carregarPesos(estat.pesosDocs);
         _ctrlDirectori.getDirectoriObert().setDeletedIds(estat.deletedIds);
         _ctrlDirectori.getDirectoriObert().setIdNouDoc(estat.idNouDoc);
         HashMap<Integer, String> continguts = new HashMap<>();

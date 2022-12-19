@@ -173,34 +173,17 @@ public class CtrlDirectori {
     public void carregarDocs(HashMap<Integer, HashMap<String,Double>> pesos,
                              HashMap<Integer, Pair<String,String>> documents,
                              HashMap<Integer, String> continguts) {
-        HashMap<String, Integer> paraulesDir = new HashMap<>();
-        for(int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
+        for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
             if (documents.containsKey(i)) {
-                String text = continguts.get(i);
-                HashMap<String,Integer> paraules = new HashMap<>();
-                if (text != null && !text.isEmpty()) {
-                    int j = 0;
-                    while (j < text.length()) {
-                        StringBuilder paraula = new StringBuilder();
-                        while (j < text.length() && esUnCharCorrecte(text.charAt(j))) {
-                            paraula.append(text.charAt(j));
-                            ++j;
-                        }
-                        ++j;
-                        if (paraula.length() > 0) {
-                            paraula = new StringBuilder(paraula.toString().toLowerCase());
-                            if (paraules.containsKey(paraula.toString())) paraules.put(paraula.toString(),paraules.get(paraula.toString())+1);
-                            else paraules.put(paraula.toString(), 1);
-                            if (paraulesDir.containsKey(paraula.toString())) paraulesDir.put(paraula.toString(),paraulesDir.get(paraula.toString())+1);
-                            else paraulesDir.put(paraula.toString(), 1);
-                        }
-                    }
-                }
-                directoriObert.docs.put(i, new Document(i, documents.get(i).first(), documents.get(i).second(), paraules));
+                documentActiu = new Document(i, documents.get(i).first(), documents.get(i).second(), continguts.get(i));
+                directoriObert.getDocs().put(i, documentActiu);
+                documentActiu.setOcurrencies(obteContingut());
+                documentActiu.setTfMap(tf(documentActiu.getOcurrencies()));
+                afegeixParaulesAlDir();
             }
         }
-        directoriObert.setParaulesDirectori(paraulesDir);
         directoriObert.setPesosDocs(pesos);
+        documentActiu = null;
     }
 
 
