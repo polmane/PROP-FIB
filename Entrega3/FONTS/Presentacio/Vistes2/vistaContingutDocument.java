@@ -46,7 +46,6 @@ public class vistaContingutDocument extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String docs = _ctrlPresentacio.cercaPerAutoriTitol(Autor.getText(), Titol.getText());
                 Contingut.setText(docs);
-                System.out.println(docs);
             }
         });
         Enrere.addActionListener(new ActionListener() {

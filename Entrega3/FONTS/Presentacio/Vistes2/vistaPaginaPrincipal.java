@@ -41,6 +41,7 @@ public class vistaPaginaPrincipal extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
+        documentSeleccionat();
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -59,7 +60,6 @@ public class vistaPaginaPrincipal extends JFrame{
             }
         });
 
-        documentSeleccionat();
 
         crearDocumentButton.addActionListener(new ActionListener() {
             @Override
@@ -127,11 +127,8 @@ public class vistaPaginaPrincipal extends JFrame{
                     txtError.setBounds(150, 30, 400, 40);
                     error.add(txtError);
                     error.setVisible(true);
-                } else {
-                    autor.setText("");
-                    titol.setText("");
-                    visualitzarModificarButton.setEnabled(false);
                 }
+                documentSeleccionat();
             }
         });
         exportarButton.addActionListener(new ActionListener() {
