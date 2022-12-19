@@ -9,10 +9,7 @@ import java.util.PriorityQueue;
 
 public class GestorBD {
 
-    public enum FILETYPE {
-        TXT, XML, PROP
-    }
-    private final String path = System.getProperty("user.dir") + "/" + "directori";
+    private final String BD_PATH = System.getProperty("user.dir") + "/directori";
 
     static class Estat implements java.io.Serializable {
         public int idDir;
@@ -30,12 +27,12 @@ public class GestorBD {
     }
 
     public Boolean guardarContingutDocument (int idDoc, String contingut) {
-        File directori = new File (path);
+        File directori = new File (BD_PATH);
         if (!directori.exists()) {
             directori.mkdir();
         }
         try {
-            FileWriter fw = new FileWriter(path + "/" + String.valueOf(idDoc) + ".txt");
+            FileWriter fw = new FileWriter(BD_PATH + "/" + String.valueOf(idDoc) + ".txt");
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(contingut);
             bw.close();
@@ -48,20 +45,19 @@ public class GestorBD {
     }
 
     public Boolean guardarEstat (int idDir, HashMap<Integer, HashMap<String,Double>> pesosDocs, PriorityQueue<Integer> deletedIds, int idNouDoc, HashMap<Integer, Pair<String,String>> docs) {
-        File directori = new File (path);
+        File directori = new File (BD_PATH);
         if (!directori.exists()) {
             directori.mkdir();
         }
         try {
             Estat estat = new Estat(idDir,pesosDocs,deletedIds,idNouDoc,docs);
-            FileOutputStream file = new FileOutputStream(path + "/" + "estat.txt");
+            FileOutputStream file = new FileOutputStream(BD_PATH + "/estat.txt");
             ObjectOutputStream out = new ObjectOutputStream(file);
 
             out.writeObject(estat);
 
             out.close();
             file.close();
-
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -69,11 +65,25 @@ public class GestorBD {
         return true;
     }
 
-    public Boolean eliminarDocument (int idDoc) {
-        File document = new File (path + "/" + String.valueOf(idDoc) + ".txt");
-        if (document.delete()) {
-            return true;
+    public Estat carregarEstat() {
+        Estat estatObject;
+        try {
+            FileInputStream estatFile = new FileInputStream(BD_PATH + "/estat.txt");
+            ObjectInputStream estatFileStream = new ObjectInputStream(estatFile);
+
+            estatObject = (Estat)estatFileStream.readObject();
+
+            estatFileStream.close();
+            estatFile.close();
         }
-        else return false;
+        catch (IOException | ClassNotFoundException e) {
+            return null;
+        }
+        return estatObject;
+    }
+
+    public boolean eliminarDocument (int idDoc) {
+        File document = new File (BD_PATH + "/" + String.valueOf(idDoc) + ".txt");
+        return document.delete();
     }
 }
