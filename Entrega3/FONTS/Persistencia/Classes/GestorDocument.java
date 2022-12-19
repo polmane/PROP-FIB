@@ -31,7 +31,8 @@ public class GestorDocument {
 
 
 
-    public boolean exportarDocument(String autor, String titol, String contingut, FILETYPE format, String path) {
+
+    public Boolean exportarDocument(String autor, String titol, String contingut, FILETYPE format, String path) {
         String nom = autor + '_' + titol;
         switch (format) {
             case TXT:
@@ -44,12 +45,10 @@ public class GestorDocument {
                     output.write(titol + "\n");
                     output.write(contingut);
                     output.flush();
+                    return true;
                 } catch (Exception e) {
-                    System.err.println("El document en format .txt no s'ha creat correctament");
-                    e.printStackTrace();
                     return false;
                 }
-                break;
             case XML:
                 try {
                     nom += ".xml";
@@ -77,12 +76,10 @@ public class GestorDocument {
                     StreamResult result = new StreamResult(docExp);
                     Transformer transformer = TransformerFactory.newInstance().newTransformer();
                     transformer.transform(source, result);
+                    return true;
                 } catch (Exception e) {
-                    System.err.println("El document en format .xml no s'ha creat correctament");
-                    e.printStackTrace();
                     return false;
                 }
-                break;
             case PROP:
                 try {
                     nom += ".prop";
@@ -93,14 +90,12 @@ public class GestorDocument {
                     output.write(PROP_TAG_TITOL + "->" + titol + "<-");
                     output.write(PROP_TAG_CONTINGUT + "->" + contingut + "<-");
                     output.flush();
+                    return true;
                 } catch (Exception e) {
-                    System.err.println("El document en format .prop no s'ha creat correctament");
-                    e.printStackTrace();
                     return false;
                 }
-                break;
             default:
-                Assert.fail("NOT REACHED");
+                return false;
         }
         return true;
     }

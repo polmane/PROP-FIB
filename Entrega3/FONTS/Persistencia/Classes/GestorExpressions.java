@@ -50,7 +50,7 @@ public class GestorExpressions {
         return true;
     }
 
-    public boolean eliminarExpressio (int idExp) {
+    public Boolean eliminarExpressio (int idExp) {
         File expressio = new File (BD_PATH + "/" + String.valueOf(idExp) + ".txt");
         if (expressio.delete()) {
             return true;
