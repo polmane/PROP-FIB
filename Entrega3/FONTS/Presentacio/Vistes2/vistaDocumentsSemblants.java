@@ -3,13 +3,14 @@ package Presentacio.Vistes2;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class vistaDocumentsSemblants extends JFrame {
 
     private CtrlPresentacio _ctrlPresentacio;
 
     private JPanel panel;
-    private JTextField K;
     private JRadioButton BOOLRadioButton;
     private JRadioButton TFIDFRadioButton;
     private JComboBox comboBox1;
@@ -22,6 +23,7 @@ public class vistaDocumentsSemblants extends JFrame {
     private JPanel panelOpcions;
     private JComboBox Documents;
     private JList Resultat;
+    private JSpinner k;
 
     public vistaDocumentsSemblants(CtrlPresentacio pCtrlPresentacio) {
         _ctrlPresentacio = pCtrlPresentacio;
@@ -31,7 +33,17 @@ public class vistaDocumentsSemblants extends JFrame {
         setTitle("Buscar els documents semblants");
 
         setVisible(true);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                _ctrlPresentacio.activarPagPrincipal();
+                System.out.println("Tancant vistaDocumentsSemblants");
+                dispose();
+            }
+        });
     }
 
     public static void main(String[] args) {

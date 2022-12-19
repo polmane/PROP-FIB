@@ -3,8 +3,7 @@ package Presentacio.Vistes2;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class vistaPaginaPrincipal extends JFrame{
     private CtrlPresentacio _ctrlPresentacio;
@@ -12,7 +11,6 @@ public class vistaPaginaPrincipal extends JFrame{
     private JButton crearDocumentButton;
     private JButton importarButton;
     private JButton gestionarExpressionsButton;
-    private JTextField document;
     private JLabel etiqueta_doc_sel;
     private JButton visualitzarModificarButton;
     private JButton eliminarDocumentSeleccionatButton;
@@ -23,6 +21,10 @@ public class vistaPaginaPrincipal extends JFrame{
     private JPanel panelDocument;
     private JPanel panelGestio;
     private JPanel panelOpcions;
+    private JLabel labelAutor;
+    private JLabel labelTitol;
+    private JTextField autor;
+    private JTextField titol;
 
     private JFileChooser file_chooser;
 
@@ -34,7 +36,24 @@ public class vistaPaginaPrincipal extends JFrame{
         setTitle("Pàgina principal");
 
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+
+                setVisible(false);
+                System.out.println("Tancant aplicacio, guardant estat");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
+                System.out.println("Aplicacio tancada");
+                dispose();
+            }
+        });
 
         crearDocumentButton.addActionListener(new ActionListener() {
             @Override
@@ -46,6 +65,13 @@ public class vistaPaginaPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 _ctrlPresentacio.ObrirVistaSeleccionarDocument();
+            }
+        });
+
+        importarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Exportar FileChooser");
             }
         });
         gestionarExpressionsButton.addActionListener(new ActionListener() {
@@ -65,7 +91,13 @@ public class vistaPaginaPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                     //TODO comprovar que hi hagi algun seleccionat: _ctrlDomin.getIdDocSeleccionat?
-                _ctrlPresentacio.eliminarDocument();
+                //int codi =_ctrlPresentacio.eliminarDocument();
+            }
+        });
+        exportarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Exportar FileChooser");
             }
         });
     }
@@ -77,6 +109,7 @@ public class vistaPaginaPrincipal extends JFrame{
 
     public void activar() {
         this.setEnabled(true);
+        this.toFront();
     }
 
     public void desactivar() {

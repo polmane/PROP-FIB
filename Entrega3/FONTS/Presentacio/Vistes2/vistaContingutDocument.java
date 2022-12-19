@@ -3,6 +3,8 @@ package Presentacio.Vistes2;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class vistaContingutDocument extends JFrame {
     private CtrlPresentacio _ctrlPresentacio;
@@ -26,7 +28,17 @@ public class vistaContingutDocument extends JFrame {
         setTitle("Buscar el contingut d'un document");
 
         setVisible(true);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                _ctrlPresentacio.activarPagPrincipal();
+                System.out.println("Tancant vistaCrearDocument");
+                dispose();
+            }
+        });
     }
 
     public static void main(String[] args) {

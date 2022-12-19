@@ -3,6 +3,8 @@ package Presentacio.Vistes2;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class vistaGestioExpressio extends JFrame{
 
@@ -30,7 +32,17 @@ public class vistaGestioExpressio extends JFrame{
         setTitle("Gestió d'una expressió");
 
         setVisible(true);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                _ctrlPresentacio.activarPagPrincipal();
+                System.out.println("Tancant vistaGestioExpressio");
+                dispose();
+            }
+        });
     }
 
     public static void main(String[] args) {

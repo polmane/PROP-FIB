@@ -356,6 +356,9 @@ public class CtrlDirectori {
      * @param idDoc és l'identificador del document que es vol eliminar del directori
      */
     public int eliminarDocument(int idDoc) {
+        if (documentActiu == null) {
+            return 31;
+        }
         //Comprovem que idDoc sigui realment un identificador d'un document
         if (!directoriObert.getDocs().containsKey(idDoc)) {
             return 20;
@@ -445,7 +448,7 @@ public class CtrlDirectori {
             return documentActiu.getIdDoc();
         }
         else {
-            return 31;
+            return -31;
         }
     }
 }

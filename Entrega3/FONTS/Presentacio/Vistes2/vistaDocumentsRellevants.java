@@ -3,6 +3,8 @@ package Presentacio.Vistes2;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class vistaDocumentsRellevants extends JFrame {
     private CtrlPresentacio _ctrlPresentacio;
@@ -27,7 +29,17 @@ public class vistaDocumentsRellevants extends JFrame {
         setTitle("Buscar els documents més rellevants segons una sèrie de paraules");
 
         setVisible(true);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                _ctrlPresentacio.activarPagPrincipal();
+                System.out.println("Tancant vistaDocumentsRellevants");
+                dispose();
+            }
+        });
     }
 
     public static void main(String[] args) {

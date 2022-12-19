@@ -28,6 +28,7 @@ public class vistaRecuperarSessio extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //_ctrlPresentacio.carregar
+                _ctrlPresentacio.activarPagPrincipal();
                 dispose();
             }
         });
@@ -35,20 +36,21 @@ public class vistaRecuperarSessio extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 _ctrlPresentacio.crearDirectori(0);
+                _ctrlPresentacio.activarPagPrincipal();
                 dispose();
             }
         });
     }
 
-    public static void main(String[] args) {
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                //Turn off metal's use of bold fonts
-                UIManager.put("swing.boldMetal", Boolean.FALSE);
-                //new vistaRecuperarSessio();
-            }
-        });
-    }
+//    public static void main(String[] args) {
+//        //Schedule a job for the event dispatch thread:
+//        //creating and showing this application's GUI.
+//        SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                //Turn off metal's use of bold fonts
+//                UIManager.put("swing.boldMetal", Boolean.FALSE);
+//                //new vistaRecuperarSessio();
+//            }
+//        });
+//    }
 }
