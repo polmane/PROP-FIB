@@ -4,7 +4,9 @@ package Domini.Controladors;
 
 import Domini.Classes.Directori;
 import Domini.Classes.Document;
+import Domini.Classes.Expressio;
 import Domini.Classes.Pair;
+import Persistencia.Classes.GestorBD;
 import Persistencia.Classes.GestorDocument;
 import Persistencia.Controladors.CtrlPersistencia;
 
@@ -126,6 +128,42 @@ public class CtrlDomini {
         }
         return -10;
     }
+
+    public int carregarEstat() {
+        Pair<GestorBD.Estat, ArrayList<Pair<Integer, String>>> resultat = _ctrlPersistencia.carregarEstat();
+        GestorBD.Estat estat = resultat.first();
+        ArrayList<Pair<Integer, String>> expressionsArray = resultat.second();
+
+        if (estat == null | expressionsArray == null)
+            return -50;
+
+        HashMap<Integer, Expressio> expressionsHashMap = new HashMap<>();
+        for (Pair<Integer, String> expPair : expressionsArray) {
+            Expressio exp = new Expressio(expPair.first(), expPair.second());
+
+            expressionsHashMap.put(expPair.first(), exp);
+        }
+        _ctrlExpressio.setExpressions(expressionsHashMap);
+
+        _ctrlDirectori.crearDirectori(estat.idDir);
+        _ctrlDirectori.carregarPesos(estat.pesosDocs);
+        _ctrlDirectori.getDirectoriObert().setDeletedIds(estat.deletedIds);
+        _ctrlDirectori.getDirectoriObert().setIdNouDoc(estat.idNouDoc);
+        HashMap<Integer, String> continguts = new HashMap<>();
+        for (int i = 0; i < estat.idNouDoc; ++i) {
+            if (estat.docs.containsKey(i)) {
+                String contingut = _ctrlPersistencia.carregarContingutDocument(i);
+                //FIXME: HAURIEM DE PASSAR L'ERROR AMB NULL
+                if (contingut.equals("$ERROR: no s'ha pogut llegir el contingut del document correctament"))
+                    return -50;
+                continguts.put(i, contingut);
+            }
+        }
+        _ctrlDirectori.carregarDocs(estat.pesosDocs, estat.docs, continguts);
+
+        return -10;
+    }
+
     public int exportarDocument(GestorDocument.FILETYPE format, String path) {
         Document d = _ctrlDirectori.getDocumentActiu();
         Boolean b = _ctrlPersistencia.exportarDocument(d.getAutor(),d.getTitol(),d.getContingut(),format,path);

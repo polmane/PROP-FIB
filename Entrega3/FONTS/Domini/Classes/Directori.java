@@ -16,7 +16,7 @@ public class Directori {
     /**
      * Representa les ids dels documents eliminats
      */
-    public PriorityQueue<Integer> deletedIds;
+    private PriorityQueue<Integer> deletedIds;
 
     /**
      * Representa un contador per atribuir la id al document corresponent
@@ -58,12 +58,21 @@ public class Directori {
     }
 
     /**
+     * Setter de matriu de pesos
+     */
+    public void setPesosDocs(HashMap<Integer, HashMap<String, Double>> pesosDocs) {this.pesosDocs = pesosDocs;}
+
+    /**
      * Getter cua de ids eliminades
      */
     public PriorityQueue<Integer> getDeletedIds() {
         return deletedIds;
     }
 
+    /**
+     * Setter cua de ids eliminades
+     */
+    public void setDeletedIds(PriorityQueue<Integer> deletedIds) {this.deletedIds = deletedIds;}
 
     /**
      * Getter documents que tenim dins el directori

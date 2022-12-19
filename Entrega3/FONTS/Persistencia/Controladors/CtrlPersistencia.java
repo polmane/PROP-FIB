@@ -5,6 +5,7 @@ import Persistencia.Classes.GestorBD;
 import Persistencia.Classes.GestorDocument;
 import Persistencia.Classes.GestorExpressions;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
@@ -25,8 +26,16 @@ public class CtrlPersistencia {
         return _gBD.guardarContingutDocument(idDoc, contingut);
     }
 
+    public String carregarContingutDocument(int idDoc) {
+        return _gBD.carregarContingutDocument(idDoc);
+    }
+
     public Boolean guardarEstat(int idDir, HashMap<Integer, HashMap<String, Double>> pesosDocs, PriorityQueue<Integer> deletedIds, int idNouDoc, HashMap<Integer, Pair<String, String>> docs) {
         return _gBD.guardarEstat(idDir, pesosDocs, deletedIds, idNouDoc, docs);
+    }
+
+    public Pair<GestorBD.Estat, ArrayList<Pair<Integer, String>>> carregarEstat() {
+        return new Pair(_gBD.carregarEstat(), _gExp.carregarExpressions());
     }
 
     public Boolean eliminarDocument(int idDoc) {
@@ -45,7 +54,4 @@ public class CtrlPersistencia {
         return _gExp.eliminarExpressio(idExp);
     }
 
-    public String carregarContingutDocument(int idDoc) {
-        return _gBD.carregarContingutDocument(idDoc);
-    }
 }

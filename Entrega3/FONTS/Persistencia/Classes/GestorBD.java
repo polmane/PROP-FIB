@@ -11,7 +11,7 @@ public class GestorBD {
 
     private final String BD_PATH = System.getProperty("user.dir") + "/directori";
 
-    static class Estat implements java.io.Serializable {
+    public static class Estat implements java.io.Serializable {
         public int idDir;
         public HashMap<Integer, HashMap<String,Double>> pesosDocs;
         public PriorityQueue<Integer> deletedIds;

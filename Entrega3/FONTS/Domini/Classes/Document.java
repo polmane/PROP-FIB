@@ -46,6 +46,13 @@ public class Document {
         this.contingut = contingut;
         this.ocurrencies = new HashMap<>();
     }
+    public Document(int idDoc, String autor, String titol, HashMap<String,Integer> ocurrencies) {
+        this.idDoc = idDoc;
+        this.autor = autor;
+        this.titol = titol;
+        this.contingut = null;
+        this.ocurrencies = ocurrencies;
+    }
 
     /**
      *Getter de IdDoc

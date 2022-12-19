@@ -265,7 +265,7 @@ public class TestGestorDocument {
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova1";
-        String contingut = "contingut de prova";
+        String contingut = "contingut de prova\n";
         ArrayList<String> result = gDoc.importarDocument(PATH_IN + "/" + autor + "_" + titol + ".txt");
         Assert.assertEquals(autor, result.get(0));
         Assert.assertEquals(titol, result.get(1));
@@ -300,7 +300,6 @@ public class TestGestorDocument {
     }
 
     //TODO: FIX XML EXPORT I DESPRES FER BE EL TEST D'IMPORT
-
 
     @Test
     public void testImportarDocumentPROPSimple() {
