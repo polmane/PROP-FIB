@@ -4,7 +4,6 @@ import Domini.Classes.Pair;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 
@@ -14,26 +13,35 @@ public class GestorExpressions {
 
     public ArrayList<Pair<Integer, String>> carregarExpressions() {
         ArrayList<Pair<Integer, String>> expressions = new ArrayList<>();
-        File dir = new File(BD_PATH);
+        Scanner scanner = null;
+        FileInputStream FileInput = null;
         try {
-            for (File FileExpressio : Objects.requireNonNull(dir.listFiles())) {
-                Scanner scanner = new Scanner(FileExpressio);
-                int id = scanner.nextBigInteger().intValue();
+            File dir = new File(BD_PATH);
+            for (File FileExpressio : dir.listFiles()) {
+                scanner = new Scanner(FileExpressio);
+                Integer id = Integer.parseInt(scanner.nextLine());
                 String exp = scanner.nextLine();
                 expressions.add(new Pair<>(id, exp));
+                scanner.close();
             }
-        } catch (Exception e) {
+        } catch (NullPointerException | NumberFormatException | IOException e) {
+            assert scanner != null;
+            scanner.close();
             e.printStackTrace();
+            /*
             Pair p = new Pair(-1,null);
             ArrayList<Pair<Integer, String>> result = new ArrayList<>();
             result.add(p);
             return result;
+            */
+            //FIXME: RETORNAR NULL NO ES CORRECTE?
+            return null;
         }
         return expressions;
     }
 
     public Boolean guardarExpressio (int idExp, String expressio) {
-        File experssions = new File (BD_PATH);
+        File experssions = new File(BD_PATH);
         if (!experssions.exists()) {
             experssions.mkdir();
         }
@@ -52,10 +60,7 @@ public class GestorExpressions {
     }
 
     public Boolean eliminarExpressio (int idExp) {
-        File expressio = new File (BD_PATH + "/" + String.valueOf(idExp) + ".txt");
-        if (expressio.delete()) {
-            return true;
-        }
-        else return false;
+        File expressio = new File(BD_PATH + "/" + String.valueOf(idExp) + ".txt");
+        return expressio.delete();
     }
 }
