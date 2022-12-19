@@ -40,6 +40,7 @@ public class GestorExpressions {
         try {
             FileWriter fw = new FileWriter(BD_PATH + "/" + String.valueOf(idExp) + ".txt");
             BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(idExp + "\n");
             bw.write(expressio);
             bw.close();
         }
