@@ -26,6 +26,8 @@ public class vistaVisualitzarModificarDocument extends JFrame{
     private JLabel labelTitol;
     private JLabel labelContingut;
 
+    private JFrame frame = new JFrame("JFrame");
+
     public vistaVisualitzarModificarDocument(CtrlPresentacio pCtrlPresentacio) {
         _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
@@ -69,9 +71,47 @@ public class vistaVisualitzarModificarDocument extends JFrame{
         Guardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int id = _ctrlPresentacio.modificarAutor(Autor.getText());
-                int id1 = _ctrlPresentacio.modificarTitol(Titol.getText());
-                int id2 = _ctrlPresentacio.modificarContingut(Contingut.getText());
+                int codi = _ctrlPresentacio.modificarAutor(Autor.getText());
+                if (codi == 30) {
+                    JDialog error = new JDialog(frame, "Error");
+                    error.setBounds(800, 300, 400, 200);
+                    error.setLayout(null);
+
+                    JLabel txtError = new JLabel("No s'ha introduït cap autor");
+                    txtError.setBounds(150, 30, 400, 40);
+                    error.add(txtError);
+                    error.setVisible(true);
+                } else if (codi == 20) {
+                    JDialog error = new JDialog(frame, "Error");
+                    error.setBounds(800, 300, 700, 200);
+                    error.setLayout(null);
+
+                    JLabel txtError = new JLabel("Ja existeix un document en el directori amb aquest títol i autor");
+                    txtError.setBounds(150, 30, 400, 40);
+                    error.add(txtError);
+                    error.setVisible(true);
+                }
+                int codi1 = _ctrlPresentacio.modificarTitol(Titol.getText());
+                if (codi1 == 30) {
+                    JDialog error = new JDialog(frame, "Error");
+                    error.setBounds(800, 300, 400, 200);
+                    error.setLayout(null);
+
+                    JLabel txtError = new JLabel("No s'ha introduït cap títol");
+                    txtError.setBounds(150, 30, 400, 40);
+                    error.add(txtError);
+                    error.setVisible(true);
+                } else if (codi1 == 20) {
+                    JDialog error = new JDialog(frame, "Error");
+                    error.setBounds(800, 300, 700, 200);
+                    error.setLayout(null);
+
+                    JLabel txtError = new JLabel("Ja existeix un document en el directori amb aquest títol i autor");
+                    txtError.setBounds(150, 30, 400, 40);
+                    error.add(txtError);
+                    error.setVisible(true);
+                }
+                int codi2 = _ctrlPresentacio.modificarContingut(Contingut.getText());
                 System.out.println("modificant Document");
                 _ctrlPresentacio.activarPagPrincipal();
                 setVisible(false);

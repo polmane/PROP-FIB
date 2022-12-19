@@ -93,7 +93,7 @@ public class CtrlPresentacio {
         _ctrlDomini._ctrlDirectori.crearDirectori(id);
     }
 
-    public int crearDocument(String autor, String titol, String contingut) { return _ctrlDomini.afegirDocument(titol, autor, contingut); }
+    public int crearDocument(String autor, String titol, String contingut) { return _ctrlDomini.afegirDocument(autor, titol, contingut); }
 
     public int seleccionarDocument(int id) { return _ctrlDomini.seleccionarDocument(id); }
 

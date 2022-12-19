@@ -4,6 +4,7 @@ import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class vistaPaginaPrincipal extends JFrame{
     private CtrlPresentacio _ctrlPresentacio;
@@ -28,6 +29,8 @@ public class vistaPaginaPrincipal extends JFrame{
 
     private JFileChooser file_chooser;
 
+    private JFrame frame = new JFrame("JFrame");
+
     public vistaPaginaPrincipal(CtrlPresentacio pCtrlPresentacio) {
         _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
@@ -37,10 +40,6 @@ public class vistaPaginaPrincipal extends JFrame{
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-        if(autor.getText() == null || titol.getText() == null) {
-            visualitzarModificarButton.setEnabled(false);
-        } else visualitzarModificarButton.setEnabled(true);
 
 
         addWindowListener(new WindowAdapter() {
@@ -60,10 +59,13 @@ public class vistaPaginaPrincipal extends JFrame{
             }
         });
 
+        documentSeleccionat();
+
         crearDocumentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 _ctrlPresentacio.ObrirVistaCrearDocument();
+                documentSeleccionat();
             }
         });
         seleccionarDocumentButton.addActionListener(new ActionListener() {
@@ -95,8 +97,41 @@ public class vistaPaginaPrincipal extends JFrame{
         eliminarDocumentSeleccionatButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    //TODO comprovar que hi hagi algun seleccionat: _ctrlDomin.getIdDocSeleccionat?
-                //int codi =_ctrlPresentacio.eliminarDocument();
+                int id = documentSeleccionat();
+                int codi =_ctrlPresentacio.eliminarDocument(id);
+                System.out.println(id);
+                if (codi == 31) {
+                    JDialog error = new JDialog(frame, "Error");
+                    error.setBounds(800, 300, 400, 200);
+                    error.setLayout(null);
+
+                    JLabel txtError = new JLabel("No has seleccionat cap document");
+                    txtError.setBounds(150, 30, 400, 40);
+                    error.add(txtError);
+                    error.setVisible(true);
+                } else if (codi == 20) {
+                    JDialog error = new JDialog(frame, "Error");
+                    error.setBounds(800, 300, 400, 200);
+                    error.setLayout(null);
+
+                    JLabel txtError = new JLabel("Identificador de document no vàlid");
+                    txtError.setBounds(150, 30, 400, 40);
+                    error.add(txtError);
+                    error.setVisible(true);
+                } else if (codi == 11) {
+                    JDialog error = new JDialog(frame, "Error");
+                    error.setBounds(800, 300, 400, 200);
+                    error.setLayout(null);
+
+                    JLabel txtError = new JLabel("Document eliminat");
+                    txtError.setBounds(150, 30, 400, 40);
+                    error.add(txtError);
+                    error.setVisible(true);
+                } else {
+                    autor.setText("");
+                    titol.setText("");
+                    visualitzarModificarButton.setEnabled(false);
+                }
             }
         });
         exportarButton.addActionListener(new ActionListener() {
@@ -123,6 +158,24 @@ public class vistaPaginaPrincipal extends JFrame{
                 }
             }
         });
+    }
+
+    public int documentSeleccionat() {
+        ArrayList<String> document = _ctrlPresentacio.getIdDocSeleccionat();
+        String s = document.get(0);
+        if (s == "-31") {
+            autor.setText("");
+            titol.setText("");
+            visualitzarModificarButton.setEnabled(false);
+        } else {
+            for (int i = 0; i < document.size(); ++i) {
+                autor.setText(document.get(1));
+                titol.setText(document.get(2));
+                visualitzarModificarButton.setEnabled(true);
+            }
+        }
+        int resultat = Integer.parseInt(s);
+        return resultat;
     }
 
     public void hacerVisible() {
