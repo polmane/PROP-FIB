@@ -14,7 +14,6 @@ public class GestorExpressions {
     public ArrayList<Pair<Integer, String>> carregarExpressions() {
         ArrayList<Pair<Integer, String>> expressions = new ArrayList<>();
         Scanner scanner = null;
-        FileInputStream FileInput = null;
         try {
             File dir = new File(BD_PATH);
             for (File FileExpressio : dir.listFiles()) {
