@@ -39,6 +39,7 @@ public class CtrlDomini {
         int i = _ctrlDirectori.seleccionarDocument(idDoc);
         if (i > -1) {
             String contingut = _ctrlPersistencia.carregarContingutDocument(idDoc);
+            //FIXME: HAURIEM DE FER SERVIR NULL PER L'ERROR
             if (contingut.equals("$ERROR: no s'ha pogut llegir el contingut del document correctament")) return -50;
             _ctrlDirectori.getDocumentActiu().setContingut(contingut);
         }
