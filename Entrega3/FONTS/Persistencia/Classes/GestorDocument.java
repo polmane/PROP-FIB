@@ -16,20 +16,57 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Representa un Gestor de Document
+ * @author pol.camprubi.prats
+ * @author juli.serra.balaguer
+ */
 public class GestorDocument {
-
+    /**
+     * Enum dels diferents tipus de fitxers que tracta el programa
+     */
     public enum FILETYPE {
         TXT, XML, PROP
     }
 
+    /**
+     * Representa una variable document
+     */
     public static final String XML_TAG_DOCUMENT = "document";
+    /**
+     * Representa una variable autor
+     */
     public static final String XML_TAG_AUTOR = "autor";
+    /**
+     * Representa una variable titol
+     */
     public static final String XML_TAG_TITOL = "titol";
+    /**
+     * Representa una variable contingut
+     */
     public static final String XML_TAG_CONTINGUT = "contingut";
+    /**
+     * Representa una variable autor en el format .prop
+     */
     public static final String PROP_TAG_AUTOR = "(autor)";
+    /**
+     * Representa una variable titol en el format .prop
+     */
     public static final String PROP_TAG_TITOL = "(titol)";
+    /**
+     * Representa una variable contingut en el format .prop
+     */
     public static final String PROP_TAG_CONTINGUT = "(contingut)";
 
+    /**
+     * Funció per exportar un document determinat a l'ordinador
+     * @param autor autor del document a exportar
+     * @param titol titol del document a exportar
+     * @param contingut contingut del document a exportar
+     * @param format format del documet a exportar (enum FILETYPE)
+     * @param path path on situar el document a exportar
+     * @return retorna true en cas de funcionament correcte, false en cas contrari
+     */
     public Boolean exportarDocument(String autor, String titol, String contingut, FILETYPE format, String path) {
         String nom = autor + '_' + titol;
         switch (format) {
@@ -101,6 +138,11 @@ public class GestorDocument {
         }
     }
 
+    /**
+     * Funció per importar un document donat un path
+     * @param path path on es troba el document a importar
+     * @return retorna null en cas d'error, altrament retorna un array d'string on la primera posició és l'autor del document, la segona és el títol i la tercera el contingut
+     */
     public ArrayList<String> importarDocument(String path){
         //NOTE: El path pot ser absolut o relatiu a la base del projecte (subgrup-prop11.1)
         //      P.E. per accedir a la carpeta exported el path haura de ser:
@@ -124,6 +166,11 @@ public class GestorDocument {
         return null;
     }
 
+    /**
+     * Funció per importar un document en fomat .txt
+     * @param path path on hi ha el document
+     * @return null en cas d'error, altrament retorna un array d'string on la primera posició és l'autor del document, la segona és el títol i la tercera el contingut
+     */
     private ArrayList<String> parseTXT(String path) {
         ArrayList<String> values = new ArrayList<>(3);
         try {
@@ -141,6 +188,11 @@ public class GestorDocument {
         return values;
     }
 
+    /**
+     * Funció per importar un document en fomat .xml
+     * @param path path on hi ha el document
+     * @return null en cas d'error, altrament retorna un array d'string on la primera posició és l'autor del document, la segona és el títol i la tercera el contingut
+     */
     private ArrayList<String> parseXML(String path) {
         ArrayList<String> values = new ArrayList<>(3);
         try {
@@ -158,7 +210,11 @@ public class GestorDocument {
         }
         return values;
     }
-
+    /**
+     * Funció per importar un document en fomat .prop
+     * @param path path on hi ha el document
+     * @return null en cas d'error, altrament retorna un array d'string on la primera posició és l'autor del document, la segona és el títol i la tercera el contingut
+     */
     private ArrayList<String> parsePROP(String path) {
         ArrayList<String> values = new ArrayList<>(3);
         try {

@@ -6,11 +6,21 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
+/**
+ * Representa un Gestor d'Expressions
+ * @author pol.camprubi.prats
+ * @author juli.serra.balaguer
+ */
 public class GestorExpressions {
-
+    /**
+     * Representa el path on hi han les expressions
+     */
     private final String BD_PATH = System.getProperty("user.dir") + "/" + "expressions";
 
+    /**
+     * Funció per carregar les expressions a MP
+     * @return retorna un arrayList de pair on la primera variable és la id de l'expressió i la segona és l'expressió
+     */
     public ArrayList<Pair<Integer, String>> carregarExpressions() {
         ArrayList<Pair<Integer, String>> expressions = new ArrayList<>();
         Scanner scanner = null;
@@ -31,6 +41,12 @@ public class GestorExpressions {
         return expressions;
     }
 
+    /**
+     * Funció per guardar una expressió
+     * @param idExp id de l'expressió a guardar
+     * @param expressio expressió a guardar
+     * @return true en cas de funcionament correcte, false en cas contrari
+     */
     public Boolean guardarExpressio (int idExp, String expressio) {
         File experssions = new File(BD_PATH);
         if (!experssions.exists()) {
@@ -49,6 +65,11 @@ public class GestorExpressions {
         return true;
     }
 
+    /**
+     * Funció per eliminar una expressió del sistema
+     * @param idExp id de l'experssió a eliminar
+     * @return retorna true en cas de funcionament correcte, false en cas contrari
+     */
     public Boolean eliminarExpressio (int idExp) {
         File expressio = new File(BD_PATH + "/" + String.valueOf(idExp) + ".txt");
         return expressio.delete();
