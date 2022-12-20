@@ -69,11 +69,15 @@ public class GestorBD {
     }
 
     public Boolean guardarEstat(int idDir, HashMap<Integer, HashMap<String,Double>> pesosDocs, PriorityQueue<Integer> deletedIds, int idNouDoc, HashMap<Integer, Pair<String,String>> docs) {
+        if (idDir < 0 || pesosDocs == null || deletedIds == null || idNouDoc < 0 || docs == null)
+            return false;
+
         File directori = new File (BD_PATH);
         if (!directori.exists()) {
             if (!directori.mkdir())
                 return false;
         }
+
         try {
             Estat estat = new Estat(idDir,pesosDocs,deletedIds,idNouDoc,docs);
             FileOutputStream file = new FileOutputStream(BD_PATH + "/estat.txt");
@@ -90,12 +94,12 @@ public class GestorBD {
     }
 
     public Estat carregarEstat() {
-        Estat estatObject;
+        Estat estat;
         try {
             FileInputStream estatFile = new FileInputStream(BD_PATH + "/estat.txt");
             ObjectInputStream estatFileStream = new ObjectInputStream(estatFile);
 
-            estatObject = (Estat)estatFileStream.readObject();
+            estat = (Estat)estatFileStream.readObject();
 
             estatFileStream.close();
             estatFile.close();
@@ -103,6 +107,6 @@ public class GestorBD {
         catch (IOException | ClassNotFoundException e) {
             return null;
         }
-        return estatObject;
+        return estat;
     }
 }
