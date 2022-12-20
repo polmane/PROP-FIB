@@ -128,7 +128,9 @@ public class GestorDocument {
             values.add(scanner.nextLine());
             StringBuilder contingut = new StringBuilder();
             while (scanner.hasNextLine()) {
-                contingut.append(scanner.nextLine()).append("\n");
+                contingut.append(scanner.nextLine());
+                if (scanner.hasNextLine())
+                    contingut.append("\n");
             }
             values.add(contingut.toString());
         } catch (Exception e) {
