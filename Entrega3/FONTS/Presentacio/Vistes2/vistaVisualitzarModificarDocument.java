@@ -116,6 +116,7 @@ public class vistaVisualitzarModificarDocument extends JFrame{
                 int codi2 = _ctrlPresentacio.modificarContingut(Contingut.getText());
                 System.out.println("modificant Document");
                 _ctrlPresentacio.activarPagPrincipal();
+                frame.dispose();
                 dispose();
             }
         });

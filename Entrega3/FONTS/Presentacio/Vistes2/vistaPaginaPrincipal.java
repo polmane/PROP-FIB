@@ -97,41 +97,18 @@ public class vistaPaginaPrincipal extends JFrame{
                 int codi =_ctrlPresentacio.eliminarDocument(id);
                 System.out.println(id);
                 if (codi == 31) {
-                    /*JDialog error = new JDialog(frame, "Error");
-                    error.setBounds(800, 300, 400, 200);
-                    error.setLayout(null);
-
-                    JLabel txtError = new JLabel("No has seleccionat cap document");
-                    txtError.setBounds(150, 30, 400, 40);
-                    error.add(txtError);
-                    error.setVisible(true);*/
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
                     int isel = vistaDialogo.setDialogo(frame,"Error a l'eliminar","No has seleccionat cap document",strBotones,1);
                     System.out.println("Error eliminar seleccionat: " + isel + " " + strBotones[isel]);
 
                 } else if (codi == 20) {
-                    /*JDialog error = new JDialog(frame, "Error");
-                    error.setBounds(800, 300, 400, 200);
-                    error.setLayout(null);
-
-                    JLabel txtError = new JLabel("Identificador de document no vàlid");
-                    txtError.setBounds(150, 30, 400, 40);
-                    error.add(txtError);
-                    error.setVisible(true);*/
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
                     int isel = vistaDialogo.setDialogo(frame,"Error a l'eliminar","Document no reconegut",strBotones,1);
                     System.out.println("Error eliminar doc no reconegut: " + isel + " " + strBotones[isel]);
-                } else if (codi == 11) {
-                   /*JDialog error = new JDialog(frame, "Acció");
-                    error.setBounds(800, 300, 400, 200);
-                    error.setLayout(null);
 
-                    JLabel txtError = new JLabel("Document eliminat");
-                    txtError.setBounds(150, 30, 400, 40);
-                    error.add(txtError);
-                    error.setVisible(true);*/
+                } else if (codi == 11) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
                     int isel = vistaDialogo.setDialogo(frame,"Eliminar document","Document eliminat",strBotones,2);
