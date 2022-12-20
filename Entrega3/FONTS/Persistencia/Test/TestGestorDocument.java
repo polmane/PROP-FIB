@@ -1,8 +1,10 @@
 package Persistencia.Test;
 
 import Persistencia.Classes.GestorDocument;
+import Persistencia.Classes.GestorExpressions;
 import org.junit.Assert;
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -18,6 +20,8 @@ public class TestGestorDocument {
 
     private static final String PATH_OUT = System.getProperty("user.dir") + "/FONTS/Persistencia/Test/OutputFiles";
     private static final String PATH_IN = System.getProperty("user.dir") + "/FONTS/Persistencia/Test/InputFiles";
+
+    //FIXME: COMPROVAR QUE S'ESBORREN DOCUMENTS AL FER ELS TESTS
 
     @Test
     public void testExportarDocumentTXTSimple() {
@@ -106,30 +110,27 @@ public class TestGestorDocument {
         String autor = "Juli";
         String titol = "prova1";
         String contingut = "contingut de prova";
-        gDoc.exportarDocument(autor, titol, contingut, GestorDocument.FILETYPE.XML, PATH_OUT);
+
+        Assert.assertTrue(gDoc.exportarDocument(autor, titol, contingut, GestorDocument.FILETYPE.XML, PATH_OUT));
+
+        File f = new File(PATH_OUT + "/" + autor + "_" + titol + ".xml");
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 
             DocumentBuilder db = dbf.newDocumentBuilder();
-            org.w3c.dom.Document doc = db.parse(new File(PATH_OUT + "/" + autor + "_" + titol + ".xml"));
+            org.w3c.dom.Document doc = db.parse(f);
 
-            values.add(doc.getElementsByTagName(XML_TAG_AUTOR).item(0).getTextContent());
-            values.add(doc.getElementsByTagName(XML_TAG_TITOL).item(0).getTextContent());
-            values.add(doc.getElementsByTagName(XML_TAG_CONTINGUT).item(0).getTextContent());
+            Assert.assertEquals(autor, doc.getElementsByTagName(GestorDocument.XML_TAG_AUTOR).item(0).getTextContent());
+            Assert.assertEquals(titol, doc.getElementsByTagName(GestorDocument.XML_TAG_TITOL).item(0).getTextContent());
+            Assert.assertEquals(contingut, doc.getElementsByTagName(GestorDocument.XML_TAG_CONTINGUT).item(0).getTextContent());
         }
-        catch (ParserConfigurationException | IOException e) {
+        catch (ParserConfigurationException | IOException | SAXException e) {
             Assert.fail("File Not Found");
-            return;
         }
-        Assert.assertNotNull(result);
-        Assert.assertEquals(XML_VERSION_TAG, result.nextLine());
-        Assert.assertEquals(autor, result.nextLine());
-        Assert.assertEquals(titol, result.nextLine());
-        Assert.assertEquals(contingut, result.nextLine());
-        result.close();
-        f.delete();
+        Assert.assertTrue(f.delete());
     }
+
     /*
     @Test
     public void testExportarDocumentXMLSenseContingut() {

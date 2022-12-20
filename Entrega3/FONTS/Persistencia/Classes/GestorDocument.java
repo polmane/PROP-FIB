@@ -30,15 +30,12 @@ public class GestorDocument {
     public static final String PROP_TAG_TITOL = "(titol)";
     public static final String PROP_TAG_CONTINGUT = "(contingut)";
 
-
-
-
     public Boolean exportarDocument(String autor, String titol, String contingut, FILETYPE format, String path) {
         String nom = autor + '_' + titol;
         switch (format) {
             case TXT:
+                nom += ".txt";
                 try {
-                    nom += ".txt";
                     File dir = new File(path);
                     File docExp = new File(dir, nom);
                     Writer output = new BufferedWriter(new FileWriter(docExp));
@@ -51,42 +48,43 @@ public class GestorDocument {
                     return false;
                 }
             case XML:
+                nom += ".xml";
                 try {
-                    nom += ".xml";
                     FileOutputStream docExp = new FileOutputStream(path + "/" + nom);
                     DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
                     org.w3c.dom.Document document = docBuilder.newDocument();
-
                     Element rootElement = document.createElement(XML_TAG_DOCUMENT);
+                    document.appendChild(rootElement);
 
-                    Element tagAutor = document.createElement(XML_TAG_AUTOR);
-                    tagAutor.appendChild(document.createTextNode(autor));
-                    rootElement.appendChild(tagAutor);
+                    Element elementAutor = document.createElement(XML_TAG_AUTOR);
+                    elementAutor.appendChild(document.createTextNode(autor));
+                    rootElement.appendChild(elementAutor);
 
-                    Element tagTitol = document.createElement(XML_TAG_TITOL);
-                    tagTitol.appendChild(document.createTextNode(titol));
-                    rootElement.appendChild(tagTitol);
+                    Element elementTitol = document.createElement(XML_TAG_TITOL);
+                    elementTitol.appendChild(document.createTextNode(titol));
+                    rootElement.appendChild(elementTitol);
 
-                    Element tagContingut = document.createElement(XML_TAG_CONTINGUT);
-                    tagContingut.appendChild(document.createTextNode(contingut));
-                    rootElement.appendChild(tagContingut);
+                    Element elementContingut = document.createElement(XML_TAG_CONTINGUT);
+                    elementContingut.appendChild(document.createTextNode(contingut));
+                    rootElement.appendChild(elementContingut);
 
                     DOMSource source = new DOMSource(document);
                     StreamResult result = new StreamResult(docExp);
                     Transformer transformer = TransformerFactory.newInstance().newTransformer();
                     transformer.transform(source, result);
 
-                    //TODO: CLOSE FILES I TAL PER A PODER ESBORRAR
-
+                    docExp.close();
                     return true;
                 } catch (Exception e) {
+                    System.out.println(e);
+                    e.printStackTrace();
                     return false;
                 }
             case PROP:
+                nom += ".prop";
                 try {
-                    nom += ".prop";
                     File dir = new File(path);
                     File docExp = new File(dir, nom);
                     Writer output = new BufferedWriter(new FileWriter(docExp));
