@@ -18,9 +18,10 @@ public class vistaCerques extends JFrame {
     private JLabel labelInfo;
     private JLabel labelResultat;
     private JPanel panelOpcions;
-    private JList Resultat;
     private JComboBox Sorting;
     private JLabel labelSorting;
+    private JTextArea Resultat;
+
 
     public vistaCerques(CtrlPresentacio pCtrlPresentacio) {
         _ctrlPresentacio = pCtrlPresentacio;
@@ -45,23 +46,23 @@ public class vistaCerques extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 List<String> res = new ArrayList<String>();
-                DefaultListModel model = (DefaultListModel) Resultat.getModel();
+                //DefaultListModel model = (DefaultListModel) Resultat.getModel();
                 if (Cerques.getSelectedItem() == "Llista de titols d'un autor") {
                     res = _ctrlPresentacio.llistaTitolsPerAutor(Info.getText(), String.valueOf(Sorting.getSelectedItem()));
                     for(int i = 0; i < res.size(); ++i) {
-                        System.out.println(res.get(i));
-                        model.addElement(res.get(i));
+                        Resultat.append(res.get(i));
+                        Resultat.append(" ");
                     }
                 } else if (Cerques.getSelectedItem() == "Llista d'autors que comencen per un prefix") {
                     res = _ctrlPresentacio.llistaAutorsPerPrefix(Info.getText(), String.valueOf(Sorting.getSelectedItem()));
                     for(int i = 0; i < res.size(); ++i) {
-                        model.addElement(res.get(i));
+                        Resultat.append(res.get(i));
+                        Resultat.append(" ");
                     }
                 }
             }
         });
-        Enrere.addComponentListener(new ComponentAdapter() {
-        });
+
         Enrere.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

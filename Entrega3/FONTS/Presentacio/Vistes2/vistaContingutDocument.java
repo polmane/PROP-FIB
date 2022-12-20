@@ -44,7 +44,9 @@ public class vistaContingutDocument extends JFrame {
         Buscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //TODO si modifiques el document no detecta el contingut
                 String docs = _ctrlPresentacio.cercaPerAutoriTitol(Autor.getText(), Titol.getText());
+                System.out.println(docs);
                 Contingut.setText(docs);
             }
         });

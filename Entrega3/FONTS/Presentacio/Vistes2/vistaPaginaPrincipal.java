@@ -168,6 +168,7 @@ public class vistaPaginaPrincipal extends JFrame{
             for (int i = 0; i < document.size(); ++i) {
                 autor.setText(document.get(1));
                 titol.setText(document.get(2));
+                System.out.println(document.get(3));
                 visualitzarModificarButton.setEnabled(true);
             }
         }
