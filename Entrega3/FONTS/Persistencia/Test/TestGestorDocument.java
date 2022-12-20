@@ -33,7 +33,7 @@ public class TestGestorDocument {
             result = new Scanner(f);
         }
         catch (FileNotFoundException e) {
-            Assert.fail("File Not Found");
+            Assert.fail("Exception during test");
             return;
         }
         Assert.assertNotNull(result);
@@ -56,7 +56,7 @@ public class TestGestorDocument {
             result = new Scanner(f);
         }
         catch (FileNotFoundException e) {
-            Assert.fail("File Not Found");
+            Assert.fail("Exception during test");
             return;
         }
         Assert.assertNotNull(result);
@@ -83,7 +83,7 @@ public class TestGestorDocument {
             result = new Scanner(f);
         }
         catch (FileNotFoundException e) {
-            Assert.fail("File Not Found");
+            Assert.fail("Exception during test");
             return;
         }
         Assert.assertNotNull(result);
@@ -119,7 +119,7 @@ public class TestGestorDocument {
             Assert.assertEquals(contingut, doc.getElementsByTagName(GestorDocument.XML_TAG_CONTINGUT).item(0).getTextContent());
         }
         catch (ParserConfigurationException | IOException | SAXException e) {
-            Assert.fail("File Not Found");
+            Assert.fail("Exception during test");
         }
         Assert.assertTrue(f.delete());
     }
@@ -146,7 +146,7 @@ public class TestGestorDocument {
             Assert.assertEquals(contingut, doc.getElementsByTagName(GestorDocument.XML_TAG_CONTINGUT).item(0).getTextContent());
         }
         catch (ParserConfigurationException | IOException | SAXException e) {
-            Assert.fail("File Not Found");
+            Assert.fail("Exception during test");
         }
         Assert.assertTrue(f.delete());
     }
