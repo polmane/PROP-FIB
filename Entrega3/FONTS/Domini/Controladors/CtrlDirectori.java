@@ -58,9 +58,9 @@ public class CtrlDirectori {
     public int seleccionarDocument(int idDoc) {
         if (directoriObert.getDocs().containsKey(idDoc)) {
             documentActiu = directoriObert.getDocs().get(idDoc);
-            return 10;
+            return -10;
         }
-        return 20;
+        return -20;
     }
 
     /**
@@ -109,7 +109,7 @@ public class CtrlDirectori {
      * @param contingut és el nou contingut que es vol utilitzar pel document
      */
     public int modificarContingut(String contingut) {
-        if (documentActiu == null) return 31;
+        if (documentActiu == null) return -31;
 
         eliminarParaulesAlDir(documentActiu.getIdDoc());
 
@@ -120,7 +120,8 @@ public class CtrlDirectori {
 
         afegeixParaulesAlDir();
         afegeixPesos();
-        return 10;
+
+        return documentActiu.getIdDoc();
     }
 
     /**
@@ -130,10 +131,10 @@ public class CtrlDirectori {
      * @param contingut representa el contingut del nou document
      */
     public int afegirDocument (String autor, String titol, String contingut) {
-        if (autor == null || autor.isBlank() || titol == null || titol.isBlank()) return 30;
+        if (autor == null || autor.isBlank() || titol == null || titol.isBlank()) return -30;
         for (Document doc : directoriObert.getDocs().values()) {
             if (doc.getAutor().equalsIgnoreCase(autor) && doc.getTitol().equalsIgnoreCase(titol)) {
-                return 20;
+                return -20;
             }
         }
         int id;
@@ -156,7 +157,7 @@ public class CtrlDirectori {
         afegeixParaulesAlDir();
         afegeixPesos();
 
-        return 10;
+        return id;
     }
 
     private void afegeixParaulesAlDir() {
@@ -166,6 +167,23 @@ public class CtrlDirectori {
             else directoriObert.getParaulesDirectori().put(paraula, documentActiu.getOcurrencies().get(paraula));
         }
     }
+
+    public void carregarDocs(HashMap<Integer, HashMap<String,Double>> pesos,
+                             HashMap<Integer, Pair<String,String>> documents,
+                             HashMap<Integer, String> continguts) {
+        for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
+            if (documents.containsKey(i)) {
+                documentActiu = new Document(i, documents.get(i).first(), documents.get(i).second(), continguts.get(i));
+                directoriObert.getDocs().put(i, documentActiu);
+                documentActiu.setOcurrencies(obteContingut());
+                documentActiu.setTfMap(tf(documentActiu.getOcurrencies()));
+                afegeixParaulesAlDir();
+            }
+        }
+        directoriObert.setPesosDocs(pesos);
+        documentActiu = null;
+    }
+
 
     private void afegeixPesos() {
         HashMap<String,Double> idfMap = idf();
@@ -358,7 +376,7 @@ public class CtrlDirectori {
     public int eliminarDocument(int idDoc) {
         //Comprovem que idDoc sigui realment un identificador d'un document
         if (!directoriObert.getDocs().containsKey(idDoc)) {
-            return 20;
+            return -20;
         }
 
         eliminarParaulesAlDir(idDoc);
@@ -372,10 +390,11 @@ public class CtrlDirectori {
         directoriObert.getDeletedIds().add(idDoc);
 
         if (documentActiu != null && idDoc == documentActiu.getIdDoc()){
+            documentActiu.setContingut(null);
             documentActiu = null;
-            return 11;
+            return -11;
         }
-        return 10;
+        return -10;
     }
 
     private void eliminarParaulesAlDir(int idDoc) {
@@ -387,17 +406,17 @@ public class CtrlDirectori {
         }
     }
 
-    public String cercaPerAutoriTitol(String autor, String titol) {
-        if (autor == null || titol == null || autor.isBlank() || titol.isBlank()) {
-            return null;
-        }
-        for (Document doc : directoriObert.getDocs().values()) {
-            if (doc.getTitol().equalsIgnoreCase(titol) && doc.getAutor().equalsIgnoreCase(autor)) {
-                return doc.getContingut();
-            }
-        }
-        return null;
-    }
+//    public String cercaPerAutoriTitol(String autor, String titol) {
+//        if (autor == null || titol == null || autor.isBlank() || titol.isBlank()) {
+//            return null;
+//        }
+//        for (Document doc : directoriObert.getDocs().values()) {
+//            if (doc.getTitol().equalsIgnoreCase(titol) && doc.getAutor().equalsIgnoreCase(autor)) {
+//                return doc.getContingut();
+//            }
+//        }
+//        return null;
+//    }
 
     public List<String> llistaAutorsPerPrefix(String pre, SORTING s) {
         if (pre == null) return null;

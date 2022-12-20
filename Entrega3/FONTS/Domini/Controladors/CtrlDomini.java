@@ -2,28 +2,61 @@ package Domini.Controladors;
 
 
 
+import Domini.Classes.Directori;
 import Domini.Classes.Document;
+import Domini.Classes.Expressio;
 import Domini.Classes.Pair;
+import Persistencia.Classes.GestorBD;
+import Persistencia.Classes.GestorDocument;
+import Persistencia.Controladors.CtrlPersistencia;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class CtrlDomini {
 
     private final CtrlDirectori _ctrlDirectori;
     private final CtrlExpressio _ctrlExpressio;
 
-    public CtrlDomini(CtrlDirectori _ctrlDirectori, CtrlExpressio _ctrlExpressio) {
-        this._ctrlDirectori = _ctrlDirectori;
-        this._ctrlExpressio = _ctrlExpressio;
+    public CtrlDirectori get_ctrlDirectori() {
+        return _ctrlDirectori;
     }
 
-    public int afegirDocument(String autor, String titol, String contingut){
-        return _ctrlDirectori.afegirDocument(autor, titol, contingut);
+    public CtrlExpressio get_ctrlExpressio() {
+        return _ctrlExpressio;
+    }
+
+    public CtrlPersistencia get_ctrlPersistencia() {
+        return _ctrlPersistencia;
+    }
+
+    private final CtrlPersistencia _ctrlPersistencia;
+
+    public CtrlDomini(CtrlDirectori _ctrlDirectori, CtrlExpressio _ctrlExpressio, CtrlPersistencia ctrlPersistencia) {
+        this._ctrlDirectori = _ctrlDirectori;
+        this._ctrlExpressio = _ctrlExpressio;
+        this._ctrlPersistencia = ctrlPersistencia;
+    }
+
+    public int afegirDocument(String autor, String titol, String contingut) {
+        if (_ctrlDirectori.getDocumentActiu() != null) _ctrlDirectori.getDocumentActiu().setContingut(null);
+        int i = _ctrlDirectori.afegirDocument(autor, titol, contingut);
+        if (i > -1) {
+            boolean b = _ctrlPersistencia.guardarContingutDocument(i, contingut);
+            if (!b) return -50;
+        }
+        return i;
     }
 
     public int seleccionarDocument(int idDoc) {
-        return _ctrlDirectori.seleccionarDocument(idDoc);
+        _ctrlDirectori.getDocumentActiu().setContingut(null);
+        int i = _ctrlDirectori.seleccionarDocument(idDoc);
+        if (i > -1) {
+            String contingut = _ctrlPersistencia.carregarContingutDocument(idDoc);
+            if (contingut == null) return -50;
+            _ctrlDirectori.getDocumentActiu().setContingut(contingut);
+        }
+        return i;
     }
 
     public int modificarAutor(String autor) {
@@ -31,11 +64,16 @@ public class CtrlDomini {
     }
 
     public int modificarTitol(String titol) {
-        return _ctrlDirectori.modificarAutor(titol);
+        return _ctrlDirectori.modificarTitol(titol);
     }
 
     public int modificarContingut(String contingut) {
-        return _ctrlDirectori.modificarContingut(contingut);
+        int i = _ctrlDirectori.modificarContingut(contingut);
+        if (i > -1) {
+            Boolean b = _ctrlPersistencia.guardarContingutDocument(i,contingut);
+            if (!b)return -50;
+        }
+        return i;
     }
 
     public List<Pair<String, String>> compararDocuments(CtrlDirectori.METODE_COMPARACIO m, CtrlDirectori.SORTING s, Integer k, Integer IdDoc) {
@@ -46,95 +84,147 @@ public class CtrlDomini {
         return _ctrlDirectori.compararQuery(m, s, k, paraules);
     }
 
-    /*
-    public void exportarDocument(CtrlDirectori.FILETYPE format, String path) {
-        _ctrlDirectori.exportarDocument(format,path);
-    } */
-
-    public int eliminarDocument(int idDoc){
-        return _ctrlDirectori.eliminarDocument(idDoc);
+    public int eliminarDocument(int idDoc) {
+        int i = _ctrlDirectori.eliminarDocument(idDoc);
+        if (i > -1 | i == -10 | i == -11) {
+            Boolean b = _ctrlPersistencia.eliminarDocument(idDoc);
+            if (!b) return -50;
+            }
+        return i;
     }
 
     public String cercaPerAutoriTitol(String autor, String titol) {
-        return _ctrlDirectori.cercaPerAutoriTitol(autor, titol);
+        if (autor == null || titol == null || autor.isBlank() || titol.isBlank()) {
+            return null;
+        }
+        for (Document doc : _ctrlDirectori.getDirectoriObert().getDocs().values()) {
+            if (doc != _ctrlDirectori.getDocumentActiu()) doc.setContingut(_ctrlPersistencia.carregarContingutDocument(doc.getIdDoc()));
+            if (doc.getTitol().equalsIgnoreCase(titol) && doc.getAutor().equalsIgnoreCase(autor)) {
+                return doc.getContingut();
+            }
+            if (doc != _ctrlDirectori.getDocumentActiu()) doc.setContingut(null);
+        }
+        return null;
     }
 
-    public List<String> llistaAutorsPerPrefix(String pre , CtrlDirectori.SORTING s) {
+    public List<String> llistaAutorsPerPrefix(String pre, CtrlDirectori.SORTING s) {
         return _ctrlDirectori.llistaAutorsPerPrefix(pre, s);
     }
 
     public List<String> llistaTitolsPerAutor(String autor, CtrlDirectori.SORTING s) {
-        return _ctrlDirectori.llistaTitolsPerAutor(autor,s);
+        return _ctrlDirectori.llistaTitolsPerAutor(autor, s);
     }
 
-    public int seleccionarExpressio (Integer idExp) {
+    public int seleccionarExpressio(Integer idExp) {
         return _ctrlExpressio.seleccionarExpressio(idExp);
     }
 
-    public int afegirExpressio(String expressio){
-        return _ctrlExpressio.afegirExpressio(expressio);
-    }
-
-    public int modificarExpressio(String exp){
-        return _ctrlExpressio.modificarExpressio(exp);
-    }
-
-    public int eliminarExpressio(int idExp){
-        return _ctrlExpressio.eliminarExpressio(idExp);
+    public int modificarExpressio(String exp) {
+        int i = _ctrlExpressio.modificarExpressio(exp);
+        if (i > -1) {
+            Boolean b = _ctrlPersistencia.guardarExpressio(i,exp);
+            if (!b) return -50;
+        }
+        return i;
     }
 
     public ArrayList<Document> selectPerExpressio(Integer idExp) {
         ArrayList<Document> resultat = new ArrayList<>();
 
         for (Document document : _ctrlDirectori.getDirectoriObert().getDocs().values()) {
-            if(_ctrlExpressio.selectPerExpressio(idExp, document)) resultat.add(document);
+            if (document != _ctrlDirectori.getDocumentActiu())document.setContingut(_ctrlPersistencia.carregarContingutDocument(document.getIdDoc()));
+            if (_ctrlExpressio.selectPerExpressio(idExp, document)) resultat.add(document);
+            if (document != _ctrlDirectori.getDocumentActiu()) document.setContingut(null);
         }
         return resultat;
     }
 
-    public static void main (String[] args){
-        CtrlDirectori dir = new CtrlDirectori();
-        CtrlExpressio exp = new CtrlExpressio();
-        CtrlDomini cdom = new CtrlDomini(dir, exp);
-        cdom._ctrlDirectori.crearDirectori(0);
-
-
-        cdom.afegirDocument("Pol","Prova","A A A A A");
-        cdom.afegirDocument("Manel","Prova","el barri gotic de girona");
-        cdom.afegirDocument("Isaac","Prova","fem un projecte de programació");
-        cdom.afegirDocument("Juli","Prova","la nit es a molt llarga");
-        cdom.afegirDocument("Pau","Prova","de de de de de de");
-        cdom.afegirDocument("Joan","Prova","el programa em peta i no se per on");
-        cdom.afegirDocument("Jordi","Prova","dema faig un viatge barcelona");
-        cdom.afegirDocument("Pep","Prova",    "la meva casa es d'estil gotic");
-        cdom.afegirDocument("Carles","Prova","A A A A A");
-        cdom.afegirDocument("Anna","Prova","B barri");
-        cdom.afegirDocument("Marta","Prova","B el");
-
-        cdom.afegirExpressio("(hola & (\"barri gotic\"))");
-
-        ArrayList<Document> docfinal = cdom.selectPerExpressio(0);
-
-        for(Document d : docfinal) {
-            System.out.println("El document: " + d.getAutor() + " i " + d.getTitol());
+    public int guardarEstat() {
+        Directori dir = _ctrlDirectori.getDirectoriObert();
+        HashMap<Integer, Pair<String, String>> docs = new HashMap<>();
+        HashMap<Integer, Document> d = dir.getDocs();
+        for (Map.Entry<Integer, Document> doc : d.entrySet()) {
+            Pair p = new Pair(doc.getValue().getAutor(), doc.getValue().getTitol());
+            docs.put(doc.getKey(), p);
         }
+        Boolean i = _ctrlPersistencia.guardarEstat(dir.getIdDir(), dir.getPesosDocs(), dir.getDeletedIds(), dir.getIdNouDoc(), docs);
+        if (!i) {
+            return -50;
+        }
+        return -10;
     }
-        /*public static void main(String[] args){
-        CtrlDirectori CtrlDir = new CtrlDirectori();
-        CtrlDomini CtrlDom = new CtrlDomini(CtrlDir,null);
-        CtrlDir.crearDirectori(0);
 
-        CtrlDom.afegirDocument("Pol","Prova","A A A A A");
-        CtrlDom.afegirDocument("Manel","Prova","el barri gotic de girona");
-        CtrlDom.afegirDocument("Isaac","Prova","fem un projecte de programació");
-        CtrlDom.afegirDocument("Juli","Prova","A A A A A");
-        CtrlDom.afegirDocument("Pau","Prova","de de de de de de");
-        CtrlDom.afegirDocument("Joan","Prova","el a a programa em peta i no se per on");
-        CtrlDom.afegirDocument("Jordi","Prova","dema faig un viatge barcelona");
-        CtrlDom.afegirDocument("Pep","Prova",    "la a a a meva casa es d'estil gotic");
-        CtrlDom.afegirDocument("Carles","Prova","la nit es a molt llarga");
+    public int carregarEstat() {
+        GestorBD.Estat estat = _ctrlPersistencia.carregarEstat();
 
-        System.out.println(CtrlDom.compararDocuments(CtrlDirectori.METODE_COMPARACIO.TF_IDF, CtrlDirectori.SORTING.SIM_DESC,2,0));
-    }*/
+        if (estat == null)
+            return -50;
 
-}
+        _ctrlDirectori.crearDirectori(estat.idDir);
+        _ctrlDirectori.getDirectoriObert().setDeletedIds(estat.deletedIds);
+        _ctrlDirectori.getDirectoriObert().setIdNouDoc(estat.idNouDoc);
+        HashMap<Integer, String> continguts = new HashMap<>();
+        for (int i = 0; i < estat.idNouDoc; ++i) {
+            if (estat.docs.containsKey(i)) {
+                String contingut = _ctrlPersistencia.carregarContingutDocument(i);
+                if (contingut == null)
+                    return -50;
+                continguts.put(i, contingut);
+            }
+        }
+        _ctrlDirectori.carregarDocs(estat.pesosDocs, estat.docs, continguts);
+
+        return -10;
+    }
+
+    public int carregarExpressions() {
+        ArrayList<Pair<Integer, String>> expressionsArray = _ctrlPersistencia.carregarExpressions();
+
+        if (expressionsArray == null)
+            return -50;
+
+        HashMap<Integer, Expressio> expressionsHashMap = new HashMap<>();
+        for (Pair<Integer, String> expPair : expressionsArray) {
+            Expressio exp = new Expressio(expPair.first(), expPair.second());
+
+            expressionsHashMap.put(expPair.first(), exp);
+        }
+        _ctrlExpressio.setExpressions(expressionsHashMap);
+
+        return -10;
+    }
+
+    public int exportarDocument(GestorDocument.FILETYPE format, String path) {
+        Document d = _ctrlDirectori.getDocumentActiu();
+        Boolean b = _ctrlPersistencia.exportarDocument(d.getAutor(),d.getTitol(),d.getContingut(),format,path);
+        if (!b) return -50;
+        return d.getIdDoc();
+    }
+
+    public int importarDocument(String path) {
+        ArrayList<String> values = _ctrlPersistencia.importarDocument(path);
+        if (values == null)
+            return -50;
+
+        return _ctrlDirectori.afegirDocument(values.get(0), values.get(1), values.get(2));
+    }
+
+    public int guardarExpressio (String expressio) {
+        int i = _ctrlExpressio.afegirExpressio(expressio);
+        if (i > -1) {
+            Boolean b = _ctrlPersistencia.guardarExpressio(i,expressio);
+            if (!b) return -50;
+        }
+        return i;
+    }
+
+    public int eliminarExpressio (int idExp) {
+        int i = _ctrlExpressio.eliminarExpressio(idExp);
+        if (i > -1) {
+            Boolean b = _ctrlPersistencia.eliminarExpressio(idExp);
+            if (!b) return -50;
+        }
+        return i;
+    }
+
+    }

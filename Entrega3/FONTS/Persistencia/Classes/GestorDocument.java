@@ -1,8 +1,6 @@
 package Persistencia.Classes;
 
-import Domini.Classes.Document;
 
-import org.junit.Assert;
 import org.w3c.dom.*;
 
 import javax.xml.XMLConstants;
@@ -13,7 +11,10 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class GestorDocument {
 
@@ -21,151 +22,172 @@ public class GestorDocument {
         TXT, XML, PROP
     }
 
-    private static final String XML_TAG_DOCUMENT = "document";
-    private static final String XML_TAG_AUTOR = "autor";
-    private static final String XML_TAG_TITOL = "titol";
-    private static final String XML_TAG_CONTINGUT = "contingut";
+    public static final String XML_TAG_DOCUMENT = "document";
+    public static final String XML_TAG_AUTOR = "autor";
+    public static final String XML_TAG_TITOL = "titol";
+    public static final String XML_TAG_CONTINGUT = "contingut";
+    public static final String PROP_TAG_AUTOR = "(autor)";
+    public static final String PROP_TAG_TITOL = "(titol)";
+    public static final String PROP_TAG_CONTINGUT = "(contingut)";
 
-    public void exportarDocument(FILETYPE format, Document doc, String path) {
-        String nom = doc.getAutor() + '_' + doc.getTitol();
+    public Boolean exportarDocument(String autor, String titol, String contingut, FILETYPE format, String path) {
+        String nom = autor + '_' + titol;
         switch (format) {
             case TXT:
+                nom += ".txt";
                 try {
-                    nom += ".txt";
                     File dir = new File(path);
                     File docExp = new File(dir, nom);
                     Writer output = new BufferedWriter(new FileWriter(docExp));
-                    output.write(doc.getAutor() + "\n");
-                    output.write(doc.getTitol() + "\n");
-                    output.write(doc.getContingut());
-                    output.flush();
+                    output.write(autor + "\n");
+                    output.write(titol + "\n");
+                    output.write(contingut);
+                    output.close();
+                    return true;
                 } catch (Exception e) {
-                    System.err.println("El document en format .txt no s'ha creat correctament");
-                    throw new RuntimeException(e);
+                    return false;
                 }
-                break;
             case XML:
+                nom += ".xml";
                 try {
-                    nom += ".xml";
                     FileOutputStream docExp = new FileOutputStream(path + "/" + nom);
                     DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
                     org.w3c.dom.Document document = docBuilder.newDocument();
-                    Element rootElement = document.createElement(XML_TAG_DOCUMENT); //FIXME:
-                    // Aqui petava per caracter ilegal a on ara posa FILE, abans hi havia la variable 'nom' (entenc q el "." la liava)
-                    // Serveix aixi amb aquesta etiqueta?? cal que sigui el nom del fitxer?? Ara mateix es crea el document correctament ;-)
+                    Element rootElement = document.createElement(XML_TAG_DOCUMENT);
                     document.appendChild(rootElement);
-                    Element autor = document.createElement(XML_TAG_AUTOR);
-                    autor.appendChild(document.createTextNode(doc.getAutor()));
-                    rootElement.appendChild(autor);
-                    Element titol = document.createElement(XML_TAG_TITOL);
-                    titol.appendChild(document.createTextNode(doc.getTitol()));
-                    rootElement.appendChild(titol);
-                    if (!doc.getContingut().isBlank()) {
-                        Element contingut = document.createElement(XML_TAG_CONTINGUT);
-                        contingut.appendChild(document.createTextNode(doc.getContingut()));
-                        rootElement.appendChild(contingut);
-                    }
 
-                    TransformerFactory transformerFactory = TransformerFactory.newInstance();
-                    Transformer transformer = transformerFactory.newTransformer();
+                    Element elementAutor = document.createElement(XML_TAG_AUTOR);
+                    elementAutor.appendChild(document.createTextNode(autor));
+                    rootElement.appendChild(elementAutor);
+
+                    Element elementTitol = document.createElement(XML_TAG_TITOL);
+                    elementTitol.appendChild(document.createTextNode(titol));
+                    rootElement.appendChild(elementTitol);
+
+                    Element elementContingut = document.createElement(XML_TAG_CONTINGUT);
+                    elementContingut.appendChild(document.createTextNode(contingut));
+                    rootElement.appendChild(elementContingut);
+
                     DOMSource source = new DOMSource(document);
                     StreamResult result = new StreamResult(docExp);
-
+                    Transformer transformer = TransformerFactory.newInstance().newTransformer();
                     transformer.transform(source, result);
+
+                    docExp.close();
+                    return true;
                 } catch (Exception e) {
-                    System.err.println("El document en format .xml no s'ha creat correctament");
-                    throw new RuntimeException(e);
+                    System.out.println(e);
+                    e.printStackTrace();
+                    return false;
                 }
-                break;
-            default:
+            case PROP:
+                nom += ".prop";
                 try {
-                    nom += ".prop";
                     File dir = new File(path);
                     File docExp = new File(dir, nom);
                     Writer output = new BufferedWriter(new FileWriter(docExp));
-                    output.write("(autor)->" + doc.getAutor() + "<-");
-                    output.write("(titol)->" + doc.getTitol() + "<-");
-                    output.write("(contingut)->" + doc.getContingut() + "<-");
-                    output.flush();
+                    output.write(PROP_TAG_AUTOR + "->" + autor + "<-");
+                    output.write(PROP_TAG_TITOL + "->" + titol + "<-");
+                    output.write(PROP_TAG_CONTINGUT + "->" + contingut + "<-");
+                    output.close();
+                    return true;
                 } catch (Exception e) {
-                    System.err.println("El document en format .prop no s'ha creat correctament");
-                    throw new RuntimeException(e);
+                    return false;
                 }
-                break;
+            default:
+                return false;
         }
     }
 
-    public Document importarDocument(int idDoc, String path){
-        if (path.endsWith(".txt")) {
-            return ParseTXT(idDoc, path);
+    public ArrayList<String> importarDocument(String path){
+        //NOTE: El path pot ser absolut o relatiu a la base del projecte (subgrup-prop11.1)
+        //      P.E. per accedir a la carpeta exported el path haura de ser:
+        //           "./Entrega3/FONTS/Persistencia/Exported"
+        try {
+            if (path.endsWith(".txt")) {
+                return parseTXT(path);
+            }
+            else if (path.endsWith(".xml")) {
+                return parseXML(path);
+            }
+            else if (path.endsWith(".prop")) {
+                return parsePROP(path);
+            }
         }
-        else if (path.endsWith(".xml")) {
-            return ParseXML(idDoc, path);
+        catch (Exception e) {
+            System.err.println("El document " + path + " en format no s'ha importat correctament");
+            return null;
         }
-        else if (path.endsWith(".prop")) {
-            return ParsePROP(idDoc, path);
-        }
-        Assert.fail("ERROR: Format del document situat a " + path + " no suportat");
+        System.err.println("ERROR: Format del document situat a " + path + " no suportat");
         return null;
     }
 
-    private Document ParseTXT(int idDoc, String path) {
-        String autor = "";
-        String titol = "";
-        StringBuilder contingut = new StringBuilder();
+    private ArrayList<String> parseTXT(String path) {
+        ArrayList<String> values = new ArrayList<>(3);
         try {
-            File f = new File(path);
-            Scanner scanner = new Scanner(f);
-            autor = scanner.nextLine();
-            titol = scanner.nextLine();
+            Scanner scanner = new Scanner(new File(path));
+            values.add(scanner.nextLine());
+            values.add(scanner.nextLine());
+            StringBuilder contingut = new StringBuilder();
             while (scanner.hasNextLine()) {
                 contingut.append(scanner.nextLine()).append("\n");
             }
+            values.add(contingut.toString());
         } catch (Exception e) {
-            System.err.println("No s'ha pogut importar el document " + path + " en format TXT");
-            throw new RuntimeException(e);
+            return null;
         }
-        return new Document(idDoc, autor, titol, contingut.toString());
+        return values;
     }
 
-    private Document ParseXML(int idDoc, String path) {
-        String autor = "", titol = "", contingut = "";
+    private ArrayList<String> parseXML(String path) {
+        ArrayList<String> values = new ArrayList<>(3);
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 
             DocumentBuilder db = dbf.newDocumentBuilder();
             org.w3c.dom.Document doc = db.parse(new File(path));
-            Element document = (Element) doc.getElementsByTagName(XML_TAG_DOCUMENT).item(0);
 
-            autor = document.getElementsByTagName(XML_TAG_AUTOR).item(0).getTextContent();
-            titol = document.getElementsByTagName(XML_TAG_TITOL).item(0).getTextContent();
-            //FIXME: Si el document xml no te tag contingut peta
-            contingut = document.getElementsByTagName(XML_TAG_CONTINGUT).item(0).getTextContent();
+            values.add(doc.getElementsByTagName(XML_TAG_AUTOR).item(0).getTextContent());
+            values.add(doc.getElementsByTagName(XML_TAG_TITOL).item(0).getTextContent());
+            values.add(doc.getElementsByTagName(XML_TAG_CONTINGUT).item(0).getTextContent());
         } catch (Exception e) {
-            System.err.println("No s'ha pogut importar el document " + path + " en format XML");
-            throw new RuntimeException(e);
+            return null;
         }
-        return new Document(idDoc, autor, titol, contingut);
+        return values;
     }
 
-    private Document ParsePROP(int idDoc, String path) {
-        String autor = "", titol = "", contingut = "";
-        Assert.fail("NOT IMPLEMENTED PARSE PROP " + path);
-        return new Document(idDoc, autor, titol, contingut);
-    }
+    private ArrayList<String> parsePROP(String path) {
+        ArrayList<String> values = new ArrayList<>(3);
+        try {
+            Scanner scanner = new Scanner(new File(path));
 
+            scanner.useDelimiter("->|<-");
+            List<String> tokens = scanner.tokens().collect(Collectors.toList());
 
-    public static void main(String[] args) {
-        Document doc = new Document(0, "autor_document", "titol_document", "contingut_document");
-        GestorDocument gestor = new GestorDocument();
-        gestor.exportarDocument(FILETYPE.XML, doc, "D:/Juli/01_Uni/Q5/PROP/subgrup-prop11.1/Entrega3/FONTS/Persistencia/Exported/");
-        Document d = gestor.importarDocument(0, "D:/Juli/01_Uni/Q5/PROP/subgrup-prop11.1/Entrega3/FONTS/Persistencia/Exported/autor_document_titol_document.xml");
-        System.out.println("Document 1");
-        System.out.println(d.getAutor());
-        System.out.println(d.getTitol());
-        System.out.println(d.getContingut());
+            int index = tokens.indexOf(PROP_TAG_AUTOR);
+            if (index < 0)
+                return null;
+            values.add(tokens.get(index + 1));
+
+            index = tokens.indexOf(PROP_TAG_TITOL);
+            if (index < 0)
+                return null;
+            values.add(tokens.get(index + 1));
+
+            index = tokens.indexOf(PROP_TAG_CONTINGUT);
+            if (index >= 0) {
+                values.add(tokens.get(tokens.indexOf(PROP_TAG_CONTINGUT) + 1));
+            }
+            else {
+                values.add("");
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+        return values;
     }
 }
