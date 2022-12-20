@@ -22,6 +22,7 @@ public class GestorDocument {
         TXT, XML, PROP
     }
 
+    public static final String XML_TAG_DOCUMENT = "document";
     public static final String XML_TAG_AUTOR = "autor";
     public static final String XML_TAG_TITOL = "titol";
     public static final String XML_TAG_CONTINGUT = "contingut";
@@ -58,19 +59,19 @@ public class GestorDocument {
 
                     org.w3c.dom.Document document = docBuilder.newDocument();
 
-                    //FIXME: ARA MATEIX PETA PQ NO SER FER XML, LI HAURIEM DE PREGUNTAR EL FORMAT AL CARLES
+                    Element rootElement = document.createElement(XML_TAG_DOCUMENT);
 
                     Element tagAutor = document.createElement(XML_TAG_AUTOR);
                     tagAutor.appendChild(document.createTextNode(autor));
-                    document.appendChild(tagAutor);
+                    rootElement.appendChild(tagAutor);
 
                     Element tagTitol = document.createElement(XML_TAG_TITOL);
                     tagTitol.appendChild(document.createTextNode(titol));
-                    document.appendChild(tagTitol);
+                    rootElement.appendChild(tagTitol);
 
                     Element tagContingut = document.createElement(XML_TAG_CONTINGUT);
                     tagContingut.appendChild(document.createTextNode(contingut));
-                    document.appendChild(tagContingut);
+                    rootElement.appendChild(tagContingut);
 
                     DOMSource source = new DOMSource(document);
                     StreamResult result = new StreamResult(docExp);

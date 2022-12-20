@@ -39,7 +39,7 @@ public class CtrlPersistencia {
     }
 
     public ArrayList<Pair<Integer, String>> carregarExpressions() {
-        return _gExp.carregarExpressions());
+        return _gExp.carregarExpressions();
     }
 
     public Boolean eliminarDocument(int idDoc) {

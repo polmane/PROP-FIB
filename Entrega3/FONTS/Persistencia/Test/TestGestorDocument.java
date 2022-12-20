@@ -4,8 +4,13 @@ import Persistencia.Classes.GestorDocument;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -92,30 +97,40 @@ public class TestGestorDocument {
     }
 
     //TODO: FIX XML EXPORT I DESPRES FER BE EL TEST D'EXPORT
-    /*
+
+    private final String XML_VERSION_TAG = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>";
+
     @Test
     public void testExportarDocumentXMLSimple() {
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova1";
-        gDoc.exportarDocument(autor, titol, "contingut de prova", GestorDocument.FILETYPE.XML, PATH_OUT);
-        File f = new File(PATH_OUT + "/" + autor + "_" + titol + ".xml");
-        Scanner result;
+        String contingut = "contingut de prova";
+        gDoc.exportarDocument(autor, titol, contingut, GestorDocument.FILETYPE.XML, PATH_OUT);
         try {
-            result = new Scanner(f);
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            org.w3c.dom.Document doc = db.parse(new File(PATH_OUT + "/" + autor + "_" + titol + ".xml"));
+
+            values.add(doc.getElementsByTagName(XML_TAG_AUTOR).item(0).getTextContent());
+            values.add(doc.getElementsByTagName(XML_TAG_TITOL).item(0).getTextContent());
+            values.add(doc.getElementsByTagName(XML_TAG_CONTINGUT).item(0).getTextContent());
         }
-        catch (FileNotFoundException e) {
+        catch (ParserConfigurationException | IOException e) {
             Assert.fail("File Not Found");
             return;
         }
         Assert.assertNotNull(result);
+        Assert.assertEquals(XML_VERSION_TAG, result.nextLine());
         Assert.assertEquals(autor, result.nextLine());
         Assert.assertEquals(titol, result.nextLine());
         Assert.assertEquals(contingut, result.nextLine());
         result.close();
         f.delete();
     }
-
+    /*
     @Test
     public void testExportarDocumentXMLSenseContingut() {
         GestorDocument gDoc = new GestorDocument();
