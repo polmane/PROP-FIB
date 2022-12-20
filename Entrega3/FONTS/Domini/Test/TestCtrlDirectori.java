@@ -443,36 +443,36 @@ public class TestCtrlDirectori {
      *              Comprovem que si cap document té el mateix titol i autor que la cerca es retorni null
      *              Finalment comprovem que es retorni el contingut quan existeix el document que busquem
      */
-    @Test
-    public void TestCercaPerAutoriTitol() {
-        CtrlDirectori CtrlDir = new CtrlDirectori();
-        CtrlDir.crearDirectori(0);
-
-        //Cas directori buit
-        assertNull(CtrlDir.cercaPerAutoriTitol("Autor", "Titol"));
-
-        CtrlDir.afegirDocument("Juli","Titol1","Juli1");
-        CtrlDir.afegirDocument("Juli","Titol2","Juli2");
-        CtrlDir.afegirDocument("Pol","Titol1","Pol1");
-        CtrlDir.afegirDocument("Pol", "Titol2", "Pol2");
-        CtrlDir.afegirDocument("Isaac","Titol1","Isaac1");
-        CtrlDir.afegirDocument("Isaac", "Titol2", "Isaac2");
-
-        //Nulls o string buida
-        assertNull(CtrlDir.cercaPerAutoriTitol("Juli", null));
-        assertNull(CtrlDir.cercaPerAutoriTitol("Juli", ""));
-        assertNull(CtrlDir.cercaPerAutoriTitol(null, "Titol1"));
-        assertNull(CtrlDir.cercaPerAutoriTitol("", "Titol1"));
-
-        //Titol erroni
-        assertNull(CtrlDir.cercaPerAutoriTitol("Juli", "TitolErroni"));
-
-        //Autor erroni
-        assertNull(CtrlDir.cercaPerAutoriTitol("AutorErroni", "Titol1"));
-
-        //Funcionament correcte
-        assertEquals("Pol2", CtrlDir.cercaPerAutoriTitol("Pol", "Titol2"));
-    }
+//    @Test
+//    public void TestCercaPerAutoriTitol() {
+//        CtrlDirectori CtrlDir = new CtrlDirectori();
+//        CtrlDir.crearDirectori(0);
+//
+//        //Cas directori buit
+//        assertNull(CtrlDir.cercaPerAutoriTitol("Autor", "Titol"));
+//
+//        CtrlDir.afegirDocument("Juli","Titol1","Juli1");
+//        CtrlDir.afegirDocument("Juli","Titol2","Juli2");
+//        CtrlDir.afegirDocument("Pol","Titol1","Pol1");
+//        CtrlDir.afegirDocument("Pol", "Titol2", "Pol2");
+//        CtrlDir.afegirDocument("Isaac","Titol1","Isaac1");
+//        CtrlDir.afegirDocument("Isaac", "Titol2", "Isaac2");
+//
+//        //Nulls o string buida
+//        assertNull(CtrlDir.cercaPerAutoriTitol("Juli", null));
+//        assertNull(CtrlDir.cercaPerAutoriTitol("Juli", ""));
+//        assertNull(CtrlDir.cercaPerAutoriTitol(null, "Titol1"));
+//        assertNull(CtrlDir.cercaPerAutoriTitol("", "Titol1"));
+//
+//        //Titol erroni
+//        assertNull(CtrlDir.cercaPerAutoriTitol("Juli", "TitolErroni"));
+//
+//        //Autor erroni
+//        assertNull(CtrlDir.cercaPerAutoriTitol("AutorErroni", "Titol1"));
+//
+//        //Funcionament correcte
+//        assertEquals("Pol2", CtrlDir.cercaPerAutoriTitol("Pol", "Titol2"));
+//    }
 
     /**
      * Objecte de la prova: Test del mètode llistaAutorsPerPrefix de la classe CtrlDirectori

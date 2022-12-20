@@ -2,6 +2,7 @@ package Persistencia.Classes;
 
 
 import Domini.Classes.Pair;
+import Persistencia.Controladors.CtrlPersistencia;
 
 import java.io.*;
 import java.util.HashMap;
@@ -38,6 +39,7 @@ public class GestorBD {
                 bw.write(contingut);
             }
             bw.close();
+            fw.close();
         }
         catch (IOException e) {
             return false;
@@ -101,6 +103,11 @@ public class GestorBD {
             return null;
         }
         return estatObject;
+    }
+
+    public static void main(String[] args) {
+        CtrlPersistencia ctrlPersistencia = new CtrlPersistencia();
+        System.out.println(ctrlPersistencia.eliminarDocument(0));
     }
 
 }

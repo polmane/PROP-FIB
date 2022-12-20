@@ -156,7 +156,7 @@ public class CtrlDirectori {
         documentActiu.setTfMap(tf(documentActiu.getOcurrencies()));
         afegeixParaulesAlDir();
         afegeixPesos();
-        
+
         return id;
     }
 
@@ -406,17 +406,17 @@ public class CtrlDirectori {
         }
     }
 
-    public String cercaPerAutoriTitol(String autor, String titol) {
-        if (autor == null || titol == null || autor.isBlank() || titol.isBlank()) {
-            return null;
-        }
-        for (Document doc : directoriObert.getDocs().values()) {
-            if (doc.getTitol().equalsIgnoreCase(titol) && doc.getAutor().equalsIgnoreCase(autor)) {
-                return doc.getContingut();
-            }
-        }
-        return null;
-    }
+//    public String cercaPerAutoriTitol(String autor, String titol) {
+//        if (autor == null || titol == null || autor.isBlank() || titol.isBlank()) {
+//            return null;
+//        }
+//        for (Document doc : directoriObert.getDocs().values()) {
+//            if (doc.getTitol().equalsIgnoreCase(titol) && doc.getAutor().equalsIgnoreCase(autor)) {
+//                return doc.getContingut();
+//            }
+//        }
+//        return null;
+//    }
 
     public List<String> llistaAutorsPerPrefix(String pre, SORTING s) {
         if (pre == null) return null;

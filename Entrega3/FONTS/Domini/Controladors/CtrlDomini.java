@@ -39,6 +39,7 @@ public class CtrlDomini {
     }
 
     public int afegirDocument(String autor, String titol, String contingut) {
+        if (_ctrlDirectori.getDocumentActiu() != null) _ctrlDirectori.getDocumentActiu().setContingut(null);
         int i = _ctrlDirectori.afegirDocument(autor, titol, contingut);
         if (i > -1) {
             boolean b = _ctrlPersistencia.guardarContingutDocument(i, contingut);
@@ -63,7 +64,7 @@ public class CtrlDomini {
     }
 
     public int modificarTitol(String titol) {
-        return _ctrlDirectori.modificarAutor(titol);
+        return _ctrlDirectori.modificarTitol(titol);
     }
 
     public int modificarContingut(String contingut) {
@@ -85,7 +86,7 @@ public class CtrlDomini {
 
     public int eliminarDocument(int idDoc) {
         int i = _ctrlDirectori.eliminarDocument(idDoc);
-        if (i > -1) {
+        if (i > -1 | i == -10 | i == -11) {
             Boolean b = _ctrlPersistencia.eliminarDocument(idDoc);
             if (!b) return -50;
             }
@@ -93,7 +94,17 @@ public class CtrlDomini {
     }
 
     public String cercaPerAutoriTitol(String autor, String titol) {
-        return _ctrlDirectori.cercaPerAutoriTitol(autor, titol);
+        if (autor == null || titol == null || autor.isBlank() || titol.isBlank()) {
+            return null;
+        }
+        for (Document doc : _ctrlDirectori.getDirectoriObert().getDocs().values()) {
+            if (doc != _ctrlDirectori.getDocumentActiu()) doc.setContingut(_ctrlPersistencia.carregarContingutDocument(doc.getIdDoc()));
+            if (doc.getTitol().equalsIgnoreCase(titol) && doc.getAutor().equalsIgnoreCase(autor)) {
+                return doc.getContingut();
+            }
+            if (doc != _ctrlDirectori.getDocumentActiu()) doc.setContingut(null);
+        }
+        return null;
     }
 
     public List<String> llistaAutorsPerPrefix(String pre, CtrlDirectori.SORTING s) {
@@ -121,9 +132,9 @@ public class CtrlDomini {
         ArrayList<Document> resultat = new ArrayList<>();
 
         for (Document document : _ctrlDirectori.getDirectoriObert().getDocs().values()) {
-            document.setContingut(_ctrlPersistencia.carregarContingutDocument(document.getIdDoc()));
+            if (document != _ctrlDirectori.getDocumentActiu())document.setContingut(_ctrlPersistencia.carregarContingutDocument(document.getIdDoc()));
             if (_ctrlExpressio.selectPerExpressio(idExp, document)) resultat.add(document);
-            document.setContingut(null);
+            if (document != _ctrlDirectori.getDocumentActiu()) document.setContingut(null);
         }
         return resultat;
     }
