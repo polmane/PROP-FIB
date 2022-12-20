@@ -443,7 +443,7 @@ public class CtrlDirectori {
         return resultat;
     }
 
-    public ArrayList<String>  getIdDocSeleccionat() {
+    public ArrayList<String>  toStringDocActiu() {
         ArrayList<String> resultat = new ArrayList<>();
         if (documentActiu != null) {
             resultat.add(String.valueOf(documentActiu.getIdDoc()));

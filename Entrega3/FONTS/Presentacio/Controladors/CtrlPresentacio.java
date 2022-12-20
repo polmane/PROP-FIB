@@ -154,12 +154,14 @@ public class CtrlPresentacio {
         return _ctrlDomini.llistarExpressions();
     }
 
-    public ArrayList<String>  getIdDocSeleccionat() {
-        return _ctrlDomini.getIdDocSeleccionat();
+    public ArrayList<String>  toStringDocActiu() {
+        return _ctrlDomini.toStringDocActiu();
     }
 
     public int getIdExp() {
         return _ctrlDomini.getIdExp();
     }
+
+
 
 }

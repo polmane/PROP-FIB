@@ -51,7 +51,7 @@ public class vistaPaginaPrincipal extends JFrame{
                 setVisible(false);
                 System.out.println("Tancant aplicacio, guardant estat");
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -65,7 +65,6 @@ public class vistaPaginaPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 _ctrlPresentacio.ObrirVistaCrearDocument();
-                documentSeleccionat();
             }
         });
         seleccionarDocumentButton.addActionListener(new ActionListener() {
@@ -78,7 +77,7 @@ public class vistaPaginaPrincipal extends JFrame{
         importarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Exportar FileChooser");
+                System.out.println("Importar FileChooser");
             }
         });
         gestionarExpressionsButton.addActionListener(new ActionListener() {
@@ -119,7 +118,7 @@ public class vistaPaginaPrincipal extends JFrame{
                     error.add(txtError);
                     error.setVisible(true);
                 } else if (codi == 11) {
-                    JDialog error = new JDialog(frame, "Error");
+                    JDialog error = new JDialog(frame, "Acció");
                     error.setBounds(800, 300, 400, 200);
                     error.setLayout(null);
 
@@ -158,7 +157,7 @@ public class vistaPaginaPrincipal extends JFrame{
     }
 
     public int documentSeleccionat() {
-        ArrayList<String> document = _ctrlPresentacio.getIdDocSeleccionat();
+        ArrayList<String> document = _ctrlPresentacio.toStringDocActiu();
         String s = document.get(0);
         if (s == "-31") {
             autor.setText("");
@@ -184,6 +183,7 @@ public class vistaPaginaPrincipal extends JFrame{
     public void activar() {
         this.setEnabled(true);
         this.toFront();
+        documentSeleccionat();
     }
 
     public void desactivar() {

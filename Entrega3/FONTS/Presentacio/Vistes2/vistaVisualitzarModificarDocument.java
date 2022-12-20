@@ -48,7 +48,7 @@ public class vistaVisualitzarModificarDocument extends JFrame{
             }
         });
 
-        ArrayList<String> document = _ctrlPresentacio.getIdDocSeleccionat();
+        ArrayList<String> document = _ctrlPresentacio.toStringDocActiu();
         String s = document.get(0);
         if (s == "-31") {
             Autor.setText("");
