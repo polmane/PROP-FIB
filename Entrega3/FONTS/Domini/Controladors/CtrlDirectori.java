@@ -435,6 +435,7 @@ public class CtrlDirectori {
 
     public ArrayList<String> llistarDocuments() {
         ArrayList<String> resultat = new ArrayList<>();
+        if (directoriObert.getDocs().size() == 0) return null;
         for (Document doc : directoriObert.getDocs().values()) {
             resultat.add(String.valueOf(doc.getIdDoc()));
             resultat.add(doc.getAutor());

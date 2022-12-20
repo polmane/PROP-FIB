@@ -25,6 +25,9 @@ public class vistaVisualitzarModificarDocument extends JFrame{
     private JLabel labelAutor;
     private JLabel labelTitol;
     private JLabel labelContingut;
+    private JButton button1;
+    private JButton button2;
+    private JScrollPane scrollPane;
 
     private JFrame frame = new JFrame("JFrame");
 
@@ -34,6 +37,9 @@ public class vistaVisualitzarModificarDocument extends JFrame{
         setBounds(450, 200, 700, 400);
         setResizable(true);
         setTitle("Gestió d'un document");
+
+        Contingut.setLineWrap(true);
+        Contingut.setWrapStyleWord(true);
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -101,6 +107,7 @@ public class vistaVisualitzarModificarDocument extends JFrame{
                 }
                 int codi2 = _ctrlPresentacio.modificarContingut(Contingut.getText());
                 System.out.println("modificant Document");
+
                 _ctrlPresentacio.activarPagPrincipal();
                 frame.dispose();
                 dispose();

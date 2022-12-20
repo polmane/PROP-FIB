@@ -35,7 +35,7 @@ public class vistaPaginaPrincipal extends JFrame{
         _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
-        setResizable(true);
+        setResizable(false);
         setTitle("Pàgina principal");
 
         setVisible(true);
@@ -137,6 +137,9 @@ public class vistaPaginaPrincipal extends JFrame{
                 } else if (cerquesBox.getSelectedItem() == "Llista de títols d'un autor" || cerquesBox.getSelectedItem() == "Llista d'autors que comencen per un prefix") {
                     _ctrlPresentacio.ObrirVistaCerques();
                     desactivar();
+                } else if (cerquesBox.getSelectedItem() == "Llista de títols d'un autor o d'autors que comencen per un prefix") {
+                    _ctrlPresentacio.ObrirVistaCerques();
+                    desactivar();
                 } else if (cerquesBox.getSelectedItem() == "Documents semblants") {
                     _ctrlPresentacio.ObrirVistaDocumentsSemblants();
                     desactivar();
@@ -160,6 +163,7 @@ public class vistaPaginaPrincipal extends JFrame{
         } else {
             autor.setText(document.get(1));
             titol.setText(document.get(2));
+            System.out.println(s + " | " + document.get(1) + " | " + document.get(2) );
             System.out.println(document.get(3));
             visualitzarModificarButton.setEnabled(true);
             eliminarDocumentSeleccionatButton.setEnabled(true);

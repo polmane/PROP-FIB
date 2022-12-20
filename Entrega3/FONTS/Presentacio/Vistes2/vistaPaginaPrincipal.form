@@ -184,8 +184,7 @@
         </constraints>
         <properties>
           <model>
-            <item value="Llista de títols d'un autor"/>
-            <item value="Llista d'autors que comencen per un prefix"/>
+            <item value="Llista de títols d'un autor o d'autors que comencen per un prefix"/>
             <item value="Contingut d'un document"/>
             <item value="Documents semblants"/>
             <item value="Documents rellevants"/>
@@ -227,7 +226,7 @@
       </hspacer>
       <hspacer id="dd00c">
         <constraints>
-          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
       </hspacer>
     </children>
