@@ -35,7 +35,7 @@ public class Document {
         this.idDoc = idDoc;
         this.autor = autor;
         this.titol = titol;
-        this.contingut = null;
+        this.contingut = "";
         this.ocurrencies = new HashMap<>();
         this.tfMap = new HashMap<>();
     }

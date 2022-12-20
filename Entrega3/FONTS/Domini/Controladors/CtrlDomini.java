@@ -17,6 +17,19 @@ public class CtrlDomini {
 
     private final CtrlDirectori _ctrlDirectori;
     private final CtrlExpressio _ctrlExpressio;
+
+    public CtrlDirectori get_ctrlDirectori() {
+        return _ctrlDirectori;
+    }
+
+    public CtrlExpressio get_ctrlExpressio() {
+        return _ctrlExpressio;
+    }
+
+    public CtrlPersistencia get_ctrlPersistencia() {
+        return _ctrlPersistencia;
+    }
+
     private final CtrlPersistencia _ctrlPersistencia;
 
     public CtrlDomini(CtrlDirectori _ctrlDirectori, CtrlExpressio _ctrlExpressio, CtrlPersistencia ctrlPersistencia) {
