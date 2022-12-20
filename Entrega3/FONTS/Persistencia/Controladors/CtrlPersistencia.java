@@ -34,8 +34,12 @@ public class CtrlPersistencia {
         return _gBD.guardarEstat(idDir, pesosDocs, deletedIds, idNouDoc, docs);
     }
 
-    public Pair<GestorBD.Estat, ArrayList<Pair<Integer, String>>> carregarEstat() {
-        return new Pair(_gBD.carregarEstat(), _gExp.carregarExpressions());
+    public GestorBD.Estat carregarEstat() {
+        return _gBD.carregarEstat();
+    }
+
+    public ArrayList<Pair<Integer, String>> carregarExpressions() {
+        return _gExp.carregarExpressions());
     }
 
     public Boolean eliminarDocument(int idDoc) {

@@ -144,20 +144,10 @@ public class CtrlDomini {
     }
 
     public int carregarEstat() {
-        Pair<GestorBD.Estat, ArrayList<Pair<Integer, String>>> resultat = _ctrlPersistencia.carregarEstat();
-        GestorBD.Estat estat = resultat.first();
-        ArrayList<Pair<Integer, String>> expressionsArray = resultat.second();
+        GestorBD.Estat estat = _ctrlPersistencia.carregarEstat();
 
-        if (estat == null | expressionsArray == null)
+        if (estat == null)
             return -50;
-
-        HashMap<Integer, Expressio> expressionsHashMap = new HashMap<>();
-        for (Pair<Integer, String> expPair : expressionsArray) {
-            Expressio exp = new Expressio(expPair.first(), expPair.second());
-
-            expressionsHashMap.put(expPair.first(), exp);
-        }
-        _ctrlExpressio.setExpressions(expressionsHashMap);
 
         _ctrlDirectori.crearDirectori(estat.idDir);
         _ctrlDirectori.getDirectoriObert().setDeletedIds(estat.deletedIds);
@@ -172,6 +162,23 @@ public class CtrlDomini {
             }
         }
         _ctrlDirectori.carregarDocs(estat.pesosDocs, estat.docs, continguts);
+
+        return -10;
+    }
+
+    public int carregarExpressions() {
+        ArrayList<Pair<Integer, String>> expressionsArray = _ctrlPersistencia.carregarExpressions();
+
+        if (expressionsArray == null)
+            return -50;
+
+        HashMap<Integer, Expressio> expressionsHashMap = new HashMap<>();
+        for (Pair<Integer, String> expPair : expressionsArray) {
+            Expressio exp = new Expressio(expPair.first(), expPair.second());
+
+            expressionsHashMap.put(expPair.first(), exp);
+        }
+        _ctrlExpressio.setExpressions(expressionsHashMap);
 
         return -10;
     }

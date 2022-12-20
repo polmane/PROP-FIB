@@ -26,7 +26,7 @@ public class GestorBD {
         }
     }
 
-    public Boolean guardarContingutDocument (int idDoc, String contingut) {
+    public Boolean guardarContingutDocument(int idDoc, String contingut) {
         File directori = new File (BD_PATH);
         if (!directori.exists()) {
             directori.mkdir();
@@ -34,7 +34,9 @@ public class GestorBD {
         try {
             FileWriter fw = new FileWriter(BD_PATH + "/" + String.valueOf(idDoc) + ".txt");
             BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(contingut);
+            if (contingut != null) {
+                bw.write(contingut);
+            }
             bw.close();
         }
         catch (IOException e) {
@@ -43,7 +45,28 @@ public class GestorBD {
         return true;
     }
 
-    public Boolean guardarEstat (int idDir, HashMap<Integer, HashMap<String,Double>> pesosDocs, PriorityQueue<Integer> deletedIds, int idNouDoc, HashMap<Integer, Pair<String,String>> docs) {
+    public String carregarContingutDocument(int idDoc){
+        File file = new File(BD_PATH + "/" + String.valueOf(idDoc) + ".txt");
+        try {
+            FileReader fileReader = new FileReader(file);
+            BufferedReader br = new BufferedReader(fileReader);
+            StringBuilder result = new StringBuilder();
+            String helper;
+            while ((helper = br.readLine()) != null) result.append(helper);
+            br.close();
+            fileReader.close();
+            return result.toString();
+        } catch (IOException e) {
+            return "$ERROR: no s'ha pogut llegir el contingut del document correctament";
+        }
+    }
+
+    public boolean eliminarDocument(int idDoc) {
+        File document = new File (BD_PATH + "/" + String.valueOf(idDoc) + ".txt");
+        return document.delete();
+    }
+
+    public Boolean guardarEstat(int idDir, HashMap<Integer, HashMap<String,Double>> pesosDocs, PriorityQueue<Integer> deletedIds, int idNouDoc, HashMap<Integer, Pair<String,String>> docs) {
         File directori = new File (BD_PATH);
         if (!directori.exists()) {
             directori.mkdir();
@@ -80,21 +103,4 @@ public class GestorBD {
         return estatObject;
     }
 
-    public String carregarContingutDocument (int idDoc){
-        File file = new File(BD_PATH + "/" + String.valueOf(idDoc) + ".txt");
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            StringBuilder result = new StringBuilder();
-            String helper;
-            while ((helper = br.readLine()) != null) result.append(helper);
-            return result.toString();
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    public boolean eliminarDocument (int idDoc) {
-        File document = new File (BD_PATH + "/" + String.valueOf(idDoc) + ".txt");
-        return document.delete();
-    }
 }
