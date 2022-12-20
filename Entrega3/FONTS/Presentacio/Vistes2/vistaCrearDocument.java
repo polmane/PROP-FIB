@@ -20,7 +20,7 @@ public class vistaCrearDocument extends JFrame{
     private JLabel labelContingut;
     private JLabel labelTitol;
     private JLabel labelAutor;
-    //private JFrame frame = new JFrame("JFrame");
+    private JFrame frame = new JFrame("JFrame");
 
 
     public vistaCrearDocument(CtrlPresentacio pCtrlPresentacio) {
@@ -39,6 +39,7 @@ public class vistaCrearDocument extends JFrame{
                 super.windowClosing(e);
                 _ctrlPresentacio.activarPagPrincipal();
                 System.out.println("Tancant vistaCrearDocument");
+                frame.dispose();
                 dispose();
             }
         });
@@ -56,11 +57,11 @@ public class vistaCrearDocument extends JFrame{
 //                    txtError.setBounds(150, 30, 400, 40);
 //                    error.add(txtError);
 //                    error.setVisible(true);
-                    JOptionPane optionPane = new JOptionPane("Títol i/o autor nuls",JOptionPane.ERROR_MESSAGE);
-                    JDialog dialogOptionPane = optionPane.createDialog(new JFrame(),"Document no afegit");
-                    dialogOptionPane.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-                    dialogOptionPane.pack();
-                    dialogOptionPane.setVisible(true);
+
+                    VistaDialogo vistaDialogo = new VistaDialogo();
+                    String[] strBotones = {"Ok"};
+                    int isel = vistaDialogo.setDialogo(frame,"No s'ha afegit el document","Titol o autor nuls",strBotones,1);
+                    System.out.println("Error CrearDoc nuls: " + isel + " " + strBotones[isel]);
                 } else if (codi == 20) {
                     /*JDialog error = new JDialog(frame, "No s'ha afegit el document");
                     error.setBounds(800, 300, 700, 200);
@@ -71,9 +72,14 @@ public class vistaCrearDocument extends JFrame{
                     error.add(txtError);
                     error.toFront();
                     error.setVisible(true);*/
+                    VistaDialogo vistaDialogo = new VistaDialogo();
+                    String[] strBotones = {"Ok"};
+                    int isel = vistaDialogo.setDialogo(frame,"No s'ha afegit el document","Ja existeix un document en el directori \n amb aquest títol i autor",strBotones,1);
+                    System.out.println("Error Crear Doc ja existeix doc amb titol i autor: " + isel + " " + strBotones[isel]);
                 }
                 else {
                     _ctrlPresentacio.activarPagPrincipal();
+                    frame.dispose();
                     dispose();
                 }
             }
@@ -82,6 +88,7 @@ public class vistaCrearDocument extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 _ctrlPresentacio.activarPagPrincipal();
+                frame.dispose();
                 dispose();
             }
         });

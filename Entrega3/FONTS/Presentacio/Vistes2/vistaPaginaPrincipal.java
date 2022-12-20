@@ -41,7 +41,7 @@ public class vistaPaginaPrincipal extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        documentSeleccionat();
+        RefreshDocumentSeleccionatPagPrin();
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -50,12 +50,9 @@ public class vistaPaginaPrincipal extends JFrame{
 
                 setVisible(false);
                 System.out.println("Tancant aplicacio, guardant estat");
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
+
                 System.out.println("Aplicacio tancada");
+                frame.dispose();
                 dispose();
             }
         });
@@ -96,38 +93,51 @@ public class vistaPaginaPrincipal extends JFrame{
         eliminarDocumentSeleccionatButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int id = documentSeleccionat();
+                int id = RefreshDocumentSeleccionatPagPrin();
                 int codi =_ctrlPresentacio.eliminarDocument(id);
                 System.out.println(id);
                 if (codi == 31) {
-                    JDialog error = new JDialog(frame, "Error");
+                    /*JDialog error = new JDialog(frame, "Error");
                     error.setBounds(800, 300, 400, 200);
                     error.setLayout(null);
 
                     JLabel txtError = new JLabel("No has seleccionat cap document");
                     txtError.setBounds(150, 30, 400, 40);
                     error.add(txtError);
-                    error.setVisible(true);
+                    error.setVisible(true);*/
+                    VistaDialogo vistaDialogo = new VistaDialogo();
+                    String[] strBotones = {"Ok"};
+                    int isel = vistaDialogo.setDialogo(frame,"Error a l'eliminar","No has seleccionat cap document",strBotones,1);
+                    System.out.println("Error eliminar seleccionat: " + isel + " " + strBotones[isel]);
+
                 } else if (codi == 20) {
-                    JDialog error = new JDialog(frame, "Error");
+                    /*JDialog error = new JDialog(frame, "Error");
                     error.setBounds(800, 300, 400, 200);
                     error.setLayout(null);
 
                     JLabel txtError = new JLabel("Identificador de document no vàlid");
                     txtError.setBounds(150, 30, 400, 40);
                     error.add(txtError);
-                    error.setVisible(true);
+                    error.setVisible(true);*/
+                    VistaDialogo vistaDialogo = new VistaDialogo();
+                    String[] strBotones = {"Ok"};
+                    int isel = vistaDialogo.setDialogo(frame,"Error a l'eliminar","Document no reconegut",strBotones,1);
+                    System.out.println("Error eliminar doc no reconegut: " + isel + " " + strBotones[isel]);
                 } else if (codi == 11) {
-                    JDialog error = new JDialog(frame, "Acció");
+                   /*JDialog error = new JDialog(frame, "Acció");
                     error.setBounds(800, 300, 400, 200);
                     error.setLayout(null);
 
                     JLabel txtError = new JLabel("Document eliminat");
                     txtError.setBounds(150, 30, 400, 40);
                     error.add(txtError);
-                    error.setVisible(true);
+                    error.setVisible(true);*/
+                    VistaDialogo vistaDialogo = new VistaDialogo();
+                    String[] strBotones = {"Ok"};
+                    int isel = vistaDialogo.setDialogo(frame,"Eliminar document","Document eliminat",strBotones,2);
+                    System.out.println("Error eliminar seleccionat: " + isel + " " + strBotones[isel]);
                 }
-                documentSeleccionat();
+                RefreshDocumentSeleccionatPagPrin();
             }
         });
         exportarButton.addActionListener(new ActionListener() {
@@ -156,20 +166,22 @@ public class vistaPaginaPrincipal extends JFrame{
         });
     }
 
-    public int documentSeleccionat() {
+    public int RefreshDocumentSeleccionatPagPrin() {
         ArrayList<String> document = _ctrlPresentacio.toStringDocActiu();
         String s = document.get(0);
         if (s == "-31") {
             autor.setText("");
             titol.setText("");
             visualitzarModificarButton.setEnabled(false);
+            eliminarDocumentSeleccionatButton.setEnabled(false);
+            exportarButton.setEnabled(false);
         } else {
-            for (int i = 0; i < document.size(); ++i) {
-                autor.setText(document.get(1));
-                titol.setText(document.get(2));
-                System.out.println(document.get(3));
-                visualitzarModificarButton.setEnabled(true);
-            }
+            autor.setText(document.get(1));
+            titol.setText(document.get(2));
+            System.out.println(document.get(3));
+            visualitzarModificarButton.setEnabled(true);
+            eliminarDocumentSeleccionatButton.setEnabled(true);
+            exportarButton.setEnabled(true);
         }
         int resultat = Integer.parseInt(s);
         return resultat;
@@ -183,7 +195,7 @@ public class vistaPaginaPrincipal extends JFrame{
     public void activar() {
         this.setEnabled(true);
         this.toFront();
-        documentSeleccionat();
+        RefreshDocumentSeleccionatPagPrin();
     }
 
     public void desactivar() {

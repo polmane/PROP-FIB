@@ -37,16 +37,7 @@ public class vistaVisualitzarModificarDocument extends JFrame{
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-                _ctrlPresentacio.activarPagPrincipal();
-                System.out.println("Tancant vistaVisualitzarModificarDocument");
-                dispose();
-            }
-        });
+        Guardar.setEnabled(false);
 
         ArrayList<String> document = _ctrlPresentacio.toStringDocActiu();
         String s = document.get(0);
@@ -55,17 +46,28 @@ public class vistaVisualitzarModificarDocument extends JFrame{
             Titol.setText("");
             Contingut.setText("");
         } else {
-            for (int i = 0; i < document.size(); ++i) {
-                Autor.setText(document.get(1));
-                Titol.setText(document.get(2));
-                Contingut.setText(document.get(3));
-            }
+            Autor.setText(document.get(1));
+            Titol.setText(document.get(2));
+            Contingut.setText(document.get(3));
         }
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                _ctrlPresentacio.activarPagPrincipal();
+                System.out.println("Tancant vistaVisualitzarModificarDocument");
+                frame.dispose();
+                dispose();
+            }
+        });
+
         Enrere.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 _ctrlPresentacio.activarPagPrincipal();
-                setVisible(false);
+                frame.dispose();
+                dispose();
             }
         });
         Guardar.addActionListener(new ActionListener() {
@@ -114,7 +116,7 @@ public class vistaVisualitzarModificarDocument extends JFrame{
                 int codi2 = _ctrlPresentacio.modificarContingut(Contingut.getText());
                 System.out.println("modificant Document");
                 _ctrlPresentacio.activarPagPrincipal();
-                setVisible(false);
+                dispose();
             }
         });
         Modificar.addActionListener(new ActionListener() {
@@ -123,6 +125,7 @@ public class vistaVisualitzarModificarDocument extends JFrame{
                 Autor.setEditable(true);
                 Titol.setEditable(true);
                 Contingut.setEditable(true);
+                Guardar.setEnabled(true);
             }
         });
     }

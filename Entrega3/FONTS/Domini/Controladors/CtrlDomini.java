@@ -36,7 +36,7 @@ public class CtrlDomini {
     }
 
     public int modificarTitol(String titol) {
-        return _ctrlDirectori.modificarAutor(titol);
+        return _ctrlDirectori.modificarTitol(titol);
     }
 
     public int modificarContingut(String contingut) {
