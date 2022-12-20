@@ -45,19 +45,20 @@ public class vistaCerques extends JFrame {
         Buscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Resultat.setText("");
                 List<String> res = new ArrayList<String>();
                 //DefaultListModel model = (DefaultListModel) Resultat.getModel();
                 if (Cerques.getSelectedItem() == "Llista de titols d'un autor") {
                     res = _ctrlPresentacio.llistaTitolsPerAutor(Info.getText(), String.valueOf(Sorting.getSelectedItem()));
                     for(int i = 0; i < res.size(); ++i) {
                         Resultat.append(res.get(i));
-                        Resultat.append(" ");
+                        Resultat.append("\n");
                     }
                 } else if (Cerques.getSelectedItem() == "Llista d'autors que comencen per un prefix") {
                     res = _ctrlPresentacio.llistaAutorsPerPrefix(Info.getText(), String.valueOf(Sorting.getSelectedItem()));
                     for(int i = 0; i < res.size(); ++i) {
                         Resultat.append(res.get(i));
-                        Resultat.append(" ");
+                        Resultat.append("\n");
                     }
                 }
             }

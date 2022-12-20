@@ -49,11 +49,20 @@
           <text value="TF-IDF"/>
         </properties>
       </component>
-      <component id="85411" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+      <component id="85411" class="javax.swing.JComboBox" binding="Sorting">
         <constraints>
           <grid row="4" column="3" row-span="2" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <model>
+            <item value="SIM_ASC"/>
+            <item value="SIM_DESC"/>
+            <item value="AUT_ASC"/>
+            <item value="AUT_DESC"/>
+            <item value="TIT_ASC"/>
+            <item value="TIT_DESC"/>
+          </model>
+        </properties>
       </component>
       <component id="7781b" class="javax.swing.JLabel" binding="labelMetode">
         <constraints>
@@ -134,19 +143,17 @@
         </constraints>
         <properties/>
       </component>
-      <component id="8265b" class="javax.swing.JList" binding="Resultat">
-        <constraints>
-          <grid row="8" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="50"/>
-          </grid>
-        </constraints>
-        <properties>
-          <model/>
-        </properties>
-      </component>
       <component id="f4bb1" class="javax.swing.JSpinner" binding="k">
         <constraints>
           <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="97ecb" class="javax.swing.JTextArea" binding="Resultat">
+        <constraints>
+          <grid row="8" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="50"/>
+          </grid>
         </constraints>
         <properties/>
       </component>
