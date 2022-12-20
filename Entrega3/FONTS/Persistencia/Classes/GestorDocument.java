@@ -78,8 +78,6 @@ public class GestorDocument {
                     docExp.close();
                     return true;
                 } catch (Exception e) {
-                    System.out.println(e);
-                    e.printStackTrace();
                     return false;
                 }
             case PROP:
@@ -117,10 +115,8 @@ public class GestorDocument {
             }
         }
         catch (Exception e) {
-            System.err.println("El document " + path + " en format no s'ha importat correctament");
             return null;
         }
-        System.err.println("ERROR: Format del document situat a " + path + " no suportat");
         return null;
     }
 

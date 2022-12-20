@@ -2,7 +2,6 @@ package Persistencia.Classes;
 
 
 import Domini.Classes.Pair;
-import Persistencia.Controladors.CtrlPersistencia;
 
 import java.io.*;
 import java.util.HashMap;
@@ -30,7 +29,8 @@ public class GestorBD {
     public Boolean guardarContingutDocument(int idDoc, String contingut) {
         File directori = new File (BD_PATH);
         if (!directori.exists()) {
-            directori.mkdir();
+            if (!directori.mkdir())
+                return false;
         }
         try {
             FileWriter fw = new FileWriter(BD_PATH + "/" + String.valueOf(idDoc) + ".txt");
@@ -71,7 +71,8 @@ public class GestorBD {
     public Boolean guardarEstat(int idDir, HashMap<Integer, HashMap<String,Double>> pesosDocs, PriorityQueue<Integer> deletedIds, int idNouDoc, HashMap<Integer, Pair<String,String>> docs) {
         File directori = new File (BD_PATH);
         if (!directori.exists()) {
-            directori.mkdir();
+            if (!directori.mkdir())
+                return false;
         }
         try {
             Estat estat = new Estat(idDir,pesosDocs,deletedIds,idNouDoc,docs);
@@ -104,10 +105,4 @@ public class GestorBD {
         }
         return estatObject;
     }
-
-    public static void main(String[] args) {
-        CtrlPersistencia ctrlPersistencia = new CtrlPersistencia();
-        System.out.println(ctrlPersistencia.eliminarDocument(0));
-    }
-
 }
