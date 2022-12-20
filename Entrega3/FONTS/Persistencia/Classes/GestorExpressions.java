@@ -24,16 +24,8 @@ public class GestorExpressions {
                 scanner.close();
             }
         } catch (NullPointerException | NumberFormatException | IOException e) {
-            assert scanner != null;
-            scanner.close();
-            e.printStackTrace();
-            /*
-            Pair p = new Pair(-1,null);
-            ArrayList<Pair<Integer, String>> result = new ArrayList<>();
-            result.add(p);
-            return result;
-            */
-            //FIXME: RETORNAR NULL NO ES CORRECTE?
+            if (scanner != null)
+                scanner.close();
             return null;
         }
         return expressions;
@@ -52,7 +44,6 @@ public class GestorExpressions {
             bw.close();
         }
         catch (IOException e) {
-            e.printStackTrace();
             return false;
         }
         return true;

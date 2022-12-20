@@ -137,8 +137,6 @@ public class GestorDocument {
             }
             values.add(contingut.toString());
         } catch (Exception e) {
-            System.err.println("El document " + path + " en format .txt no s'ha importat correctament");
-            e.printStackTrace();
             return null;
         }
         return values;
@@ -157,8 +155,6 @@ public class GestorDocument {
             values.add(doc.getElementsByTagName(XML_TAG_TITOL).item(0).getTextContent());
             values.add(doc.getElementsByTagName(XML_TAG_CONTINGUT).item(0).getTextContent());
         } catch (Exception e) {
-            System.err.println("El document " + path + " en format .xml no s'ha importat correctament");
-            e.printStackTrace();
             return null;
         }
         return values;
@@ -174,12 +170,12 @@ public class GestorDocument {
 
             int index = tokens.indexOf(PROP_TAG_AUTOR);
             if (index < 0)
-                throw new RuntimeException("El document " + path + " no conte l'etiqueta " + PROP_TAG_AUTOR);
+                return null;
             values.add(tokens.get(index + 1));
 
             index = tokens.indexOf(PROP_TAG_TITOL);
             if (index < 0)
-                throw new RuntimeException("El document " + path + " no conte l'etiqueta " + PROP_TAG_TITOL);
+                return null;
             values.add(tokens.get(index + 1));
 
             index = tokens.indexOf(PROP_TAG_CONTINGUT);
@@ -191,8 +187,6 @@ public class GestorDocument {
             }
 
         } catch (Exception e) {
-            System.err.println("El document " + path + " en format .prop no s'ha importat correctament");
-            e.printStackTrace();
             return null;
         }
         return values;

@@ -39,8 +39,7 @@ public class CtrlDomini {
         int i = _ctrlDirectori.seleccionarDocument(idDoc);
         if (i > -1) {
             String contingut = _ctrlPersistencia.carregarContingutDocument(idDoc);
-            //FIXME: HAURIEM DE FER SERVIR NULL PER L'ERROR
-            if (contingut.equals("$ERROR: no s'ha pogut llegir el contingut del document correctament")) return -50;
+            if (contingut == null) return -50;
             _ctrlDirectori.getDocumentActiu().setContingut(contingut);
         }
         return i;
@@ -132,11 +131,32 @@ public class CtrlDomini {
     }
 
     public int carregarEstat() {
-        Pair<GestorBD.Estat, ArrayList<Pair<Integer, String>>> resultat = _ctrlPersistencia.carregarEstat();
-        GestorBD.Estat estat = resultat.first();
-        ArrayList<Pair<Integer, String>> expressionsArray = resultat.second();
+        GestorBD.Estat estat = _ctrlPersistencia.carregarEstat();
 
-        if (estat == null | expressionsArray == null)
+        if (estat == null)
+            return -50;
+
+        _ctrlDirectori.crearDirectori(estat.idDir);
+        _ctrlDirectori.getDirectoriObert().setDeletedIds(estat.deletedIds);
+        _ctrlDirectori.getDirectoriObert().setIdNouDoc(estat.idNouDoc);
+        HashMap<Integer, String> continguts = new HashMap<>();
+        for (int i = 0; i < estat.idNouDoc; ++i) {
+            if (estat.docs.containsKey(i)) {
+                String contingut = _ctrlPersistencia.carregarContingutDocument(i);
+                if (contingut == null)
+                    return -50;
+                continguts.put(i, contingut);
+            }
+        }
+        _ctrlDirectori.carregarDocs(estat.pesosDocs, estat.docs, continguts);
+
+        return -10;
+    }
+
+    public int carregarExpressions() {
+        ArrayList<Pair<Integer, String>> expressionsArray = _ctrlPersistencia.carregarExpressions();
+
+        if (expressionsArray == null)
             return -50;
 
         HashMap<Integer, Expressio> expressionsHashMap = new HashMap<>();
@@ -146,21 +166,6 @@ public class CtrlDomini {
             expressionsHashMap.put(expPair.first(), exp);
         }
         _ctrlExpressio.setExpressions(expressionsHashMap);
-
-        _ctrlDirectori.crearDirectori(estat.idDir);
-        _ctrlDirectori.getDirectoriObert().setDeletedIds(estat.deletedIds);
-        _ctrlDirectori.getDirectoriObert().setIdNouDoc(estat.idNouDoc);
-        HashMap<Integer, String> continguts = new HashMap<>();
-        for (int i = 0; i < estat.idNouDoc; ++i) {
-            if (estat.docs.containsKey(i)) {
-                String contingut = _ctrlPersistencia.carregarContingutDocument(i);
-                //FIXME: HAURIEM DE PASSAR L'ERROR AMB NULL
-                if (contingut.equals("$ERROR: no s'ha pogut llegir el contingut del document correctament"))
-                    return -50;
-                continguts.put(i, contingut);
-            }
-        }
-        _ctrlDirectori.carregarDocs(estat.pesosDocs, estat.docs, continguts);
 
         return -10;
     }
