@@ -43,23 +43,23 @@ public class TestCtrlDirectori {
         CtrlDir.crearDirectori(0);
 
         //Null arguments
-        assertEquals(30, CtrlDir.afegirDocument(null, "titol", ""));
-        assertEquals(30, CtrlDir.afegirDocument("", "titol", ""));
-        assertEquals(30, CtrlDir.afegirDocument("autor", null, ""));
-        assertEquals(30, CtrlDir.afegirDocument("autor", "", ""));
+        assertEquals(-30, CtrlDir.afegirDocument(null, "titol", ""));
+        assertEquals(-30, CtrlDir.afegirDocument("", "titol", ""));
+        assertEquals(-30, CtrlDir.afegirDocument("autor", null, ""));
+        assertEquals(-30, CtrlDir.afegirDocument("autor", "", ""));
 
         //Funcionament correcte
         int idDoc = CtrlDir.getDirectoriObert().getIdNouDoc();
         String autor = "juli";
         String titol = "prova afegir document";
         String contingut = "document per a provar afegirDocument()";
-        assertEquals(10, CtrlDir.afegirDocument(autor, titol, contingut));
+        assertEquals(idDoc, CtrlDir.afegirDocument(autor, titol, contingut));
         assertEquals(autor, CtrlDir.getDirectoriObert().getDocs().get(idDoc).getAutor());
         assertEquals(titol, CtrlDir.getDirectoriObert().getDocs().get(idDoc).getTitol());
         assertEquals(contingut, CtrlDir.getDirectoriObert().getDocs().get(idDoc).getContingut());
 
         //ERROR: ja existeix document amb el mateix autor i titol
-        assertEquals(20, CtrlDir.afegirDocument(autor, titol, contingut));
+        assertEquals(-20, CtrlDir.afegirDocument(autor, titol, contingut));
     }
 
     /**

@@ -38,7 +38,6 @@ public class GestorBD {
             bw.close();
         }
         catch (IOException e) {
-            e.printStackTrace();
             return false;
         }
         return true;
@@ -59,7 +58,6 @@ public class GestorBD {
             out.close();
             file.close();
         } catch (IOException e) {
-            e.printStackTrace();
             return false;
         }
         return true;
@@ -91,7 +89,7 @@ public class GestorBD {
             while ((helper = br.readLine()) != null) result.append(helper);
             return result.toString();
         } catch (IOException e) {
-            return "$ERROR: no s'ha pogut llegir el contingut del document correctament";
+            return null;
         }
     }
 

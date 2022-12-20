@@ -17,6 +17,19 @@ public class CtrlDomini {
 
     private final CtrlDirectori _ctrlDirectori;
     private final CtrlExpressio _ctrlExpressio;
+
+    public CtrlDirectori get_ctrlDirectori() {
+        return _ctrlDirectori;
+    }
+
+    public CtrlExpressio get_ctrlExpressio() {
+        return _ctrlExpressio;
+    }
+
+    public CtrlPersistencia get_ctrlPersistencia() {
+        return _ctrlPersistencia;
+    }
+
     private final CtrlPersistencia _ctrlPersistencia;
 
     public CtrlDomini(CtrlDirectori _ctrlDirectori, CtrlExpressio _ctrlExpressio, CtrlPersistencia ctrlPersistencia) {
@@ -39,8 +52,7 @@ public class CtrlDomini {
         int i = _ctrlDirectori.seleccionarDocument(idDoc);
         if (i > -1) {
             String contingut = _ctrlPersistencia.carregarContingutDocument(idDoc);
-            //FIXME: HAURIEM DE FER SERVIR NULL PER L'ERROR
-            if (contingut.equals("$ERROR: no s'ha pogut llegir el contingut del document correctament")) return -50;
+            if (contingut == null) return -50;
             _ctrlDirectori.getDocumentActiu().setContingut(contingut);
         }
         return i;
@@ -154,8 +166,7 @@ public class CtrlDomini {
         for (int i = 0; i < estat.idNouDoc; ++i) {
             if (estat.docs.containsKey(i)) {
                 String contingut = _ctrlPersistencia.carregarContingutDocument(i);
-                //FIXME: HAURIEM DE PASSAR L'ERROR AMB NULL
-                if (contingut.equals("$ERROR: no s'ha pogut llegir el contingut del document correctament"))
+                if (contingut == null)
                     return -50;
                 continguts.put(i, contingut);
             }

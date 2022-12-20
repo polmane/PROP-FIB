@@ -156,9 +156,7 @@ public class CtrlDirectori {
         documentActiu.setTfMap(tf(documentActiu.getOcurrencies()));
         afegeixParaulesAlDir();
         afegeixPesos();
-
-        documentActiu.setContingut(null);
-
+        
         return id;
     }
 
