@@ -199,9 +199,10 @@ public class TestGestorBD {
 
         GestorBD gBD = new GestorBD();
         Assert.assertTrue(gBD.guardarEstat(idDir, pesosDocs, deletedIds, idNouDoc, docs));
+        File f = new File(BD_PATH + "/estat.txt");
 
         try {
-            FileInputStream estatFile = new FileInputStream(BD_PATH + "/estat.txt");
+            FileInputStream estatFile = new FileInputStream(f);
             ObjectInputStream estatFileStream = new ObjectInputStream(estatFile);
 
             GestorBD.Estat estat = (GestorBD.Estat)estatFileStream.readObject();
@@ -219,8 +220,47 @@ public class TestGestorBD {
             Assert.fail("Exception during test");
         }
 
-        File f = new File(BD_PATH + "/estat.txt");
         Assert.assertTrue(f.delete());
     }
 
+    @Test
+    public void testCarregarEstat() {
+        int idDir = 0;
+        HashMap<Integer, HashMap<String,Double>> pesosDocs = new HashMap<>();
+        HashMap<String,Double> pes = new HashMap<>();
+        pes.put("pes", 23.45);
+        pesosDocs.put(0, pes);
+        PriorityQueue<Integer> deletedIds = new PriorityQueue<>();
+        deletedIds.add(27);
+        int idNouDoc = 23;
+        HashMap<Integer, Pair<String,String>> docs = new HashMap<>();
+        docs.put(0, new Pair<>("Juli", "document"));
+
+        GestorBD.Estat estat = new GestorBD.Estat(idDir,pesosDocs,deletedIds,idNouDoc,docs);
+        File f = new File(BD_PATH + "/estat.txt");
+        try {
+            FileOutputStream file = new FileOutputStream(f);
+            ObjectOutputStream out = new ObjectOutputStream(file);
+
+            out.writeObject(estat);
+
+            out.close();
+            file.close();
+        } catch (IOException e) {
+            Assert.fail("Exception during test");
+        }
+
+        GestorBD gBD = new GestorBD();
+        GestorBD.Estat result = gBD.carregarEstat();
+
+        Assert.assertNotNull(result);
+        Assert.assertEquals(estat.idDir, result.idDir);
+        Assert.assertEquals(estat.pesosDocs, result.pesosDocs);
+        Assert.assertEquals(estat.deletedIds.size(), result.deletedIds.size());
+        Assert.assertEquals(estat.deletedIds.poll(), result.deletedIds.poll());
+        Assert.assertEquals(estat.idNouDoc, result.idNouDoc);
+        Assert.assertEquals(estat.docs, result.docs);
+
+        Assert.assertTrue(f.delete());
+    }
 }
