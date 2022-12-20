@@ -28,6 +28,7 @@ public class vistaRecuperarSessio extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //_ctrlPresentacio.carregar
+                System.out.println("Carregant sessio");
                 _ctrlPresentacio.activarPagPrincipal();
                 dispose();
             }
@@ -36,6 +37,7 @@ public class vistaRecuperarSessio extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 _ctrlPresentacio.crearDirectori(0);
+                System.out.println("Creant nou directori");
                 _ctrlPresentacio.activarPagPrincipal();
                 dispose();
             }

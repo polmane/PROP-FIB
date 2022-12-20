@@ -62,12 +62,15 @@ public class vistaPaginaPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 _ctrlPresentacio.ObrirVistaCrearDocument();
+                System.out.println("Obrint VistaCrearDocument");
             }
         });
         seleccionarDocumentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 _ctrlPresentacio.ObrirVistaSeleccionarDocument();
+                System.out.println("Obrint VistaSeleccionaDocument");
+
             }
         });
 
@@ -81,12 +84,14 @@ public class vistaPaginaPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 _ctrlPresentacio.ObrirVistaGestioExpressio();
+                System.out.println("Obrint VistaGestioExpressio");
             }
         });
         visualitzarModificarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 _ctrlPresentacio.ObrirVistaVisualitzarModificarDocument();
+                System.out.println("Obrint VistaVisualitzarModificarDocument");
             }
         });
 

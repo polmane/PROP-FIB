@@ -106,8 +106,6 @@
         </constraints>
         <properties>
           <model>
-            <item value="SIM_ASC"/>
-            <item value="SIM_DESC"/>
             <item value="AUT_ASC"/>
             <item value="AUT_DESC"/>
             <item value="TIT_ASC"/>
