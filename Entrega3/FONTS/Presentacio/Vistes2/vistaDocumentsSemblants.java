@@ -30,6 +30,8 @@ public class vistaDocumentsSemblants extends JFrame {
     private JSpinner k;
     private JTextArea Resultat;
 
+    private JFrame frame = new JFrame("JFrame");
+
     public vistaDocumentsSemblants(CtrlPresentacio pCtrlPresentacio) {
         _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
@@ -67,6 +69,14 @@ public class vistaDocumentsSemblants extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Resultat.setText("");
+                try {
+                    int numdocs = Integer.parseInt(String.valueOf(k.getValue()));
+                } catch (NumberFormatException excepcio) {
+                    VistaDialogo vistaDialogo = new VistaDialogo();
+                    String[] strBotones = {"Ok"};
+                    int isel = vistaDialogo.setDialogo(frame,"No s'ha introduit un valor correcte de documents","El nombre de documents a obtenir \n ha de ser un nombre natural major que 0",strBotones,1);
+                    System.out.println("Error valor de k: " + isel + " " + strBotones[isel]);
+                }
                 List<Pair<String, String>> res;
                 if (BOOLRadioButton.isSelected()) {
                     res = _ctrlPresentacio.compararDocuments("BOOL" ,String.valueOf(Sorting.getSelectedItem()), Integer.parseInt(String.valueOf(k.getValue())), Integer.parseInt(String.valueOf(Documents.getSelectedItem())));
