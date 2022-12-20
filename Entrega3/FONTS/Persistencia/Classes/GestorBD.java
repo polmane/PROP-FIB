@@ -57,7 +57,7 @@ public class GestorBD {
             fileReader.close();
             return result.toString();
         } catch (IOException e) {
-            return "$ERROR: no s'ha pogut llegir el contingut del document correctament";
+            return null;
         }
     }
 
