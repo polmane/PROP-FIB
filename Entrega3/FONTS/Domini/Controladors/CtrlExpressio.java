@@ -145,8 +145,16 @@ public class CtrlExpressio {
         return resultat;
     }
 
-    public int  getIdExp() {
-        return expressioSeleccionada.getIdExp();
+    public ArrayList<String>  toStringExpActiva() {
+        ArrayList<String> resultat = new ArrayList<>();
+        if (expressioSeleccionada != null) {
+            resultat.add(String.valueOf(expressioSeleccionada.getIdExp()));
+            resultat.add(expressioSeleccionada.getExpressio());
+        }
+        else {
+            resultat.add("-31");
+        }
+        return resultat;
     }
 }
 

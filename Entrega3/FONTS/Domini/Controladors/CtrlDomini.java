@@ -109,9 +109,10 @@ public class CtrlDomini {
         return _ctrlDirectori.toStringDocActiu();
     }
 
-    public int getIdExp() {
-        return _ctrlExpressio.getIdExp();
+    public ArrayList<String> toStringExpActiva() {
+        return _ctrlExpressio.toStringExpActiva();
     }
+
 
     /*public static void main (String[] args){
         CtrlDirectori dir = new CtrlDirectori();

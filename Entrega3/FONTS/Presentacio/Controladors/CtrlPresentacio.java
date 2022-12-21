@@ -21,7 +21,9 @@ public class CtrlPresentacio {
     private vistaContingutDocument vContingutDoc;
     private vistaDocumentsSemblants vDocsSemblants;
     private vistaDocumentsRellevants vDocsRellevants;
-    private vistaCrearModificarExpressio vCrearModiExp;
+    private vistaCrearExpressio vCrearModiExp;
+
+    private vistaModificarExpressio vModiExp;
     private vistaCerques vCerques;
 
     //VISTES
@@ -77,9 +79,14 @@ public class CtrlPresentacio {
         vDocsRellevants = new vistaDocumentsRellevants(this);
     }
 
-    public void ObrirVistaCrearModificarExpressio() {
+    public void ObrirVistaCrearExpressio() {
         vPrincipal.desactivar();
-        vCrearModiExp = new vistaCrearModificarExpressio(this);
+        vCrearModiExp = new vistaCrearExpressio(this);
+    }
+
+    public void ObrirVistaModificarExpressio() {
+        vPrincipal.desactivar();
+        vModiExp = new vistaModificarExpressio(this);
     }
 
     public void ObrirVistaCerques() {
@@ -158,10 +165,9 @@ public class CtrlPresentacio {
         return _ctrlDomini.toStringDocActiu();
     }
 
-    public int getIdExp() {
-        return _ctrlDomini.getIdExp();
+    public ArrayList<String>  toStringExpActiva() {
+        return _ctrlDomini.toStringExpActiva();
     }
-
 
 
 }

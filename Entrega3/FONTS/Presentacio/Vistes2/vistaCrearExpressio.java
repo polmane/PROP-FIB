@@ -3,17 +3,19 @@ package Presentacio.Vistes2;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class vistaCrearModificarExpressio extends JFrame {
+public class vistaCrearExpressio extends JFrame {
     private CtrlPresentacio _ctrlPresentacio;
     private JPanel panel;
     private JTextField Expressio;
     private JButton Crear;
-    private JButton Modificar;
+    private JButton Enrere;
 
-    public vistaCrearModificarExpressio(CtrlPresentacio pCtrlPresentacio) {
+    public vistaCrearExpressio(CtrlPresentacio pCtrlPresentacio) {
         _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
@@ -32,6 +34,21 @@ public class vistaCrearModificarExpressio extends JFrame {
                 dispose();
             }
         });
+        Crear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _ctrlPresentacio.afegirExp(Expressio.getText());
+                Expressio.setText("");
+                System.out.println(Expressio.getText());
+            }
+        });
+        Enrere.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _ctrlPresentacio.ObrirVistaGestioExpressio();
+                dispose();
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -41,7 +58,7 @@ public class vistaCrearModificarExpressio extends JFrame {
             public void run() {
                 //Turn off metal's use of bold fonts
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaCrearModificarExpressio(new CtrlPresentacio());
+                new vistaCrearExpressio(new CtrlPresentacio());
             }
         });
     }
