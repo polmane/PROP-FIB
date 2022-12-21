@@ -8,6 +8,7 @@
       <excludeFolder url="file://$MODULE_DIR$/FONTS/Persistencia/Exported" />
       <excludeFolder url="file://$MODULE_DIR$/FONTS/Persistencia/BD" />
       <excludeFolder url="file://$MODULE_DIR$/FONTS/Persistencia/Test/OutputFiles" />
+      <excludeFolder url="file://$MODULE_DIR$/FONTS/Persistencia/Test/InputFiles" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

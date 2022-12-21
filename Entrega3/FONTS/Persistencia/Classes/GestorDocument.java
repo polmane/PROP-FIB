@@ -30,32 +30,14 @@ public class GestorDocument {
     }
 
     /**
-     * Representa una variable document
+     * Etiquetes per a la creacio de documents
      */
     public static final String XML_TAG_DOCUMENT = "document";
-    /**
-     * Representa una variable autor
-     */
     public static final String XML_TAG_AUTOR = "autor";
-    /**
-     * Representa una variable titol
-     */
     public static final String XML_TAG_TITOL = "titol";
-    /**
-     * Representa una variable contingut
-     */
     public static final String XML_TAG_CONTINGUT = "contingut";
-    /**
-     * Representa una variable autor en el format .prop
-     */
     public static final String PROP_TAG_AUTOR = "(autor)";
-    /**
-     * Representa una variable titol en el format .prop
-     */
     public static final String PROP_TAG_TITOL = "(titol)";
-    /**
-     * Representa una variable contingut en el format .prop
-     */
     public static final String PROP_TAG_CONTINGUT = "(contingut)";
 
     /**
@@ -73,13 +55,13 @@ public class GestorDocument {
             case TXT:
                 nom += ".txt";
                 try {
-                    File dir = new File(path);
-                    File docExp = new File(dir, nom);
-                    Writer output = new BufferedWriter(new FileWriter(docExp));
+                    FileWriter fw = new FileWriter(new File(new File(path), nom));
+                    Writer output = new BufferedWriter(fw);
                     output.write(autor + "\n");
                     output.write(titol + "\n");
                     output.write(contingut);
                     output.close();
+                    fw.close();
                     return true;
                 } catch (Exception e) {
                     return false;
@@ -120,13 +102,13 @@ public class GestorDocument {
             case PROP:
                 nom += ".prop";
                 try {
-                    File dir = new File(path);
-                    File docExp = new File(dir, nom);
-                    Writer output = new BufferedWriter(new FileWriter(docExp));
+                    FileWriter fw = new FileWriter(new File(new File(path), nom));
+                    Writer output = new BufferedWriter(fw);
                     output.write(PROP_TAG_AUTOR + "->" + autor + "<-");
                     output.write(PROP_TAG_TITOL + "->" + titol + "<-");
                     output.write(PROP_TAG_CONTINGUT + "->" + contingut + "<-");
                     output.close();
+                    fw.close();
                     return true;
                 } catch (Exception e) {
                     return false;
@@ -180,6 +162,8 @@ public class GestorDocument {
                     contingut.append("\n");
             }
             values.add(contingut.toString());
+
+            scanner.close();
         } catch (Exception e) {
             return null;
         }
@@ -239,6 +223,7 @@ public class GestorDocument {
                 values.add("");
             }
 
+            scanner.close();
         } catch (Exception e) {
             return null;
         }
