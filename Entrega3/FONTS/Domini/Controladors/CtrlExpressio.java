@@ -4,6 +4,7 @@ import Domini.Classes.BinaryTree;
 import Domini.Classes.Document;
 import Domini.Classes.Expressio;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -146,6 +147,28 @@ public class CtrlExpressio {
         BinaryTree bt = expressions.get(idExp).getExpressionTree();
         int result = BinaryTree.evalTree(bt.root, document);
         return (result != 0);
+    }
+
+    public ArrayList<String> llistarExpressions() {
+        ArrayList<String> resultat = new ArrayList<>();
+        if (expressions.size() == 0) return null;
+        for (HashMap.Entry<Integer, Expressio> exp : expressions.entrySet()) {
+            resultat.add(String.valueOf(exp.getKey()));
+            resultat.add(exp.getValue().getExpressio());
+        }
+        return resultat;
+    }
+
+    public ArrayList<String>  toStringExpActiva() {
+        ArrayList<String> resultat = new ArrayList<>();
+        if (expressioSeleccionada != null) {
+            resultat.add(String.valueOf(expressioSeleccionada.getIdExp()));
+            resultat.add(expressioSeleccionada.getExpressio());
+        }
+        else {
+            resultat.add("-31");
+        }
+        return resultat;
     }
 }
 

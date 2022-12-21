@@ -1,122 +1,178 @@
 package Presentacio.Controladors;
 
+import java.util.*;
+import Domini.Classes.Pair;
+import Domini.Classes.Document;;
 import Domini.Controladors.CtrlDomini;
+import Presentacio.Vistes.*;
+
+import java.util.List;
 
 public class CtrlPresentacio {
 
-    private static CtrlDomini cd = new CtrlDomini();
+    public CtrlDomini _ctrlDomini;
+    private vistaPaginaPrincipal vPrincipal = null;
+    private vistaRecuperarSessio vRecuperarSessio;
+    private vistaGestioExpressio vGestioExpressio;
+    private vistaCrearDocument vCrearDoc;
+    private vistaSeleccionarDocument vSelecDoc;
+
+    private vistaVisualitzarModificarDocument vVisualModiDoc;
+    private vistaContingutDocument vContingutDoc;
+    private vistaDocumentsSemblants vDocsSemblants;
+    private vistaDocumentsRellevants vDocsRellevants;
+    private vistaCrearExpressio vCrearExp;
+
+    private vistaModificarExpressio vModiExp;
+    private vistaCerques vCerques;
 
     //VISTES
-
-    public static void iniPresentacio() {
-        VistaCrearDirectori vCd = new VistaCrearDirectori();
+    public CtrlPresentacio() {
+         _ctrlDomini = new CtrlDomini();
+         vPrincipal = new vistaPaginaPrincipal(this);
     }
 
-    public static void vistaPagPrincipal(int id) {
-        VistaPagPrincipal vPp = new VistaPagPrincipal(id);
+    public void iniPresentacio() {
+
+        vPrincipal.hacerVisible();
+        vPrincipal.desactivar();
+        vRecuperarSessio = new vistaRecuperarSessio(this);
     }
 
-    public static void VistaAfegirExpressio() {
-        VistaAfegirExpressio() vAexp = new VistaAfegirExpressio();
+    public void activarPagPrincipal() {
+        vPrincipal.activar();
+        //VistaPagPrincipal vPp = new VistaPagPrincipal();
     }
 
-    public static void vistaCrearDocument() {
-        VistaCrearDocument vCdoc = new VistaCrearDocument();
+    public void activarGestioExpressio() {
+        vGestioExpressio.activar();
     }
 
-    public static void vistaPaginaOpcions(int id) {
-        VistaPaginaOpcions vPop = new VistaPaginaOpcions(id);
+    public void ObrirVistaCrearDocument() {
+        vPrincipal.desactivar();
+        vCrearDoc = new vistaCrearDocument(this);
     }
 
-    public static void vistaModificarDocument(int id) {
-        VistaModificarDocument vMdoc = new VistaModificarDocument(id);
+    public void ObrirVistaSeleccionarDocument() {
+        vPrincipal.desactivar();
+        vSelecDoc = new vistaSeleccionarDocument(this);
     }
 
-    public static void vistaInfoDocument(int id) {
-        VistaInfoDocument vIdoc = new VistaInfoDocument(id);
+    public void ObrirVistaVisualitzarModificarDocument() {
+        vPrincipal.desactivar();
+        vVisualModiDoc = new vistaVisualitzarModificarDocument(this);
     }
 
-    public static void vistaContingutDocument() {
-        VistaContingutDocument vCdoc = new VistaContingutDocument();
+    public void ObrirVistaContingutDocument() {
+        vPrincipal.desactivar();
+        vContingutDoc = new vistaContingutDocument(this);
     }
 
-    public static void vistaDocsSemblants() {
-        VistaDocsSemblants vDocsS = new VistaDocsSemblants();
+    public void ObrirVistaDocumentsSemblants() {
+        vPrincipal.desactivar();
+        vDocsSemblants = new vistaDocumentsSemblants(this);
     }
 
-    public static void vistaDocsSemblantsPerExp() {
-        VistaDocsSemblantsPerExp vSPexp = new VistaDocsSemblantsPerExp();
+    public void ObrirVistaDocumentsRellevants() {
+        vPrincipal.desactivar();
+        vDocsRellevants = new vistaDocumentsRellevants(this);
     }
+
+    public void ObrirVistaCerques() {
+        vPrincipal.desactivar();
+        vCerques = new vistaCerques(this);
+    }
+
+    public void ObrirVistaGestioExpressio() {
+        vPrincipal.desactivar();
+        vGestioExpressio = new vistaGestioExpressio(this);
+    }
+
+    public void ObrirVistaCrearExpressio() {
+        vGestioExpressio.desactivar();
+        vCrearExp = new vistaCrearExpressio(this);
+    }
+
+    public void ObrirVistaModificarExpressio() {
+        vGestioExpressio.desactivar();
+        vModiExp = new vistaModificarExpressio(this);
+    }
+
 
     //FUNCIONS DE DOMINI
 
-    public static void crearDirectori(int id) {
-        cd._ctrlDirectori.crearDirectori(id);
+    public void crearDirectori(int id) {
+        _ctrlDomini._ctrlDirectori.crearDirectori(id);
     }
 
-    public static int crearDocument(String autor, String titol, String contingut) { return cd.afegirDocument(titol, autor, contingut); }
+    public int crearDocument(String autor, String titol, String contingut) { return _ctrlDomini.afegirDocument(autor, titol, contingut); }
 
-    public static void obrirDocument(CtrlDirectori.FILETYPE format, String path) {
-        cd.exportarDocument(format, path);
+    public int seleccionarDocument(int id) { return _ctrlDomini.seleccionarDocument(id); }
+
+    public int modificarAutor(String autor) {
+        return _ctrlDomini.modificarAutor(autor);
     }
 
-    public static int seleccionarDocument(int id) { return cd.seleccionarDocument(id); }
-
-    public static int afegirExp(String expressio)  { return cd.afegirExpressio(expressio); }
-
-    public static int modificarAutor(String autor) {
-        return cd.modificarAutor(autor);
+    public int modificarTitol(String titol) {
+        return _ctrlDomini.modificarTitol(titol);
     }
 
-    public static int modificarTitol(String titol) {
-        return cd.modificarAutor(titol);
+    public int modificarContingut(String contingut) {
+        return _ctrlDomini.modificarContingut(contingut);
     }
 
-    public static int modificarContingut(String contingut) {
-        return cd.modificarContingut(contingut);
+    public List<Pair<String, String>> compararDocuments(String metodeComp, String sorting, int k, int id) {
+        return _ctrlDomini.compararDocuments(metodeComp, sorting, k, id);
     }
 
-    public static List<Pair<String, String>> compararDocuments(CtrlDirectori.METODE_COMPARACIO m, CtrlDirectori.SORTING s, int k, int id) {
-        return cd.compararDocuments(m, s, k, id);
+    public List<Pair<String, String>> compararQuery(String metodeComp, String sorting, int k, String paraules) {
+        return _ctrlDomini.compararQuery(metodeComp, sorting, k, paraules);
     }
 
-    public static List<Pair<String, String>> compararQuery(CtrlDirectori.METODE_COMPARACIO m, CtrlDirectori.SORTING s, int k, String paraules) {
-        return cd.compararQuery(m, s, k, paraules);
+    //public static void exportarDocument(CtrlDirectori.FILETYPE format, String path) { _ctrlDomini.exportarDocument(format,path); }
+
+    public int eliminarDocument(int id){
+        return _ctrlDomini.eliminarDocument(id);
     }
 
-    public static void exportarDocument(CtrlDirectori.FILETYPE format, String path) { cd.exportarDocument(format,path); }
+    public String cercaPerAutoriTitol(String autor, String titol) { return _ctrlDomini.cercaPerAutoriTitol(autor, titol); }
 
-    public static int eliminarDocument(int id){
-        return cd.eliminarDocument(id);
+    public List<String> llistaAutorsPerPrefix(String pre , String sorting) {
+        return _ctrlDomini.llistaAutorsPerPrefix(pre, sorting);
     }
 
-    public static String cercaPerAutoriTitol(String autor, String titol) { return cd.cercaPerAutoriTitol(autor, titol); }
-
-    public static List<String> llistaAutorsPerPrefix(String pre , CtrlDirectori.SORTING s) { return cd.llistaAutorsPerPrefix(pre, s); }
-
-    public static List<String> llistaTitolsPerAutor(String autor, CtrlDirectori.SORTING s) { return cd.llistaTitolsPerAutor(autor,s); }
-
-    public static int seleccionarExpressio (int id) {
-        return cd.seleccionarExpressio(id);
+    public List<String> llistaTitolsPerAutor(String autor, String sorting) {
+        return _ctrlDomini.llistaTitolsPerAutor(autor,sorting);
     }
 
-    public static int modificarExpressio(String exp){ return cd.modificarExpressio(exp); }
+    public int afegirExp(String expressio)  { return _ctrlDomini.afegirExpressio(expressio); }
 
-    public static int eliminarExpressio(int id){
-        return cd.eliminarExpressio(id);
+    public int seleccionarExpressio (int id) {
+        return _ctrlDomini.seleccionarExpressio(id);
     }
 
-    public static ArrayList<Document> selectPerExpressio(int id) { return cd.selectPerExpressio(id); }
+    public int modificarExpressio(String exp){ return _ctrlDomini.modificarExpressio(exp); }
 
+    public int eliminarExpressio(int id){
+        return _ctrlDomini.eliminarExpressio(id);
+    }
 
+    public List<Pair<String, String>> selectPerExpressio(int id) { return _ctrlDomini.selectPerExpressio(id); }
 
+    public ArrayList<String> llistarDocuments() {
+        return _ctrlDomini.llistarDocuments();
+    }
+    public ArrayList<String> llistarExpressions() {
+        return _ctrlDomini.llistarExpressions();
+    }
 
+    public ArrayList<String>  toStringDocActiu() {
+        return _ctrlDomini.toStringDocActiu();
+    }
 
+    public ArrayList<String>  toStringExpActiva() {
+        return _ctrlDomini.toStringExpActiva();
+    }
 
-
-
-
-
-
-
+    //public void carregarEstat() { _ctrlDomini.carregarEstat(); }
 }

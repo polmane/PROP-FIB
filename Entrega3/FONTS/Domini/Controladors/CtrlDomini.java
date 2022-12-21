@@ -10,7 +10,11 @@ import Persistencia.Classes.GestorBD;
 import Persistencia.Classes.GestorDocument;
 import Persistencia.Controladors.CtrlPersistencia;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.*;
+
 
 /**
  * Representa un Controlador de Domini
@@ -140,7 +144,9 @@ public class CtrlDomini {
      * @param IdDoc identificador del document que s'utilitarà per fer les comparacions
      * @return retorna una llista de pairs on el primer valor és el nom de l'autor i el segon el títol del document semblant
      */
-    public List<Pair<String, String>> compararDocuments(CtrlDirectori.METODE_COMPARACIO m, CtrlDirectori.SORTING s, Integer k, Integer IdDoc) {
+    public List<Pair<String, String>> compararDocuments(String metodeComp, String sorting, Integer k, Integer IdDoc) {
+        CtrlDirectori.METODE_COMPARACIO m = CtrlDirectori.METODE_COMPARACIO.valueOf(metodeComp);
+        CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(sorting);
         return _ctrlDirectori.compararDocuments(m, s, k, IdDoc);
     }
     /**
@@ -151,7 +157,9 @@ public class CtrlDomini {
      * @param paraules query de paraules a comparar
      * @return retorna una llista de pairs on el primer valor és el nom de l'autor i el segon el títol del document semblant
      */
-    public List<Pair<String, String>> compararQuery(CtrlDirectori.METODE_COMPARACIO m, CtrlDirectori.SORTING s, Integer k, String paraules) {
+    public List<Pair<String, String>> compararQuery(String metodeComp, String sorting, Integer k, String paraules) {
+        CtrlDirectori.METODE_COMPARACIO m = CtrlDirectori.METODE_COMPARACIO.valueOf(metodeComp);
+        CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(sorting);
         return _ctrlDirectori.compararQuery(m, s, k, paraules);
     }
 
@@ -195,7 +203,8 @@ public class CtrlDomini {
      * @param s mètode d'ordenació (enum SORTING)
      * @return retorna una llista d'autors
      */
-    public List<String> llistaAutorsPerPrefix(String pre, CtrlDirectori.SORTING s) {
+    public List<String> llistaAutorsPerPrefix(String pre , String sorting) {
+        CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(sorting);
         return _ctrlDirectori.llistaAutorsPerPrefix(pre, s);
     }
     /**
@@ -204,8 +213,9 @@ public class CtrlDomini {
      * @param s mètode d'ordenació (enum SORTING)
      * @return retorna una llista de títols
      */
-    public List<String> llistaTitolsPerAutor(String autor, CtrlDirectori.SORTING s) {
-        return _ctrlDirectori.llistaTitolsPerAutor(autor, s);
+    public List<String> llistaTitolsPerAutor(String autor, String sorting) {
+        CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(sorting);
+        return _ctrlDirectori.llistaTitolsPerAutor(autor,s);
     }
 
     /**
@@ -246,7 +256,7 @@ public class CtrlDomini {
         }
         return resultat;
     }
-
+   
     /**
      * Funció que permet guardar l'estat del programa un cop l'usuari tanca l'app
      * @return consultar els codis de return en el document word entregat
@@ -293,6 +303,20 @@ public class CtrlDomini {
         return -10;
     }
 
+    public ArrayList<String> llistarDocuments() {
+        return _ctrlDirectori.llistarDocuments();
+    }
+    public ArrayList<String> llistarExpressions() {
+        return _ctrlExpressio.llistarExpressions();
+    }
+
+    public ArrayList<String> toStringDocActiu() {
+        return _ctrlDirectori.toStringDocActiu();
+    }
+
+    public ArrayList<String> toStringExpActiva() {
+        return _ctrlExpressio.toStringExpActiva();
+    }
     /**
      * Funció per carregar les expressions un cop es torna a executar el codi
      * @return consultar els codis de return en el document word entregat

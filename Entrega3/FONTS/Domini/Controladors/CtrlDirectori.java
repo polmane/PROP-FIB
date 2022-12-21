@@ -445,6 +445,9 @@ public class CtrlDirectori {
      * @return consultar els codis de return en el document word entregat
      */
     public int eliminarDocument(int idDoc) {
+        if (documentActiu == null) {
+            return 31;
+        }
         //Comprovem que idDoc sigui realment un identificador d'un document
         if (!directoriObert.getDocs().containsKey(idDoc)) {
             return -20;
@@ -522,5 +525,30 @@ public class CtrlDirectori {
         if (s == SORTING.TIT_ASC) Collections.sort(docs);
         else if (s == SORTING.TIT_DESC) docs.sort(Collections.reverseOrder());
         return docs;
+    }
+
+    public ArrayList<String> llistarDocuments() {
+        ArrayList<String> resultat = new ArrayList<>();
+        if (directoriObert.getDocs().size() == 0) return null;
+        for (Document doc : directoriObert.getDocs().values()) {
+            resultat.add(String.valueOf(doc.getIdDoc()));
+            resultat.add(doc.getAutor());
+            resultat.add(doc.getTitol());
+        }
+        return resultat;
+    }
+
+    public ArrayList<String>  toStringDocActiu() {
+        ArrayList<String> resultat = new ArrayList<>();
+        if (documentActiu != null) {
+            resultat.add(String.valueOf(documentActiu.getIdDoc()));
+            resultat.add(documentActiu.getAutor());
+            resultat.add(documentActiu.getTitol());
+            resultat.add(documentActiu.getContingut());
+        }
+        else {
+            resultat.add("-31");
+        }
+        return resultat;
     }
 }
