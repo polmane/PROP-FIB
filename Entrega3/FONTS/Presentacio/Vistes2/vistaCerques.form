@@ -130,6 +130,7 @@
         </constraints>
         <properties>
           <editable value="false"/>
+          <text value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"/>
         </properties>
       </component>
     </children>

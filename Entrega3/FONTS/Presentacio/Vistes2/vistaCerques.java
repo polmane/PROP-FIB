@@ -21,6 +21,7 @@ public class vistaCerques extends JFrame {
     private JComboBox Sorting;
     private JLabel labelSorting;
     private JTextArea Resultat;
+    private JFrame frame = new JFrame("JFrame");
 
 
     public vistaCerques(CtrlPresentacio pCtrlPresentacio) {
@@ -39,6 +40,7 @@ public class vistaCerques extends JFrame {
                 super.windowClosing(e);
                 _ctrlPresentacio.activarPagPrincipal();
                 System.out.println("Tancant vistaCrearDocument");
+                frame.dispose();
                 dispose();
             }
         });
@@ -50,15 +52,30 @@ public class vistaCerques extends JFrame {
                 //DefaultListModel model = (DefaultListModel) Resultat.getModel();
                 if (Cerques.getSelectedItem() == "Llista de titols d'un autor") {
                     res = _ctrlPresentacio.llistaTitolsPerAutor(Info.getText(), String.valueOf(Sorting.getSelectedItem()));
-                    for(int i = 0; i < res.size(); ++i) {
-                        Resultat.append(res.get(i));
-                        Resultat.append("\n");
+                    if (res == null) {
+                        VistaDialogo vistaDialogo = new VistaDialogo();
+                        String[] strBotones = {"Ok"};
+                        int isel = vistaDialogo.setDialogo(frame, "Titols per autor", "No hem trobat titols amb aquest autor", strBotones, 1);
+                        System.out.println("Titols autor, null: " + isel + " " + strBotones[isel]);
+                    }
+                    else {
+                        for (int i = 0; i < res.size(); ++i) {
+                            Resultat.append(res.get(i));
+                            Resultat.append("\n");
+                        }
                     }
                 } else if (Cerques.getSelectedItem() == "Llista d'autors que comencen per un prefix") {
                     res = _ctrlPresentacio.llistaAutorsPerPrefix(Info.getText(), String.valueOf(Sorting.getSelectedItem()));
-                    for(int i = 0; i < res.size(); ++i) {
-                        Resultat.append(res.get(i));
-                        Resultat.append("\n");
+                    if (res == null) {
+                        VistaDialogo vistaDialogo = new VistaDialogo();
+                        String[] strBotones = {"Ok"};
+                        int isel = vistaDialogo.setDialogo(frame, "Autors donat un prefix", "No hi ha autors amb aquest prefix", strBotones, 1);
+                        System.out.println("Error valor de k: " + isel + " " + strBotones[isel]);
+                    } else {
+                        for (int i = 0; i < res.size(); ++i) {
+                            Resultat.append(res.get(i));
+                            Resultat.append("\n");
+                        }
                     }
                 }
             }
@@ -68,7 +85,14 @@ public class vistaCerques extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 _ctrlPresentacio.activarPagPrincipal();
-                setVisible(false);
+                frame.dispose();
+                dispose();
+            }
+        });
+        Cerques.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }
