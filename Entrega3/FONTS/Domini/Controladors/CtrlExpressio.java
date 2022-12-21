@@ -38,6 +38,11 @@ public class CtrlExpressio {
     }
 
     /**
+     * Setter d'identificador per a una nova expressio
+     */
+    public void setIdNovaExp(Integer id) {IdNovaExp = id;}
+
+    /**
      * Getter d'expressió seleccionada
      * @return retorna l'expressió seleccionada
      */

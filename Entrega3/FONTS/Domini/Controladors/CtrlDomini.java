@@ -303,12 +303,20 @@ public class CtrlDomini {
         if (expressionsArray == null)
             return -50;
 
+        int idMax = Integer.MIN_VALUE;
         HashMap<Integer, Expressio> expressionsHashMap = new HashMap<>();
         for (Pair<Integer, String> expPair : expressionsArray) {
-            Expressio exp = new Expressio(expPair.first(), expPair.second());
+            int id = expPair.first();
+
+            Expressio exp = new Expressio(id, expPair.second());
+
+            if (id > idMax)
+                idMax = id;
 
             expressionsHashMap.put(expPair.first(), exp);
         }
+
+        _ctrlExpressio.setIdNovaExp(idMax + 1);
         _ctrlExpressio.setExpressions(expressionsHashMap);
 
         return -10;
