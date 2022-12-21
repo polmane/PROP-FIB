@@ -27,6 +27,8 @@ public class vistaDocumentsSemblants extends JFrame {
     private JLabel labelResultat;
     private JPanel panelOpcions;
     private JComboBox Documents;
+    private SpinnerModel valors_k;
+
     private JSpinner k;
     private JTextArea Resultat;
     private JScrollPane scrollPaneRes;
@@ -36,6 +38,7 @@ public class vistaDocumentsSemblants extends JFrame {
 
     public vistaDocumentsSemblants(CtrlPresentacio pCtrlPresentacio) {
         _ctrlPresentacio = pCtrlPresentacio;
+
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
@@ -45,11 +48,24 @@ public class vistaDocumentsSemblants extends JFrame {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         ArrayList<String> resultat = _ctrlPresentacio.llistarDocuments();
-        if (resultat == null) Buscar.setEnabled(false);
+        if (resultat == null)  {
+            Buscar.setEnabled(false);
+            k.setEnabled(false);
+
+        }
+        else if (resultat.size() == 1) {
+            Buscar.setEnabled(false);
+            k.setEnabled(false);
+            Documents.addItem(resultat.get(0) + " | " + resultat.get(1) + " | " + resultat.get(2));
+
+        }
         else {
             for (int i = 0; i < resultat.size(); i += 3) {
                 Documents.addItem(resultat.get(i) + " | " + resultat.get(i + 1) + " | " + resultat.get(i + 2));
             }
+            k.setEnabled(true);
+            valors_k = new SpinnerNumberModel(0, 0, (resultat.size()/3)-1, 1);
+            k.setModel(valors_k);
         }
 
         addWindowListener(new WindowAdapter() {

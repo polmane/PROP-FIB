@@ -92,7 +92,16 @@ public class vistaCerques extends JFrame {
         Cerques.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                if (String.valueOf(Cerques.getSelectedItem()) == "Llista de titols d'un autor") {
+                    Sorting.removeAllItems();
+                    Sorting.addItem("TIT_DESC");
+                    Sorting.addItem("TIT_ASC");
+                }
+                else if (String.valueOf(Cerques.getSelectedItem()) == "Llista d'autors que comencen per un prefix") {
+                    Sorting.removeAllItems();
+                    Sorting.addItem("AUT_DESC");
+                    Sorting.addItem("AUT_ASC");
+                }
             }
         });
     }

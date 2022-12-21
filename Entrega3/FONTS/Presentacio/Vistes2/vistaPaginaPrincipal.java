@@ -3,7 +3,10 @@ package Presentacio.Vistes2;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class vistaPaginaPrincipal extends JFrame{
@@ -26,6 +29,7 @@ public class vistaPaginaPrincipal extends JFrame{
     private JLabel labelTitol;
     private JTextField autor;
     private JTextField titol;
+    private JComboBox format;
 
     private JFileChooser file_chooser;
 
@@ -33,6 +37,7 @@ public class vistaPaginaPrincipal extends JFrame{
 
     public vistaPaginaPrincipal(CtrlPresentacio pCtrlPresentacio) {
         _ctrlPresentacio = pCtrlPresentacio;
+
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(false);
@@ -74,12 +79,6 @@ public class vistaPaginaPrincipal extends JFrame{
             }
         });
 
-        importarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Importar FileChooser");
-            }
-        });
         gestionarExpressionsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -122,10 +121,72 @@ public class vistaPaginaPrincipal extends JFrame{
                 RefreshDocumentSeleccionatPagPrin();
             }
         });
+
+        importarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame parentFrame = new JFrame();
+                file_chooser = new JFileChooser();
+                System.out.println("Importar FileChooser");
+
+                file_chooser.setDialogTitle("Importar fitxer");
+                file_chooser.removeChoosableFileFilter(file_chooser.getAcceptAllFileFilter());
+                file_chooser.addChoosableFileFilter(new FileNameExtensionFilter("(.txt), (.xml), (.prop)", "txt", "xml", "prop"));
+                file_chooser.setMultiSelectionEnabled(true);
+
+                int returnVal = file_chooser.showOpenDialog(parentFrame);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File[] files = file_chooser.getSelectedFiles();
+                    ArrayList<String> paths = new ArrayList<>();
+                    for (File file : files) {
+                        paths.add(file.getAbsolutePath());
+                    }
+                    //IMPORTAR CTRLDOMINI
+                    System.out.println(paths);
+                } else {
+                    System.out.println("Cancel·lant importacio");
+                }
+                parentFrame.dispose();
+            }
+        });
+
         exportarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Exportar FileChooser");
+                JFrame parentFrame = new JFrame();
+                file_chooser = new JFileChooser();
+
+                file_chooser.setDialogTitle("Escull la carpeta on exportar el fitxer");
+                file_chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                file_chooser.setAcceptAllFileFilterUsed(false);
+
+                int returnVal = file_chooser.showSaveDialog(parentFrame);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File file = file_chooser.getSelectedFile();
+                    String path = file.getAbsolutePath();
+
+                    String f =  String.valueOf(format.getSelectedItem());
+
+                    //EXPORTAR CTRLDOMINI
+                    System.out.println(path + " " + f);
+
+                    //TODO eliminar aixo
+                    File fileprova = new File(path+"\\hola.txt");
+                    try {
+                        fileprova.createNewFile();
+                    } catch (IOException ex) {
+                        VistaDialogo vistaDialogo = new VistaDialogo();
+                        String[] strBotones = {"Ok"};
+                        int isel = vistaDialogo.setDialogo(frame,"Error a l'exportar","Path incorrecte",strBotones,1);
+                        System.out.println("Error exportar: " + isel + " " + strBotones[isel]);
+                    }
+
+
+                } else {
+                    System.out.println("Cancel·lant exportació");
+                }
+                parentFrame.dispose();
             }
         });
         cerquesBox.addActionListener(new ActionListener() {
@@ -160,6 +221,7 @@ public class vistaPaginaPrincipal extends JFrame{
             visualitzarModificarButton.setEnabled(false);
             eliminarDocumentSeleccionatButton.setEnabled(false);
             exportarButton.setEnabled(false);
+            format.setEnabled(false);
         } else {
             autor.setText(document.get(1));
             titol.setText(document.get(2));
@@ -168,6 +230,7 @@ public class vistaPaginaPrincipal extends JFrame{
             visualitzarModificarButton.setEnabled(true);
             eliminarDocumentSeleccionatButton.setEnabled(true);
             exportarButton.setEnabled(true);
+            format.setEnabled(true);
         }
         int resultat = Integer.parseInt(s);
         return resultat;

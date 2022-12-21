@@ -106,10 +106,8 @@
         </constraints>
         <properties>
           <model>
-            <item value="AUT_ASC"/>
-            <item value="AUT_DESC"/>
-            <item value="TIT_ASC"/>
             <item value="TIT_DESC"/>
+            <item value="TIT_ASC"/>
           </model>
         </properties>
       </component>
@@ -122,17 +120,22 @@
           <text value="Com vol obtenir ordenat el resultat?"/>
         </properties>
       </component>
-      <component id="87c5" class="javax.swing.JTextArea" binding="Resultat">
+      <scrollpane id="60bba">
         <constraints>
-          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="50"/>
-          </grid>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties>
-          <editable value="false"/>
-          <text value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"/>
-        </properties>
-      </component>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="87c5" class="javax.swing.JTextArea" binding="Resultat">
+            <constraints/>
+            <properties>
+              <editable value="false"/>
+              <text value=""/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
     </children>
   </grid>
 </form>
