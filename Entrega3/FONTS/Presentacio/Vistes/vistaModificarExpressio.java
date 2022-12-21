@@ -52,7 +52,7 @@ public class vistaModificarExpressio extends JFrame {
         Enrere.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                _ctrlPresentacio.ObrirVistaGestioExpressio();
+                _ctrlPresentacio.activarGestioExpressio();
                 frame.dispose();
                 dispose();
             }
@@ -76,10 +76,12 @@ public class vistaModificarExpressio extends JFrame {
                     String[] strBotones = {"Ok"};
                     int isel = vistaDialogo.setDialogo(frame, "Modificar Expressió", "Expressió modificada corectament", strBotones, 2);
                     System.out.println("Expressió modificada: " + isel + " " + strBotones[isel]);
-                    _ctrlPresentacio.ObrirVistaGestioExpressio();
+
+                    _ctrlPresentacio.activarGestioExpressio();
+                    frame.dispose();
+                    dispose();
                 }
-                frame.dispose();
-                dispose();
+
             }
 
         });

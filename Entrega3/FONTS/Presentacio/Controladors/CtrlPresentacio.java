@@ -157,7 +157,7 @@ public class CtrlPresentacio {
         return _ctrlDomini.eliminarExpressio(id);
     }
 
-    public ArrayList<Document> selectPerExpressio(int id) { return _ctrlDomini.selectPerExpressio(id); }
+    public List<Pair<String, String>> selectPerExpressio(int id) { return _ctrlDomini.selectPerExpressio(id); }
 
     public ArrayList<String> llistarDocuments() {
         return _ctrlDomini.llistarDocuments();
@@ -173,6 +173,4 @@ public class CtrlPresentacio {
     public ArrayList<String>  toStringExpActiva() {
         return _ctrlDomini.toStringExpActiva();
     }
-
-
 }

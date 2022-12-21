@@ -15,6 +15,8 @@ public class vistaCrearExpressio extends JFrame {
     private JButton Crear;
     private JButton Enrere;
 
+    private JFrame frame = new JFrame("JFrame");
+
     public vistaCrearExpressio(CtrlPresentacio pCtrlPresentacio) {
         _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
@@ -29,23 +31,46 @@ public class vistaCrearExpressio extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                //_ctrlPresentacio.activarPagPrincipal(); ES LA PAGINA DE GESTIO EXPRESSIO
-                System.out.println("Tancant vistaDocumentsRellevants");
+
+                System.out.println("Tancant vistaCrearExpressio");
+                _ctrlPresentacio.activarGestioExpressio();
+                frame.dispose();
                 dispose();
             }
         });
         Crear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                _ctrlPresentacio.afegirExp(Expressio.getText());
+                int codi = _ctrlPresentacio.afegirExp(Expressio.getText());
+                if (codi == 30) {
+                    VistaDialogo vistaDialogo = new VistaDialogo();
+                    String[] strBotones = {"Ok"};
+                    int isel = vistaDialogo.setDialogo(frame, "Error crear expressio", "S'ha d'introduir un valor vàlid", strBotones, 0);
+                    System.out.println("Error crear exp buida: " + isel + " " + strBotones[isel]);
+                }
+                else if (codi == 20) {
+                    VistaDialogo vistaDialogo = new VistaDialogo();
+                    String[] strBotones = {"Ok"};
+                    int isel = vistaDialogo.setDialogo(frame, "Error crear expressio", "Ja existeix aquesta expressió", strBotones, 0);
+                    System.out.println("error ja existeix exp: " + isel + " " + strBotones[isel]);
+                }
+                else {
+                    VistaDialogo vistaDialogo = new VistaDialogo();
+                    String[] strBotones = {"Ok"};
+                    int isel = vistaDialogo.setDialogo(frame, "Alta expressio", "Expressió afegida correctament", strBotones, 1);
+                    System.out.println("exp afegida: " + isel + " " + strBotones[isel]);
+                    System.out.println(Expressio.getText());
+                }
                 Expressio.setText("");
-                System.out.println(Expressio.getText());
+
             }
         });
         Enrere.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                _ctrlPresentacio.ObrirVistaGestioExpressio();
+                System.out.println("Tancant vistaCrearExpressio");
+                _ctrlPresentacio.activarGestioExpressio();
+                frame.dispose();
                 dispose();
             }
         });

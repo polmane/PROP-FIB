@@ -1,6 +1,6 @@
 package Presentacio.Vistes;
 
-import Domini.Classes.Document;
+import Domini.Classes.Pair;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 public class vistaGestioExpressio extends JFrame {
 
@@ -18,7 +19,7 @@ public class vistaGestioExpressio extends JFrame {
     private JButton Crear;
     private JButton Eliminar;
     private JButton Modificar;
-    private JComboBox Expresions;
+    private JComboBox Expressions;
     private JButton Buscar;
     private JButton Enrere;
     private JLabel labelInfo;
@@ -40,13 +41,7 @@ public class vistaGestioExpressio extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        ArrayList<String> resultat = _ctrlPresentacio.llistarExpressions();
-        if (resultat == null) Buscar.setEnabled(false);
-        else {
-            for (int i = 1; i < resultat.size(); i += 2) {
-                Expresions.addItem(resultat.get(i));
-            }
-        }
+        RefreshExpressionsGestio();
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -63,7 +58,6 @@ public class vistaGestioExpressio extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 _ctrlPresentacio.ObrirVistaCrearExpressio();
-                dispose();
             }
         });
         Enrere.addActionListener(new ActionListener() {
@@ -78,38 +72,41 @@ public class vistaGestioExpressio extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Resultat.setText("");
-                Expresions.removeItem(Expresions.getSelectedItem());
 
-                int codi = _ctrlPresentacio.eliminarExpressio(0);
-                if (codi == 11) {
+                String info = String.valueOf(Expressions.getSelectedItem());
+                int id = Integer.parseInt(info.substring(0, 1));
+
+                int codi = _ctrlPresentacio.eliminarExpressio(id);
+                System.out.println(codi);
+                if (codi == 11 ||codi == 10) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Eliminar expressió", "Expressió eliminada", strBotones, 2);
+                    int isel = vistaDialogo.setDialogo(frame, "Eliminar expressió", "Expressió eliminada", strBotones, 1);
                     System.out.println("Error eliminar seleccionat: " + isel + " " + strBotones[isel]);
+                    Expressions.removeItem(Expressions.getSelectedItem());
+
                 } else if (codi == 20) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Error a l'eliminar", "Expressio no reconeguda", strBotones, 1);
+                    int isel = vistaDialogo.setDialogo(frame, "Error a l'eliminar", "Expressio no reconeguda", strBotones, 0);
                     System.out.println("Error eliminar exp no reconegut: " + isel + " " + strBotones[isel]);
                 }
             }
         });
-        Modificar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                _ctrlPresentacio.ObrirVistaModificarExpressio();
-                setVisible(false);
-            }
-        });
+
         Buscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Resultat.setText("");
-                ArrayList<Document> res = _ctrlPresentacio.selectPerExpressio(0);
+
+                String info = String.valueOf(Expressions.getSelectedItem());
+                int id = Integer.parseInt(info.substring(0, 1));
+
+                List<Pair<String, String>> res = _ctrlPresentacio.selectPerExpressio(id);
                 for (int i = 0; i < res.size(); ++i) {
-                    Resultat.append(res.get(i).getTitol());
-                    Resultat.append(" ");
-                    Resultat.append(res.get(i).getAutor());
+                    Resultat.append(res.get(i).first());
+                    Resultat.append(" | ");
+                    Resultat.append(res.get(i).second());
                     Resultat.append("\n");
                 }
             }
@@ -119,27 +116,43 @@ public class vistaGestioExpressio extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 _ctrlPresentacio.ObrirVistaModificarExpressio();
-                dispose();
+            }
+        });
+        Expressions.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Expressions.getSelectedItem() != null) {
+                    String info = String.valueOf(Expressions.getSelectedItem());
+                    int id = Integer.parseInt(info.substring(0, 1));
+
+                    int codi = _ctrlPresentacio.seleccionarExpressio(id);
+                    System.out.println("Seleccionant expressio " + id + "; " +codi);
+                }
+                else {
+                    Buscar.setEnabled(false);
+                }
             }
         });
     }
 
-    public int RefreshExpSeleccionadaGestio() {
-        ArrayList<String> document = _ctrlPresentacio.toStringDocActiu();
-        String s = document.get(0);
-        if (s == "-31") {
-
-        } else {
-
+    public void RefreshExpressionsGestio() {
+        Expressions.removeAllItems();
+        ArrayList<String> resultat = _ctrlPresentacio.llistarExpressions();
+        if (resultat == null) {
+            Buscar.setEnabled(false);
         }
-        int resultat = Integer.parseInt(s);
-        return resultat;
+        else {
+            for (int i = 0; i < resultat.size()-1; i += 2) {
+                Expressions.addItem(resultat.get(i) + " | " + resultat.get(i+1));
+            }
+            Buscar.setEnabled(true);
+        };
     }
 
     public void activar() {
         this.setEnabled(true);
         this.toFront();
-        RefreshExpSeleccionadaGestio();
+        RefreshExpressionsGestio();
     }
 
     public void desactivar() {

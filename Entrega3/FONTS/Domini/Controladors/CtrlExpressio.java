@@ -138,6 +138,7 @@ public class CtrlExpressio {
 
     public ArrayList<String> llistarExpressions() {
         ArrayList<String> resultat = new ArrayList<>();
+        if (expressions.size() == 0) return null;
         for (HashMap.Entry<Integer, Expressio> exp : expressions.entrySet()) {
             resultat.add(String.valueOf(exp.getKey()));
             resultat.add(exp.getValue().getExpressio());

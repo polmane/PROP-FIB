@@ -89,11 +89,11 @@ public class CtrlDomini {
         return _ctrlExpressio.eliminarExpressio(idExp);
     }
 
-    public ArrayList<Document> selectPerExpressio(Integer idExp) {
-        ArrayList<Document> resultat = new ArrayList<>();
+    public List<Pair<String, String>> selectPerExpressio(Integer idExp) {
+        List<Pair<String, String>> resultat = new ArrayList<>();
 
         for (Document document : _ctrlDirectori.getDirectoriObert().getDocs().values()) {
-            if(_ctrlExpressio.selectPerExpressio(idExp, document)) resultat.add(document);
+            if(_ctrlExpressio.selectPerExpressio(idExp, document)) resultat.add(new Pair<>(document.getAutor(), document.getTitol()));
         }
         return resultat;
     }
