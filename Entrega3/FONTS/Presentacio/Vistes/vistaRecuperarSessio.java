@@ -25,19 +25,29 @@ public class vistaRecuperarSessio extends JFrame {
         Recuperar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //_ctrlPresentacio.carregar
-                System.out.println("Carregant sessio");
-                _ctrlPresentacio.activarPagPrincipal();
-                dispose();
+                int codi = _ctrlPresentacio.carregarEstat();
+                if (codi == -10) {
+                    System.out.println("Carregant sessio");
+                    _ctrlPresentacio.activarPagPrincipal();
+                    dispose();
+                }
+                else {
+                    //TODO: enviar missatge que el directori no s'ha pogut recuperar correctament o que no hi havia directori per recuperar
+                }
             }
         });
         Crear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                _ctrlPresentacio.crearDirectori(0);
-                System.out.println("Creant nou directori");
-                _ctrlPresentacio.activarPagPrincipal();
-                dispose();
+                int codi = _ctrlPresentacio.crearDirectori(0);
+                if (codi == -10) {
+                    System.out.println("Creant nou directori");
+                    _ctrlPresentacio.activarPagPrincipal();
+                    dispose();
+                }
+                else {
+                    //TODO: enviar un missatge perquè el directori no s'ha creat correctament
+                }
             }
         });
     }

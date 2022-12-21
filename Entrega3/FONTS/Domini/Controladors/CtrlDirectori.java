@@ -56,10 +56,12 @@ public class CtrlDirectori {
      * Funció que crea un nou directori en el sistema
      * @param idDir id del directori
      */
-    public void crearDirectori(int idDir) {
+    public Boolean crearDirectori(int idDir) {
         if (directoriObert == null) {
             directoriObert = new Directori(idDir);
+            return true;
         }
+        return false;
     }
 
     /**

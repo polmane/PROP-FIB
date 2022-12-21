@@ -61,23 +61,30 @@ public class CtrlDomini {
 
     /**
      * Constructora del controlador de domini
-     * @param _ctrlDirectori controlador Directori
-     * @param _ctrlExpressio controlador Expressió
-     * @param ctrlPersistencia controlador Persistència
      */
-    public CtrlDomini(CtrlDirectori _ctrlDirectori, CtrlExpressio _ctrlExpressio, CtrlPersistencia ctrlPersistencia) {
-        this._ctrlDirectori = _ctrlDirectori;
-        this._ctrlExpressio = _ctrlExpressio;
-        this._ctrlPersistencia = ctrlPersistencia;
+    public CtrlDomini() {
+        this._ctrlDirectori = new CtrlDirectori();
+        this._ctrlExpressio = new CtrlExpressio();
+        this._ctrlPersistencia = new CtrlPersistencia();
     }
 
     /**
-     * Funció que permet afegir documents en el nostre sistema
-     * @param autor nom de l'autor del document
-     * @param titol nom del títol del document
-     * @param contingut nom del contingut del document
-     * @return consultar els codis de return en el document word entregat, la id del document creat en cas de funcionament correcte
+     * Funció per crear un directori a partir d'una id
+     * @param idDir id del nou directori
+     * @return retorna true en cas de funcionament correcte, false en cas contrari
      */
+    public int crearDirectori(int idDir) {
+        if(_ctrlDirectori.crearDirectori(idDir)) return -10;
+        return -50;
+    }
+
+        /**
+         * Funció que permet afegir documents en el nostre sistema
+         * @param autor nom de l'autor del document
+         * @param titol nom del títol del document
+         * @param contingut nom del contingut del document
+         * @return consultar els codis de return en el document word entregat, la id del document creat en cas de funcionament correcte
+         */
     public int afegirDocument(String autor, String titol, String contingut) {
         if (_ctrlDirectori.getDocumentActiu() != null) _ctrlDirectori.getDocumentActiu().setContingut(null);
         int i = _ctrlDirectori.afegirDocument(autor, titol, contingut);
@@ -138,8 +145,8 @@ public class CtrlDomini {
 
     /**
      * Funció que permet comparar documents i obtenir-ne el nivell de similaritat
-     * @param m mètode de comparació (enum METODE_COMPARACIO)
-     * @param s mètode d'ordenació del resultat (enum SORTING)
+     * @param metodeComp mètode de comparació (enum METODE_COMPARACIO)
+     * @param sorting mètode d'ordenació del resultat (enum SORTING)
      * @param k nombre de documents similars a trobar
      * @param IdDoc identificador del document que s'utilitarà per fer les comparacions
      * @return retorna una llista de pairs on el primer valor és el nom de l'autor i el segon el títol del document semblant
@@ -151,8 +158,8 @@ public class CtrlDomini {
     }
     /**
      * Funció que permet comparar els documents del sistema amb una query de paraules entrada per l'usuari
-     * @param m mètode de comparació (enum METODE_COMPARACIO)
-     * @param s mètode d'ordenació (enum SORTING)
+     * @param metodeComp mètode de comparació (enum METODE_COMPARACIO)
+     * @param sorting mètode d'ordenació (enum SORTING)
      * @param k nombre de documents similars a trobar
      * @param paraules query de paraules a comparar
      * @return retorna una llista de pairs on el primer valor és el nom de l'autor i el segon el títol del document semblant
@@ -200,7 +207,7 @@ public class CtrlDomini {
     /**
      * Funció per llistar els autors del nostre sistema que començen per un prefix determinat
      * @param pre prefix pel que buscar els autors similars
-     * @param s mètode d'ordenació (enum SORTING)
+     * @param sorting mètode d'ordenació (enum SORTING)
      * @return retorna una llista d'autors
      */
     public List<String> llistaAutorsPerPrefix(String pre , String sorting) {
@@ -210,7 +217,7 @@ public class CtrlDomini {
     /**
      * Funció per llistar els títols del nostre sistema que començen per un autor determinat
      * @param autor autor pel que buscar els titols
-     * @param s mètode d'ordenació (enum SORTING)
+     * @param sorting mètode d'ordenació (enum SORTING)
      * @return retorna una llista de títols
      */
     public List<String> llistaTitolsPerAutor(String autor, String sorting) {

@@ -3,7 +3,10 @@ package Presentacio.Controladors;
 import java.util.*;
 import Domini.Classes.Pair;
 import Domini.Classes.Document;;
+import Domini.Controladors.CtrlDirectori;
 import Domini.Controladors.CtrlDomini;
+import Domini.Controladors.CtrlExpressio;
+import Persistencia.Controladors.CtrlPersistencia;
 import Presentacio.Vistes.*;
 
 import java.util.List;
@@ -29,6 +32,7 @@ public class CtrlPresentacio {
     //VISTES
     public CtrlPresentacio() {
          _ctrlDomini = new CtrlDomini();
+         _ctrlDomini.carregarExpressions();
          vPrincipal = new vistaPaginaPrincipal(this);
     }
 
@@ -101,9 +105,7 @@ public class CtrlPresentacio {
 
     //FUNCIONS DE DOMINI
 
-    public void crearDirectori(int id) {
-        _ctrlDomini._ctrlDirectori.crearDirectori(id);
-    }
+    public int crearDirectori(int id) {return _ctrlDomini.crearDirectori(id);}
 
     public int crearDocument(String autor, String titol, String contingut) { return _ctrlDomini.afegirDocument(autor, titol, contingut); }
 
@@ -174,5 +176,5 @@ public class CtrlPresentacio {
         return _ctrlDomini.toStringExpActiva();
     }
 
-    //public void carregarEstat() { _ctrlDomini.carregarEstat(); }
+    public int carregarEstat() { return _ctrlDomini.carregarEstat(); }
 }
