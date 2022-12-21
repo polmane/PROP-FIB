@@ -12,6 +12,7 @@ import java.util.Scanner;
  * @author juli.serra.balaguer
  */
 public class GestorExpressions {
+
     /**
      * Representa el path on hi han les expressions
      */
@@ -26,6 +27,8 @@ public class GestorExpressions {
         Scanner scanner = null;
         try {
             File dir = new File(BD_PATH);
+            if (!dir.exists()) return null;
+
             for (File FileExpressio : dir.listFiles()) {
                 scanner = new Scanner(FileExpressio);
                 Integer id = Integer.parseInt(scanner.nextLine());
@@ -50,10 +53,10 @@ public class GestorExpressions {
     public Boolean guardarExpressio (int idExp, String expressio) {
         File experssions = new File(BD_PATH);
         if (!experssions.exists()) {
-            experssions.mkdir();
+            if (!experssions.mkdir()) return false;
         }
         try {
-            FileWriter fw = new FileWriter(BD_PATH + "/" + String.valueOf(idExp) + ".txt");
+            FileWriter fw = new FileWriter(BD_PATH + "/" + idExp + ".txt");
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(idExp + "\n");
             bw.write(expressio);
@@ -67,11 +70,11 @@ public class GestorExpressions {
 
     /**
      * Funció per eliminar una expressió del sistema
-     * @param idExp id de l'experssió a eliminar
+     * @param idExp id de l'experssio a eliminar
      * @return retorna true en cas de funcionament correcte, false en cas contrari
      */
     public Boolean eliminarExpressio (int idExp) {
-        File expressio = new File(BD_PATH + "/" + String.valueOf(idExp) + ".txt");
+        File expressio = new File(BD_PATH + "/" + idExp + ".txt");
         return expressio.delete();
     }
 }
