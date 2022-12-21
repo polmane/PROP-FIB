@@ -19,13 +19,13 @@ public class vistaVisualitzarModificarDocument extends JFrame {
     private JPanel panelOpcions;
     private JButton Modificar;
     private JButton Enrere;
-    private JButton Guardar;
+    private JButton GuardarTitol;
     private JTextArea Contingut;
     private JLabel labelAutor;
     private JLabel labelTitol;
     private JLabel labelContingut;
-    private JButton button1;
-    private JButton button2;
+    private JButton GuardarAutor;
+    private JButton GuardarContingut;
     private JScrollPane scrollPane;
 
     private JFrame frame = new JFrame("JFrame");
@@ -42,7 +42,9 @@ public class vistaVisualitzarModificarDocument extends JFrame {
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        Guardar.setEnabled(false);
+        GuardarAutor.setVisible(false);
+        GuardarTitol.setVisible(false);
+        GuardarContingut.setVisible(false);
 
         ArrayList<String> document = _ctrlPresentacio.toStringDocActiu();
         String s = document.get(0);
@@ -70,57 +72,97 @@ public class vistaVisualitzarModificarDocument extends JFrame {
         Enrere.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                _ctrlPresentacio.activarPagPrincipal();
-                frame.dispose();
-                dispose();
+                if (Enrere.getText() == "Enrere") {
+                    _ctrlPresentacio.activarPagPrincipal();
+                    frame.dispose();
+                    dispose();
+                } else {
+                    Autor.setEditable(false);
+                    Titol.setEditable(false);
+                    Contingut.setEditable(false);
+                    GuardarTitol.setVisible(false);
+                    GuardarAutor.setVisible(false);
+                    GuardarContingut.setVisible(false);
+                    Modificar.setEnabled(true);
+                    Enrere.setText("Enrere");
+                }
             }
         });
-        Guardar.addActionListener(new ActionListener() {
+        GuardarTitol.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int codi = _ctrlPresentacio.modificarTitol(Titol.getText());
+                if (codi == 30) {
+                    VistaDialogo vistaDialogo = new VistaDialogo();
+                    String[] strBotones = {"Ok"};
+                    int isel = vistaDialogo.setDialogo(frame, "Error titol", "No s'ha introduït cap títol", strBotones, 0);
+                    System.out.println("Modif titol, buit: " + isel + " " + strBotones[isel]);
+
+                } else if (codi == 20) {
+                    VistaDialogo vistaDialogo = new VistaDialogo();
+                    String[] strBotones = {"Ok"};
+                    int isel = vistaDialogo.setDialogo(frame, "Error títol", "Ja existeix un document amb aquest títol i autor", strBotones, 0);
+                    System.out.println("Modif titol, doc amb autor i titol repetit: " + isel + " " + strBotones[isel]);
+                } else {
+                    VistaDialogo vistaDialogo = new VistaDialogo();
+                    String[] strBotones = {"Ok"};
+                    int isel = vistaDialogo.setDialogo(frame, "Mofificar títol", "Títol modificat correctament", strBotones, 1);
+                    System.out.println("Titol modificat: " + isel + " " + strBotones[isel]);
+                }
+
+
+            }
+        });
+        Modificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Modificar.getText() == "Modificar") {
+                    Autor.setEditable(true);
+                    Titol.setEditable(true);
+                    Contingut.setEditable(true);
+                    GuardarTitol.setVisible(true);
+                    GuardarAutor.setVisible(true);
+                    GuardarContingut.setVisible(true);
+                    Modificar.setText("Confirmar");
+                    Enrere.setText("Cancel·lar");
+                } else {
+                    _ctrlPresentacio.activarPagPrincipal();
+                    frame.dispose();
+                    dispose();
+                }
+            }
+        });
+        GuardarAutor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int codi = _ctrlPresentacio.modificarAutor(Autor.getText());
                 if (codi == 30) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Error autor", "No s'ha introduït cap autor", strBotones, 1);
+                    int isel = vistaDialogo.setDialogo(frame, "Error autor", "No s'ha introduït cap autor", strBotones, 0);
                     System.out.println("Modif autor, buit: " + isel + " " + strBotones[isel]);
 
                 } else if (codi == 20) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Error autor", "Ja existeix un document amb aquest autor i títol", strBotones, 1);
+                    int isel = vistaDialogo.setDialogo(frame, "Error autor", "Ja existeix un document amb aquest autor i títol", strBotones, 0);
                     System.out.println("Modif autor, doc amb autor i titol repetit: " + isel + " " + strBotones[isel]);
-                }
-                int codi1 = _ctrlPresentacio.modificarTitol(Titol.getText());
-                if (codi1 == 30) {
+                } else {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Error titol", "No s'ha introduït cap títol", strBotones, 1);
-                    System.out.println("Modif titol, buit: " + isel + " " + strBotones[isel]);
-
-                } else if (codi1 == 20) {
-                    VistaDialogo vistaDialogo = new VistaDialogo();
-                    String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Error títol", "Ja existeix un document amb aquest títol i autor", strBotones, 1);
-                    System.out.println("Modif titol, doc amb autor i titol repetit: " + isel + " " + strBotones[isel]);
+                    int isel = vistaDialogo.setDialogo(frame, "Mofificar autor", "Autor modificat correctament", strBotones, 1);
+                    System.out.println("Autor modificat: " + isel + " " + strBotones[isel]);
                 }
-                int codi2 = _ctrlPresentacio.modificarContingut(Contingut.getText());
-                System.out.println("modificant Document");
-
-                _ctrlPresentacio.activarPagPrincipal();
-                frame.dispose();
-                dispose();
             }
         });
-        Modificar.addActionListener(new ActionListener() {
+        GuardarContingut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Autor.setEditable(true);
-                Titol.setEditable(true);
-                Contingut.setEditable(true);
-                Guardar.setEnabled(true);
-                Modificar.setEnabled(false);
-                Enrere.setText("Cancel·lar");
+                _ctrlPresentacio.modificarContingut(Contingut.getText());
+                VistaDialogo vistaDialogo = new VistaDialogo();
+                String[] strBotones = {"Ok"};
+                int isel = vistaDialogo.setDialogo(frame, "Mofificar contingut", "Contingut modificat correctament", strBotones, 1);
+                System.out.println("Contingut modificat: " + isel + " " + strBotones[isel]);
             }
         });
     }
