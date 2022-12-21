@@ -1,4 +1,4 @@
-package Presentacio.Vistes2;
+package Presentacio.Vistes;
 
 import javax.swing.*;
 

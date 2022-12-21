@@ -1,14 +1,9 @@
-package Presentacio.Vistes2;
+package Presentacio.Vistes;
 
 import Presentacio.Controladors.CtrlPresentacio;
 
-import java.awt.*;
 import java.awt.event.*;
-import java.util.Locale;
 import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
 
 public class vistaRecuperarSessio extends JFrame {
 

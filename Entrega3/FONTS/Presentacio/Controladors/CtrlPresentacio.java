@@ -4,7 +4,7 @@ import java.util.*;
 import Domini.Classes.Pair;
 import Domini.Classes.Document;;
 import Domini.Controladors.CtrlDomini;
-import Presentacio.Vistes2.*;
+import Presentacio.Vistes.*;
 
 import java.util.List;
 

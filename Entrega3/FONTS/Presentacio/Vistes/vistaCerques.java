@@ -1,15 +1,11 @@
-package Presentacio.Vistes2;
+package Presentacio.Vistes;
 
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
-import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class vistaCerques extends JFrame {
     private CtrlPresentacio _ctrlPresentacio;

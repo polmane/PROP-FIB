@@ -1,10 +1,9 @@
-package Presentacio.Vistes2;
+package Presentacio.Vistes;
 
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;

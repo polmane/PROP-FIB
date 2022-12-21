@@ -1,9 +1,8 @@
-package Presentacio.Vistes2;
+package Presentacio.Vistes;
 
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;

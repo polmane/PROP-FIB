@@ -1,81 +1,52 @@
-package Presentacio.Vistes2;
+package Presentacio.Vistes;
 
 import Domini.Classes.Pair;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-public class vistaDocumentsSemblants extends JFrame {
-
+public class vistaDocumentsRellevants extends JFrame {
     private CtrlPresentacio _ctrlPresentacio;
-
     private JPanel panel;
     private JRadioButton BOOLRadioButton;
     private JRadioButton TFIDFRadioButton;
     private JComboBox Sorting;
     private JButton Buscar;
     private JButton Enrere;
-    private JLabel labelMetode;
-    private JLabel labelK;
-    private JLabel labelDocument;
-    private JLabel labelResultat;
     private JPanel panelOpcions;
-    private JComboBox Documents;
-    private SpinnerModel valors_k;
-
-    private JSpinner k;
+    private JLabel labelResultat;
+    private JLabel labelMetode;
     private JTextArea Resultat;
+    private JSpinner k;
+    private JTextArea Paraules;
+    private JScrollPane scrollPanePar;
     private JScrollPane scrollPaneRes;
-    private JScrollPane scrollPaneDocs;
-
     private JFrame frame = new JFrame("JFrame");
 
-    public vistaDocumentsSemblants(CtrlPresentacio pCtrlPresentacio) {
+    public vistaDocumentsRellevants(CtrlPresentacio pCtrlPresentacio) {
         _ctrlPresentacio = pCtrlPresentacio;
-
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
-        setTitle("Buscar els documents semblants");
+        setTitle("Buscar els documents més rellevants segons una sèrie de paraules");
+
+        Paraules.setLineWrap(true);
+        Paraules.setWrapStyleWord(true);
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-        ArrayList<String> resultat = _ctrlPresentacio.llistarDocuments();
-        if (resultat == null) {
-            Buscar.setEnabled(false);
-            k.setEnabled(false);
-
-        } else if (resultat.size() == 1) {
-            Buscar.setEnabled(false);
-            k.setEnabled(false);
-            Documents.addItem(resultat.get(0) + " | " + resultat.get(1) + " | " + resultat.get(2));
-
-        } else {
-            for (int i = 0; i < resultat.size(); i += 3) {
-                Documents.addItem(resultat.get(i) + " | " + resultat.get(i + 1) + " | " + resultat.get(i + 2));
-            }
-            k.setEnabled(true);
-            valors_k = new SpinnerNumberModel(0, 0, (resultat.size() / 3) - 1, 1);
-            k.setModel(valors_k);
-        }
 
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 _ctrlPresentacio.activarPagPrincipal();
-                System.out.println("Tancant vistaDocumentsSemblants");
+                System.out.println("Tancant vistaDocumentsRellevants");
                 frame.dispose();
                 dispose();
             }
@@ -89,6 +60,23 @@ public class vistaDocumentsSemblants extends JFrame {
                 dispose();
             }
         });
+
+        TFIDFRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BOOLRadioButton.setSelected(false);
+                System.out.println("Botó TFIDF");
+            }
+        });
+
+        BOOLRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TFIDFRadioButton.setSelected(false);
+                System.out.println("Botó BOOL");
+            }
+        });
+
         Buscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -105,14 +93,14 @@ public class vistaDocumentsSemblants extends JFrame {
 
                 List<Pair<String, String>> res;
                 String sort = String.valueOf(Sorting.getSelectedItem());
-                String infoDoc = (String.valueOf(Documents.getSelectedItem()));
-                int idDoc = Integer.parseInt(infoDoc.substring(0, 1));
+                String query = (String.valueOf(Paraules.getText()));
+                System.out.println(query);
 
                 if (BOOLRadioButton.isSelected()) {
-                    res = _ctrlPresentacio.compararDocuments("BOOL", sort, numdocs, idDoc);
+                    res = _ctrlPresentacio.compararQuery("BOOL", sort, numdocs, query);
 
                 } else {
-                    res = _ctrlPresentacio.compararDocuments("TF_IDF", sort, numdocs, idDoc);
+                    res = _ctrlPresentacio.compararQuery("TF_IDF", sort, numdocs, query);
                 }
                 if (res == null) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
@@ -128,20 +116,6 @@ public class vistaDocumentsSemblants extends JFrame {
                     }
                 }
 
-            }
-        });
-        TFIDFRadioButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                BOOLRadioButton.setSelected(false);
-                System.out.println("Botó TFIDF");
-            }
-        });
-        BOOLRadioButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                TFIDFRadioButton.setSelected(false);
-                System.out.println("Botó BOOL");
             }
         });
     }
