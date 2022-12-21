@@ -22,6 +22,8 @@ public class TestGestorDocument {
 
     @Test
     public void testExportarDocumentTXTSimple() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova1";
@@ -46,6 +48,8 @@ public class TestGestorDocument {
 
     @Test
     public void testExportarDocumentTXTSenseContingut() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova2";
@@ -69,6 +73,8 @@ public class TestGestorDocument {
 
     @Test
     public void testExportarDocumentTXTContingutLlarg() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova3";
@@ -99,6 +105,8 @@ public class TestGestorDocument {
 
     @Test
     public void testExportarDocumentXMLSimple() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova1";
@@ -126,6 +134,8 @@ public class TestGestorDocument {
 
     @Test
     public void testExportarDocumentXMLSenseContingut() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova2";
@@ -153,6 +163,8 @@ public class TestGestorDocument {
 
     @Test
     public void testExportarDocumentXMLContingutLlarg() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova3";
@@ -183,6 +195,8 @@ public class TestGestorDocument {
 
     @Test
     public void testExportarDocumentPROPSimple() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova1";
@@ -208,6 +222,8 @@ public class TestGestorDocument {
 
     @Test
     public void testExportarDocumentPROPSenseContingut() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova2";
@@ -231,6 +247,8 @@ public class TestGestorDocument {
 
     @Test
     public void testExportarDocumentPROPContingutLlarg() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova3";
@@ -264,6 +282,8 @@ public class TestGestorDocument {
 
     @Test
     public void testImportarDocumentFormatNoSuportat() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         ArrayList<String> result = gDoc.importarDocument(PATH_IN + "/format_no_suportat.wtf");
         Assert.assertNull(result);
@@ -271,6 +291,8 @@ public class TestGestorDocument {
 
     @Test
     public void testImportarDocumentTXTSimple() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova1";
@@ -283,6 +305,8 @@ public class TestGestorDocument {
 
     @Test
     public void testImportarDocumentTXTSenseContingut() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova2";
@@ -295,6 +319,8 @@ public class TestGestorDocument {
 
     @Test
     public void testImportarDocumentTXTContingutLlarg() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova3";
@@ -310,6 +336,8 @@ public class TestGestorDocument {
 
     @Test
     public void testImportarDocumentXMLSimple() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova1";
@@ -322,6 +350,8 @@ public class TestGestorDocument {
 
     @Test
     public void testImportarDocumentXMLSenseContingut() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova2";
@@ -334,6 +364,8 @@ public class TestGestorDocument {
 
     @Test
     public void testImportarDocumentXMLContingutLlarg() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova3";
@@ -349,6 +381,8 @@ public class TestGestorDocument {
 
     @Test
     public void testImportarDocumentPROPSimple() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova1";
@@ -361,6 +395,8 @@ public class TestGestorDocument {
 
     @Test
     public void testImportarDocumentPROPSenseContingut() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova2";
@@ -373,6 +409,8 @@ public class TestGestorDocument {
 
     @Test
     public void testImportarDocumentPROPContingutLlarg() {
+        File output = new File(PATH_OUT);
+        if(!output.exists()) output.mkdir();
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova3";
