@@ -12,6 +12,11 @@ import static java.lang.Math.min;
 import static java.util.Collections.reverseOrder;
 import static java.util.Comparator.comparing;
 
+/**
+ * Representa un Controlador de Directori
+ * @author pol.camprubi.prats
+ * @author juli.serra.balaguer
+ */
 public class CtrlDirectori {
     /**
      * Representa el directori que s'està utilitzant
@@ -19,12 +24,12 @@ public class CtrlDirectori {
     private Directori directoriObert;
 
     /**
-     * Representa el document carregat en el directori
+     * Representa el document seleccionat
      */
     private Document documentActiu;
 
     /**
-     * Constructora
+     * Constructora de directori
      */
     public CtrlDirectori() {
         directoriObert = null;
@@ -32,18 +37,24 @@ public class CtrlDirectori {
     }
 
     /**
-     * Getters de directoriObert i documentActiu
+     * Getter del directori obert
+     * @return retorna el directori obert
      */
     public Directori getDirectoriObert() {
         return directoriObert;
     }
 
+    /**
+     * Getter del docuent actiu
+     * @return retorna el document actiu
+     */
     public Document getDocumentActiu() {
         return documentActiu;
     }
 
     /**
-     * Operació per crear un directori en el nostre sistema
+     * Funció que crea un nou directori en el sistema
+     * @param idDir id del directori
      */
     public void crearDirectori(int idDir) {
         if (directoriObert == null) {
@@ -52,8 +63,9 @@ public class CtrlDirectori {
     }
 
     /**
-     * Operació per obrir un document que ja teniem precarregat dins el nostre sistema
-     * @param idDoc és l'identificador del document que volem obrir
+     * Funció per settejar el document actiu
+     * @param idDoc id del document que es vol definir com a actiu
+     * @return consultar els codis de return el el document word entregat
      */
     public int seleccionarDocument(int idDoc) {
         if (directoriObert.getDocs().containsKey(idDoc)) {
@@ -64,49 +76,49 @@ public class CtrlDirectori {
     }
 
     /**
-     * Modifica l'autor del document actiu
-     *
-     * @param autor és el nou nom d'autor que es vol utilitzar pel document
+     * Funció per modificar l'autor del document actiu
+     * @param autor nou valor de la variable autor en el document actiu
+     * @return consultar els codis de return en el document word entregat
      */
     public int modificarAutor(String autor) {
-        if (documentActiu == null) return 31;
+        if (documentActiu == null) return -31;
         if (autor == null || autor.isBlank()) {
-            return 30;
+            return -30;
         }
         for (Document document : directoriObert.getDocs().values()) {
             if (document.getIdDoc() == documentActiu.getIdDoc()) continue;
             if (documentActiu.getTitol().equalsIgnoreCase(document.getTitol()) && document.getAutor().equalsIgnoreCase(autor)) {
-                return 20;
+                return -20;
             }
         }
         documentActiu.setAutor(autor);
-        return 10;
+        return -10;
     }
 
     /**
-     * Modifica el títol del document actiu
-     *
-     * @param titol és el nou nom del títol que es vol utilitzar pel document
+     * Funció per modificar el títol del document actiu
+     * @param titol nou valor de la variable titol del document actiu
+     * @return consultar els codis de return en el document word entregat
      */
     public int modificarTitol(String titol) {
-        if (documentActiu == null) return 31;
+        if (documentActiu == null) return -31;
         if (titol == null || titol.isBlank()) {
-            return 30;
+            return -30;
         }
         for (Document document : directoriObert.getDocs().values()) {
             if (document.getIdDoc() == documentActiu.getIdDoc()) continue;
             if (documentActiu.getAutor().equalsIgnoreCase(document.getAutor()) && document.getTitol().equalsIgnoreCase(titol)) {
-                return 20;
+                return -20;
             }
         }
         documentActiu.setTitol(titol);
-        return 10;
+        return -10;
     }
 
     /**
-     * Modifica el contingut del document actiu
-     *
-     * @param contingut és el nou contingut que es vol utilitzar pel document
+     * Funció per modificar el títol del document actiu
+     * @param contingut nou valor de la variable contingut del document actiu
+     * @return -31 si el document actiu té valor null, la id del document en cas contrari
      */
     public int modificarContingut(String contingut) {
         if (documentActiu == null) return -31;
@@ -125,10 +137,11 @@ public class CtrlDirectori {
     }
 
     /**
-     * Afegir Document fa una alta d'un nou document dins el directori
-     * @param autor representa l'autor del document que es vol afegir
-     * @param titol representa el títol del document que es vol afegir
-     * @param contingut representa el contingut del nou document
+     * Funció per afegir un document dins el nostre directori
+     * @param autor nom de l'autor del nou document
+     * @param titol nom del títol del nou document
+     * @param contingut contingut del nou document
+     * @return consultar els codis de return en el document word entregat, la id del document creat en cas de que s'hagi executat correctament
      */
     public int afegirDocument (String autor, String titol, String contingut) {
         if (autor == null || autor.isBlank() || titol == null || titol.isBlank()) return -30;
@@ -160,6 +173,9 @@ public class CtrlDirectori {
         return id;
     }
 
+    /**
+     * Funció per afegir les paraules del document actiu al directori
+     */
     private void afegeixParaulesAlDir() {
         for (String paraula : documentActiu.getOcurrencies().keySet()) {
             if (directoriObert.getParaulesDirectori().containsKey(paraula))
@@ -168,6 +184,12 @@ public class CtrlDirectori {
         }
     }
 
+    /**
+     * Funció per recuperar l'estat de les variables del programa
+     * @param pesos variable pesos del directori
+     * @param documents hashmap on la key representa la id del document, com a valor té un pair de dos strings que fan referència a l'autor i el títol
+     * @param continguts hashmap on la key representa la id del document i el valor el contingut del document
+     */
     public void carregarDocs(HashMap<Integer, HashMap<String,Double>> pesos,
                              HashMap<Integer, Pair<String,String>> documents,
                              HashMap<Integer, String> continguts) {
@@ -184,7 +206,9 @@ public class CtrlDirectori {
         documentActiu = null;
     }
 
-
+    /**
+     * Funció per afegir els pesos en el sistema
+     */
     private void afegeixPesos() {
         HashMap<String,Double> idfMap = idf();
         for (Document doc : directoriObert.getDocs().values()) {
@@ -203,6 +227,11 @@ public class CtrlDirectori {
         }
     }
 
+    /**
+     * Funció per calcular el tfMap dels documents donat el seu contingut analitzat
+     * @param paraules hashmap on la key representa una paraula i el valor és el nombre de vegades que la paraula surt en el document
+     * @return retorna el tfMap del document
+     */
     private HashMap<String, Double> tf(HashMap<String, Integer> paraules) {
         HashMap<String,Double> tfMap = new HashMap<>();
         Double sum = 0.0;
@@ -216,6 +245,10 @@ public class CtrlDirectori {
         return tfMap;
     }
 
+    /**
+     * Funció per calcular el idf del directori
+     * @return retorna l'idf del directori
+     */
     private HashMap<String, Double> idf() {
         HashMap<String,Double> idfMap = new HashMap<>();
         int size = directoriObert.getDocs().size();
@@ -232,6 +265,10 @@ public class CtrlDirectori {
         return idfMap;
     }
 
+    /**
+     * Funció per obtenir el nombre d'ocurrències d'una certa paraula en el contingut del document actiu
+     * @return retorna les ocurrències d'aquell document
+     */
     private HashMap<String, Integer> obteContingut() {
         String text = documentActiu.getContingut();
         HashMap<String,Integer> paraules = new HashMap<>();
@@ -254,6 +291,11 @@ public class CtrlDirectori {
         return paraules;
     }
 
+    /**
+     * Funció que avalua si un char compleix unes determinades condicions
+     * @param c char que s'avalua
+     * @return retorna true en cas de que es compleixi, false en cas contrari
+     */
     private boolean esUnCharCorrecte(char c) {
         String simbols = " .,'-;:_´`+¨^*{[]}!$%&/()=~|@#€¬";
         for (int i = 0; i < simbols.length(); ++i) {
@@ -262,11 +304,17 @@ public class CtrlDirectori {
         return true;
     }
 
+    /**
+     * Enumeració del nostre sistema per comparar els documents
+     */
     public enum METODE_COMPARACIO {
         TF_IDF,
         BOOL,
     }
 
+    /**
+     * Enumeració del nostre sistema per ordenar resultats
+     */
     public enum SORTING {
         SIM_ASC,
         SIM_DESC,
@@ -276,6 +324,14 @@ public class CtrlDirectori {
         TIT_DESC,
     }
 
+    /**
+     * Funció que permet comparar documents i obtenir-ne el nivell de similaritat
+     * @param m mètode de comparació (enum METODE_COMPARACIO)
+     * @param s mètode d'ordenació del resultat (enum SORTING)
+     * @param k nombre de documents similars a trobar
+     * @param IdDoc identificador del document que s'utilitarà per fer les comparacions
+     * @return retorna una llista de pairs on el primer valor és el nom de l'autor i el segon el títol del document semblant
+     */
     public List<Pair<String, String>> compararDocuments(METODE_COMPARACIO m, SORTING s, Integer k, Integer IdDoc) {
         if (m == null || s == null || k <= 0 || !directoriObert.getDocs().containsKey(IdDoc) || directoriObert.getDocs().size() == 1)
             return null;
@@ -334,6 +390,11 @@ public class CtrlDirectori {
         return llistaSemblants;
     }
 
+    /**
+     * Funció que permet ordenar el resultat segons el criteri desitjat
+     * @param llistaSemblants llista de pairs on el primer valor és el nom d'autor i el segon el nom del títol de cada document
+     * @param s mètode d'ordenació (enum SORTING)
+     */
     private void sortLlista(List<Pair<String, String>> llistaSemblants, SORTING s) {
         switch(s) {
             case SIM_DESC:
@@ -357,6 +418,14 @@ public class CtrlDirectori {
         }
     }
 
+    /**
+     * Funció que permet comparar els documents del sistema amb una query de paraules entrada per l'usuari
+     * @param m mètode de comparació (enum METODE_COMPARACIO)
+     * @param s mètode d'ordenació (enum SORTING)
+     * @param k nombre de documents similars a trobar
+     * @param paraules query de paraules a comparar
+     * @return retorna una llista de pairs on el primer valor és el nom de l'autor i el segon el títol del document semblant
+     */
     public List<Pair<String, String>> compararQuery(METODE_COMPARACIO m, SORTING s, Integer k, String paraules) {
         if (m == null || s == null || k <= 0 || paraules == null || directoriObert.getDocs().size() == 0)
             return null;
@@ -370,8 +439,9 @@ public class CtrlDirectori {
     }
 
     /**
-     * Elimina un document del directori
-     * @param idDoc és l'identificador del document que es vol eliminar del directori
+     * Funció per eliminar un document del directori
+     * @param idDoc id del document a eliminar
+     * @return consultar els codis de return en el document word entregat
      */
     public int eliminarDocument(int idDoc) {
         //Comprovem que idDoc sigui realment un identificador d'un document
@@ -397,6 +467,10 @@ public class CtrlDirectori {
         return -10;
     }
 
+    /**
+     * Funció per eliminar el contingut d'un document en especial en la variable ParaulesDirectori
+     * @param idDoc id del document a eliminar les paraules
+     */
     private void eliminarParaulesAlDir(int idDoc) {
         Document doc = directoriObert.getDocs().get(idDoc);
 
@@ -406,18 +480,12 @@ public class CtrlDirectori {
         }
     }
 
-//    public String cercaPerAutoriTitol(String autor, String titol) {
-//        if (autor == null || titol == null || autor.isBlank() || titol.isBlank()) {
-//            return null;
-//        }
-//        for (Document doc : directoriObert.getDocs().values()) {
-//            if (doc.getTitol().equalsIgnoreCase(titol) && doc.getAutor().equalsIgnoreCase(autor)) {
-//                return doc.getContingut();
-//            }
-//        }
-//        return null;
-//    }
-
+    /**
+     * Funció per llistar els autors del nostre sistema que començen per un prefix determinat
+     * @param pre prefix pel que buscar els autors similars
+     * @param s mètode d'ordenació (enum SORTING)
+     * @return retorna una llista d'autors
+     */
     public List<String> llistaAutorsPerPrefix(String pre, SORTING s) {
         if (pre == null) return null;
         List<String> autors = new ArrayList<String>();
@@ -434,6 +502,12 @@ public class CtrlDirectori {
         return autors;
     }
 
+    /**
+     * Funció per llistar els títols del nostre sistema que començen per un autor determinat
+     * @param autor autor pel que buscar els titols
+     * @param s mètode d'ordenació (enum SORTING)
+     * @return retorna una llista de títols
+     */
     public List<String> llistaTitolsPerAutor(String autor, SORTING s) {
         if (autor == null || autor.isBlank()) return null;
         List<String> docs = new ArrayList<>();
