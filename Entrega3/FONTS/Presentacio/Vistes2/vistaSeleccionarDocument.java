@@ -4,11 +4,15 @@ import Domini.Classes.Document;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class vistaSeleccionarDocument extends JFrame {
     private CtrlPresentacio _ctrlPresentacio;
@@ -40,10 +44,9 @@ public class vistaSeleccionarDocument extends JFrame {
             Seleccionar.setEnabled(false);
             VistaDialogo vistaDialogo = new VistaDialogo();
             String[] strBotones = {"Ok"};
-            int isel = vistaDialogo.setDialogo(frame,"Seleccionar documents","No hi ha documents per seleccionar",strBotones,1);
+            int isel = vistaDialogo.setDialogo(frame, "Seleccionar documents", "No hi ha documents per seleccionar", strBotones, 1);
             System.out.println("Error selecc document nuls: " + isel + " " + strBotones[isel]);
-        }
-        else {
+        } else {
             int index = 0;
             for (int i = 0; i < resultat.size(); i += 3) {
                 model.addElement(resultat.get(i) + " | " + resultat.get(i + 1) + " | " + resultat.get(i + 2));
@@ -55,8 +58,8 @@ public class vistaSeleccionarDocument extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                _ctrlPresentacio.activarPagPrincipal();
                 System.out.println("Tancant vistaSeleccionarDocument");
+                _ctrlPresentacio.activarPagPrincipal();
                 frame.dispose();
                 dispose();
             }
@@ -76,11 +79,10 @@ public class vistaSeleccionarDocument extends JFrame {
                     _ctrlPresentacio.activarPagPrincipal();
                     frame.dispose();
                     dispose();
-                }
-                else {
+                } else {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame,"Document no seleccionat","Has de seleccionar un document perquè tingui efecte",strBotones,1);
+                    int isel = vistaDialogo.setDialogo(frame, "Document no seleccionat", "Has de seleccionar un document perquè tingui efecte", strBotones, 1);
                     System.out.println("Error selecc document nuls: " + isel + " " + strBotones[isel]);
                 }
             }
@@ -96,15 +98,4 @@ public class vistaSeleccionarDocument extends JFrame {
         });
     }
 
-    public static void main(String[] args) {
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                //Turn off metal's use of bold fonts
-                UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaSeleccionarDocument(new CtrlPresentacio());
-            }
-        });
-    }
 }

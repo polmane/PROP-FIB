@@ -3,6 +3,7 @@ package Presentacio.Vistes2;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -53,6 +54,7 @@ public class vistaModificarExpressio extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 _ctrlPresentacio.ObrirVistaGestioExpressio();
+                frame.dispose();
                 dispose();
             }
         });
@@ -63,17 +65,17 @@ public class vistaModificarExpressio extends JFrame {
                 if (codi == 20) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame,"Modificar Expressió","Ja existeix una expressió igual en el directori",strBotones,2);
+                    int isel = vistaDialogo.setDialogo(frame, "Modificar Expressió", "Ja existeix una expressió igual en el directori", strBotones, 2);
                     System.out.println("Error expressió igual: " + isel + " " + strBotones[isel]);
-                } else if(codi == 30) {
+                } else if (codi == 30) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame,"Modificar Expressió","S'ha d'introduir un valor vàlid com a paràmetre",strBotones,2);
+                    int isel = vistaDialogo.setDialogo(frame, "Modificar Expressió", "S'ha d'introduir un valor vàlid com a paràmetre", strBotones, 2);
                     System.out.println("Error expressió nula: " + isel + " " + strBotones[isel]);
                 } else if (codi == 10) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame,"Modificar Expressió","Expressió modificada corectament",strBotones,2);
+                    int isel = vistaDialogo.setDialogo(frame, "Modificar Expressió", "Expressió modificada corectament", strBotones, 2);
                     System.out.println("Expressió modificada: " + isel + " " + strBotones[isel]);
                     _ctrlPresentacio.ObrirVistaGestioExpressio();
                 }
@@ -83,4 +85,5 @@ public class vistaModificarExpressio extends JFrame {
 
         });
     }
+
 }

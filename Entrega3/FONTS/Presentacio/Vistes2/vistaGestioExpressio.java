@@ -4,14 +4,17 @@ import Domini.Classes.Document;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Locale;
 
-public class vistaGestioExpressio extends JFrame{
+public class vistaGestioExpressio extends JFrame {
 
     private CtrlPresentacio _ctrlPresentacio;
 
@@ -55,6 +58,7 @@ public class vistaGestioExpressio extends JFrame{
                 super.windowClosing(e);
                 _ctrlPresentacio.activarPagPrincipal();
                 System.out.println("Tancant vistaGestioExpressio");
+                frame.dispose();
                 dispose();
             }
         });
@@ -70,6 +74,7 @@ public class vistaGestioExpressio extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 _ctrlPresentacio.activarPagPrincipal();
+                frame.dispose();
                 dispose();
             }
         });
@@ -83,12 +88,12 @@ public class vistaGestioExpressio extends JFrame{
                 if (codi == 11) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame,"Eliminar expressió","Expressió eliminada",strBotones,2);
+                    int isel = vistaDialogo.setDialogo(frame, "Eliminar expressió", "Expressió eliminada", strBotones, 2);
                     System.out.println("Error eliminar seleccionat: " + isel + " " + strBotones[isel]);
                 } else if (codi == 20) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame,"Error a l'eliminar","Expressio no reconeguda",strBotones,1);
+                    int isel = vistaDialogo.setDialogo(frame, "Error a l'eliminar", "Expressio no reconeguda", strBotones, 1);
                     System.out.println("Error eliminar exp no reconegut: " + isel + " " + strBotones[isel]);
                 }
             }
@@ -121,19 +126,28 @@ public class vistaGestioExpressio extends JFrame{
                 dispose();
             }
         });
-
     }
 
+    public int RefreshExpSeleccionadaGestio() {
+        ArrayList<String> document = _ctrlPresentacio.toStringDocActiu();
+        String s = document.get(0);
+        if (s == "-31") {
 
-    public static void main(String[] args) {
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                //Turn off metal's use of bold fonts
-                UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaGestioExpressio(new CtrlPresentacio());
-            }
-        });
+        } else {
+
+        }
+        int resultat = Integer.parseInt(s);
+        return resultat;
     }
+
+    public void activar() {
+        this.setEnabled(true);
+        this.toFront();
+        RefreshExpSeleccionadaGestio();
+    }
+
+    public void desactivar() {
+        this.setEnabled(false);
+    }
+
 }

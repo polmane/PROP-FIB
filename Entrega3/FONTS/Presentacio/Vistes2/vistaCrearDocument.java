@@ -3,12 +3,16 @@ package Presentacio.Vistes2;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Locale;
 
-public class vistaCrearDocument extends JFrame{
+public class vistaCrearDocument extends JFrame {
 
     private CtrlPresentacio _ctrlPresentacio;
     private JPanel panel;
@@ -54,17 +58,16 @@ public class vistaCrearDocument extends JFrame{
                 if (codi == 30) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame,"No s'ha afegit el document","Titol o autor nuls",strBotones,1);
+                    int isel = vistaDialogo.setDialogo(frame, "No s'ha afegit el document", "Titol o autor nuls", strBotones, 1);
                     System.out.println("Error CrearDoc nuls: " + isel + " " + strBotones[isel]);
 
                 } else if (codi == 20) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame,"No s'ha afegit el document","Ja existeix un document en el directori \n amb aquest títol i autor",strBotones,1);
+                    int isel = vistaDialogo.setDialogo(frame, "No s'ha afegit el document", "Ja existeix un document en el directori \n amb aquest títol i autor", strBotones, 1);
                     System.out.println("Error Crear Doc ja existeix doc amb titol i autor: " + isel + " " + strBotones[isel]);
 
-                }
-                else {
+                } else {
                     _ctrlPresentacio.activarPagPrincipal();
                     frame.dispose();
                     dispose();
@@ -81,15 +84,4 @@ public class vistaCrearDocument extends JFrame{
         });
     }
 
-    public static void main(String[] args) {
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                //Turn off metal's use of bold fonts
-                UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaCrearDocument(new CtrlPresentacio());
-            }
-        });
-    }
 }

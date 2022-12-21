@@ -3,9 +3,13 @@ package Presentacio.Vistes2;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class vistaCerques extends JFrame {
     private CtrlPresentacio _ctrlPresentacio;
@@ -106,15 +110,4 @@ public class vistaCerques extends JFrame {
         });
     }
 
-    public static void main(String[] args) {
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                //Turn off metal's use of bold fonts
-                UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaCerques(new CtrlPresentacio());
-            }
-        });
-    }
 }

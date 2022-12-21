@@ -21,7 +21,7 @@ public class CtrlPresentacio {
     private vistaContingutDocument vContingutDoc;
     private vistaDocumentsSemblants vDocsSemblants;
     private vistaDocumentsRellevants vDocsRellevants;
-    private vistaCrearExpressio vCrearModiExp;
+    private vistaCrearExpressio vCrearExp;
 
     private vistaModificarExpressio vModiExp;
     private vistaCerques vCerques;
@@ -44,9 +44,8 @@ public class CtrlPresentacio {
         //VistaPagPrincipal vPp = new VistaPagPrincipal();
     }
 
-    public void ObrirVistaGestioExpressio() {
-        vPrincipal.desactivar();
-        vGestioExpressio = new vistaGestioExpressio(this);
+    public void activarGestioExpressio() {
+        vGestioExpressio.activar();
     }
 
     public void ObrirVistaCrearDocument() {
@@ -79,20 +78,26 @@ public class CtrlPresentacio {
         vDocsRellevants = new vistaDocumentsRellevants(this);
     }
 
-    public void ObrirVistaCrearExpressio() {
-        vPrincipal.desactivar();
-        vCrearModiExp = new vistaCrearExpressio(this);
-    }
-
-    public void ObrirVistaModificarExpressio() {
-        vPrincipal.desactivar();
-        vModiExp = new vistaModificarExpressio(this);
-    }
-
     public void ObrirVistaCerques() {
         vPrincipal.desactivar();
         vCerques = new vistaCerques(this);
     }
+
+    public void ObrirVistaGestioExpressio() {
+        vPrincipal.desactivar();
+        vGestioExpressio = new vistaGestioExpressio(this);
+    }
+
+    public void ObrirVistaCrearExpressio() {
+        vGestioExpressio.desactivar();
+        vCrearExp = new vistaCrearExpressio(this);
+    }
+
+    public void ObrirVistaModificarExpressio() {
+        vGestioExpressio.desactivar();
+        vModiExp = new vistaModificarExpressio(this);
+    }
+
 
     //FUNCIONS DE DOMINI
 

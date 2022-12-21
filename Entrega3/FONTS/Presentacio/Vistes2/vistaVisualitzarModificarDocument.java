@@ -4,13 +4,17 @@ import Domini.Classes.Document;
 import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Locale;
 
-public class vistaVisualitzarModificarDocument extends JFrame{
+public class vistaVisualitzarModificarDocument extends JFrame {
 
     private CtrlPresentacio _ctrlPresentacio;
 
@@ -83,26 +87,26 @@ public class vistaVisualitzarModificarDocument extends JFrame{
                 if (codi == 30) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame,"Error autor","No s'ha introduït cap autor",strBotones,1);
+                    int isel = vistaDialogo.setDialogo(frame, "Error autor", "No s'ha introduït cap autor", strBotones, 1);
                     System.out.println("Modif autor, buit: " + isel + " " + strBotones[isel]);
 
                 } else if (codi == 20) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame,"Error autor","Ja existeix un document amb aquest autor i títol",strBotones,1);
+                    int isel = vistaDialogo.setDialogo(frame, "Error autor", "Ja existeix un document amb aquest autor i títol", strBotones, 1);
                     System.out.println("Modif autor, doc amb autor i titol repetit: " + isel + " " + strBotones[isel]);
                 }
                 int codi1 = _ctrlPresentacio.modificarTitol(Titol.getText());
                 if (codi1 == 30) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame,"Error titol","No s'ha introduït cap títol",strBotones,1);
+                    int isel = vistaDialogo.setDialogo(frame, "Error titol", "No s'ha introduït cap títol", strBotones, 1);
                     System.out.println("Modif titol, buit: " + isel + " " + strBotones[isel]);
 
                 } else if (codi1 == 20) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame,"Error títol","Ja existeix un document amb aquest títol i autor",strBotones,1);
+                    int isel = vistaDialogo.setDialogo(frame, "Error títol", "Ja existeix un document amb aquest títol i autor", strBotones, 1);
                     System.out.println("Modif titol, doc amb autor i titol repetit: " + isel + " " + strBotones[isel]);
                 }
                 int codi2 = _ctrlPresentacio.modificarContingut(Contingut.getText());
@@ -126,15 +130,4 @@ public class vistaVisualitzarModificarDocument extends JFrame{
         });
     }
 
-    public static void main(String[] args) {
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                //Turn off metal's use of bold fonts
-                UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaVisualitzarModificarDocument(new CtrlPresentacio());
-            }
-        });
-    }
 }

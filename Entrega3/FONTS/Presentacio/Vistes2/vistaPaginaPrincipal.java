@@ -4,12 +4,13 @@ import Presentacio.Controladors.CtrlPresentacio;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class vistaPaginaPrincipal extends JFrame{
+public class vistaPaginaPrincipal extends JFrame {
     private CtrlPresentacio _ctrlPresentacio;
     private JPanel panel;
     private JButton crearDocumentButton;
@@ -98,24 +99,24 @@ public class vistaPaginaPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 int id = RefreshDocumentSeleccionatPagPrin();
-                int codi =_ctrlPresentacio.eliminarDocument(id);
+                int codi = _ctrlPresentacio.eliminarDocument(id);
                 System.out.println(id);
                 if (codi == 31) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame,"Error a l'eliminar","No has seleccionat cap document",strBotones,1);
+                    int isel = vistaDialogo.setDialogo(frame, "Error a l'eliminar", "No has seleccionat cap document", strBotones, 1);
                     System.out.println("Error eliminar seleccionat: " + isel + " " + strBotones[isel]);
 
                 } else if (codi == 20) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame,"Error a l'eliminar","Document no reconegut",strBotones,1);
+                    int isel = vistaDialogo.setDialogo(frame, "Error a l'eliminar", "Document no reconegut", strBotones, 1);
                     System.out.println("Error eliminar doc no reconegut: " + isel + " " + strBotones[isel]);
 
                 } else if (codi == 11) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame,"Eliminar document","Document eliminat",strBotones,2);
+                    int isel = vistaDialogo.setDialogo(frame, "Eliminar document", "Document eliminat", strBotones, 2);
                     System.out.println("Error eliminar seleccionat: " + isel + " " + strBotones[isel]);
                 }
                 RefreshDocumentSeleccionatPagPrin();
@@ -166,19 +167,19 @@ public class vistaPaginaPrincipal extends JFrame{
                     File file = file_chooser.getSelectedFile();
                     String path = file.getAbsolutePath();
 
-                    String f =  String.valueOf(format.getSelectedItem());
+                    String f = String.valueOf(format.getSelectedItem());
 
                     //EXPORTAR CTRLDOMINI
                     System.out.println(path + " " + f);
 
                     //TODO eliminar aixo
-                    File fileprova = new File(path+"\\hola.txt");
+                    File fileprova = new File(path + "\\hola.txt");
                     try {
                         fileprova.createNewFile();
                     } catch (IOException ex) {
                         VistaDialogo vistaDialogo = new VistaDialogo();
                         String[] strBotones = {"Ok"};
-                        int isel = vistaDialogo.setDialogo(frame,"Error a l'exportar","Path incorrecte",strBotones,1);
+                        int isel = vistaDialogo.setDialogo(frame, "Error a l'exportar", "Path incorrecte", strBotones, 1);
                         System.out.println("Error exportar: " + isel + " " + strBotones[isel]);
                     }
 
@@ -225,7 +226,7 @@ public class vistaPaginaPrincipal extends JFrame{
         } else {
             autor.setText(document.get(1));
             titol.setText(document.get(2));
-            System.out.println(s + " | " + document.get(1) + " | " + document.get(2) );
+            System.out.println(s + " | " + document.get(1) + " | " + document.get(2));
             System.out.println(document.get(3));
             visualitzarModificarButton.setEnabled(true);
             eliminarDocumentSeleccionatButton.setEnabled(true);
@@ -249,18 +250,6 @@ public class vistaPaginaPrincipal extends JFrame{
 
     public void desactivar() {
         this.setEnabled(false);
-    }
-
-    public static void main(String[] args) {
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                //Turn off metal's use of bold fonts
-                UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaPaginaPrincipal(new CtrlPresentacio());
-            }
-        });
     }
 
 }

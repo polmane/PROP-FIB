@@ -4,10 +4,13 @@ import Presentacio.Controladors.CtrlPresentacio;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Locale;
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
 
-public class vistaRecuperarSessio extends JFrame{
+public class vistaRecuperarSessio extends JFrame {
 
     private CtrlPresentacio _ctrlPresentacio;
     private JButton Recuperar;
@@ -44,15 +47,4 @@ public class vistaRecuperarSessio extends JFrame{
         });
     }
 
-    public static void main(String[] args) {
-        //Schedule a job for the event dispatch thread:
-      //creating and showing this application's GUI.
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-              //Turn off metal's use of bold fonts
-               UIManager.put("swing.boldMetal", Boolean.FALSE);
-                new vistaRecuperarSessio(new CtrlPresentacio());
-            }
-        });
-    }
 }
