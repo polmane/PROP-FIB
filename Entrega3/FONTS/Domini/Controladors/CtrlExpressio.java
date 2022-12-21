@@ -87,14 +87,13 @@ public class CtrlExpressio {
      */
     public int afegirExpressio(String expressio){
         if (expressio == null || expressio.isBlank()) return -30;
-        //FIXME: ESTEM CREANT L'EXPRESSIO ABANS DE VEURE SI ESTA REPETIDA?
-        expressioSeleccionada = new Expressio(IdNovaExp,expressio);
-        ++IdNovaExp;
         for (Expressio e : expressions.values()) {
             if (e.getExpressio().equals(expressio)) {
                 return -20;
             }
         }
+        expressioSeleccionada = new Expressio(IdNovaExp,expressio);
+        ++IdNovaExp;
         expressions.put(expressioSeleccionada.getIdExp(),expressioSeleccionada);
         return expressioSeleccionada.getIdExp();
     }

@@ -378,6 +378,7 @@ public class CtrlDirectori {
             helper.add(new Pair<>(doc.getIdDoc(), similarity));
         }
         helper.sort(comparing(Pair::second));
+        Collections.reverse(helper);
 
         for (int i = 0; i < min(k, helper.size()); ++i) {
             documentsSemblants.add(directoriObert.getDocs().get(helper.get(i).first()));
@@ -398,9 +399,9 @@ public class CtrlDirectori {
     private void sortLlista(List<Pair<String, String>> llistaSemblants, SORTING s) {
         switch(s) {
             case SIM_DESC:
-                Collections.reverse(llistaSemblants);
                 break;
             case SIM_ASC:
+                Collections.reverse(llistaSemblants);
                 break;
             case AUT_DESC:
                 Comparator<Pair<String, String>> c1 = reverseOrder(comparing(Pair::first));

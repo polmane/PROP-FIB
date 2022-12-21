@@ -236,12 +236,12 @@ public class CtrlDomini {
      * @param idExp id de l'expressió a comparar
      * @return retorna un vector dels documents que compleixen l'expressió
      */
-    public ArrayList<Document> selectPerExpressio(Integer idExp) {
-        ArrayList<Document> resultat = new ArrayList<>();
+    public List<Pair<String, String>> selectPerExpressio(Integer idExp) {
+        List<Pair<String, String>> resultat = new ArrayList<>();
 
         for (Document document : _ctrlDirectori.getDirectoriObert().getDocs().values()) {
             if (document != _ctrlDirectori.getDocumentActiu())document.setContingut(_ctrlPersistencia.carregarContingutDocument(document.getIdDoc()));
-            if (_ctrlExpressio.selectPerExpressio(idExp, document)) resultat.add(document);
+            if(_ctrlExpressio.selectPerExpressio(idExp, document)) resultat.add(new Pair<>(document.getAutor(), document.getTitol()));
             if (document != _ctrlDirectori.getDocumentActiu()) document.setContingut(null);
         }
         return resultat;
@@ -357,7 +357,7 @@ public class CtrlDomini {
      * @param expressio expressió que volem guardar
      * @return consultar els codis de return en el document word entregat, la id de l'expressió creada en cas de funcionament correcte
      */
-    public int guardarExpressio (String expressio) {
+    public int afegirExpressio (String expressio) {
         int i = _ctrlExpressio.afegirExpressio(expressio);
         if (i > -1) {
             Boolean b = _ctrlPersistencia.guardarExpressio(i,expressio);
@@ -380,4 +380,4 @@ public class CtrlDomini {
         return i;
     }
 
-    }
+}

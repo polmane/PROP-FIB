@@ -211,6 +211,7 @@ public class BinaryTree {
                 if (root.expr.charAt(pos) == '(') root.expr = root.expr.substring(2, root.expr.length()-1);
                 else root.expr = root.expr.substring(1, root.expr.length());
                 Integer result = evalLeaf(root, d);
+                root.expr = "!" + root.expr;
                 if (result != 0) return 0;
                 return 1;
 
@@ -227,7 +228,9 @@ public class BinaryTree {
                 while (pos < root.expr.length() && !isWhitespace(root.expr.charAt(pos))) ++pos;
                 String word2 = root.expr.substring(start3, pos);
                 ++pos;
-                if (d.getOcurrencies().containsKey(word2)) return 1;
+                if (d.getOcurrencies().containsKey(word2)){
+                    return 1;
+                }
                 return 0;
         }
     }
