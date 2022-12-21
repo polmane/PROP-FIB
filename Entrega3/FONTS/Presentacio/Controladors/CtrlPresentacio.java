@@ -173,4 +173,6 @@ public class CtrlPresentacio {
     public ArrayList<String>  toStringExpActiva() {
         return _ctrlDomini.toStringExpActiva();
     }
+
+    //public void carregarEstat() { _ctrlDomini.carregarEstat(); }
 }

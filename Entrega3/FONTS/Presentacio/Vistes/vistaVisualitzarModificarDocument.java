@@ -91,6 +91,7 @@ public class vistaVisualitzarModificarDocument extends JFrame {
         GuardarTitol.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Enrere.setEnabled(false);
                 int codi = _ctrlPresentacio.modificarTitol(Titol.getText());
                 if (codi == 30) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
@@ -135,6 +136,7 @@ public class vistaVisualitzarModificarDocument extends JFrame {
         GuardarAutor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Enrere.setEnabled(false);
                 int codi = _ctrlPresentacio.modificarAutor(Autor.getText());
                 if (codi == 30) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
@@ -158,6 +160,7 @@ public class vistaVisualitzarModificarDocument extends JFrame {
         GuardarContingut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Enrere.setEnabled(false);
                 _ctrlPresentacio.modificarContingut(Contingut.getText());
                 VistaDialogo vistaDialogo = new VistaDialogo();
                 String[] strBotones = {"Ok"};
