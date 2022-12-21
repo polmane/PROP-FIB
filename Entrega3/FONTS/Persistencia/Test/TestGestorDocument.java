@@ -1,7 +1,6 @@
 package Persistencia.Test;
 
 import Persistencia.Classes.GestorDocument;
-import Persistencia.Classes.GestorExpressions;
 import org.junit.Assert;
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -21,8 +20,6 @@ public class TestGestorDocument {
     private static final String PATH_OUT = System.getProperty("user.dir") + "/FONTS/Persistencia/Test/OutputFiles";
     private static final String PATH_IN = System.getProperty("user.dir") + "/FONTS/Persistencia/Test/InputFiles";
 
-    //FIXME: COMPROVAR QUE S'ESBORREN DOCUMENTS AL FER ELS TESTS
-
     @Test
     public void testExportarDocumentTXTSimple() {
         GestorDocument gDoc = new GestorDocument();
@@ -36,7 +33,7 @@ public class TestGestorDocument {
             result = new Scanner(f);
         }
         catch (FileNotFoundException e) {
-            Assert.fail("File Not Found");
+            Assert.fail("Exception during test");
             return;
         }
         Assert.assertNotNull(result);
@@ -44,7 +41,7 @@ public class TestGestorDocument {
         Assert.assertEquals(titol, result.nextLine());
         Assert.assertEquals(contingut, result.nextLine());
         result.close();
-        f.delete();
+        Assert.assertTrue(f.delete());
     }
 
     @Test
@@ -59,7 +56,7 @@ public class TestGestorDocument {
             result = new Scanner(f);
         }
         catch (FileNotFoundException e) {
-            Assert.fail("File Not Found");
+            Assert.fail("Exception during test");
             return;
         }
         Assert.assertNotNull(result);
@@ -67,7 +64,7 @@ public class TestGestorDocument {
         Assert.assertEquals(titol, result.nextLine());
         Assert.assertFalse(result.hasNextLine());
         result.close();
-        f.delete();
+        Assert.assertTrue(f.delete());
     }
 
     @Test
@@ -78,7 +75,7 @@ public class TestGestorDocument {
         String c1 = "contingut de prova\n";
         String c2 = "que conte salts de pagina\n";
         String c3 = "hem de veure\n";
-        String c4 = "que els exporti be\n";
+        String c4 = "que els exporti be";
         gDoc.exportarDocument(autor, titol, c1 + c2 + c3 + c4, GestorDocument.FILETYPE.TXT, PATH_OUT);
         File f = new File(PATH_OUT + "/" + autor + "_" + titol + ".txt");
         Scanner result;
@@ -86,7 +83,7 @@ public class TestGestorDocument {
             result = new Scanner(f);
         }
         catch (FileNotFoundException e) {
-            Assert.fail("File Not Found");
+            Assert.fail("Exception during test");
             return;
         }
         Assert.assertNotNull(result);
@@ -95,14 +92,10 @@ public class TestGestorDocument {
         Assert.assertEquals(c1, result.nextLine() + "\n");
         Assert.assertEquals(c2, result.nextLine() + "\n");
         Assert.assertEquals(c3, result.nextLine() + "\n");
-        Assert.assertEquals(c4, result.nextLine() + "\n");
+        Assert.assertEquals(c4, result.nextLine());
         result.close();
-        f.delete();
+        Assert.assertTrue(f.delete());
     }
-
-    //TODO: FIX XML EXPORT I DESPRES FER BE EL TEST D'EXPORT
-
-    private final String XML_VERSION_TAG = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>";
 
     @Test
     public void testExportarDocumentXMLSimple() {
@@ -126,33 +119,36 @@ public class TestGestorDocument {
             Assert.assertEquals(contingut, doc.getElementsByTagName(GestorDocument.XML_TAG_CONTINGUT).item(0).getTextContent());
         }
         catch (ParserConfigurationException | IOException | SAXException e) {
-            Assert.fail("File Not Found");
+            Assert.fail("Exception during test");
         }
         Assert.assertTrue(f.delete());
     }
 
-    /*
     @Test
     public void testExportarDocumentXMLSenseContingut() {
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova2";
-        gDoc.exportarDocument(autor, titol, "", GestorDocument.FILETYPE.XML, PATH_OUT);
+        String contingut = "";
+
+        Assert.assertTrue(gDoc.exportarDocument(autor, titol, contingut, GestorDocument.FILETYPE.XML, PATH_OUT));
+
         File f = new File(PATH_OUT + "/" + autor + "_" + titol + ".xml");
-        Scanner result;
         try {
-            result = new Scanner(f);
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            org.w3c.dom.Document doc = db.parse(f);
+
+            Assert.assertEquals(autor, doc.getElementsByTagName(GestorDocument.XML_TAG_AUTOR).item(0).getTextContent());
+            Assert.assertEquals(titol, doc.getElementsByTagName(GestorDocument.XML_TAG_TITOL).item(0).getTextContent());
+            Assert.assertEquals(contingut, doc.getElementsByTagName(GestorDocument.XML_TAG_CONTINGUT).item(0).getTextContent());
         }
-        catch (FileNotFoundException e) {
-            Assert.fail("File Not Found");
-            return;
+        catch (ParserConfigurationException | IOException | SAXException e) {
+            Assert.fail("Exception during test");
         }
-        Assert.assertNotNull(result);
-        Assert.assertEquals(autor, result.nextLine());
-        Assert.assertEquals(titol, result.nextLine());
-        Assert.assertFalse(result.hasNextLine());
-        result.close();
-        f.delete();
+        Assert.assertTrue(f.delete());
     }
 
     @Test
@@ -163,29 +159,27 @@ public class TestGestorDocument {
         String c1 = "contingut de prova\n";
         String c2 = "que conte salts de pagina\n";
         String c3 = "hem de veure\n";
-        String c4 = "que els exporti be\n";
-        gDoc.exportarDocument(autor, titol, c1 + c2 + c3 + c4, GestorDocument.FILETYPE.XML, PATH_OUT);
-        File f = new File(PATH_OUT + "/" + autor + "_" + titol + ".xml");
-        Scanner result;
-        try {
-            result = new Scanner(f);
-        }
-        catch (FileNotFoundException e) {
-            Assert.fail("File Not Found");
-            return;
-        }
-        Assert.assertNotNull(result);
-        Assert.assertEquals(autor, result.nextLine());
-        Assert.assertEquals(titol, result.nextLine());
-        Assert.assertEquals(c1, result.nextLine() + "\n");
-        Assert.assertEquals(c2, result.nextLine() + "\n");
-        Assert.assertEquals(c3, result.nextLine() + "\n");
-        Assert.assertEquals(c4, result.nextLine() + "\n");
-        result.close();
-        f.delete();
-    }
+        String c4 = "que els exporti be";
 
-     */
+        Assert.assertTrue(gDoc.exportarDocument(autor, titol, c1 + c2 + c3 + c4, GestorDocument.FILETYPE.XML, PATH_OUT));
+
+        File f = new File(PATH_OUT + "/" + autor + "_" + titol + ".xml");
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            org.w3c.dom.Document doc = db.parse(f);
+
+            Assert.assertEquals(autor, doc.getElementsByTagName(GestorDocument.XML_TAG_AUTOR).item(0).getTextContent());
+            Assert.assertEquals(titol, doc.getElementsByTagName(GestorDocument.XML_TAG_TITOL).item(0).getTextContent());
+            Assert.assertEquals(c1 + c2 + c3 + c4, doc.getElementsByTagName(GestorDocument.XML_TAG_CONTINGUT).item(0).getTextContent());
+        }
+        catch (ParserConfigurationException | IOException | SAXException e) {
+            Assert.fail("File Not Found");
+        }
+        Assert.assertTrue(f.delete());
+    }
 
     @Test
     public void testExportarDocumentPROPSimple() {
@@ -209,9 +203,8 @@ public class TestGestorDocument {
                      GestorDocument.PROP_TAG_CONTINGUT + "->" + contingut + "<-";
         Assert.assertEquals(cmp, result.nextLine());
         result.close();
-        f.delete();
+        Assert.assertTrue(f.delete());
     }
-
 
     @Test
     public void testExportarDocumentPROPSenseContingut() {
@@ -233,7 +226,7 @@ public class TestGestorDocument {
                 GestorDocument.PROP_TAG_CONTINGUT + "->" + "<-";
         Assert.assertEquals(cmp, result.nextLine());
         result.close();
-        f.delete();
+        Assert.assertTrue(f.delete());
     }
 
     @Test
@@ -244,7 +237,7 @@ public class TestGestorDocument {
         String c1 = "contingut de prova\n";
         String c2 = "que conte salts de pagina\n";
         String c3 = "hem de veure\n";
-        String c4 = "que els exporti be\n";
+        String c4 = "que els exporti be";
         gDoc.exportarDocument(autor, titol, c1 + c2 + c3 + c4, GestorDocument.FILETYPE.PROP, PATH_OUT);
         File f = new File(PATH_OUT + "/" + autor + "_" + titol + ".prop");
         Scanner result;
@@ -266,7 +259,7 @@ public class TestGestorDocument {
         }
         Assert.assertEquals(cmp, res.toString());
         result.close();
-        f.delete();
+        Assert.assertTrue(f.delete());
     }
 
     @Test
@@ -281,7 +274,7 @@ public class TestGestorDocument {
         GestorDocument gDoc = new GestorDocument();
         String autor = "Juli";
         String titol = "prova1";
-        String contingut = "contingut de prova\n";
+        String contingut = "contingut de prova";
         ArrayList<String> result = gDoc.importarDocument(PATH_IN + "/" + autor + "_" + titol + ".txt");
         Assert.assertEquals(autor, result.get(0));
         Assert.assertEquals(titol, result.get(1));
@@ -308,14 +301,51 @@ public class TestGestorDocument {
         String c1 = "contingut de prova\n";
         String c2 = "que conte salts de pagina\n";
         String c3 = "hem de veure\n";
-        String c4 = "que els exporti be\n";
+        String c4 = "que els exporti be";
         ArrayList<String> result = gDoc.importarDocument(PATH_IN + "/" + autor + "_" + titol + ".txt");
         Assert.assertEquals(autor, result.get(0));
         Assert.assertEquals(titol, result.get(1));
         Assert.assertEquals(c1 + c2 + c3 + c4, result.get(2));
     }
 
-    //TODO: FIX XML EXPORT I DESPRES FER BE EL TEST D'IMPORT
+    @Test
+    public void testImportarDocumentXMLSimple() {
+        GestorDocument gDoc = new GestorDocument();
+        String autor = "Juli";
+        String titol = "prova1";
+        String contingut = "contingut de prova";
+        ArrayList<String> result = gDoc.importarDocument(PATH_IN + "/" + autor + "_" + titol + ".xml");
+        Assert.assertEquals(autor, result.get(0));
+        Assert.assertEquals(titol, result.get(1));
+        Assert.assertEquals(contingut, result.get(2));
+    }
+
+    @Test
+    public void testImportarDocumentXMLSenseContingut() {
+        GestorDocument gDoc = new GestorDocument();
+        String autor = "Juli";
+        String titol = "prova2";
+        String contingut = "";
+        ArrayList<String> result = gDoc.importarDocument(PATH_IN + "/" + autor + "_" + titol + ".xml");
+        Assert.assertEquals(autor, result.get(0));
+        Assert.assertEquals(titol, result.get(1));
+        Assert.assertEquals(contingut, result.get(2));
+    }
+
+    @Test
+    public void testImportarDocumentXMLContingutLlarg() {
+        GestorDocument gDoc = new GestorDocument();
+        String autor = "Juli";
+        String titol = "prova3";
+        String c1 = "contingut de prova\n";
+        String c2 = "que conte salts de pagina\n";
+        String c3 = "hem de veure\n";
+        String c4 = "que els exporti be";
+        ArrayList<String> result = gDoc.importarDocument(PATH_IN + "/" + autor + "_" + titol + ".xml");
+        Assert.assertEquals(autor, result.get(0));
+        Assert.assertEquals(titol, result.get(1));
+        Assert.assertEquals(c1 + c2 + c3 + c4, result.get(2));
+    }
 
     @Test
     public void testImportarDocumentPROPSimple() {
@@ -349,7 +379,7 @@ public class TestGestorDocument {
         String c1 = "contingut de prova\n";
         String c2 = "que conte salts de pagina\n";
         String c3 = "hem de veure\n";
-        String c4 = "que els exporti be\n";
+        String c4 = "que els exporti be";
         ArrayList<String> result = gDoc.importarDocument(PATH_IN + "/" + autor + "_" + titol + ".prop");
         Assert.assertEquals(autor, result.get(0));
         Assert.assertEquals(titol, result.get(1));
