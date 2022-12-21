@@ -151,8 +151,9 @@ public class GestorDocument {
      */
     private ArrayList<String> parseTXT(String path) {
         ArrayList<String> values = new ArrayList<>(3);
+        Scanner scanner = null;
         try {
-            Scanner scanner = new Scanner(new File(path));
+            scanner = new Scanner(new File(path));
             values.add(scanner.nextLine());
             values.add(scanner.nextLine());
             StringBuilder contingut = new StringBuilder();
@@ -165,6 +166,8 @@ public class GestorDocument {
 
             scanner.close();
         } catch (Exception e) {
+            assert scanner != null;
+            scanner.close();
             return null;
         }
         return values;
@@ -199,32 +202,38 @@ public class GestorDocument {
      */
     private ArrayList<String> parsePROP(String path) {
         ArrayList<String> values = new ArrayList<>(3);
+        Scanner scanner = null;
         try {
-            Scanner scanner = new Scanner(new File(path));
+            scanner = new Scanner(new File(path));
 
             scanner.useDelimiter("->|<-");
             List<String> tokens = scanner.tokens().collect(Collectors.toList());
 
             int index = tokens.indexOf(PROP_TAG_AUTOR);
-            if (index < 0)
+            if (index < 0) {
+                scanner.close();
                 return null;
+            }
             values.add(tokens.get(index + 1));
 
             index = tokens.indexOf(PROP_TAG_TITOL);
-            if (index < 0)
+            if (index < 0) {
+                scanner.close();
                 return null;
+            }
             values.add(tokens.get(index + 1));
 
             index = tokens.indexOf(PROP_TAG_CONTINGUT);
             if (index >= 0) {
                 values.add(tokens.get(tokens.indexOf(PROP_TAG_CONTINGUT) + 1));
-            }
-            else {
+            } else {
                 values.add("");
             }
 
             scanner.close();
         } catch (Exception e) {
+            assert scanner != null;
+            scanner.close();
             return null;
         }
         return values;

@@ -20,9 +20,23 @@ import java.util.Scanner;
 
 public class TestGestorDocument {
 
+    /**
+     * Adreces pels directoris on fer els tests
+     */
     private static final String PATH_OUT = System.getProperty("user.dir") + "/FONTS/Persistencia/Test/OutputFiles";
     private static final String PATH_IN = System.getProperty("user.dir") + "/FONTS/Persistencia/Test/InputFiles";
 
+    /**
+     * Objecte de la prova: Test del mètode exportarDocument amb un document simple en format txt.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'exporta un document amb un text simple en format txt.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es fa la crida a exportarDocument amb aquests paràmetres, format txt i adreça el directori de prova.
+     *            Es comprova que el document creat és del format correcte i conté els valors correctes en cada camp.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testExportarDocumentTXTSimple() {
         File dir = new File(PATH_OUT);
@@ -50,6 +64,17 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode exportarDocument amb un document sense contingut en format txt.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'exporta un document sense contingut en format txt.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es fa la crida a exportarDocument amb aquests paràmetres, format txt i adreça el directori de prova.
+     *            Es comprova que el document creat és del format correcte i conté els valors correctes en cada camp.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testExportarDocumentTXTSenseContingut() {
         File dir = new File(PATH_OUT);
@@ -76,6 +101,17 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode exportarDocument amb un document amb contingut llarg en format txt.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'exporta un document amb contingut llarg en format txt.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es fa la crida a exportarDocument amb aquests paràmetres, format txt i adreça el directori de prova.
+     *            Es comprova que el document creat és del format correcte i conté els valors correctes en cada camp.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testExportarDocumentTXTContingutLlarg() {
         File dir = new File(PATH_OUT);
@@ -109,6 +145,17 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode exportarDocument amb un document simple en format xml.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'exporta un document amb un text simple en format xml.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es fa la crida a exportarDocument amb aquests paràmetres, format xml i adreça el directori de prova.
+     *            Es comprova que el document creat és del format correcte i conté els valors correctes en cada camp.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testExportarDocumentXMLSimple() {
         File dir = new File(PATH_OUT);
@@ -139,6 +186,17 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode exportarDocument amb un document sense contingut en format xml.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'exporta un document sense contingut en format xml.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es fa la crida a exportarDocument amb aquests paràmetres, format xml i adreça el directori de prova.
+     *            Es comprova que el document creat és del format correcte i conté els valors correctes en cada camp.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testExportarDocumentXMLSenseContingut() {
         File dir = new File(PATH_OUT);
@@ -169,6 +227,17 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode exportarDocument amb un document amb contingut llarg en format xml.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'exporta un document amb contingut llarg en format xml.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es fa la crida a exportarDocument amb aquests paràmetres, format xml i adreça el directori de prova.
+     *            Es comprova que el document creat és del format correcte i conté els valors correctes en cada camp.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testExportarDocumentXMLContingutLlarg() {
         File dir = new File(PATH_OUT);
@@ -202,6 +271,17 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode exportarDocument amb un document simple en format propietari.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'exporta un document amb un text simple en format propietari.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es fa la crida a exportarDocument amb aquests paràmetres, format propietari i adreça el directori de prova.
+     *            Es comprova que el document creat és del format correcte i conté els valors correctes en cada camp.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testExportarDocumentPROPSimple() {
         File dir = new File(PATH_OUT);
@@ -230,6 +310,17 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode exportarDocument amb un document sense contingut en format propietari.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'exporta un document sense contingut en format propietari.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es fa la crida a exportarDocument amb aquests paràmetres, format propietari i adreça el directori de prova.
+     *            Es comprova que el document creat és del format correcte i conté els valors correctes en cada camp.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testExportarDocumentPROPSenseContingut() {
         File dir = new File(PATH_OUT);
@@ -256,6 +347,17 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode exportarDocument amb un document amb contingut llarg en format propietari.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'exporta un document amb contingut llarg en format propietari.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es fa la crida a exportarDocument amb aquests paràmetres, format propietari i adreça el directori de prova.
+     *            Es comprova que el document creat és del format correcte i conté els valors correctes en cada camp.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testExportarDocumentPROPContingutLlarg() {
         File dir = new File(PATH_OUT);
@@ -292,6 +394,16 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode importarDocument amb un document en un format no suportat.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: No es permet importar un document en un format no suportat.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es crea el document en un format que no suportem (.wtf)
+     *            Es comprova que es reconeix el format com a no suportat i no s'importa el document.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testImportarDocumentFormatNoSuportat() {
         File dir = new File(PATH_IN);
@@ -318,6 +430,17 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode importarDocument amb un document amb contingut simple en format txt.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'importa un document amb contingut simple en format txt.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es crea el document en format txt.
+     *            Es comprova que s'importen correctament els paràmetres del document.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testImportarDocumentTXTSimple() {
         File dir = new File(PATH_IN);
@@ -351,6 +474,17 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode importarDocument amb un document sense contingut en format txt.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'importa un document sense contingut en format txt.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es crea el document en format txt.
+     *            Es comprova que s'importen correctament els paràmetres del document.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testImportarDocumentTXTSenseContingut() {
         File dir = new File(PATH_IN);
@@ -384,6 +518,17 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode importarDocument amb un document amb contingut llarg en format txt.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'importa un document amb contingut llarg en format txt.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es crea el document en format txt.
+     *            Es comprova que s'importen correctament els paràmetres del document.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testImportarDocumentTXTContingutLlarg() {
         File dir = new File(PATH_IN);
@@ -421,6 +566,58 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode importarDocument amb un document en format txt erroni.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: No es permet importar un document en format txt erroni.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es crea el document en format txt de forma incorrecta (vegeu comentari).
+     *            Es comprova que es detecta l'error i no s'importa el document.
+     *            S'esborren el fitxer i el directori creats.
+     */
+    @Test
+    public void testImportarDocumentTXTFormatErroni() {
+        File dir = new File(PATH_IN);
+        if(!dir.exists()) Assert.assertTrue(dir.mkdir());
+
+        String path = PATH_IN + "/prova4.txt";
+        String autor = "Juli";
+        String titol = "prova4";
+        String contingut = "contingut de prova";
+
+        try {
+            FileWriter f = new FileWriter(path);
+            Writer output = new BufferedWriter(f);
+            // No fem salts de línia, no està ben formada la representació en txt
+            output.write(autor+titol+contingut);
+            output.close();
+            f.close();
+        } catch (Exception e) {
+            Assert.fail("Exception during test");
+        }
+
+        GestorDocument gDoc = new GestorDocument();
+        ArrayList<String> result = gDoc.importarDocument(path);
+        Assert.assertNull(result);
+
+        File f = new File(path);
+        Assert.assertTrue(f.delete());
+        Assert.assertTrue(dir.delete());
+    }
+
+    /**
+     * Objecte de la prova: Test del mètode importarDocument amb un document amb contingut simple en format xml.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'importa un document amb contingut simple en format xml.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es crea el document en format xml.
+     *            Es comprova que s'importen correctament els paràmetres del document.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testImportarDocumentXMLSimple() {
         File dir = new File(PATH_IN);
@@ -473,6 +670,17 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode importarDocument amb un document sense contingut en format xml.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'importa un document sense contingut en format xml.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es crea el document en format xml.
+     *            Es comprova que s'importen correctament els paràmetres del document.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testImportarDocumentXMLSenseContingut() {
         File dir = new File(PATH_IN);
@@ -525,6 +733,17 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode importarDocument amb un document amb contingut llarg en format xml.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'importa un document amb contingut llarg en format xml.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es crea el document en format xml.
+     *            Es comprova que s'importen correctament els paràmetres del document.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testImportarDocumentXMLContingutLlarg() {
         File dir = new File(PATH_IN);
@@ -581,6 +800,77 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode importarDocument amb un document en format xml erroni.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: No es permet importar un document en format xml erroni.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es crea el document en format xml de forma incorrecta (vegeu comentari).
+     *            Es comprova que es detecta l'error i no s'importa el document.
+     *            S'esborren el fitxer i el directori creats.
+     */
+    @Test
+    public void testImportarDocumentXMLFormatErroni() {
+        File dir = new File(PATH_IN);
+        if(!dir.exists()) Assert.assertTrue(dir.mkdir());
+
+        String path = PATH_IN + "/prova4.xml";
+        //No hi afegim tag autor
+        //String autor = "Juli";
+        String titol = "prova4";
+        String contingut = "contingut de prova";
+
+        try {
+            FileOutputStream docExp = new FileOutputStream(path);
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+            org.w3c.dom.Document document = docBuilder.newDocument();
+            Element rootElement = document.createElement(GestorDocument.XML_TAG_DOCUMENT);
+            document.appendChild(rootElement);
+
+            //No hi afegim tag autor
+
+            Element elementTitol = document.createElement(GestorDocument.XML_TAG_TITOL);
+            elementTitol.appendChild(document.createTextNode(titol));
+            rootElement.appendChild(elementTitol);
+
+            Element elementContingut = document.createElement(GestorDocument.XML_TAG_CONTINGUT);
+            elementContingut.appendChild(document.createTextNode(contingut));
+            rootElement.appendChild(elementContingut);
+
+            DOMSource source = new DOMSource(document);
+            StreamResult result = new StreamResult(docExp);
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.transform(source, result);
+
+            docExp.close();
+        } catch (Exception e) {
+            Assert.fail("Exception during test");
+        }
+
+        GestorDocument gDoc = new GestorDocument();
+        ArrayList<String> result = gDoc.importarDocument(path);
+        Assert.assertNull(result);
+
+        File f = new File(path);
+        Assert.assertTrue(f.delete());
+        Assert.assertTrue(dir.delete());
+    }
+
+    /**
+     * Objecte de la prova: Test del mètode importarDocument amb un document amb contingut simple en format propietari.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'importa un document amb contingut simple en format propietari.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es crea el document en format propietari.
+     *            Es comprova que s'importen correctament els paràmetres del document.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testImportarDocumentPROPSimple() {
         File dir = new File(PATH_IN);
@@ -592,7 +882,7 @@ public class TestGestorDocument {
         String contingut = "contingut de prova";
 
         try {
-            FileWriter fw = new FileWriter(new File(path));
+            FileWriter fw = new FileWriter(path);
             Writer output = new BufferedWriter(fw);
             output.write(GestorDocument.PROP_TAG_AUTOR + "->" + autor + "<-");
             output.write(GestorDocument.PROP_TAG_TITOL + "->" + titol + "<-");
@@ -614,6 +904,17 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode importarDocument amb un document sense contingut en format propietari.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'importa un document sense contingut en format propietari.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es crea el document en format propietari.
+     *            Es comprova que s'importen correctament els paràmetres del document.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testImportarDocumentPROPSenseContingut() {
         File dir = new File(PATH_IN);
@@ -625,7 +926,7 @@ public class TestGestorDocument {
         String contingut = "";
 
         try {
-            FileWriter fw = new FileWriter(new File(path));
+            FileWriter fw = new FileWriter(path);
             Writer output = new BufferedWriter(fw);
             output.write(GestorDocument.PROP_TAG_AUTOR + "->" + autor + "<-");
             output.write(GestorDocument.PROP_TAG_TITOL + "->" + titol + "<-");
@@ -647,6 +948,17 @@ public class TestGestorDocument {
         Assert.assertTrue(dir.delete());
     }
 
+    /**
+     * Objecte de la prova: Test del mètode importarDocument amb un document amb contingut llarg en format propietari.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: S'importa un document amb contingut llarg en format propietari.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es crea el document en format propietari.
+     *            Es comprova que s'importen correctament els paràmetres del document.
+     *            S'esborren el fitxer i el directori creats.
+     */
     @Test
     public void testImportarDocumentPROPContingutLlarg() {
         File dir = new File(PATH_IN);
@@ -662,7 +974,7 @@ public class TestGestorDocument {
         String contingut = c1 + c2 + c3 + c4;
 
         try {
-            FileWriter fw = new FileWriter(new File(path));
+            FileWriter fw = new FileWriter(path);
             Writer output = new BufferedWriter(fw);
             output.write(GestorDocument.PROP_TAG_AUTOR + "->" + autor + "<-");
             output.write(GestorDocument.PROP_TAG_TITOL + "->" + titol + "<-");
@@ -678,6 +990,49 @@ public class TestGestorDocument {
         Assert.assertEquals(autor, result.get(0));
         Assert.assertEquals(titol, result.get(1));
         Assert.assertEquals(contingut, result.get(2));
+
+        File f = new File(path);
+        Assert.assertTrue(f.delete());
+        Assert.assertTrue(dir.delete());
+    }
+
+    /**
+     * Objecte de la prova: Test del mètode importarDocument amb un document en format propietari erroni.
+     * Fitxer de dades necessari: Dades introduïdes manualment, no ha calgut un fitxer addicional
+     *                            el mateix test crea un nou fitxer i l'esborra.
+     * Valors estudiats: No es permet importar un document en format propietari erroni.
+     * Operativa: Es crea el directori de la prova si no existeix.
+     *            Es creen els strings representant els paràmetres del document.
+     *            Es crea el document en format propietari de forma incorrecta (vegeu comentari).
+     *            Es comprova que es detecta l'error i no s'importa el document.
+     *            S'esborren el fitxer i el directori creats.
+     */
+    @Test
+    public void testImportarDocumentPROPFormatErroni() {
+        File dir = new File(PATH_IN);
+        if(!dir.exists()) Assert.assertTrue(dir.mkdir());
+
+        String path = PATH_IN + "/prova4.prop";
+        //No hi afegim tag autor
+        //String autor = "Juli";
+        String titol = "prova4";
+        String contingut = "contingut de prova";
+
+        try {
+            FileWriter fw = new FileWriter(path);
+            Writer output = new BufferedWriter(fw);
+            //No hi afegim tag autor
+            output.write(GestorDocument.PROP_TAG_TITOL + "->" + titol + "<-");
+            output.write(GestorDocument.PROP_TAG_CONTINGUT + "->" + contingut + "<-");
+            output.close();
+            fw.close();
+        } catch (Exception e) {
+            Assert.fail("Exception during test");
+        }
+
+        GestorDocument gDoc = new GestorDocument();
+        ArrayList<String> result = gDoc.importarDocument(path);
+        Assert.assertNull(result);
 
         File f = new File(path);
         Assert.assertTrue(f.delete());

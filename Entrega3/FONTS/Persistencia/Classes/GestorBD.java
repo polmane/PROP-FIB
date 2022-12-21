@@ -73,7 +73,7 @@ public class GestorBD {
                 return false;
         }
         try {
-            FileWriter fw = new FileWriter(BD_PATH + "/" + String.valueOf(idDoc) + ".txt");
+            FileWriter fw = new FileWriter(BD_PATH + "/" + idDoc + ".txt");
             BufferedWriter bw = new BufferedWriter(fw);
             if (contingut != null) {
                 bw.write(contingut);
@@ -93,7 +93,7 @@ public class GestorBD {
      * @return retorna el contingut del docuement en cas de funcionament correcte, null en cas contrari
      */
     public String carregarContingutDocument(int idDoc){
-        File file = new File(BD_PATH + "/" + String.valueOf(idDoc) + ".txt");
+        File file = new File(BD_PATH + "/" + idDoc + ".txt");
         try {
             FileReader fileReader = new FileReader(file);
             BufferedReader br = new BufferedReader(fileReader);
@@ -113,8 +113,8 @@ public class GestorBD {
      * @param idDoc identificador del document a eliminar
      * @return retorna true en cas de funcionament correcte, false en cas contrari
      */
-    public boolean eliminarDocument(int idDoc) {
-        File document = new File (BD_PATH + "/" + String.valueOf(idDoc) + ".txt");
+    public Boolean eliminarDocument(int idDoc) {
+        File document = new File (BD_PATH + "/" + idDoc + ".txt");
         return document.delete();
     }
 
@@ -166,6 +166,9 @@ public class GestorBD {
 
             estatFileStream.close();
             estatFile.close();
+
+            if (estat.idDir < 0 || estat.pesosDocs == null || estat.deletedIds == null || estat.idNouDoc < 0 || estat.docs == null)
+                return null;
         }
         catch (IOException | ClassNotFoundException e) {
             return null;
