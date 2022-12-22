@@ -434,10 +434,11 @@ public class CtrlDirectori {
             return null;
         if (paraules.isEmpty())
             return null;
-
+        Document d = documentActiu;
         afegirDocument("compararQuery","compararQuery", paraules);
         List<Pair<String, String>> equalQuery = compararDocuments(m,s,k, documentActiu.getIdDoc());
         eliminarDocument(documentActiu.getIdDoc());
+        documentActiu = d;
         return equalQuery;
     }
 
