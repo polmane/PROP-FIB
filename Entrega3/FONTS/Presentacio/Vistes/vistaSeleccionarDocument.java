@@ -9,6 +9,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
+import static java.lang.Character.isWhitespace;
+
 public class vistaSeleccionarDocument extends JFrame {
     private CtrlPresentacio _ctrlPresentacio;
     private JPanel panel;
@@ -39,7 +41,7 @@ public class vistaSeleccionarDocument extends JFrame {
             VistaDialogo vistaDialogo = new VistaDialogo();
             String[] strBotones = {"Ok"};
             int isel = vistaDialogo.setDialogo(frame, "Seleccionar documents", "No hi ha documents per seleccionar", strBotones, 1);
-            System.out.println("Error selecc document nuls: " + isel + " " + strBotones[isel]);
+            System.out.println("No hi ha docs per seleccionar: " + isel + " " + strBotones[isel]);
         } else {
             for (int i = 0; i < resultat.size(); i += 3) {
                 model.addElement(resultat.get(i) + " | " + resultat.get(i + 1) + " | " + resultat.get(i + 2));
@@ -60,12 +62,13 @@ public class vistaSeleccionarDocument extends JFrame {
         Seleccionar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //System.out.println(String.valueOf(Documents.getSelectedValue()));
                 if (Documents.getSelectedValue() != null) {
                     String resultat = String.valueOf(Documents.getSelectedValue());
-                    //System.out.println(resultat.substring(0,1));
-                    int id = Integer.parseInt(resultat.substring(0, 1));
+                    int i = 0;
+                    while(!isWhitespace(resultat.charAt(i))) ++i;
+                    int id = Integer.parseInt(resultat.substring(0, i));
                     int codi = _ctrlPresentacio.seleccionarDocument(id);
+                    if (codi == -50) //TODO
                     System.out.println("Doc seleccionat: " + resultat);
 
                     _ctrlPresentacio.activarPagPrincipal();
@@ -75,7 +78,7 @@ public class vistaSeleccionarDocument extends JFrame {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
                     int isel = vistaDialogo.setDialogo(frame, "Document no seleccionat", "Has de seleccionar un document perquè tingui efecte", strBotones, 1);
-                    System.out.println("Error selecc document nuls: " + isel + " " + strBotones[isel]);
+                    System.out.println("Error seleccio document null: " + isel + " " + strBotones[isel]);
                 }
             }
         });
