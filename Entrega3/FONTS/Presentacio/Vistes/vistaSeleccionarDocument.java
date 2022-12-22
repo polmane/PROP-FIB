@@ -77,10 +77,12 @@ public class vistaSeleccionarDocument extends JFrame {
         ArrayList<String> resultat = _ctrlPresentacio.llistarDocuments();
         if (resultat == null) {
             Seleccionar.setEnabled(false);
+
             VistaDialogo vistaDialogo = new VistaDialogo();
             String[] strBotones = {"Ok"};
             int isel = vistaDialogo.setDialogo(frame, "Seleccionar documents", "No hi ha documents per seleccionar", strBotones, 1);
             System.out.println("No hi ha docs per seleccionar: " + isel + " " + strBotones[isel]);
+
         } else {
             for (int i = 0; i < resultat.size(); i += 3) {
                 model.addElement(resultat.get(i) + " | " + resultat.get(i + 1) + " | " + resultat.get(i + 2));
@@ -101,33 +103,13 @@ public class vistaSeleccionarDocument extends JFrame {
         Seleccionar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Documents.getSelectedValue() != null) {
-                    String resultat = String.valueOf(Documents.getSelectedValue());
-                    int i = 0;
-                    while(!isWhitespace(resultat.charAt(i))) ++i;
-                    int id = Integer.parseInt(resultat.substring(0, i));
-                    int codi = _ctrlPresentacio.seleccionarDocument(id);
-                    if (codi == -50) //TODO
-                    System.out.println("Doc seleccionat: " + resultat);
-
-                    _ctrlPresentacio.activarPagPrincipal();
-                    frame.dispose();
-                    dispose();
-                } else {
-                    VistaDialogo vistaDialogo = new VistaDialogo();
-                    String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Document no seleccionat", "Has de seleccionar un document perquè tingui efecte", strBotones, 1);
-                    System.out.println("Error seleccio document null: " + isel + " " + strBotones[isel]);
-                }
+                actionPerformed_buttonSeleccionar(e);
             }
         });
         Cancellar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                _ctrlPresentacio.activarPagPrincipal();
-                System.out.println("Cancelar vistaSeleccionarDocument");
-                frame.dispose();
-                dispose();
+                actionPerformed_buttonCancellar(e);
             }
         });
     }

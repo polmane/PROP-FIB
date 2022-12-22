@@ -41,12 +41,16 @@ public class vistaModificarExpressio extends JFrame {
      */
     private JFrame frame = new JFrame("JFrame");
 
+    /**
+     * Creadora de la vistaModificarExpressio
+     * @param pCtrlPresentacio Controlador de Presentació
+     */
     public vistaModificarExpressio(CtrlPresentacio pCtrlPresentacio) {
         _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
-        setTitle("Gestió d'un document");
+        setTitle("Modificar expressió");
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -79,28 +83,7 @@ public class vistaModificarExpressio extends JFrame {
         Guardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int codi = _ctrlPresentacio.modificarExpressio(Expressio.getText());
-                if (codi == 20) {
-                    VistaDialogo vistaDialogo = new VistaDialogo();
-                    String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Modificar Expressió", "Ja existeix una expressió igual en el directori", strBotones, 2);
-                    System.out.println("Error expressió igual: " + isel + " " + strBotones[isel]);
-                } else if (codi == 30) {
-                    VistaDialogo vistaDialogo = new VistaDialogo();
-                    String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Modificar Expressió", "S'ha d'introduir un valor vàlid com a paràmetre", strBotones, 2);
-                    System.out.println("Error expressió nula: " + isel + " " + strBotones[isel]);
-                } else if (codi == 10) {
-                    VistaDialogo vistaDialogo = new VistaDialogo();
-                    String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Modificar Expressió", "Expressió modificada corectament", strBotones, 2);
-                    System.out.println("Expressió modificada: " + isel + " " + strBotones[isel]);
-
-                    _ctrlPresentacio.activarGestioExpressio();
-                    frame.dispose();
-                    dispose();
-                }
-
+                actionPerformed_buttonGuardar(e);
             }
 
         });

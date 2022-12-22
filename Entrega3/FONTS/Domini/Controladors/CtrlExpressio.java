@@ -70,12 +70,12 @@ public class CtrlExpressio {
     /**
      * Funció per seleccionar l'expressió seleccionada
      * @param idExp id del document a seleccionar
-     * @return consultar els codis de return en el document word entregat, la id de l'expressió creada en cas de funcionament correcte
+     * @return consultar els codis de return en el document word entregat, la id de l'expressió seleccionada en cas de funcionament correcte
      */
     public int seleccionarExpressio (Integer idExp) {
         if (expressions.containsKey(idExp)) {
             expressioSeleccionada = expressions.get(idExp);
-            return -10;
+            return expressioSeleccionada.getIdExp();
         }
         return -20;
     }

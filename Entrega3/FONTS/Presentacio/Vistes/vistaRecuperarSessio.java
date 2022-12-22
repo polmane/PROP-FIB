@@ -38,7 +38,7 @@ public class vistaRecuperarSessio extends JFrame {
     private JPanel panel;
 
     /**
-     * Finestra que apareix quan es realitza una acció
+     * Finestra que apareix quan hi ha un error
      */
     private JFrame frame = new JFrame("Frame");
 
@@ -65,7 +65,7 @@ public class vistaRecuperarSessio extends JFrame {
         Crear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                actionPerformed_buttonRecuperar(e);
+                actionPerformed_buttonCrear(e);
             }
         });
     }

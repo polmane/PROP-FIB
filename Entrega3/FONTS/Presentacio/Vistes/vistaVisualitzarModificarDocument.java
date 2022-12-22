@@ -90,7 +90,7 @@ public class vistaVisualitzarModificarDocument extends JFrame {
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
-        setTitle("Gestió d'un document");
+        setTitle("Visualització i modificació d'un document");
 
         Contingut.setLineWrap(true);
         Contingut.setWrapStyleWord(true);
@@ -130,71 +130,32 @@ public class vistaVisualitzarModificarDocument extends JFrame {
                 actionPerformed_buttonEnrere(e);
             }
         });
-        GuardarTitol.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Enrere.setEnabled(false);
-                int codi = _ctrlPresentacio.modificarTitol(Titol.getText());
-                if (codi == 30) {
-                    VistaDialogo vistaDialogo = new VistaDialogo();
-                    String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Error titol", "No s'ha introduït cap títol", strBotones, 0);
-                    System.out.println("Modif titol, buit: " + isel + " " + strBotones[isel]);
 
-                } else if (codi == 20) {
-                    VistaDialogo vistaDialogo = new VistaDialogo();
-                    String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Error títol", "Ja existeix un document amb aquest títol i autor", strBotones, 0);
-                    System.out.println("Modif titol, doc amb autor i titol repetit: " + isel + " " + strBotones[isel]);
-                } else {
-                    VistaDialogo vistaDialogo = new VistaDialogo();
-                    String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Mofificar títol", "Títol modificat correctament", strBotones, 1);
-                    System.out.println("Titol modificat: " + isel + " " + strBotones[isel]);
-                }
-
-
-            }
-        });
         Modificar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 actionPerformed_buttonModificar(e);
             }
         });
+
         GuardarAutor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Enrere.setEnabled(false);
-                int codi = _ctrlPresentacio.modificarAutor(Autor.getText());
-                if (codi == 30) {
-                    VistaDialogo vistaDialogo = new VistaDialogo();
-                    String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Error autor", "No s'ha introduït cap autor", strBotones, 0);
-                    System.out.println("Modif autor, buit: " + isel + " " + strBotones[isel]);
-
-                } else if (codi == 20) {
-                    VistaDialogo vistaDialogo = new VistaDialogo();
-                    String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Error autor", "Ja existeix un document amb aquest autor i títol", strBotones, 0);
-                    System.out.println("Modif autor, doc amb autor i titol repetit: " + isel + " " + strBotones[isel]);
-                } else {
-                    VistaDialogo vistaDialogo = new VistaDialogo();
-                    String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Mofificar autor", "Autor modificat correctament", strBotones, 1);
-                    System.out.println("Autor modificat: " + isel + " " + strBotones[isel]);
-                }
+                actionPerformed_buttonGuardarAutor(e);
             }
         });
+
+        GuardarTitol.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actionPerformed_buttonGuardarTitol(e);
+            }
+        });
+
         GuardarContingut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Enrere.setEnabled(false);
-                _ctrlPresentacio.modificarContingut(Contingut.getText());
-                VistaDialogo vistaDialogo = new VistaDialogo();
-                String[] strBotones = {"Ok"};
-                int isel = vistaDialogo.setDialogo(frame, "Mofificar contingut", "Contingut modificat correctament", strBotones, 1);
-                System.out.println("Contingut modificat: " + isel + " " + strBotones[isel]);
+                actionPerformed_buttonGuardarContingut(e);
             }
         });
     }

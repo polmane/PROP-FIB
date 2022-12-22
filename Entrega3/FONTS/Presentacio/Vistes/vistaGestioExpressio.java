@@ -81,12 +81,16 @@ public class vistaGestioExpressio extends JFrame {
      */
     private JFrame frame = new JFrame("JFrame");
 
+    /**
+     * Creadora de la vistaGestióExpressio
+     * @param pCtrlPresentacio Controlador de Presentació
+     */
     public vistaGestioExpressio(CtrlPresentacio pCtrlPresentacio) {
         _ctrlPresentacio = pCtrlPresentacio;
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
-        setTitle("Gestió d'una expressió");
+        setTitle("Gestió d'expressions");
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -119,29 +123,7 @@ public class vistaGestioExpressio extends JFrame {
         Eliminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Resultat.setText("");
-
-                String info = String.valueOf(Expressions.getSelectedItem());
-                int i = 0;
-                while(!isWhitespace(info.charAt(i))) ++i;
-                int id = Integer.parseInt(info.substring(0, i));
-                System.out.println(id);
-
-                int codi = _ctrlPresentacio.eliminarExpressio(id);
-                System.out.println(codi);
-                if (codi == 11 ||codi == 10) {
-                    VistaDialogo vistaDialogo = new VistaDialogo();
-                    String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Eliminar expressió", "Expressió eliminada", strBotones, 1);
-                    System.out.println("Error eliminar seleccionat: " + isel + " " + strBotones[isel]);
-                    Expressions.removeItem(Expressions.getSelectedItem());
-
-                } else if (codi == 20) {
-                    VistaDialogo vistaDialogo = new VistaDialogo();
-                    String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Error a l'eliminar", "Expressio no reconeguda", strBotones, 0);
-                    System.out.println("Error eliminar exp no reconegut: " + isel + " " + strBotones[isel]);
-                }
+                actionPerformed_buttonEliminar(e);
             }
         });
 
@@ -285,12 +267,14 @@ public class vistaGestioExpressio extends JFrame {
         ArrayList<String> resultat = _ctrlPresentacio.llistarExpressions();
         if (resultat == null) {
             Buscar.setEnabled(false);
+            Modificar.setEnabled(false);
         }
         else {
-            for (int i = 0; i < resultat.size()-1; i += 2) {
-                Expressions.addItem(resultat.get(i) + " | " + resultat.get(i+1));
+            for (int i = 0; i < resultat.size(); i += 2) {
+                Expressions.addItem(resultat.get(i) + " : " + resultat.get(i+1));
             }
             Buscar.setEnabled(true);
+            Modificar.setEnabled(true);
         };
     }
     /**

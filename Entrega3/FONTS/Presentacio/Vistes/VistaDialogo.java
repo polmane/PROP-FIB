@@ -8,10 +8,21 @@ import javax.swing.*;
  * @author isaac.roma.granado
  */
 public class VistaDialogo {
-
+  /**
+   * Creadora de la VistaDialogo
+   */
   public VistaDialogo() {
   }
 
+  /**
+   * Funció que inicialitza un dialeg a partir de paràmetres
+   * @param frame Frame pare (parentFrame) del diàleg
+   * @param strTitulo Títol del diàleg
+   * @param strTexto  Text del contingut del diàleg
+   * @param strBotones Botons disponibles en el diàleg
+   * @param iTipo Tipus de diàleg JOptionPane
+   * @return Retorna l'índex del botó seleccionat
+   */
   public int setDialogo
     (JFrame frame,String strTitulo, String strTexto, String[] strBotones, int iTipo) {
 
@@ -24,7 +35,6 @@ public class VistaDialogo {
       case 4: oTipo = JOptionPane.PLAIN_MESSAGE; break;
     }
 
-    // Crea y viisualiza el dialogo
     JOptionPane optionPane = new JOptionPane(strTexto,oTipo);
     optionPane.setOptions(strBotones);
 
