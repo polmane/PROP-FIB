@@ -5,6 +5,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/Entrega3/FONTS" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/Entrega3/FONTS/Domini/Drivers" />
+      <excludeFolder url="file://$MODULE_DIR$/Entrega3/FONTS/Persistencia/Test" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

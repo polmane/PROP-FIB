@@ -103,7 +103,7 @@ public class vistaPaginaPrincipal extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int id = RefreshDocumentSeleccionatPagPrin();
                 int codi = _ctrlPresentacio.eliminarDocument(id);
-                System.out.println(id);
+
                 if (codi == 31) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
@@ -237,7 +237,6 @@ public class vistaPaginaPrincipal extends JFrame {
             autor.setText(document.get(1));
             titol.setText(document.get(2));
             System.out.println(s + " | " + document.get(1) + " | " + document.get(2));
-            System.out.println(document.get(3));
             visualitzarModificarButton.setEnabled(true);
             eliminarDocumentSeleccionatButton.setEnabled(true);
             exportarButton.setEnabled(true);
