@@ -72,6 +72,14 @@ public class GestorExpressions {
      */
     public Boolean eliminarExpressio (int idExp) {
         File expressio = new File(BD_PATH + "/" + String.valueOf(idExp) + ".txt");
-        return expressio.delete();
+        boolean b = expressio.delete();
+        if (b) {
+            File dirExp = new File(BD_PATH);
+            if(dirExp.length() == 0) {
+                dirExp.delete();
+            }
+            return true;
+        }
+        return false;
     }
 }

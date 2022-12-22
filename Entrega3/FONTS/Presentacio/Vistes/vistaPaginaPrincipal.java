@@ -56,6 +56,10 @@ public class vistaPaginaPrincipal extends JFrame {
                 setVisible(false);
                 System.out.println("Tancant aplicacio, guardant estat");
 
+                int codi = _ctrlPresentacio.guardarEstat();
+                if (codi == -10){} //TODO: FUCIONA CORRECTAMENT
+                else {}//TODO:T'HA PETAT EL CODI CAMPIÓ
+
                 System.out.println("Aplicacio tancada");
                 frame.dispose();
                 dispose();
@@ -141,7 +145,17 @@ public class vistaPaginaPrincipal extends JFrame {
                     for (File file : files) {
                         paths.add(file.getAbsolutePath());
                     }
-                    //IMPORTAR CTRLDOMINI
+                    int codi = _ctrlPresentacio.importarDocument(paths);
+                    if (codi == -10) {
+                        RefreshDocumentSeleccionatPagPrin();
+                    }
+                    else if (codi == -50) {
+                        //TODO: Un dels documents proporcionats té un format que el sistema no suporta, tots els fitxers ubicats en paths anteriors al referit s'han afegit correctament dins el sistema
+                    }
+                    else {
+                        //TODO: El document del path "i" ja existeix o és null, tots documents anteriors a i s'han afegit correctament
+                    }
+
                     System.out.println(paths);
                 } else {
                     System.out.println("Cancel·lant importacio");
@@ -168,20 +182,17 @@ public class vistaPaginaPrincipal extends JFrame {
 
                     String f = String.valueOf(format.getSelectedItem());
 
-                    //EXPORTAR CTRLDOMINI
-                    System.out.println(path + " " + f);
-
-                    //TODO eliminar aixo
-                    File fileprova = new File(path + "\\hola.txt");
-                    try {
-                        fileprova.createNewFile();
-                    } catch (IOException ex) {
+                    int codi = _ctrlPresentacio.exportarDocument(f,path);
+                    if (codi > -1) {
+                        //TODO: El document s'ha exportat correctament
+                    }
+                    else {
                         VistaDialogo vistaDialogo = new VistaDialogo();
                         String[] strBotones = {"Ok"};
                         int isel = vistaDialogo.setDialogo(frame, "Error a l'exportar", "Path incorrecte", strBotones, 1);
                         System.out.println("Error exportar: " + isel + " " + strBotones[isel]);
                     }
-
+                    System.out.println(path + " " + f);
 
                 } else {
                     System.out.println("Cancel·lant exportació");

@@ -101,7 +101,7 @@ public class CtrlDomini {
      * @return consultar els codis de return en el document word entregat, la id del document creat en cas de funcionament correcte
      */
     public int seleccionarDocument(int idDoc) {
-        _ctrlDirectori.getDocumentActiu().setContingut(null);
+        if (_ctrlDirectori.getDocumentActiu() != null) _ctrlDirectori.getDocumentActiu().setContingut(null);
         int i = _ctrlDirectori.seleccionarDocument(idDoc);
         if (i > -1) {
             String contingut = _ctrlPersistencia.carregarContingutDocument(idDoc);
@@ -355,11 +355,12 @@ public class CtrlDomini {
 
     /**
      * Funció per exportar un document determinat a l'ordinador
-     * @param format format esperat d'exportació
+     * @param f format esperat d'exportació
      * @param path path on volem guardar el document
      * @return consultar els codis de return en el document word entregat, la id del document exportat en cas de funcionament correcte
      */
-    public int exportarDocument(GestorDocument.FILETYPE format, String path) {
+    public int exportarDocument(String f, String path) {
+        GestorDocument.FILETYPE format = GestorDocument.FILETYPE.valueOf(f);
         Document d = _ctrlDirectori.getDocumentActiu();
         Boolean b = _ctrlPersistencia.exportarDocument(d.getAutor(),d.getTitol(),d.getContingut(),format,path);
         if (!b) return -50;
@@ -377,8 +378,8 @@ public class CtrlDomini {
             if (values == null)
                 return -50;
 
-            int j = _ctrlDirectori.afegirDocument(values.get(0), values.get(1), values.get(2));
-            if (j == -20 | j == -30) return j;
+            int j = afegirDocument(values.get(0), values.get(1), values.get(2));
+            if (j == -20 | j == -30) return i;
         }
         return -10;
     }
@@ -404,7 +405,7 @@ public class CtrlDomini {
      */
     public int eliminarExpressio (int idExp) {
         int i = _ctrlExpressio.eliminarExpressio(idExp);
-        if (i > -1) {
+        if (i > -1 || i == -10 || i == -11) {
             Boolean b = _ctrlPersistencia.eliminarExpressio(idExp);
             if (!b) return -50;
         }

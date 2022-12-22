@@ -182,9 +182,9 @@
             </constraints>
             <properties>
               <model>
-                <item value=".txt"/>
-                <item value=".xml"/>
-                <item value=".prop"/>
+                <item value="TXT"/>
+                <item value="XML"/>
+                <item value="PROP"/>
               </model>
             </properties>
           </component>

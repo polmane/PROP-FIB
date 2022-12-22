@@ -11,6 +11,8 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Character.isWhitespace;
+
 public class vistaGestioExpressio extends JFrame {
 
     private CtrlPresentacio _ctrlPresentacio;
@@ -74,7 +76,10 @@ public class vistaGestioExpressio extends JFrame {
                 Resultat.setText("");
 
                 String info = String.valueOf(Expressions.getSelectedItem());
-                int id = Integer.parseInt(info.substring(0, 1));
+                int i = 0;
+                while(!isWhitespace(info.charAt(i))) ++i;
+                int id = Integer.parseInt(info.substring(0, i));
+                System.out.println(id);
 
                 int codi = _ctrlPresentacio.eliminarExpressio(id);
                 System.out.println(codi);

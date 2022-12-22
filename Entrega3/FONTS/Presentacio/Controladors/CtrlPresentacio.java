@@ -131,7 +131,9 @@ public class CtrlPresentacio {
         return _ctrlDomini.compararQuery(metodeComp, sorting, k, paraules);
     }
 
-    //public static void exportarDocument(CtrlDirectori.FILETYPE format, String path) { _ctrlDomini.exportarDocument(format,path); }
+    public int exportarDocument(String format, String path) { return _ctrlDomini.exportarDocument(format,path); }
+
+    public int importarDocument(ArrayList<String> paths) {return _ctrlDomini.importarDocument(paths);}
 
     public int eliminarDocument(int id){
         return _ctrlDomini.eliminarDocument(id);
@@ -177,4 +179,7 @@ public class CtrlPresentacio {
     }
 
     public int carregarEstat() { return _ctrlDomini.carregarEstat(); }
+
+    public int guardarEstat() {return _ctrlDomini.guardarEstat();}
+
 }
