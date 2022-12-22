@@ -72,7 +72,7 @@ public class CtrlDirectori {
     public int seleccionarDocument(int idDoc) {
         if (directoriObert.getDocs().containsKey(idDoc)) {
             documentActiu = directoriObert.getDocs().get(idDoc);
-            return -10;
+            return documentActiu.getIdDoc();
         }
         return -20;
     }

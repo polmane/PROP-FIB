@@ -101,12 +101,22 @@ public class CtrlDomini {
      * @return consultar els codis de return en el document word entregat, la id del document creat en cas de funcionament correcte
      */
     public int seleccionarDocument(int idDoc) {
-        if (_ctrlDirectori.getDocumentActiu() != null) _ctrlDirectori.getDocumentActiu().setContingut(null);
+        Document d = null;
+        String c = null;
+        String contingut = _ctrlPersistencia.carregarContingutDocument(idDoc);
+        if (contingut == null) return -50;
+        if (_ctrlDirectori.getDocumentActiu() != null) {
+            d = _ctrlDirectori.getDocumentActiu();
+            c = _ctrlDirectori.getDocumentActiu().getContingut();
+            _ctrlDirectori.getDocumentActiu().setContingut(null);
+        }
         int i = _ctrlDirectori.seleccionarDocument(idDoc);
         if (i > -1) {
-            String contingut = _ctrlPersistencia.carregarContingutDocument(idDoc);
-            if (contingut == null) return -50; //FIXME pero a tot aixo, hauriem de ficar l contingut a null o ja ho estara?
             _ctrlDirectori.getDocumentActiu().setContingut(contingut);
+        }
+        else if (d != null){
+            _ctrlDirectori.seleccionarDocument(d.getIdDoc());
+            _ctrlDirectori.getDocumentActiu().setContingut(c);
         }
         return i;
     }
