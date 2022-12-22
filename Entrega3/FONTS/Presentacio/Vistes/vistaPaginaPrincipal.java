@@ -40,7 +40,7 @@ public class vistaPaginaPrincipal extends JFrame {
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(false);
-        setTitle("Pàgina principal");
+        setTitle("Pàgina principal del Gestor de Documents");
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -125,8 +125,8 @@ public class vistaPaginaPrincipal extends JFrame {
                 } else if (codi > -1 || codi == -11 || codi == -10) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Eliminar document", "Document eliminat", strBotones, 1);
-                    System.out.println("Error eliminar seleccionat: " + isel + " " + strBotones[isel]);
+                    int isel = vistaDialogo.setDialogo(frame, "Eliminar document", "Document eliminat amb exit", strBotones, 1);
+                    System.out.println("Document eliminat!: " + isel + " " + strBotones[isel]);
                 }
                 RefreshDocumentSeleccionatPagPrin();
             }
@@ -151,19 +151,22 @@ public class vistaPaginaPrincipal extends JFrame {
                     for (File file : files) {
                         paths.add(file.getAbsolutePath());
                     }
+                    System.out.println("Importar següents documents: " + paths);
                     int codi = _ctrlPresentacio.importarDocument(paths);
                     if (codi == -10) {
                         RefreshDocumentSeleccionatPagPrin();
                     }
                     else if (codi == -50) {
-                        //TODO: Un dels documents proporcionats té un format que el sistema no suporta, tots els fitxers ubicats en paths anteriors al referit s'han afegit correctament dins el sistema
                         VistaDialogo vistaDialogo = new VistaDialogo();
                         String[] strBotones = {"Ok"};
-                        int isel = vistaDialogo.setDialogo(frame, "Error a l'eliminar", "No has seleccionat cap document", strBotones, 0);
-                        System.out.println("Error eliminar seleccionat: " + isel + " " + strBotones[isel]);
+                        int isel = vistaDialogo.setDialogo(frame, "Error a l'importar", "Algun dels fitxers té un format\n que el sistema no suporta.\n Compte! Els fitxers anteriors a aquest s'han carregat correctament", strBotones, 0);
+                        System.out.println("Error importar, llegir fitxer: " + isel + " " + strBotones[isel]);
                     }
                     else {
-                        //TODO: El document del path "i" ja existeix o és null, tots documents anteriors a i s'han afegit correctament
+                        VistaDialogo vistaDialogo = new VistaDialogo();
+                        String[] strBotones = {"Ok"};
+                        int isel = vistaDialogo.setDialogo(frame, "Error a l'importar", "El fitxer amb path \n"+ paths.get(codi)+"\n ja existeix.\n Compte! Els fitxers anteriors a aquest s'han carregat correctament", strBotones, 0);
+                        System.out.println("Error importar ja existeix algun document: " + isel + " " + strBotones[isel]);
                     }
 
                     System.out.println(paths);
@@ -194,13 +197,16 @@ public class vistaPaginaPrincipal extends JFrame {
 
                     int codi = _ctrlPresentacio.exportarDocument(f,path);
                     if (codi > -1) {
-                        //TODO: El document s'ha exportat correctament
+                        VistaDialogo vistaDialogo = new VistaDialogo();
+                        String[] strBotones = {"Ok"};
+                        int isel = vistaDialogo.setDialogo(frame, "Exportar", "Document exportat correctament", strBotones, 1);
+                        System.out.println("Exportar correcte: " + isel + " " + strBotones[isel]);
                     }
                     else {
                         VistaDialogo vistaDialogo = new VistaDialogo();
                         String[] strBotones = {"Ok"};
-                        int isel = vistaDialogo.setDialogo(frame, "Error a l'exportar", "Path incorrecte", strBotones, 1);
-                        System.out.println("Error exportar: " + isel + " " + strBotones[isel]);
+                        int isel = vistaDialogo.setDialogo(frame, "Error a l'exportar", "No existeix aquesta carpeta", strBotones, 0);
+                        System.out.println("Error a l'exportar: " + isel + " " + strBotones[isel]);
                     }
                     System.out.println(path + " " + f);
 
@@ -215,9 +221,6 @@ public class vistaPaginaPrincipal extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (cerquesBox.getSelectedItem() == "Contingut d'un document") {
                     _ctrlPresentacio.ObrirVistaContingutDocument();
-                    desactivar();
-                } else if (cerquesBox.getSelectedItem() == "Llista de títols d'un autor" || cerquesBox.getSelectedItem() == "Llista d'autors que comencen per un prefix") {
-                    _ctrlPresentacio.ObrirVistaCerques();
                     desactivar();
                 } else if (cerquesBox.getSelectedItem() == "Llista de títols d'un autor o d'autors que comencen per un prefix") {
                     _ctrlPresentacio.ObrirVistaCerques();
@@ -246,7 +249,7 @@ public class vistaPaginaPrincipal extends JFrame {
         } else {
             autor.setText(document.get(1));
             titol.setText(document.get(2));
-            System.out.println(s + " | " + document.get(1) + " | " + document.get(2));
+            System.out.println("[PagPrin]DocActiu: "+ s + " | " + document.get(1) + " | " + document.get(2));
             visualitzarModificarButton.setEnabled(true);
             eliminarDocumentSeleccionatButton.setEnabled(true);
             exportarButton.setEnabled(true);
@@ -257,7 +260,6 @@ public class vistaPaginaPrincipal extends JFrame {
     }
 
     public void hacerVisible() {
-        //this.pack();
         this.setVisible(true);
     }
 

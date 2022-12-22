@@ -4,6 +4,7 @@ import Domini.Classes.Pair;
 import Domini.Controladors.CtrlDomini;
 import Presentacio.Vistes.*;
 
+import javax.sound.midi.Soundbank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,11 @@ public class CtrlPresentacio {
     //VISTES
     public CtrlPresentacio() {
          _ctrlDomini = new CtrlDomini();
-         _ctrlDomini.carregarExpressions();
+         int codi = _ctrlDomini.carregarExpressions();
+         if (codi == -50) System.out.println("No hi ha expressions");
+         else {
+             System.out.println("Expressions carregades correctament");
+         }
          vPrincipal = new vistaPaginaPrincipal(this);
     }
 

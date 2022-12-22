@@ -41,10 +41,8 @@ public class vistaSeleccionarDocument extends JFrame {
             int isel = vistaDialogo.setDialogo(frame, "Seleccionar documents", "No hi ha documents per seleccionar", strBotones, 1);
             System.out.println("Error selecc document nuls: " + isel + " " + strBotones[isel]);
         } else {
-            int index = 0;
             for (int i = 0; i < resultat.size(); i += 3) {
                 model.addElement(resultat.get(i) + " | " + resultat.get(i + 1) + " | " + resultat.get(i + 2));
-                ++index;
             }
         }
 
