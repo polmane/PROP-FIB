@@ -1,0 +1,15 @@
+La carpeta vistes conte els següents elements:
+- Main: Main per poder executar i provar el programa.
+- VistaDialogo: vista pels missatges d'error.
+- vistaCerques: vista per buscar els títols d'un autor i els autors que comencen per un prefix.
+- vistaContingutDocument: vista per buscar el contingut d'un document.
+- vistaCrearDocument: vista per crear un document.
+- vistaCrearExpressio: vista per crear una expressio.
+- vistaDocumentsRellevants: vista per buscar els documents mes rellevants segons una query de paraules.
+- vistaDocumentsSemblants: vista per buscar els documents semblants.
+- vistaGestioExpressio: vista per fer totes les gestions d'una expressio.
+- vistaModificarExpressio: vista per modificar una expressio.
+- vistaPaginaPrincipal: vista de la pagina principal.
+- vistaRecuperarSessio: vista per recuperar sessio.
+- vistaSeleccionarDocument: vista per seleccionar un document.
+- vistaVisualitzarModificarDocument: vista per viualitzar i modificar un document.

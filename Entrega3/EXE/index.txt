@@ -1,0 +1,3 @@
+La carpeta d'executables conte els elements següents:
+- Executable del projecte.
+- Tests d'integracio documentant els casos testejats, el seu input i l'output.
