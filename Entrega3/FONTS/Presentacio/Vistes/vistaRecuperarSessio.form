@@ -14,7 +14,7 @@
         </constraints>
         <properties>
           <font name="JetBrains Mono" size="15" style="1"/>
-          <text value="Vol recuperar una sessió anterior o vol crear una nova?"/>
+          <text value="Vol recuperar la sessió anterior o vol crear una nova?"/>
         </properties>
       </component>
       <vspacer id="e7398">
