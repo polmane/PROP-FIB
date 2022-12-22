@@ -144,7 +144,7 @@ public class CtrlDomini {
      * @param contingut nou valor de la variable títol
      * @return consultar els codis de return en el document word entregat, la id del document modificat en cas de funcionament correcte
      */
-    public int modificarContingut(String contingut) {
+    public int modificarContingut(String contingut) { //FIXME: comprovar ordre de persist domini
         int i = _ctrlDirectori.modificarContingut(contingut);
         if (i > -1) {
             Boolean b = _ctrlPersistencia.guardarContingutDocument(i,contingut);
@@ -187,7 +187,7 @@ public class CtrlDomini {
      */
     public int eliminarDocument(int idDoc) {
         int i = _ctrlDirectori.eliminarDocument(idDoc);
-        if (i > -1 | i == -10 | i == -11) {
+        if (i > -1 | i == -10 | i == -11) {//FIXME DIRIA QUE NO IMPORTA ORDRE
             Boolean b = _ctrlPersistencia.eliminarDocument(idDoc);
             if (!b) return -50;
             }
@@ -236,6 +236,34 @@ public class CtrlDomini {
     public List<String> llistaTitolsPerAutor(String autor, String sorting) {
         CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(sorting);
         return _ctrlDirectori.llistaTitolsPerAutor(autor,s);
+    }
+
+    /**
+     * Funció per afegir una expressió dins el nostre sistema
+     * @param expressio expressió que volem guardar
+     * @return consultar els codis de return en el document word entregat, la id de l'expressió creada en cas de funcionament correcte
+     */
+    public int afegirExpressio (String expressio) {
+        int i = _ctrlExpressio.afegirExpressio(expressio);
+        if (i > -1) {
+            Boolean b = _ctrlPersistencia.guardarExpressio(i,expressio);
+            if (!b) return -50;
+        }
+        return i;
+    }
+
+    /**
+     * Funció per eliminar una expressió del sistema
+     * @param idExp id de l'expressió a eliminar
+     * @return consultar els codis de return en el document word entregat, la id de l'expressió eliminada en cas de funcionament correcte
+     */
+    public int eliminarExpressio (int idExp) {
+        int i = _ctrlExpressio.eliminarExpressio(idExp);
+        if (i > -1 || i == -10 || i == -11) {
+            Boolean b = _ctrlPersistencia.eliminarExpressio(idExp);
+            if (!b) return -50;
+        }
+        return i;
     }
 
     /**
@@ -395,34 +423,6 @@ public class CtrlDomini {
             if (j == -20 | j == -30) return i;
         }
         return -10;
-    }
-
-    /**
-     * Funció per afegir una expressió dins el nostre sistema
-     * @param expressio expressió que volem guardar
-     * @return consultar els codis de return en el document word entregat, la id de l'expressió creada en cas de funcionament correcte
-     */
-    public int afegirExpressio (String expressio) {
-        int i = _ctrlExpressio.afegirExpressio(expressio);
-        if (i > -1) {
-            Boolean b = _ctrlPersistencia.guardarExpressio(i,expressio);
-            if (!b) return -50;
-        }
-        return i;
-    }
-
-    /**
-     * Funció per eliminar una expressió del sistema
-     * @param idExp id de l'expressió a eliminar
-     * @return consultar els codis de return en el document word entregat, la id de l'expressió eliminada en cas de funcionament correcte
-     */
-    public int eliminarExpressio (int idExp) {
-        int i = _ctrlExpressio.eliminarExpressio(idExp);
-        if (i > -1 || i == -10 || i == -11) {
-            Boolean b = _ctrlPersistencia.eliminarExpressio(idExp);
-            if (!b) return -50;
-        }
-        return i;
     }
 
 }
