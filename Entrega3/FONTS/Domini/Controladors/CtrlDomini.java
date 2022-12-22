@@ -144,11 +144,15 @@ public class CtrlDomini {
      * @param contingut nou valor de la variable títol
      * @return consultar els codis de return en el document word entregat, la id del document modificat en cas de funcionament correcte
      */
-    public int modificarContingut(String contingut) { //FIXME: comprovar ordre de persist domini
+    public int modificarContingut(String contingut) {
+        String c = _ctrlDirectori.getDocumentActiu().getContingut();
         int i = _ctrlDirectori.modificarContingut(contingut);
         if (i > -1) {
             Boolean b = _ctrlPersistencia.guardarContingutDocument(i,contingut);
-            if (!b)return -50;
+            if (!b){
+                _ctrlDirectori.getDocumentActiu().setContingut(c);
+                return -50;
+            }
         }
         return i;
     }
@@ -186,11 +190,15 @@ public class CtrlDomini {
      * @return consultar els codis de return en el document word entregat, la id del document eliminat si no hi han errors
      */
     public int eliminarDocument(int idDoc) {
+        Document d = _ctrlDirectori.getDirectoriObert().getDocs().get(idDoc);
         int i = _ctrlDirectori.eliminarDocument(idDoc);
-        if (i > -1 | i == -10 | i == -11) {//FIXME DIRIA QUE NO IMPORTA ORDRE
+        if (i > -1 | i == -10 | i == -11) {
             Boolean b = _ctrlPersistencia.eliminarDocument(idDoc);
-            if (!b) return -50;
+            if (!b) {
+                _ctrlDirectori.afegirDocument(d.getAutor(),d.getTitol(),d.getContingut());
+                return -50;
             }
+        }
         return i;
     }
 
@@ -205,12 +213,16 @@ public class CtrlDomini {
             return null;
         }
         for (Document doc : _ctrlDirectori.getDirectoriObert().getDocs().values()) {
-            //FIXME  es poden posar a dinsdel if, perque comprovem titol i autor i coma result el contingut, no?
-            if (doc != _ctrlDirectori.getDocumentActiu()) doc.setContingut(_ctrlPersistencia.carregarContingutDocument(doc.getIdDoc()));
             if (doc.getTitol().equalsIgnoreCase(titol) && doc.getAutor().equalsIgnoreCase(autor)) {
-                return doc.getContingut();
+                String s = null;
+                if (_ctrlDirectori.getDocumentActiu().getIdDoc() != doc.getIdDoc()) {
+                    s = _ctrlPersistencia.carregarContingutDocument(doc.getIdDoc());
+                }
+                else {
+                    s = _ctrlDirectori.getDocumentActiu().getContingut();
+                }
+                return s;
             }
-            if (doc != _ctrlDirectori.getDocumentActiu()) doc.setContingut(null);
         }
         return null;
     }
@@ -223,8 +235,6 @@ public class CtrlDomini {
      */
     public List<String> llistaAutorsPerPrefix(String pre , String sorting) {
         CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(sorting);
-        //FIXME: Retornem un Set? Sino, si Pol té dos documents retorna Pol Pol. No cal canviar aqui fora, sino a dins
-        // de CtrlDirectori i ficar que sumi en un set i que surti en un mateix list<string> aixi estalviem canviar controladors
         return _ctrlDirectori.llistaAutorsPerPrefix(pre, s);
     }
     /**

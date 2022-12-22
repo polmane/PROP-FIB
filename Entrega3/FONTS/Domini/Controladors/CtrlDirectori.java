@@ -500,7 +500,7 @@ public class CtrlDirectori {
         List<String> autors = new ArrayList<String>();
         for (Document doc : directoriObert.getDocs().values()) {
             String autor = doc.getAutor();
-            if (autor.toLowerCase().startsWith(pre.toLowerCase())) {
+            if (autor.toLowerCase().startsWith(pre.toLowerCase()) && !autors.contains(autor.toLowerCase())) {
                 autors.add(autor);
             }
         }
