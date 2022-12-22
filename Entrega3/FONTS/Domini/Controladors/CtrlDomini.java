@@ -105,7 +105,7 @@ public class CtrlDomini {
         int i = _ctrlDirectori.seleccionarDocument(idDoc);
         if (i > -1) {
             String contingut = _ctrlPersistencia.carregarContingutDocument(idDoc);
-            if (contingut == null) return -50;
+            if (contingut == null) return -50; //FIXME pero a tot aixo, hauriem de ficar l contingut a null o ja ho estara?
             _ctrlDirectori.getDocumentActiu().setContingut(contingut);
         }
         return i;
@@ -195,6 +195,7 @@ public class CtrlDomini {
             return null;
         }
         for (Document doc : _ctrlDirectori.getDirectoriObert().getDocs().values()) {
+            //FIXME  es poden posar a dinsdel if, perque comprovem titol i autor i coma result el contingut, no?
             if (doc != _ctrlDirectori.getDocumentActiu()) doc.setContingut(_ctrlPersistencia.carregarContingutDocument(doc.getIdDoc()));
             if (doc.getTitol().equalsIgnoreCase(titol) && doc.getAutor().equalsIgnoreCase(autor)) {
                 return doc.getContingut();
@@ -212,6 +213,8 @@ public class CtrlDomini {
      */
     public List<String> llistaAutorsPerPrefix(String pre , String sorting) {
         CtrlDirectori.SORTING s = CtrlDirectori.SORTING.valueOf(sorting);
+        //FIXME: Retornem un Set? Sino, si Pol té dos documents retorna Pol Pol. No cal canviar aqui fora, sino a dins
+        // de CtrlDirectori i ficar que sumi en un set i que surti en un mateix list<string> aixi estalviem canviar controladors
         return _ctrlDirectori.llistaAutorsPerPrefix(pre, s);
     }
     /**

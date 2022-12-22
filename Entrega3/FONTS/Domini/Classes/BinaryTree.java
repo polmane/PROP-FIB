@@ -56,7 +56,7 @@ public class BinaryTree {
     }
 
     /**
-     * Funció per crear l'arbre binari de manera recuriva
+     * Funció per crear l'arbre binari de manera recursiva
      * @param current node actual en el que s'està treballant
      * @param exp expressió que té el node actual
      * @return retorna el nou node actual
