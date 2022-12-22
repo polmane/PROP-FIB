@@ -532,6 +532,10 @@ public class CtrlDirectori {
         return docs;
     }
 
+    /**
+     * Funció per llistar els documents actius del programa
+     * @return retorna un vector amb tots els documents actius
+     */
     public ArrayList<String> llistarDocuments() {
         ArrayList<String> resultat = new ArrayList<>();
         if (directoriObert.getDocs().size() == 0) return null;
@@ -543,6 +547,10 @@ public class CtrlDirectori {
         return resultat;
     }
 
+    /**
+     * Funció obtenir la informació del document seleccionat
+     * @return retorna un vector l'identificador, l'autor, el títol i el contingut del document seleccionat
+     */
     public ArrayList<String>  toStringDocActiu() {
         ArrayList<String> resultat = new ArrayList<>();
         if (documentActiu != null) {

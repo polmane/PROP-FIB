@@ -351,17 +351,34 @@ public class CtrlDomini {
         return -10;
     }
 
+    /**
+     * Funció per llistar els documents actius del programa
+     * @return retorna un vector amb tots els documents actius
+     */
     public ArrayList<String> llistarDocuments() {
         return _ctrlDirectori.llistarDocuments();
     }
+
+    /**
+     * Funció per carregar les expressions actives en el directori
+     * @return retorna un vector amb totes les expressions actives
+     */
     public ArrayList<String> llistarExpressions() {
         return _ctrlExpressio.llistarExpressions();
     }
 
+    /**
+     * Funció obtenir la informació del document seleccionat
+     * @return retorna un vector l'identificador, l'autor, el títol i el contingut del document seleccionat
+     */
     public ArrayList<String> toStringDocActiu() {
         return _ctrlDirectori.toStringDocActiu();
     }
 
+    /**
+     * Funció per obtenir la informació de l'expressió seleccionada
+     * @return retorna un vector amb l'identificador i l'expressió seleccionada
+     */
     public ArrayList<String> toStringExpActiva() {
         return _ctrlExpressio.toStringExpActiva();
     }

@@ -149,6 +149,10 @@ public class CtrlExpressio {
         return (result != 0);
     }
 
+    /**
+     * Funció per carregar les expressions actives en el directori
+     * @return retorna un vector amb totes les expressions actives
+     */
     public ArrayList<String> llistarExpressions() {
         ArrayList<String> resultat = new ArrayList<>();
         if (expressions.size() == 0) return null;
@@ -159,6 +163,10 @@ public class CtrlExpressio {
         return resultat;
     }
 
+    /**
+     * Funció per obtenir la informació de l'expressió seleccionada
+     * @return retorna un vector amb l'identificador i l'expressió seleccionada
+     */
     public ArrayList<String>  toStringExpActiva() {
         ArrayList<String> resultat = new ArrayList<>();
         if (expressioSeleccionada != null) {

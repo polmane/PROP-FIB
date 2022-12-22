@@ -29,7 +29,7 @@ public class CtrlPersistencia {
     private final GestorExpressions _gExp;
 
     /**
-     * Constrctora del Controlador de Persistència
+     * Constructora del Controlador de Persistència
      */
     public CtrlPersistencia() {
         this._gBD = new GestorBD();
