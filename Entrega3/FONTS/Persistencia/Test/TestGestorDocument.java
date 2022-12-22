@@ -23,8 +23,8 @@ public class TestGestorDocument {
     /**
      * Adreces pels directoris on fer els tests
      */
-    private static final String PATH_OUT = System.getProperty("user.dir") + "/FONTS/Persistencia/Test/OutputFiles";
-    private static final String PATH_IN = System.getProperty("user.dir") + "/FONTS/Persistencia/Test/InputFiles";
+    private static final String PATH_OUT = System.getProperty("user.dir") + "/OutputFiles";
+    private static final String PATH_IN = System.getProperty("user.dir") + "/InputFiles";
 
     /**
      * Objecte de la prova: Test del mètode exportarDocument amb un document simple en format txt.
