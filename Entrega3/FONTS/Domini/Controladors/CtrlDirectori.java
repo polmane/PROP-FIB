@@ -67,7 +67,7 @@ public class CtrlDirectori {
     /**
      * Funció per settejar el document actiu
      * @param idDoc id del document que es vol definir com a actiu
-     * @return consultar els codis de return el el document word entregat
+     * @return consultar els codis de return en el document word entregat
      */
     public int seleccionarDocument(int idDoc) {
         if (directoriObert.getDocs().containsKey(idDoc)) {
@@ -187,28 +187,6 @@ public class CtrlDirectori {
     }
 
     /**
-     * Funció per recuperar l'estat de les variables del programa
-     * @param pesos variable pesos del directori
-     * @param documents hashmap on la key representa la id del document, com a valor té un pair de dos strings que fan referència a l'autor i el títol
-     * @param continguts hashmap on la key representa la id del document i el valor el contingut del document
-     */
-    public void carregarDocs(HashMap<Integer, HashMap<String,Double>> pesos,
-                             HashMap<Integer, Pair<String,String>> documents,
-                             HashMap<Integer, String> continguts) {
-        for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
-            if (documents.containsKey(i)) {
-                documentActiu = new Document(i, documents.get(i).first(), documents.get(i).second(), continguts.get(i));
-                directoriObert.getDocs().put(i, documentActiu);
-                documentActiu.setOcurrencies(obteContingut());
-                documentActiu.setTfMap(tf(documentActiu.getOcurrencies()));
-                afegeixParaulesAlDir();
-            }
-        }
-        directoriObert.setPesosDocs(pesos);
-        documentActiu = null;
-    }
-
-    /**
      * Funció per afegir els pesos en el sistema
      */
     private void afegeixPesos() {
@@ -304,6 +282,28 @@ public class CtrlDirectori {
             if (simbols.charAt(i) == c) return false;
         }
         return true;
+    }
+
+    /**
+     * Funció per recuperar l'estat de les variables del programa
+     * @param pesos variable pesos del directori
+     * @param documents hashmap on la key representa la id del document, com a valor té un pair de dos strings que fan referència a l'autor i el títol
+     * @param continguts hashmap on la key representa la id del document i el valor el contingut del document
+     */
+    public void carregarDocs(HashMap<Integer, HashMap<String,Double>> pesos,
+                             HashMap<Integer, Pair<String,String>> documents,
+                             HashMap<Integer, String> continguts) {
+        for (int i = 0; i < directoriObert.getIdNouDoc(); ++i) {
+            if (documents.containsKey(i)) {
+                documentActiu = new Document(i, documents.get(i).first(), documents.get(i).second(), continguts.get(i));
+                directoriObert.getDocs().put(i, documentActiu);
+                documentActiu.setOcurrencies(obteContingut());
+                documentActiu.setTfMap(tf(documentActiu.getOcurrencies()));
+                afegeixParaulesAlDir();
+            }
+        }
+        directoriObert.setPesosDocs(pesos);
+        documentActiu = null;
     }
 
     /**
@@ -451,7 +451,7 @@ public class CtrlDirectori {
      */
     public int eliminarDocument(int idDoc) {
         if (documentActiu == null) {
-            return 31;
+            return -31;
         }
         //Comprovem que idDoc sigui realment un identificador d'un document
         if (!directoriObert.getDocs().containsKey(idDoc)) {
@@ -512,8 +512,8 @@ public class CtrlDirectori {
     }
 
     /**
-     * Funció per llistar els títols del nostre sistema que començen per un autor determinat
-     * @param autor autor pel que buscar els titols
+     * Funció per llistar els títols del nostre sistema que comencen per un autor determinat
+     * @param autor autor pel qual buscar els titols
      * @param s mètode d'ordenació (enum SORTING)
      * @return retorna una llista de títols
      */
