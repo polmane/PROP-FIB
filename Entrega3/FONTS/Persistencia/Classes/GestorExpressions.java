@@ -50,10 +50,10 @@ public class GestorExpressions {
     public Boolean guardarExpressio (int idExp, String expressio) {
         File experssions = new File(BD_PATH);
         if (!experssions.exists()) {
-            experssions.mkdir();
+            if (!experssions.mkdir()) return false;
         }
         try {
-            FileWriter fw = new FileWriter(BD_PATH + "/" + String.valueOf(idExp) + ".txt");
+            FileWriter fw = new FileWriter(BD_PATH + "/" + idExp + ".txt");
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(idExp + "\n");
             bw.write(expressio);
@@ -71,7 +71,7 @@ public class GestorExpressions {
      * @return retorna true en cas de funcionament correcte, false en cas contrari
      */
     public Boolean eliminarExpressio (int idExp) {
-        File expressio = new File(BD_PATH + "/" + String.valueOf(idExp) + ".txt");
+        File expressio = new File(BD_PATH + "/" + idExp + ".txt");
         boolean b = expressio.delete();
         if (b) {
             File dirExp = new File(BD_PATH);
