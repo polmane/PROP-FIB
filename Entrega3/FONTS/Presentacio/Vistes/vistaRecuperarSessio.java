@@ -12,6 +12,7 @@ public class vistaRecuperarSessio extends JFrame {
     private JButton Crear;
     private JLabel text;
     private JPanel panel;
+    private JFrame frame = new JFrame("Frame");
 
     public vistaRecuperarSessio(CtrlPresentacio pCtrlPresentacio) {
         _ctrlPresentacio = pCtrlPresentacio;
@@ -29,13 +30,18 @@ public class vistaRecuperarSessio extends JFrame {
                 if (codi == -10) {
                     System.out.println("Carregant sessio");
                     _ctrlPresentacio.activarPagPrincipal();
+                    frame.dispose();
                     dispose();
                 }
                 else {
-                    //TODO: enviar missatge que el directori no s'ha pogut recuperar correctament o que no hi havia directori per recuperar
+                    VistaDialogo vistaDialogo = new VistaDialogo();
+                    String[] strBotones = {"Ok"};
+                    int isel = vistaDialogo.setDialogo(frame, "Error recuperar sessió", "No s'ha pogut recuperat cap sessió", strBotones, 0);
+                    System.out.println("Error recuperar sessió: " + isel + " " + strBotones[isel]);
                 }
             }
         });
+
         Crear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,10 +49,15 @@ public class vistaRecuperarSessio extends JFrame {
                 if (codi == -10) {
                     System.out.println("Creant nou directori");
                     _ctrlPresentacio.activarPagPrincipal();
+                    frame.dispose();
                     dispose();
                 }
                 else {
-                    //TODO: enviar un missatge perquè el directori no s'ha creat correctament
+                    VistaDialogo vistaDialogo = new VistaDialogo();
+                    String[] strBotones = {"Ok"};
+                    int isel = vistaDialogo.setDialogo(frame, "Error al crear el directori", "No s'ha pogut crear un directori", strBotones, 0);
+                    System.out.println("Error crear directori: " + isel + " " + strBotones[isel]);
+                    System.exit(-1);
                 }
             }
         });

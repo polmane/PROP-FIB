@@ -30,7 +30,6 @@ public class vistaPaginaPrincipal extends JFrame {
     private JTextField autor;
     private JTextField titol;
     private JComboBox format;
-
     private JFileChooser file_chooser;
 
     private JFrame frame = new JFrame("JFrame");
@@ -57,9 +56,12 @@ public class vistaPaginaPrincipal extends JFrame {
                 System.out.println("Tancant aplicacio, guardant estat");
 
                 int codi = _ctrlPresentacio.guardarEstat();
-                if (codi == -10){} //TODO: FUCIONA CORRECTAMENT
-                else {}//TODO:T'HA PETAT EL CODI CAMPIÓ
-
+                if (codi == -10) {
+                    System.out.println("Estat guardat amb exit");
+                }
+                else {
+                    System.out.println("Estat NO guardat correctament");
+                }
                 System.out.println("Aplicacio tancada");
                 frame.dispose();
                 dispose();
@@ -79,7 +81,6 @@ public class vistaPaginaPrincipal extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 _ctrlPresentacio.ObrirVistaSeleccionarDocument();
                 System.out.println("Obrint VistaSeleccionaDocument");
-
             }
         });
 
@@ -104,22 +105,27 @@ public class vistaPaginaPrincipal extends JFrame {
                 int id = RefreshDocumentSeleccionatPagPrin();
                 int codi = _ctrlPresentacio.eliminarDocument(id);
 
-                if (codi == 31) {
+                if (codi == -50) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Error a l'eliminar", "No has seleccionat cap document", strBotones, 1);
+                    int isel = vistaDialogo.setDialogo(frame, "Error a l'eliminar", "Error a l'eliminar de disc", strBotones, 0);
+                    System.out.println("Error eliminar disc: " + isel + " " + strBotones[isel]);
+                } else if (codi == -31) {
+                    VistaDialogo vistaDialogo = new VistaDialogo();
+                    String[] strBotones = {"Ok"};
+                    int isel = vistaDialogo.setDialogo(frame, "Error a l'eliminar", "No has seleccionat cap document", strBotones, 0);
                     System.out.println("Error eliminar seleccionat: " + isel + " " + strBotones[isel]);
 
-                } else if (codi == 20) {
+                } else if (codi == -20) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Error a l'eliminar", "Document no reconegut", strBotones, 1);
+                    int isel = vistaDialogo.setDialogo(frame, "Error a l'eliminar", "Identificador del document no reconegut", strBotones, 0);
                     System.out.println("Error eliminar doc no reconegut: " + isel + " " + strBotones[isel]);
 
-                } else if (codi == 11) {
+                } else if (codi > -1 || codi == -11 || codi == -10) {
                     VistaDialogo vistaDialogo = new VistaDialogo();
                     String[] strBotones = {"Ok"};
-                    int isel = vistaDialogo.setDialogo(frame, "Eliminar document", "Document eliminat", strBotones, 2);
+                    int isel = vistaDialogo.setDialogo(frame, "Eliminar document", "Document eliminat", strBotones, 1);
                     System.out.println("Error eliminar seleccionat: " + isel + " " + strBotones[isel]);
                 }
                 RefreshDocumentSeleccionatPagPrin();
@@ -151,6 +157,10 @@ public class vistaPaginaPrincipal extends JFrame {
                     }
                     else if (codi == -50) {
                         //TODO: Un dels documents proporcionats té un format que el sistema no suporta, tots els fitxers ubicats en paths anteriors al referit s'han afegit correctament dins el sistema
+                        VistaDialogo vistaDialogo = new VistaDialogo();
+                        String[] strBotones = {"Ok"};
+                        int isel = vistaDialogo.setDialogo(frame, "Error a l'eliminar", "No has seleccionat cap document", strBotones, 0);
+                        System.out.println("Error eliminar seleccionat: " + isel + " " + strBotones[isel]);
                     }
                     else {
                         //TODO: El document del path "i" ja existeix o és null, tots documents anteriors a i s'han afegit correctament

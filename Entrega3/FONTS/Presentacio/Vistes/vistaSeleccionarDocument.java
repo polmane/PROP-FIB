@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class vistaSeleccionarDocument extends JFrame {
     private CtrlPresentacio _ctrlPresentacio;
     private JPanel panel;
-    //private JComboBox Documents;
     private DefaultListModel<String> model = new DefaultListModel<>();
     private JList<String> Documents;
     private JButton Seleccionar;

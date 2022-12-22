@@ -1,14 +1,10 @@
 package Presentacio.Controladors;
 
-import java.util.*;
 import Domini.Classes.Pair;
-import Domini.Classes.Document;;
-import Domini.Controladors.CtrlDirectori;
 import Domini.Controladors.CtrlDomini;
-import Domini.Controladors.CtrlExpressio;
-import Persistencia.Controladors.CtrlPersistencia;
 import Presentacio.Vistes.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CtrlPresentacio {
@@ -45,7 +41,6 @@ public class CtrlPresentacio {
 
     public void activarPagPrincipal() {
         vPrincipal.activar();
-        //VistaPagPrincipal vPp = new VistaPagPrincipal();
     }
 
     public void activarGestioExpressio() {
