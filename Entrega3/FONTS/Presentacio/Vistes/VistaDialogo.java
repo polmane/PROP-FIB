@@ -2,8 +2,11 @@ package Presentacio.Vistes;
 
 import javax.swing.*;
 
-////////////////////////
-
+/**
+ * Representa una vista de dialeg modal
+ * @author pol.mane.roiger
+ * @author isaac.roma.granado
+ */
 public class VistaDialogo {
 
   public VistaDialogo() {
@@ -30,7 +33,6 @@ public class VistaDialogo {
     dialogOptionPane.pack();
     dialogOptionPane.setVisible(true);
 
-    // Captura la opcion elegida
     String vsel = (String) optionPane.getValue();
     int isel;
     for (isel = 0;
@@ -41,4 +43,3 @@ public class VistaDialogo {
 
 }
 
-////////////////////////

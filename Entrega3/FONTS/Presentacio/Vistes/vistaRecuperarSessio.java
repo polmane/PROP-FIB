@@ -28,12 +28,12 @@ public class vistaRecuperarSessio extends JFrame {
     private JButton Crear;
 
     /**
-     * Label per indicar que vol fer l'usuari
+     * Etiqueta per indicar que vol fer l'usuari
      */
     private JLabel text;
 
     /**
-     * Panel que conté tots els elements de la vista
+     * Panell que conté tots els elements de la vista
      */
     private JPanel panel;
 
@@ -71,8 +71,8 @@ public class vistaRecuperarSessio extends JFrame {
     }
 
     /**
-     * Funció que captura l'acció del botó crear
-     * @param event
+     * Funció que captura l'acció del botó Recuperar i crida a la funció carregarEstat del controlador de Presentació
+     * @param event acció que es captura al clicar el botó Recuperar
      */
     public void actionPerformed_buttonRecuperar(ActionEvent event){
         int codi = _ctrlPresentacio.carregarEstat();
@@ -90,6 +90,10 @@ public class vistaRecuperarSessio extends JFrame {
         }
     }
 
+    /**
+     * Funció que captura l'acció del botó Crear i crida a la funció crearDirectori del controlador de Presentació
+     * @param event acció que es captura al clicar el botó Crear
+     */
     public void actionPerformed_buttonCrear(ActionEvent event) {
         int codi = _ctrlPresentacio.crearDirectori(0);
         if (codi == -10) {
