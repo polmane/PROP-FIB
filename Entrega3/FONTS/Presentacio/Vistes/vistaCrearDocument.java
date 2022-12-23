@@ -111,15 +111,18 @@ public class vistaCrearDocument extends JFrame {
      */
     public void actionPerformed_buttonCrear(ActionEvent event) {
         int codi = _ctrlPresentacio.crearDocument(Autor.getText(), Titol.getText(), Contingut.getText());
-        if (codi == 30) {
-            VistaDialogo vistaDialogo = new VistaDialogo();
-            String[] strBotones = {"Ok"};
+
+        VistaDialogo vistaDialogo = new VistaDialogo();
+        String[] strBotones = {"Ok"};
+        if (codi == -50) {
+            int isel = vistaDialogo.setDialogo(frame, "Error crear expressio", "No s'ha pogut afegir el document a disc", strBotones, 0);
+            System.out.println("Error crear exp buida: " + isel + " " + strBotones[isel]);
+
+        } else if (codi == -30) {
             int isel = vistaDialogo.setDialogo(frame, "No s'ha afegit el document", "Titol o autor nuls", strBotones, 1);
             System.out.println("Error CrearDoc nuls: " + isel + " " + strBotones[isel]);
 
-        } else if (codi == 20) {
-            VistaDialogo vistaDialogo = new VistaDialogo();
-            String[] strBotones = {"Ok"};
+        } else if (codi == -20) {
             int isel = vistaDialogo.setDialogo(frame, "No s'ha afegit el document", "Ja existeix un document en el directori \n amb aquest títol i autor", strBotones, 1);
             System.out.println("Error Crear Doc ja existeix doc amb titol i autor: " + isel + " " + strBotones[isel]);
 

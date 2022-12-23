@@ -241,7 +241,7 @@ public class vistaGestioExpressio extends JFrame {
      */
     public void actionPerformed_buttonBuscar(ActionEvent event) {
         Resultat.setText("");
-
+        System.out.println("AQUI SI");
         if (Expressions.getSelectedItem() != null) {
             String info = String.valueOf(Expressions.getSelectedItem());
             int i = 0;
@@ -249,11 +249,20 @@ public class vistaGestioExpressio extends JFrame {
             int id = Integer.parseInt(info.substring(0, i));
 
             List<Pair<String, String>> res = _ctrlPresentacio.selectPerExpressio(id);
-            for (int j = 0; j < res.size(); ++j) {
-                Resultat.append("Autor: " + res.get(j).first());
-                Resultat.append(" | ");
-                Resultat.append("Titol: " + res.get(j).second());
-                Resultat.append("\n");
+            System.out.println(res);
+            if (res.size() != 0) {
+                for (int j = 0; j < res.size(); ++j) {
+                    Resultat.append("Autor: " + res.get(j).first());
+                    Resultat.append(" | ");
+                    Resultat.append("Titol: " + res.get(j).second());
+                    Resultat.append("\n");
+                }
+            }
+            else {
+                VistaDialogo vistaDialogo = new VistaDialogo();
+                String[] strBotones = {"Ok"};
+                int isel = vistaDialogo.setDialogo(frame, "Cerca booleana", "No s'ha trobat cap document que compleixi l'expressió", strBotones, 1);
+                System.out.println("cap doc compleix expressio: " + isel + " " + strBotones[isel]);
             }
         }
     }

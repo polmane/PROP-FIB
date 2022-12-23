@@ -48,7 +48,7 @@ public class vistaCrearExpressio extends JFrame {
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
-        setTitle("Crear un document");
+        setTitle("Crear una expressió");
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -84,26 +84,27 @@ public class vistaCrearExpressio extends JFrame {
      */
     public void actionPerformed_buttonCrear(ActionEvent event) {
         int codi = _ctrlPresentacio.afegirExpressio(Expressio.getText());
-        if (codi == 30) {
-            VistaDialogo vistaDialogo = new VistaDialogo();
-            String[] strBotones = {"Ok"};
-            int isel = vistaDialogo.setDialogo(frame, "Error crear expressio", "S'ha d'introduir un valor vàlid", strBotones, 0);
+
+        VistaDialogo vistaDialogo = new VistaDialogo();
+        String[] strBotones = {"Ok"};
+        if (codi == -50) {
+            int isel = vistaDialogo.setDialogo(frame, "Error crear expressio", "No s'ha pogut afegir l'expressió a disc", strBotones, 0);
             System.out.println("Error crear exp buida: " + isel + " " + strBotones[isel]);
         }
-        else if (codi == 20) {
-            VistaDialogo vistaDialogo = new VistaDialogo();
-            String[] strBotones = {"Ok"};
+        else if (codi == -30) {
+            int isel = vistaDialogo.setDialogo(frame, "Error crear expressio", "S'ha d'introduir un valor vàlid", strBotones, 0);
+            System.out.println("Error crear exp buida: " + isel + " " + strBotones[isel]);
+
+        }
+        else if (codi == -20) {
             int isel = vistaDialogo.setDialogo(frame, "Error crear expressio", "Ja existeix aquesta expressió", strBotones, 0);
             System.out.println("error ja existeix exp: " + isel + " " + strBotones[isel]);
         }
-        else {
-            VistaDialogo vistaDialogo = new VistaDialogo();
-            String[] strBotones = {"Ok"};
-            int isel = vistaDialogo.setDialogo(frame, "Alta expressio", "Expressió afegida correctament", strBotones, 1);
-            System.out.println("exp afegida: " + isel + " " + strBotones[isel]);
-            System.out.println(Expressio.getText());
+        else if (codi > -1) {
+            _ctrlPresentacio.activarGestioExpressio();
+            frame.dispose();
+            dispose();
         }
-        Expressio.setText("");
     }
 
     /**

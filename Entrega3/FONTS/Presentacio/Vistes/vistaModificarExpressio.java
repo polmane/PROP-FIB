@@ -67,7 +67,7 @@ public class vistaModificarExpressio extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                _ctrlPresentacio.activarPagPrincipal();
+                _ctrlPresentacio.activarGestioExpressio();
                 System.out.println("Tancant vistaModificarExpresio");
                 frame.dispose();
                 dispose();
@@ -112,7 +112,7 @@ public class vistaModificarExpressio extends JFrame {
             int isel = vistaDialogo.setDialogo(frame, "Modificar expressió", "S'ha d'introduir un valor vàlid com a expressió", strBotones, 0);
             System.out.println("Error expressió nula: " + isel + " " + strBotones[isel]);
 
-        } else if (codi == -10) {
+        } else if (codi > -1) {
             _ctrlPresentacio.activarGestioExpressio();
             frame.dispose();
             dispose();
