@@ -77,6 +77,10 @@ public class vistaGestioExpressio extends JFrame {
      */
     private JTextArea Resultat;
     /**
+     * Panell per fer "scroll" de Resultat
+     */
+    private JScrollPane scrollPane;
+    /**
      * Finestra que apareix quan hi ha un error
      */
     private JFrame frame = new JFrame("JFrame");

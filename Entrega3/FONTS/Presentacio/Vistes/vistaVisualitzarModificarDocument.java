@@ -165,19 +165,31 @@ public class vistaVisualitzarModificarDocument extends JFrame {
      * @param event acció que es captura al clicar el botó Enrere
      */
     public void actionPerformed_buttonEnrere(ActionEvent event) {
+        //Botó Enrere amb mutació a Cancel·lar
         if (Enrere.getText() == "Enrere") {
             _ctrlPresentacio.activarPagPrincipal();
             frame.dispose();
             dispose();
+
         } else {
+            ArrayList<String> document = _ctrlPresentacio.toStringDocActiu();
+            String s = document.get(0);
+            if (s != "-31") {
+                Autor.setText(document.get(1));
+                Titol.setText(document.get(2));
+                Contingut.setText(document.get(3));
+            }
             Autor.setEditable(false);
             Titol.setEditable(false);
             Contingut.setEditable(false);
+
             GuardarTitol.setVisible(false);
             GuardarAutor.setVisible(false);
             GuardarContingut.setVisible(false);
+
             Modificar.setEnabled(true);
             Enrere.setText("Enrere");
+            Modificar.setText("Modificar");
         }
     }
 

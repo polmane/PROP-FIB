@@ -58,6 +58,10 @@ public class vistaContingutDocument extends JFrame {
      * Panell que conté els botons Buscar i Enrere
      */
     private JPanel panelOpcions;
+    /**
+     * Panell "scroll" per al resultat
+     */
+    private JScrollPane scrollPane;
 
     /**
      * Creadora de la VistaContingutDocument
@@ -72,6 +76,9 @@ public class vistaContingutDocument extends JFrame {
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        Contingut.setLineWrap(true);
+        Contingut.setWrapStyleWord(true);
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -114,7 +121,7 @@ public class vistaContingutDocument extends JFrame {
     public void actionPerformed_buttonEnrere(ActionEvent event) {
         _ctrlPresentacio.activarPagPrincipal();
         //TODO
-        setVisible(false);
+        dispose();
     }
 
 }

@@ -78,6 +78,18 @@ public class vistaDocumentsRellevants extends JFrame {
      */
     private JScrollPane scrollPaneRes;
     /**
+     * Etiqueta per indicar el nombre de documents semblants que volem
+     */
+    private JLabel labelK;
+    /**
+     * Etiqueta per indicar el camp de Paraules (Query)
+     */
+    private JLabel labelQuery;
+    /**
+     * Etiqueta per indicar l'ordre, "Sorting"
+     */
+    private JLabel labelSorting;
+    /**
      * Finestra que apareix quan hi ha un error
      */
     private JFrame frame = new JFrame("JFrame");
@@ -161,7 +173,7 @@ public class vistaDocumentsRellevants extends JFrame {
         } catch (NumberFormatException excepcio) {
             VistaDialogo vistaDialogo = new VistaDialogo();
             String[] strBotones = {"Ok"};
-            int isel = vistaDialogo.setDialogo(frame, "No s'ha introduit un valor correcte de documents", "El nombre de documents a obtenir \n ha de ser un nombre natural major que 0", strBotones, 1);
+            int isel = vistaDialogo.setDialogo(frame, "No s'ha introduit un valor correcte de documents", "El nombre de documents a obtenir \n ha de ser un nombre natural major que 0", strBotones, 0);
             System.out.println("Error valor de k: " + isel + " " + strBotones[isel]);
         }
 
@@ -179,13 +191,13 @@ public class vistaDocumentsRellevants extends JFrame {
         if (res == null) {
             VistaDialogo vistaDialogo = new VistaDialogo();
             String[] strBotones = {"Ok"};
-            int isel = vistaDialogo.setDialogo(frame, "Cerca semblants ", "No hi ha resultats per aquests paràmetres", strBotones, 2);
+            int isel = vistaDialogo.setDialogo(frame, "Cerca documents rellevants ", "No hi ha resultats per aquests paràmetres \n (Recorda que el numero de documents a obtenir \n ha de ser un nombre major que 0)", strBotones, 1);
             System.out.println("Resultat null de documents semblants: " + isel + " " + strBotones[isel]);
         } else {
             for (int i = 0; i < res.size(); ++i) {
-                Resultat.append(res.get(i).first());
-                Resultat.append(" ");
-                Resultat.append(res.get(i).second());
+                Resultat.append("Autor: " + res.get(i).first());
+                Resultat.append(" | ");
+                Resultat.append("Títol: " + res.get(i).second());
                 Resultat.append("\n");
             }
         }

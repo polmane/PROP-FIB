@@ -11,6 +11,8 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Character.isWhitespace;
+
 /**
  * Representa la vista de la pàgina on es fa la cerca dels documents semblants
  * @author isaac.roma.granado
@@ -91,6 +93,10 @@ public class vistaDocumentsSemblants extends JFrame {
      */
     private JScrollPane scrollPaneDocs;
     /**
+     * Etiqueta per fer la pregunta sobre el camp Sorting
+     */
+    private JLabel labelSorting;
+    /**
      * Finestra que apareix quan hi ha un error
      */
     private JFrame frame = new JFrame("JFrame");
@@ -105,7 +111,7 @@ public class vistaDocumentsSemblants extends JFrame {
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
-        setTitle("Buscar els documents semblants");
+        setTitle("Buscar documents semblants");
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -118,11 +124,11 @@ public class vistaDocumentsSemblants extends JFrame {
         } else if (resultat.size() == 1) {
             Buscar.setEnabled(false);
             k.setEnabled(false);
-            Documents.addItem(resultat.get(0) + " | " + resultat.get(1) + " | " + resultat.get(2));
+            Documents.addItem(resultat.get(0) + " | Autor: " + resultat.get(1) + " | Titol: " + resultat.get(2));
 
         } else {
             for (int i = 0; i < resultat.size(); i += 3) {
-                Documents.addItem(resultat.get(i) + " | " + resultat.get(i + 1) + " | " + resultat.get(i + 2));
+                Documents.addItem(resultat.get(i) + " | Autor: " + resultat.get(i + 1) + " | Titol: " + resultat.get(i + 2));
             }
             k.setEnabled(true);
             valors_k = new SpinnerNumberModel(0, 0, (resultat.size() / 3) - 1, 1);
@@ -183,19 +189,23 @@ public class vistaDocumentsSemblants extends JFrame {
     public void actionPerformed_buttonBuscar(ActionEvent event) {
         Resultat.setText("");
         int numdocs = 0;
+
         try {
             numdocs = Integer.parseInt(String.valueOf(k.getValue()));
         } catch (NumberFormatException excepcio) {
             VistaDialogo vistaDialogo = new VistaDialogo();
             String[] strBotones = {"Ok"};
-            int isel = vistaDialogo.setDialogo(frame, "No s'ha introduit un valor correcte de documents", "El nombre de documents a obtenir \n ha de ser un nombre natural major que 0", strBotones, 1);
+            int isel = vistaDialogo.setDialogo(frame, "No s'ha introduit un valor correcte de documents", "El nombre de documents a obtenir \n ha de ser un nombre natural major que 0", strBotones, 0);
             System.out.println("Error valor de k: " + isel + " " + strBotones[isel]);
         }
 
         List<Pair<String, String>> res;
         String sort = String.valueOf(Sorting.getSelectedItem());
         String infoDoc = (String.valueOf(Documents.getSelectedItem()));
-        int idDoc = Integer.parseInt(infoDoc.substring(0, 1));
+
+        int j = 0;
+        while (!isWhitespace(infoDoc.charAt(j))) ++j;
+        int idDoc = Integer.parseInt(infoDoc.substring(0, j));
 
         if (BOOLRadioButton.isSelected()) {
             res = _ctrlPresentacio.compararDocuments("BOOL", sort, numdocs, idDoc);
@@ -206,13 +216,13 @@ public class vistaDocumentsSemblants extends JFrame {
         if (res == null) {
             VistaDialogo vistaDialogo = new VistaDialogo();
             String[] strBotones = {"Ok"};
-            int isel = vistaDialogo.setDialogo(frame, "Cerca semblants ", "No hi ha resultats per aquests paràmetres", strBotones, 2);
+            int isel = vistaDialogo.setDialogo(frame, "Cerca semblants ", "No hi ha resultats per aquests paràmetres", strBotones, 1);
             System.out.println("Resultat null de documents semblants: " + isel + " " + strBotones[isel]);
         } else {
             for (int i = 0; i < res.size(); ++i) {
-                Resultat.append(res.get(i).first());
-                Resultat.append(" ");
-                Resultat.append(res.get(i).second());
+                Resultat.append("Autor: " + res.get(i).first());
+                Resultat.append(" | ");
+                Resultat.append("Títol: " + res.get(i).second());
                 Resultat.append("\n");
             }
         }

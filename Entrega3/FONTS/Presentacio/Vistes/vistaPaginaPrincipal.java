@@ -296,7 +296,7 @@ public class vistaPaginaPrincipal extends JFrame {
                 System.out.println("Error importar, llegir fitxer: " + isel + " " + strBotones[isel]);
 
             } else {
-                int isel = vistaDialogo.setDialogo(frame, "Error a l'importar", "El fitxer amb path \n"+ paths.get(codi)+"\n ja existeix.\n Compte! Els fitxers anteriors a aquest s'han carregat correctament", strBotones, 0);
+                int isel = vistaDialogo.setDialogo(frame, "Error a l'importar", "El fitxer amb path \n"+ paths.get(codi)+"\n ja existeix.\n Compte! Si era una importació múltiple, els\n fitxers anteriors a aquest s'han carregat correctament", strBotones, 0);
                 System.out.println("Error importar ja existeix algun document: " + isel + " " + strBotones[isel]);
             }
 

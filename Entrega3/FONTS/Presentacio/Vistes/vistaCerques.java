@@ -63,6 +63,10 @@ public class vistaCerques extends JFrame {
      */
     private JTextArea Resultat;
     /**
+     * Panell "scroll" per al resultat
+     */
+    private JScrollPane scrollPane;
+    /**
      * Finestra que apareix quan hi ha un error
      */
     private JFrame frame = new JFrame("JFrame");
@@ -76,7 +80,7 @@ public class vistaCerques extends JFrame {
         setContentPane(panel);
         setBounds(450, 200, 700, 400);
         setResizable(true);
-        setTitle("Cerca d'els titols d'un autor o dels autos que comencen per un prefix");
+        setTitle("Cerca dels titols d'un autor o dels autors que comencen per un prefix");
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
