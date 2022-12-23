@@ -4,7 +4,6 @@ import Domini.Classes.Pair;
 import Domini.Controladors.CtrlDomini;
 import Presentacio.Vistes.*;
 
-import javax.sound.midi.Soundbank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -319,7 +318,7 @@ public class CtrlPresentacio {
      * @param expressio expressió que volem guardar
      * @return retorna la funció de Domini per afegir una expressió
      */
-    public int afegirExp(String expressio)  { return _ctrlDomini.afegirExpressio(expressio); }
+    public int afegirExpressio(String expressio)  { return _ctrlDomini.afegirExpressio(expressio); }
 
     /**
      * Funció per seleccionar l'expressió seleccionada

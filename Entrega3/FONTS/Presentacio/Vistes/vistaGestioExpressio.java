@@ -172,31 +172,32 @@ public class vistaGestioExpressio extends JFrame {
      */
     public void actionPerformed_buttonEliminar(ActionEvent event) {
         Resultat.setText("");
-        //TODO
-        //if (Expres)
-        String info = String.valueOf(Expressions.getSelectedItem());
-        int i = 0;
-        while(!isWhitespace(info.charAt(i))) ++i;
-        int id = Integer.parseInt(info.substring(0, i));
-        System.out.println(id);
 
-        int codi = _ctrlPresentacio.eliminarExpressio(id);
-        System.out.println(codi);
+        if (Expressions.getSelectedItem() != null) {
+            String info = String.valueOf(Expressions.getSelectedItem());
+            int i = 0;
+            while (!isWhitespace(info.charAt(i))) ++i;
+            int id = Integer.parseInt(info.substring(0, i));
+            System.out.println(id);
 
-        VistaDialogo vistaDialogo = new VistaDialogo();
-        String[] strBotones = {"Ok"};
-        if (codi == -11 ||codi == -10) {
-            int isel = vistaDialogo.setDialogo(frame, "Eliminar expressió", "Expressió eliminada", strBotones, 1);
-            System.out.println("Error eliminar seleccionat: " + isel + " " + strBotones[isel]);
-            Expressions.removeItem(Expressions.getSelectedItem());
+            int codi = _ctrlPresentacio.eliminarExpressio(id);
+            System.out.println(codi);
 
-        } else if (codi == -20) {
-            int isel = vistaDialogo.setDialogo(frame, "Error a l'eliminar expressió", "Expressió no reconeguda", strBotones, 0);
-            System.out.println("Error eliminar exp no reconegut: " + isel + " " + strBotones[isel]);
+            VistaDialogo vistaDialogo = new VistaDialogo();
+            String[] strBotones = {"Ok"};
+            if (codi == -11 || codi == -10) {
+                int isel = vistaDialogo.setDialogo(frame, "Eliminar expressió", "Expressió eliminada", strBotones, 1);
+                System.out.println("Error eliminar seleccionat: " + isel + " " + strBotones[isel]);
+                Expressions.removeItem(Expressions.getSelectedItem());
 
-        } else {
-            int isel = vistaDialogo.setDialogo(frame, "Error a l'eliminar expressió", "Expressió no s'ha pogut eliminar de disc", strBotones, 0);
-            System.out.println("Error eliminar exp no reconegut: " + isel + " " + strBotones[isel]);
+            } else if (codi == -20) {
+                int isel = vistaDialogo.setDialogo(frame, "Error a l'eliminar expressió", "Expressió no reconeguda", strBotones, 0);
+                System.out.println("Error eliminar exp no reconegut: " + isel + " " + strBotones[isel]);
+
+            } else {
+                int isel = vistaDialogo.setDialogo(frame, "Error a l'eliminar expressió", "Expressió no s'ha pogut eliminar de disc", strBotones, 0);
+                System.out.println("Error eliminar exp no reconegut: " + isel + " " + strBotones[isel]);
+            }
         }
     }
 
@@ -237,17 +238,19 @@ public class vistaGestioExpressio extends JFrame {
     public void actionPerformed_buttonBuscar(ActionEvent event) {
         Resultat.setText("");
 
-        String info = String.valueOf(Expressions.getSelectedItem());
-        int i = 0;
-        while(!isWhitespace(info.charAt(i))) ++i;
-        int id = Integer.parseInt(info.substring(0, i));
+        if (Expressions.getSelectedItem() != null) {
+            String info = String.valueOf(Expressions.getSelectedItem());
+            int i = 0;
+            while (!isWhitespace(info.charAt(i))) ++i;
+            int id = Integer.parseInt(info.substring(0, i));
 
-        List<Pair<String, String>> res = _ctrlPresentacio.selectPerExpressio(id);
-        for (int j = 0; j < res.size(); ++j) {
-            Resultat.append(res.get(j).first());
-            Resultat.append(" | ");
-            Resultat.append(res.get(j).second());
-            Resultat.append("\n");
+            List<Pair<String, String>> res = _ctrlPresentacio.selectPerExpressio(id);
+            for (int j = 0; j < res.size(); ++j) {
+                Resultat.append("Autor: " + res.get(j).first());
+                Resultat.append(" | ");
+                Resultat.append("Titol: " + res.get(j).second());
+                Resultat.append("\n");
+            }
         }
     }
 
@@ -264,12 +267,14 @@ public class vistaGestioExpressio extends JFrame {
      */
     public void RefreshExpressionsGestio() {
         Expressions.removeAllItems();
+
         ArrayList<String> resultat = _ctrlPresentacio.llistarExpressions();
         if (resultat == null) {
             Buscar.setEnabled(false);
             Modificar.setEnabled(false);
         }
         else {
+            _ctrlPresentacio.seleccionarExpressio(Integer.parseInt(resultat.get(0)));
             for (int i = 0; i < resultat.size(); i += 2) {
                 Expressions.addItem(resultat.get(i) + " : " + resultat.get(i+1));
             }
