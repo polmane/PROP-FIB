@@ -50,71 +50,106 @@ public class GestorDocument {
      * @return retorna true en cas de funcionament correcte, false en cas contrari
      */
     public Boolean exportarDocument(String autor, String titol, String contingut, FILETYPE format, String path) {
-        String nom = autor + '_' + titol;
         switch (format) {
             case TXT:
-                nom += ".txt";
-                try {
-                    FileWriter fw = new FileWriter(new File(new File(path), nom));
-                    Writer output = new BufferedWriter(fw);
-                    output.write(autor + "\n");
-                    output.write(titol + "\n");
-                    output.write(contingut);
-                    output.close();
-                    fw.close();
-                    return true;
-                } catch (Exception e) {
-                    return false;
-                }
+                return exportarTXT(autor, titol, contingut, path);
             case XML:
-                nom += ".xml";
-                try {
-                    FileOutputStream docExp = new FileOutputStream(path + "/" + nom);
-                    DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-                    DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-
-                    org.w3c.dom.Document document = docBuilder.newDocument();
-                    Element rootElement = document.createElement(XML_TAG_DOCUMENT);
-                    document.appendChild(rootElement);
-
-                    Element elementAutor = document.createElement(XML_TAG_AUTOR);
-                    elementAutor.appendChild(document.createTextNode(autor));
-                    rootElement.appendChild(elementAutor);
-
-                    Element elementTitol = document.createElement(XML_TAG_TITOL);
-                    elementTitol.appendChild(document.createTextNode(titol));
-                    rootElement.appendChild(elementTitol);
-
-                    Element elementContingut = document.createElement(XML_TAG_CONTINGUT);
-                    elementContingut.appendChild(document.createTextNode(contingut));
-                    rootElement.appendChild(elementContingut);
-
-                    DOMSource source = new DOMSource(document);
-                    StreamResult result = new StreamResult(docExp);
-                    Transformer transformer = TransformerFactory.newInstance().newTransformer();
-                    transformer.transform(source, result);
-
-                    docExp.close();
-                    return true;
-                } catch (Exception e) {
-                    return false;
-                }
+                return exportarXML(autor, titol, contingut, path);
             case PROP:
-                nom += ".prop";
-                try {
-                    FileWriter fw = new FileWriter(new File(new File(path), nom));
-                    Writer output = new BufferedWriter(fw);
-                    output.write(PROP_TAG_AUTOR + "->" + autor + "<-");
-                    output.write(PROP_TAG_TITOL + "->" + titol + "<-");
-                    output.write(PROP_TAG_CONTINGUT + "->" + contingut + "<-");
-                    output.close();
-                    fw.close();
-                    return true;
-                } catch (Exception e) {
-                    return false;
-                }
+                return exportarPROP(autor, titol, contingut, path);
             default:
                 return false;
+        }
+    }
+
+    /**
+     * Funció per exportar un document determinat en format .txt
+     * @param autor autor del document a exportar
+     * @param titol titol del document a exportar
+     * @param contingut contingut del document a exportar
+     * @param path path on situar el document a exportar
+     * @return retorna true en cas de funcionament correcte, false en cas contrari
+     */
+    private Boolean exportarTXT(String autor, String titol, String contingut, String path) {
+        String nom = autor + '_' + titol + ".txt";
+        try {
+            FileWriter fw = new FileWriter(new File(new File(path), nom));
+            Writer output = new BufferedWriter(fw);
+            output.write(autor + "\n");
+            output.write(titol + "\n");
+            output.write(contingut);
+            output.close();
+            fw.close();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Funció per exportar un document determinat en format .xml
+     * @param autor autor del document a exportar
+     * @param titol titol del document a exportar
+     * @param contingut contingut del document a exportar
+     * @param path path on situar el document a exportar
+     * @return retorna true en cas de funcionament correcte, false en cas contrari
+     */
+    private Boolean exportarXML(String autor, String titol, String contingut, String path) {
+        String nom = autor + '_' + titol + ".xml";
+        try {
+            FileOutputStream docExp = new FileOutputStream(path + "/" + nom);
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+            org.w3c.dom.Document document = docBuilder.newDocument();
+            Element rootElement = document.createElement(XML_TAG_DOCUMENT);
+            document.appendChild(rootElement);
+
+            Element elementAutor = document.createElement(XML_TAG_AUTOR);
+            elementAutor.appendChild(document.createTextNode(autor));
+            rootElement.appendChild(elementAutor);
+
+            Element elementTitol = document.createElement(XML_TAG_TITOL);
+            elementTitol.appendChild(document.createTextNode(titol));
+            rootElement.appendChild(elementTitol);
+
+            Element elementContingut = document.createElement(XML_TAG_CONTINGUT);
+            elementContingut.appendChild(document.createTextNode(contingut));
+            rootElement.appendChild(elementContingut);
+
+            DOMSource source = new DOMSource(document);
+            StreamResult result = new StreamResult(docExp);
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.transform(source, result);
+
+            docExp.close();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Funció per exportar un document determinat en format .prop
+     * @param autor autor del document a exportar
+     * @param titol titol del document a exportar
+     * @param contingut contingut del document a exportar
+     * @param path path on situar el document a exportar
+     * @return retorna true en cas de funcionament correcte, false en cas contrari
+     */
+    private Boolean exportarPROP(String autor, String titol, String contingut, String path) {
+        String nom = autor + '_' + titol + ".prop";
+        try {
+            FileWriter fw = new FileWriter(new File(new File(path), nom));
+            Writer output = new BufferedWriter(fw);
+            output.write(PROP_TAG_AUTOR + "->" + autor + "<-");
+            output.write(PROP_TAG_TITOL + "->" + titol + "<-");
+            output.write(PROP_TAG_CONTINGUT + "->" + contingut + "<-");
+            output.close();
+            fw.close();
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 
