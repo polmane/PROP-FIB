@@ -88,8 +88,8 @@ public class vistaCrearExpressio extends JFrame {
         VistaDialogo vistaDialogo = new VistaDialogo();
         String[] strBotones = {"Ok"};
         if (codi == -50) {
-            int isel = vistaDialogo.setDialogo(frame, "Error crear expressio", "No s'ha pogut afegir l'expressió a disc", strBotones, 0);
-            System.out.println("Error crear exp buida: " + isel + " " + strBotones[isel]);
+            int isel = vistaDialogo.setDialogo(frame, "Error crear expressio", "No s'ha pogut guardar l'expressió a disc", strBotones, 0);
+            System.out.println("Error crear exp disc: " + isel + " " + strBotones[isel]);
         }
         else if (codi == -30) {
             int isel = vistaDialogo.setDialogo(frame, "Error crear expressio", "S'ha d'introduir un valor vàlid", strBotones, 0);

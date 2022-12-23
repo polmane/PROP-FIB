@@ -205,7 +205,7 @@ public class vistaVisualitzarModificarDocument extends JFrame {
             GuardarTitol.setVisible(true);
             GuardarAutor.setVisible(true);
             GuardarContingut.setVisible(true);
-            Modificar.setText("Confirmar");
+            Modificar.setText("Pàgina principal");
             Enrere.setText("Cancel·lar");
         } else {
             _ctrlPresentacio.activarPagPrincipal();

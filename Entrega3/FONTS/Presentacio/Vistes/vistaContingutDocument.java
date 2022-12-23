@@ -62,6 +62,10 @@ public class vistaContingutDocument extends JFrame {
      * Panell "scroll" per al resultat
      */
     private JScrollPane scrollPane;
+    /**
+     * Finestra que apareix quan hi ha un error
+     */
+    private JFrame frame = new JFrame("JFrame");
 
     /**
      * Creadora de la VistaContingutDocument
@@ -86,6 +90,7 @@ public class vistaContingutDocument extends JFrame {
                 super.windowClosing(e);
                 _ctrlPresentacio.activarPagPrincipal();
                 System.out.println("Tancant vistaCrearDocument");
+                frame.dispose();
                 dispose();
             }
         });
@@ -108,10 +113,18 @@ public class vistaContingutDocument extends JFrame {
      * @param event acció que es captura al clicar el botó Buscar
      */
     public void actionPerformed_buttonBuscar(ActionEvent event) {
-        //TODO si modifiques el document no detecta el contingut
-        String docs = _ctrlPresentacio.cercaPerAutoriTitol(Autor.getText(), Titol.getText());
-        System.out.println(docs);
-        Contingut.setText(docs);
+        String contingut = _ctrlPresentacio.cercaPerAutoriTitol(Autor.getText(), Titol.getText());
+        System.out.println(contingut);
+
+        if (contingut != null) {
+            Contingut.setText(contingut);
+        }
+        else {
+            VistaDialogo vistaDialogo = new VistaDialogo();
+            String[] strBotones = {"Ok"};
+            int isel = vistaDialogo.setDialogo(frame, "Error cerca contingut", "No s'ha trobat cap document amb aquest tiítol i autor \n Vés amb compte amb els espai en blanc", strBotones, 0);
+            System.out.println("Error crear exp buida: " + isel + " " + strBotones[isel]);
+        }
     }
 
     /**
@@ -120,7 +133,7 @@ public class vistaContingutDocument extends JFrame {
      */
     public void actionPerformed_buttonEnrere(ActionEvent event) {
         _ctrlPresentacio.activarPagPrincipal();
-        //TODO
+        frame.dispose();
         dispose();
     }
 

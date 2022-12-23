@@ -67,6 +67,10 @@ public class vistaCerques extends JFrame {
      */
     private JScrollPane scrollPane;
     /**
+     * Etiqueta per indicar el tipus de cerca a realitzar (ComboBox Cerques
+     */
+    private JLabel labelCerques;
+    /**
      * Finestra que apareix quan hi ha un error
      */
     private JFrame frame = new JFrame("JFrame");
@@ -133,13 +137,13 @@ public class vistaCerques extends JFrame {
     public void actionPerformed_buttonBuscar(ActionEvent event) {
         Resultat.setText("");
         List<String> res = new ArrayList<String>();
-        //DefaultListModel model = (DefaultListModel) Resultat.getModel();
+
         if (Cerques.getSelectedItem() == "Llista de titols d'un autor") {
             res = _ctrlPresentacio.llistaTitolsPerAutor(Info.getText(), String.valueOf(Sorting.getSelectedItem()));
             if (res == null) {
                 VistaDialogo vistaDialogo = new VistaDialogo();
                 String[] strBotones = {"Ok"};
-                int isel = vistaDialogo.setDialogo(frame, "Titols per autor", "No hem trobat titols amb aquest autor", strBotones, 1);
+                int isel = vistaDialogo.setDialogo(frame, "Titols per autor", "No hem trobat titols amb aquest autor \n Vés amb compte amb els espai en blanc", strBotones, 1);
                 System.out.println("Titols autor, null: " + isel + " " + strBotones[isel]);
             }
             else {
@@ -153,8 +157,8 @@ public class vistaCerques extends JFrame {
             if (res == null) {
                 VistaDialogo vistaDialogo = new VistaDialogo();
                 String[] strBotones = {"Ok"};
-                int isel = vistaDialogo.setDialogo(frame, "Autors donat un prefix", "No hi ha autors amb aquest prefix", strBotones, 1);
-                System.out.println("Error valor de k: " + isel + " " + strBotones[isel]);
+                int isel = vistaDialogo.setDialogo(frame, "Autors donat un prefix", "No hi ha autors amb aquest prefix \n Vés amb compte amb els espai en blanc", strBotones, 1);
+                System.out.println("Prefix sense resultat: " + isel + " " + strBotones[isel]);
             } else {
                 for (int i = 0; i < res.size(); ++i) {
                     Resultat.append(res.get(i));

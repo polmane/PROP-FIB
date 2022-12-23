@@ -115,8 +115,8 @@ public class vistaCrearDocument extends JFrame {
         VistaDialogo vistaDialogo = new VistaDialogo();
         String[] strBotones = {"Ok"};
         if (codi == -50) {
-            int isel = vistaDialogo.setDialogo(frame, "Error crear expressio", "No s'ha pogut afegir el document a disc", strBotones, 0);
-            System.out.println("Error crear exp buida: " + isel + " " + strBotones[isel]);
+            int isel = vistaDialogo.setDialogo(frame, "Error crear document", "No s'ha pogut afegir el document a disc", strBotones, 0);
+            System.out.println("Error crear doc disc: " + isel + " " + strBotones[isel]);
 
         } else if (codi == -30) {
             int isel = vistaDialogo.setDialogo(frame, "No s'ha afegit el document", "Titol o autor nuls", strBotones, 1);
