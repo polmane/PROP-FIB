@@ -40,6 +40,7 @@ public class CtrlExpressio {
 
     /**
      * Setter d'identificador per a una nova expressio
+     * @param id valor de la nova IdNovaExp
      */
     public void setIdNovaExp(Integer id) {IdNovaExp = id;}
 

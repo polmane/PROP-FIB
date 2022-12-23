@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"Domini.Classes"},{"l":"Domini.Controladors"},{"l":"Persistencia.Classes"},{"l":"Persistencia.Controladors"},{"l":"Persistencia.Test"},{"l":"Presentacio.Controladors"},{"l":"Presentacio.Vistes"}]

@@ -55,6 +55,7 @@ public class CtrlDirectori {
     /**
      * Funció que crea un nou directori en el sistema
      * @param idDir id del directori
+     * @return retorna true en cas de funcionar correctament, false en cas contrari
      */
     public Boolean crearDirectori(int idDir) {
         if (directoriObert == null) {
