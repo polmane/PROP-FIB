@@ -1,9 +1,13 @@
 package Presentacio.Vistes;
 
 import Presentacio.Controladors.CtrlPresentacio;
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +15,7 @@ import java.util.ArrayList;
 
 /**
  * Representa la vista de la pàgina principal
+ *
  * @author isaac.roma.granado
  * @author pol.mane.roiger
  */
@@ -108,6 +113,7 @@ public class vistaPaginaPrincipal extends JFrame {
 
     /**
      * Creadora de la vistaPaginaPrincipal
+     *
      * @param pCtrlPresentacio Controlador de Presentció
      */
     public vistaPaginaPrincipal(CtrlPresentacio pCtrlPresentacio) {
@@ -134,8 +140,7 @@ public class vistaPaginaPrincipal extends JFrame {
                 int codi = _ctrlPresentacio.guardarEstat();
                 if (codi == -10) {
                     System.out.println("Estat guardat amb exit");
-                }
-                else {
+                } else {
                     System.out.println("Estat NO guardat correctament");
                 }
                 System.out.println("Aplicacio tancada");
@@ -200,6 +205,7 @@ public class vistaPaginaPrincipal extends JFrame {
 
     /**
      * Funció que captura l'acció del botó crearDocumentButton i crida a la funció ObrirVistaCrearDocument del controlador de Presentació
+     *
      * @param event acció que es captura al clicar el botó crearDocumentButton
      */
     public void actionPerformed_buttonCrear(ActionEvent event) {
@@ -209,6 +215,7 @@ public class vistaPaginaPrincipal extends JFrame {
 
     /**
      * Funció que captura l'acció del botó seleccionarDocumentButton i crida a la funció ObrirVistaSeleccionarDocument del controlador de Presentació
+     *
      * @param event acció que es captura al clicar el botó seleccionarDocumentButton
      */
     public void actionPerformed_buttonSelecionar(ActionEvent event) {
@@ -218,6 +225,7 @@ public class vistaPaginaPrincipal extends JFrame {
 
     /**
      * Funció que captura l'acció del botó gestionarExpressionsButton i crida a la funció ObrirVistaGestioExpressio del controlador de Presentació
+     *
      * @param event acció que es captura al clicar el botó gestionarExpressionsButton
      */
     public void actionPerformed_buttonGestionarExpressions(ActionEvent event) {
@@ -227,6 +235,7 @@ public class vistaPaginaPrincipal extends JFrame {
 
     /**
      * Funció que captura l'acció del botó visualitzarModificarButton i crida a la funció ObrirVistaVisualitzarModificar del controlador de Presentació
+     *
      * @param event acció que es captura al clicar el botó visualitzarModificarButton
      */
     public void actionPerformed_buttonVisualitzarModificar(ActionEvent event) {
@@ -236,6 +245,7 @@ public class vistaPaginaPrincipal extends JFrame {
 
     /**
      * Funció que captura l'acció del botó eliminarDocummentSeleccionatButton i crida a la funció eliminarDocument del controlador de Presentació
+     *
      * @param event acció que es captura al clicar el botó eliminarDocumentSeleccionatButton
      */
     public void actionPerformed_buttonEliminarDocument(ActionEvent event) {
@@ -262,8 +272,10 @@ public class vistaPaginaPrincipal extends JFrame {
         }
         RefreshDocumentSeleccionatPagPrin();
     }
+
     /**
      * Funció que captura l'acció del botó importarButton i obra un explorador d'arxius per seleccionar un o varis documents
+     *
      * @param event acció que es captura al clicar el botó importarButton
      */
     public void actionPerformed_buttonImportar(ActionEvent event) {
@@ -296,7 +308,7 @@ public class vistaPaginaPrincipal extends JFrame {
                 System.out.println("Error importar, llegir fitxer: " + isel + " " + strBotones[isel]);
 
             } else {
-                int isel = vistaDialogo.setDialogo(frame, "Error a l'importar", "El fitxer amb path \n"+ paths.get(codi)+"\n ja existeix.\n Compte! Si era una importació múltiple, els\n fitxers anteriors a aquest s'han carregat correctament", strBotones, 0);
+                int isel = vistaDialogo.setDialogo(frame, "Error a l'importar", "El fitxer amb path \n" + paths.get(codi) + "\n ja existeix.\n Compte! Si era una importació múltiple, els\n fitxers anteriors a aquest s'han carregat correctament", strBotones, 0);
                 System.out.println("Error importar ja existeix algun document: " + isel + " " + strBotones[isel]);
             }
 
@@ -306,8 +318,10 @@ public class vistaPaginaPrincipal extends JFrame {
         }
         parentFrame.dispose();
     }
+
     /**
      * Funció que captura l'acció del botó exportarButton i obra un explorador d'arxius per exportar un document
+     *
      * @param event acció que es captura al clicar el botó exportarButton
      */
     public void actionPerformed_buttonExportar(ActionEvent event) {
@@ -326,7 +340,7 @@ public class vistaPaginaPrincipal extends JFrame {
 
             String f = String.valueOf(format.getSelectedItem());
 
-            int codi = _ctrlPresentacio.exportarDocument(f,path);
+            int codi = _ctrlPresentacio.exportarDocument(f, path);
 
             VistaDialogo vistaDialogo = new VistaDialogo();
             String[] strBotones = {"Ok"};
@@ -349,6 +363,7 @@ public class vistaPaginaPrincipal extends JFrame {
 
     /**
      * Funció que captura l'acció del desplegable cerquesBox i obra la vista adient a cada opció del desplegable
+     *
      * @param event acció que es captura al seleccionar una opció del desplegable cerquesBox
      */
     public void actionPerformed_ComboBoxCerques(ActionEvent event) {
@@ -370,6 +385,7 @@ public class vistaPaginaPrincipal extends JFrame {
 
     /**
      * Funció que refresca la pàgina principal per fer visible l'autor i el títol del document seleccionat
+     *
      * @return retorna -31 si no hi ha cap document seleccionat, i l'identificaor del document seleccionat si no hi ha error
      */
     public int RefreshDocumentSeleccionatPagPrin() {
@@ -385,7 +401,7 @@ public class vistaPaginaPrincipal extends JFrame {
         } else {
             autor.setText(document.get(1));
             titol.setText(document.get(2));
-            System.out.println("[PagPrin]DocActiu: "+ s + " | " + document.get(1) + " | " + document.get(2));
+            System.out.println("[PagPrin]DocActiu: " + s + " | " + document.get(1) + " | " + document.get(2));
             visualitzarModificarButton.setEnabled(true);
             eliminarDocumentSeleccionatButton.setEnabled(true);
             exportarButton.setEnabled(true);
@@ -418,4 +434,120 @@ public class vistaPaginaPrincipal extends JFrame {
         this.setEnabled(false);
     }
 
+    {
+// GUI initializer generated by IntelliJ IDEA GUI Designer
+// >>> IMPORTANT!! <<<
+// DO NOT EDIT OR ADD ANY CODE HERE!
+        $$$setupUI$$$();
+    }
+
+    /**
+     * Method generated by IntelliJ IDEA GUI Designer
+     * >>> IMPORTANT!! <<<
+     * DO NOT edit this method OR call it in your code!
+     *
+     * @noinspection ALL
+     */
+    private void $$$setupUI$$$() {
+        panel = new JPanel();
+        panel.setLayout(new GridLayoutManager(8, 6, new Insets(0, 0, 0, 0), -1, -1));
+        panelDocument = new JPanel();
+        panelDocument.setLayout(new GridLayoutManager(5, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel.add(panelDocument, new GridConstraints(1, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        etiqueta_doc_sel = new JLabel();
+        etiqueta_doc_sel.setText("Document seleccionat");
+        panelDocument.add(etiqueta_doc_sel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        labelAutor = new JLabel();
+        labelAutor.setText("Autor:");
+        panelDocument.add(labelAutor, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        labelTitol = new JLabel();
+        labelTitol.setText("Títol:");
+        panelDocument.add(labelTitol, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        autor = new JTextField();
+        autor.setEditable(false);
+        panelDocument.add(autor, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        titol = new JTextField();
+        titol.setEditable(false);
+        panelDocument.add(titol, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        panelGestio = new JPanel();
+        panelGestio.setLayout(new GridLayoutManager(7, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel.add(panelGestio, new GridConstraints(1, 1, 3, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        crearDocumentButton = new JButton();
+        crearDocumentButton.setText("Crear document");
+        panelGestio.add(crearDocumentButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        importarButton = new JButton();
+        importarButton.setText("Importar");
+        panelGestio.add(importarButton, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        gestionarExpressionsButton = new JButton();
+        gestionarExpressionsButton.setText("Gestionar expressions");
+        panelGestio.add(gestionarExpressionsButton, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        seleccionarDocumentButton = new JButton();
+        seleccionarDocumentButton.setText("Seleccionar document");
+        panelGestio.add(seleccionarDocumentButton, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer1 = new Spacer();
+        panelGestio.add(spacer1, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final Spacer spacer2 = new Spacer();
+        panelGestio.add(spacer2, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final Spacer spacer3 = new Spacer();
+        panelGestio.add(spacer3, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final Spacer spacer4 = new Spacer();
+        panelGestio.add(spacer4, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final Spacer spacer5 = new Spacer();
+        panelGestio.add(spacer5, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panelOpcions = new JPanel();
+        panelOpcions.setLayout(new GridLayoutManager(4, 4, new Insets(0, 0, 0, 0), -1, -1));
+        panel.add(panelOpcions, new GridConstraints(3, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        visualitzarModificarButton = new JButton();
+        visualitzarModificarButton.setText("Visualitzar/Modificar");
+        panelOpcions.add(visualitzarModificarButton, new GridConstraints(0, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer6 = new Spacer();
+        panelOpcions.add(spacer6, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final Spacer spacer7 = new Spacer();
+        panelOpcions.add(spacer7, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final Spacer spacer8 = new Spacer();
+        panelOpcions.add(spacer8, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        exportarButton = new JButton();
+        exportarButton.setText("Exportar");
+        panelOpcions.add(exportarButton, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        eliminarDocumentSeleccionatButton = new JButton();
+        eliminarDocumentSeleccionatButton.setText("Eliminar document seleccionat");
+        panelOpcions.add(eliminarDocumentSeleccionatButton, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        format = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
+        defaultComboBoxModel1.addElement("TXT");
+        defaultComboBoxModel1.addElement("XML");
+        defaultComboBoxModel1.addElement("PROP");
+        format.setModel(defaultComboBoxModel1);
+        panelOpcions.add(format, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        cerquesBox = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
+        defaultComboBoxModel2.addElement("Llista de títols d'un autor o d'autors que comencen per un prefix");
+        defaultComboBoxModel2.addElement("Contingut d'un document");
+        defaultComboBoxModel2.addElement("Documents semblants");
+        defaultComboBoxModel2.addElement("Documents rellevants");
+        cerquesBox.setModel(defaultComboBoxModel2);
+        panel.add(cerquesBox, new GridConstraints(6, 1, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        etiqueta_cerques = new JLabel();
+        etiqueta_cerques.setText("Seleccionar la cerca desitjada:");
+        panel.add(etiqueta_cerques, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer9 = new Spacer();
+        panel.add(spacer9, new GridConstraints(7, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final Spacer spacer10 = new Spacer();
+        panel.add(spacer10, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final Spacer spacer11 = new Spacer();
+        panel.add(spacer11, new GridConstraints(6, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final Spacer spacer12 = new Spacer();
+        panel.add(spacer12, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final Spacer spacer13 = new Spacer();
+        panel.add(spacer13, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final Spacer spacer14 = new Spacer();
+        panel.add(spacer14, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    public JComponent $$$getRootComponent$$$() {
+        return panel;
+    }
 }
