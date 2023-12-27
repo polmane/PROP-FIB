@@ -11,3 +11,5 @@ El directori esta dividit en packages i conte tantes carpetes com packages te el
 
 - lib: aquest directori conte el codi de les llibreries que em utilitzat, que son la llibreria junit-4.12 i la
         llibreria hamcrest-core-1.3.
+
+- Instruccions per compilar el codi + fitxer Makefile
