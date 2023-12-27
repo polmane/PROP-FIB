@@ -1,0 +1,36 @@
+Joc de proves del Driver CtrlDirectori
+
+								----JOC DE PROVA CAIXA GRISA----
+Aquest joc de proves esta fet amb valors de la caixa grisa, es testeja tot el possible
+-Objecte de la prova:
+	Amb aquest joc d’assaigs es proven els següents casos d’us:
+	0: Tancar Driver
+	1: Constructora
+	2: Afegir document
+	3: Seleccionar document
+	4: Modificar autor
+	5: Modificar titol
+	6: Modificar contingut
+	7: Eliminar document
+	8: Contingut de titol i autor
+	9: Autors per prefix
+	10: Llista de titols d'un autor
+	11: Documents semblants
+	12: Documents semblants a una query
+
+-Fitxers necessaris:
+
+	El codi del Driver
+
+
+-Entrada del joc de proves (valors estudiats):
+
+	Document JocDeProvesCtrlDirectori
+
+La missio d’aquests valors es veure el bon funcionament del programa en general passant per totes les funcionalitats d’aquest. 
+Per exemple una de les missions és veure que l'eliminació dels documents comporta borrar totes les consultes necessàries, que la cerca per autor retorna els autors de manera correcta o que les ordenacions de les diferents cerques funcionen correctament.
+
+
+Operativa:
+Executem el Makefile i anem introduint els valors que ens va demanant la terminal. El joc de prova esmentat s’ha d’anar introduint a mà ja que 
+l’execucio es fa a traves d’un .sh. 
