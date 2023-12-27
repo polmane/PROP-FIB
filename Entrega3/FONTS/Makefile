@@ -8,6 +8,9 @@ default:
 	$(JC) -cp ./:../lib/* Presentacio/Vistes/Main.java -d ../EXE
 	$(JC) -cp ../EXE:../lib/* Persistencia/Test/*.java -d ../EXE
 
+jar:
+	jar cfmv ../EXE/GestorDocuments.jar Manifest.mf -C  ../EXE .
+
 all: default
 
 clean:
