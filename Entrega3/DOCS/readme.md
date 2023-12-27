@@ -1,4 +1,5 @@
 La carpeta de documentacio conte els documents següents:
 - Manual d'usuari.
 - Javadoc amb la documentació de totes les classes, atributs i metodes.
-- Tests d'integracio.
+- Codis error del programa.
+- Repartiment tasques
