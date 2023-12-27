@@ -1,4 +1,0 @@
-El directori dexecucio conte el seguent:
-- Conte tots els arxius .jar dels drivers (si shan compilat previament)
-- Carpeta Tests: Conte els .jar de tots els test del programa.
-- Instruccions per executar
